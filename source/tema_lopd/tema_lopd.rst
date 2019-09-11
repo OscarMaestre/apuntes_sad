@@ -1,8 +1,17 @@
-La Ley Orgánica de Protección de Datos
+Legislación y normas sobre seguridad
 =================================================
 
-Artículos
+
+
+
+Legislación sobre protección de datos.
+-----------------------------------------------------------------------------------------------
+
+
+La Ley Orgánica de Protección de Datos
 --------------------------------------------------
+
+
 
 
 Artículo 1. Objeto de la Ley
@@ -69,7 +78,7 @@ Artículo 10. Tratamiento de datos de naturaleza penal.
 Los datos penales no podrán usarse para otros fines y su tratamiento solo podrá hacerse por abogados y procuradores.
 
 Artículo 11. Transparencia e información al afectado.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 El responsable debe cumplir con el deber de información y decir al afectado:
 

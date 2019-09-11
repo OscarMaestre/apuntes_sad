@@ -7,9 +7,14 @@ Apuntes de Seguridad y alta disponibilidad
 ======================================================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: Contenidos:
 
 
 
-   tema_lopd
+   tema_lopd/tema_lopd
+   tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica
+   tema_acceso_remoto/tema_acceso_remoto
+   tema_cortafuegos/tema_cortafuegos
+   tema_proxys/tema_proxys
+   tema_sad/tema_sad
