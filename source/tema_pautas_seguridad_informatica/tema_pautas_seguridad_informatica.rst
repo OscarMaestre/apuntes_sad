@@ -19,6 +19,16 @@ Análisis de las principales vulnerabilidades de un sistema informático.
 Amenazas. Tipos.
 -----------------------------------------------------------------------------------------------
 
+Clasificando por lugar
+
+* Interna
+* Externa
+
+Clasificando por mecanismo
+
+* Físicas
+* Lógicas
+
 
 Amenazas físicas.
 -----------------------------------------------------------------------------------------------
