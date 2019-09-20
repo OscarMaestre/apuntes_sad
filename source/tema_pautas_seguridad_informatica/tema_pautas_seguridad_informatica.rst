@@ -3,6 +3,8 @@ Adopción de pautas de seguridad informática
 
 
 
+
+
 Fiabilidad, confidencialidad, integridad y disponibilidad.
 -----------------------------------------------------------------------------------------------
 A continuación definimos los siguientes términos
@@ -161,3 +163,26 @@ Análisis de evidencias digitales.
 
 Herramientas de análisis forense.
 -----------------------------------------------------------------------------------------------
+
+
+
+El sistema operativo Unix
+--------------------------------------------------
+
+A lo largo del curso usaremos GNU/Linux, un sistema operativo de tipo UNIX de libre distribución. Aunque GNU/Linux suele empaquetarse en "distribuciones" que suelen incluir un entorno gráfico en este módulo aprenderemos a movernos por el sistema utilizando los comandos.
+
+* ``mkdir`` nos permite crear directorios.
+* ``cd`` nos permite movernos a un directorio.
+* ``rm`` nos permite borrar ficheros. 
+* ``rmdir`` nos permite borrar un directorio **siempre y cuando esté vacío**.
+* ``ls`` muestra los ficheros del directorio actual.
+* ``cat`` nos permite imprimir un fichero por pantalla.
+* ``man <comando>`` nos permite obtener ayuda sobre un cierto comando (o incluso fichero de configuración).
+* ``pwd`` nos muestra el nombre del directorio actual.
+* ``nano`` nos da acceso a un pequeño editor de texto que nos permitirá editar, entre otras cosas, los ficheros de configuración del sistema.
+* Cuando se manipulan ficheros se puede ocultar un fichero *usando el punto como primer carácter de un fichero*.
+* ``apt-get`` nos permitirá instalar sofware de los repositorios del empaquetador de la distribución.
+* Se puede ejecutar un comando escribiendo el nombre de dicho comando. Si el comando no está en las rutas de búsqueda se puede escribir la ruta completa.
+* Se puede redirigir la salida de un comando hacia un fichero (usando ``<comando> > <fichero>``  o redirigir la salida de un comando hacia otro comando con ``<comando> | <comando>`` 
+* Un comando de cualquier tipo podría necesitar **permisos de administrador**. En ese caso tendremos que usar el comando ``sudo`` de esta manera: ``sudo <comando>`` .
+
