@@ -1,63 +1,84 @@
-Implantación de soluciones de alta disponibilidad
-============================================================
+Implantación de técnicas de acceso remoto. Seguridad perimetral
+==================================================================================================
 
 
-Definición y objetivos.
+
+
+Elementos básicos de la seguridad perimetral.
 -----------------------------------------------------------------------------------------------
 
 
-Análisis de configuraciones de alta disponibilidad
+Perímetros de red. Zonas desmilitarizadas. Router frontera.
 -----------------------------------------------------------------------------------------------
 
 
-Funcionamiento ininterrumpido.
+Arquitectura débil de subred protegida.
 -----------------------------------------------------------------------------------------------
 
 
-Integridad de datos y recuperación de servicio.
+Arquitectura fuerte de subred protegida.
 -----------------------------------------------------------------------------------------------
 
 
-Servidores redundantes.
+Políticas de defensa en profundidad.
 -----------------------------------------------------------------------------------------------
 
 
-Sistemas de  clusters .
+Defensa perimetral.
 -----------------------------------------------------------------------------------------------
 
 
-SAN, NAS, FiberChannel
+Defensa interna.
 -----------------------------------------------------------------------------------------------
 
 
-Balanceadores de carga.
+Factor Humano.
 -----------------------------------------------------------------------------------------------
 
 
-Instalación y configuración de soluciones de alta disponibilidad.
+Redes privadas virtuales. VPN.
 -----------------------------------------------------------------------------------------------
 
 
-Vitalización de sistemas.
+Beneficios y desventajas con respecto a las líneas dedicadas.
 -----------------------------------------------------------------------------------------------
 
 
-Posibilidades de la virtualización de sistemas.
+Técnicas de cifrado. Clave pública y clave privada.
 -----------------------------------------------------------------------------------------------
 
 
-Herramientas para la virtualización.
+VPN a nivel de enlace.
 -----------------------------------------------------------------------------------------------
 
 
-Configuración y utilización de maquinas virtuales.
+VPN a nivel de red. SSL, Pisac.
 -----------------------------------------------------------------------------------------------
 
 
-Alta disponibilidad y virtualización.
+VPN a nivel de aplicación. SSH.
 -----------------------------------------------------------------------------------------------
 
 
-Simulación de servicios con virtualización.
+Intérprete de comandos SSH.
 -----------------------------------------------------------------------------------------------
 
+
+Gestión de archivos SSH.
+-----------------------------------------------------------------------------------------------
+
+
+Servidores de acceso remoto
+-----------------------------------------------------------------------------------------------
+
+
+Protocolos de autenticación.
+-----------------------------------------------------------------------------------------------
+
+
+Configuración de parámetros de acceso.
+-----------------------------------------------------------------------------------------------
+
+
+Servidores de autenticación.
+-----------------------------------------------------------------------------------------------

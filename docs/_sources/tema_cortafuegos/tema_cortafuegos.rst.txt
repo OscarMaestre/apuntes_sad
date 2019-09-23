@@ -1,63 +1,48 @@
-Implantación de soluciones de alta disponibilidad
-============================================================
+Instalación y configuración de cortafuegos
+=================================================
 
 
-Definición y objetivos.
+
+
+Utilización de cortafuegos.
 -----------------------------------------------------------------------------------------------
 
 
-Análisis de configuraciones de alta disponibilidad
+Filtrado de paquetes de datos.
 -----------------------------------------------------------------------------------------------
 
 
-Funcionamiento ininterrumpido.
+Tipos de cortafuegos. Características. Funciones principal.
 -----------------------------------------------------------------------------------------------
 
 
-Integridad de datos y recuperación de servicio.
+Instalación de cortafuegos. Ubicación.
 -----------------------------------------------------------------------------------------------
 
 
-Servidores redundantes.
+Reglas de filtrado de cortafuegos.
 -----------------------------------------------------------------------------------------------
 
 
-Sistemas de  clusters .
+Pruebas de funcionamiento. Sondeo.
 -----------------------------------------------------------------------------------------------
 
 
-SAN, NAS, FiberChannel
+Registros de sucesos de un cortafuegos.
 -----------------------------------------------------------------------------------------------
 
 
-Balanceadores de carga.
+Cortafuegos integrados en los sistemas operativos.
 -----------------------------------------------------------------------------------------------
 
 
-Instalación y configuración de soluciones de alta disponibilidad.
+Cortafuegos libres y propietarios.
 -----------------------------------------------------------------------------------------------
 
 
-Vitalización de sistemas.
+Distribuciones libres para implementar cortafuegos en máquinas dedicadas.
 -----------------------------------------------------------------------------------------------
 
 
-Posibilidades de la virtualización de sistemas.
+Cortafuegos hardware.
 -----------------------------------------------------------------------------------------------
-
-
-Herramientas para la virtualización.
------------------------------------------------------------------------------------------------
-
-
-Configuración y utilización de maquinas virtuales.
------------------------------------------------------------------------------------------------
-
-
-Alta disponibilidad y virtualización.
------------------------------------------------------------------------------------------------
-
-
-Simulación de servicios con virtualización.
------------------------------------------------------------------------------------------------
-

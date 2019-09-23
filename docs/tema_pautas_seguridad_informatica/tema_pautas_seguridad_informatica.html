@@ -1,0 +1,293 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Adopción de pautas de seguridad informática &#8212; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Legislación y normas sobre seguridad" href="../tema_lopd/tema_lopd.html" />
+    <link rel="prev" title="Apuntes de Seguridad y alta disponibilidad" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="adopcion-de-pautas-de-seguridad-informatica">
+<h1>Adopción de pautas de seguridad informática<a class="headerlink" href="#adopcion-de-pautas-de-seguridad-informatica" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="fiabilidad-confidencialidad-integridad-y-disponibilidad">
+<h2>Fiabilidad, confidencialidad, integridad y disponibilidad.<a class="headerlink" href="#fiabilidad-confidencialidad-integridad-y-disponibilidad" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A continuación definimos los siguientes términos</p>
+<ul class="simple">
+<li>Fiabilidad: la capacidad de conseguir que un SI ofrezca la información sin pausas entre peticiones.</li>
+<li>confidencialidad: capacidad de conseguir que la información se muestre solo a las personas que estén autorizadas para ello.</li>
+<li>Integridad: capacidad de conseguir que la información no se altere por causas involuntarias.</li>
+<li>Disponibilidad: capacidad de respuesta a una peticiones con las mínimas pausas por causas involuntarias.</li>
+</ul>
+<p>En relación con el último punto, se mide la disponibilidad de un SI en «nueves».</p>
+<ul class="simple">
+<li>Se dice que un SI ofrece una disponibilidad de «2 nueves», si está disponible el 99% del tiempo.</li>
+<li>Se dice que un SI ofrece una disponibilidad de «3 nueves», si lo está al 99.9%.</li>
+<li>Se dice que un SI ofrece una disponibilidad de «4 nueves» si lo está al 99.99%.</li>
+<li>Se dice que un SI ofrece una disponibilidad de «5 nueves» si lo está al 99.999%</li>
+</ul>
+<p>Ejercicio: Si un año tiene 365 días, calcular cuanto tiempo podría estar como «no disponible» cada uno de los sistemas que hemos enumerado en el punto anterior.</p>
+</div>
+<div class="section" id="elementos-vulnerables-en-el-sistema-informatico-hardware-software-y-datos">
+<h2>Elementos vulnerables en el sistema informático; hardware, software y datos.<a class="headerlink" href="#elementos-vulnerables-en-el-sistema-informatico-hardware-software-y-datos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>«Vulnerable»: medida de la capacidad de un sistema para fallar de manera inesperada. En pocas palabras una vulnerabilidad es un punto débil.</p>
+<p>Como resulta evidente en un SI hay tres grandes elementos que son susceptibles de ser vulnerables:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Hardware.</dt>
+<dd><ul class="first last">
+<li>Fluido eléctrico.</li>
+<li>Placa base.</li>
+<li>RAM: errores muy difíciles de detectar.</li>
+<li>Discos: hay abundantes estadísticas acerca de sus tasas de fallos.</li>
+<li>Tarjetas gráficas.</li>
+<li>Interconexiones. cables y/o soldaduras</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Software.</dt>
+<dd><ul class="first last">
+<li>Sistema operativo: es importante tener activada la actualización automática que aplica «parches» sin necesidad de recordar aplicarlas manualmente. Para evitar la aplicación de actualizaciones que puedan estropear otras partes se suele aconsejar NO TENER ACTIVADA LA ACTUALIZACIÓN AUTOMÁTICA en equipos críticos y sí tenerla en otros equipos que actúen como «cobayas.»</li>
+<li>Aplicaciones. También pueden mostrar fallos que den lugar a consecuencias muy desagradables especialmente con los datos.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Datos. Hoy en día son casi con total seguridad el activo más valioso de la empresa. Para protegerlos habrá que tomar muchas medidas de seguridad.</li>
+</ul>
+</div>
+<div class="section" id="analisis-de-las-principales-vulnerabilidades-de-un-sistema-informatico">
+<h2>Análisis de las principales vulnerabilidades de un sistema informático.<a class="headerlink" href="#analisis-de-las-principales-vulnerabilidades-de-un-sistema-informatico" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Cuando se habla de vulnerabilidad, se asocia este término con problemas software. Una vulnerabilidad puede conllevar una serie de problemas muy graves:</p>
+<ul class="simple">
+<li>Que un intruso consiga permisos de administración en un sistema.</li>
+<li>Que un virus informático consiga tomar el control de los equipos de la empresa.</li>
+<li>Que un software o individuo consiga borrar/alterar/cifrar datos de la empresa.</li>
+</ul>
+<p>En Internet todas las vulnerabilidades detectadas se publican como un informe CVE (Common Vulnerability Exposure)</p>
+<p>Recientemente se han descubierto <strong>vulnerabilidades a nivel de microprocesador</strong>.
+En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
+<p>Algunas aplicaciones basadas en bases de datos son susceptibles de sufrir «ataques SQL» o «inyecciones SQL» o «SQL injects».</p>
+<p>Otro tipo de ataque común son los HTML/JS injects.</p>
+<p>En líneas generales, ningún programa web debe confiar en lo que escriben sus usuarios.</p>
+</div>
+<div class="section" id="amenazas-tipos">
+<h2>Amenazas. Tipos.<a class="headerlink" href="#amenazas-tipos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Clasificando por lugar</p>
+<ul class="simple">
+<li>Interna</li>
+<li>Externa</li>
+</ul>
+<p>Clasificando por mecanismo</p>
+<ul class="simple">
+<li>Físicas</li>
+<li>Lógicas</li>
+</ul>
+</div>
+<div class="section" id="amenazas-fisicas">
+<h2>Amenazas físicas.<a class="headerlink" href="#amenazas-fisicas" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="amenazas-logicas">
+<h2>Amenazas lógicas.<a class="headerlink" href="#amenazas-logicas" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="seguridad-fisica-y-ambiental">
+<h2>Seguridad física y ambiental<a class="headerlink" href="#seguridad-fisica-y-ambiental" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="ubicacion-y-proteccion-fisica-de-los-equipos-y-servidores">
+<h2>Ubicación y protección física de los equipos y servidores.<a class="headerlink" href="#ubicacion-y-proteccion-fisica-de-los-equipos-y-servidores" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="sistemas-de-alimentacion-ininterrumpida">
+<h2>Sistemas de alimentación ininterrumpida.<a class="headerlink" href="#sistemas-de-alimentacion-ininterrumpida" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="seguridad-logica">
+<h2>Seguridad lógica.<a class="headerlink" href="#seguridad-logica" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="criptografia">
+<h2>Criptografía.<a class="headerlink" href="#criptografia" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="listas-de-control-de-acceso">
+<h2>Listas de control de acceso.<a class="headerlink" href="#listas-de-control-de-acceso" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="establecimiento-de-politicas-de-contrasenas">
+<h2>Establecimiento de políticas de contraseñas.<a class="headerlink" href="#establecimiento-de-politicas-de-contrasenas" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="politicas-de-almacenamiento">
+<h2>Políticas de almacenamiento.<a class="headerlink" href="#politicas-de-almacenamiento" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="copias-de-seguridad-e-imagenes-de-respaldo">
+<h2>Copias de seguridad e imágenes de respaldo.<a class="headerlink" href="#copias-de-seguridad-e-imagenes-de-respaldo" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="medios-de-almacenamiento">
+<h2>Medios de almacenamiento.<a class="headerlink" href="#medios-de-almacenamiento" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="sistemas-biometricos-funcionamiento-estandares">
+<h2>Sistemas biométricos. Funcionamiento. Estándares.<a class="headerlink" href="#sistemas-biometricos-funcionamiento-estandares" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="analisis-forense-en-sistemas-informaticos">
+<h2>Análisis forense en sistemas informáticos<a class="headerlink" href="#analisis-forense-en-sistemas-informaticos" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="funcionalidad-y-fases-de-un-analisis-forense">
+<h2>Funcionalidad y fases de un análisis forense.<a class="headerlink" href="#funcionalidad-y-fases-de-un-analisis-forense" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="respuesta-a-incidentes">
+<h2>Respuesta a incidentes.<a class="headerlink" href="#respuesta-a-incidentes" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="analisis-de-evidencias-digitales">
+<h2>Análisis de evidencias digitales.<a class="headerlink" href="#analisis-de-evidencias-digitales" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="herramientas-de-analisis-forense">
+<h2>Herramientas de análisis forense.<a class="headerlink" href="#herramientas-de-analisis-forense" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="el-sistema-operativo-unix">
+<h2>El sistema operativo Unix<a class="headerlink" href="#el-sistema-operativo-unix" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A lo largo del curso usaremos GNU/Linux, un sistema operativo de tipo UNIX de libre distribución. Aunque GNU/Linux suele empaquetarse en «distribuciones» que suelen incluir un entorno gráfico en este módulo aprenderemos a movernos por el sistema utilizando los comandos.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">mkdir</span></code> nos permite crear directorios.</li>
+<li><code class="docutils literal notranslate"><span class="pre">cd</span></code> nos permite movernos a un directorio.</li>
+<li><code class="docutils literal notranslate"><span class="pre">rm</span></code> nos permite borrar ficheros.</li>
+<li><code class="docutils literal notranslate"><span class="pre">rmdir</span></code> nos permite borrar un directorio <strong>siempre y cuando esté vacío</strong>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ls</span></code> muestra los ficheros del directorio actual.</li>
+<li><code class="docutils literal notranslate"><span class="pre">cat</span></code> nos permite imprimir un fichero por pantalla.</li>
+<li><code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">&lt;comando&gt;</span></code> nos permite obtener ayuda sobre un cierto comando (o incluso fichero de configuración).</li>
+<li><code class="docutils literal notranslate"><span class="pre">pwd</span></code> nos muestra el nombre del directorio actual.</li>
+<li><code class="docutils literal notranslate"><span class="pre">nano</span></code> nos da acceso a un pequeño editor de texto que nos permitirá editar, entre otras cosas, los ficheros de configuración del sistema.</li>
+<li>Cuando se manipulan ficheros se puede ocultar un fichero <em>usando el punto como primer carácter de un fichero</em>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">apt-get</span></code> nos permitirá instalar sofware de los repositorios del empaquetador de la distribución.</li>
+<li>Se puede ejecutar un comando escribiendo el nombre de dicho comando. Si el comando no está en las rutas de búsqueda se puede escribir la ruta completa.</li>
+<li>Se puede redirigir la salida de un comando hacia un fichero (usando <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">&gt;</span> <span class="pre">&lt;fichero&gt;</span></code>  o redirigir la salida de un comando hacia otro comando con <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">|</span> <span class="pre">&lt;comando&gt;</span></code></li>
+<li>Un comando de cualquier tipo podría necesitar <strong>permisos de administrador</strong>. En ese caso tendremos que usar el comando <code class="docutils literal notranslate"><span class="pre">sudo</span></code> de esta manera: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">&lt;comando&gt;</span></code> .</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Apuntes de Seguridad y alta disponibilidad</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+<p class="caption"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adopción de pautas de seguridad informática</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fiabilidad-confidencialidad-integridad-y-disponibilidad">Fiabilidad, confidencialidad, integridad y disponibilidad.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#elementos-vulnerables-en-el-sistema-informatico-hardware-software-y-datos">Elementos vulnerables en el sistema informático; hardware, software y datos.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analisis-de-las-principales-vulnerabilidades-de-un-sistema-informatico">Análisis de las principales vulnerabilidades de un sistema informático.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#amenazas-tipos">Amenazas. Tipos.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#amenazas-fisicas">Amenazas físicas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#amenazas-logicas">Amenazas lógicas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#seguridad-fisica-y-ambiental">Seguridad física y ambiental</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ubicacion-y-proteccion-fisica-de-los-equipos-y-servidores">Ubicación y protección física de los equipos y servidores.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sistemas-de-alimentacion-ininterrumpida">Sistemas de alimentación ininterrumpida.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#seguridad-logica">Seguridad lógica.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#criptografia">Criptografía.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listas-de-control-de-acceso">Listas de control de acceso.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#establecimiento-de-politicas-de-contrasenas">Establecimiento de políticas de contraseñas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#politicas-de-almacenamiento">Políticas de almacenamiento.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copias-de-seguridad-e-imagenes-de-respaldo">Copias de seguridad e imágenes de respaldo.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#medios-de-almacenamiento">Medios de almacenamiento.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sistemas-biometricos-funcionamiento-estandares">Sistemas biométricos. Funcionamiento. Estándares.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analisis-forense-en-sistemas-informaticos">Análisis forense en sistemas informáticos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funcionalidad-y-fases-de-un-analisis-forense">Funcionalidad y fases de un análisis forense.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#respuesta-a-incidentes">Respuesta a incidentes.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analisis-de-evidencias-digitales">Análisis de evidencias digitales.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#herramientas-de-analisis-forense">Herramientas de análisis forense.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#el-sistema-operativo-unix">El sistema operativo Unix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html">Implantación de soluciones de alta disponibilidad</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="capítulo anterior">Apuntes de Seguridad y alta disponibilidad</a></li>
+      <li>Next: <a href="../tema_lopd/tema_lopd.html" title="próximo capítulo">Legislación y normas sobre seguridad</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Oscar GG.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

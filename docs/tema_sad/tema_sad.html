@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Implantación de soluciones de alta disponibilidad &#8212; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="prev" title="Instalación y configuración de servidores proxy" href="../tema_proxys/tema_proxys.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="implantacion-de-soluciones-de-alta-disponibilidad">
+<h1>Implantación de soluciones de alta disponibilidad<a class="headerlink" href="#implantacion-de-soluciones-de-alta-disponibilidad" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="definicion-y-objetivos">
+<h2>Definición y objetivos.<a class="headerlink" href="#definicion-y-objetivos" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="analisis-de-configuraciones-de-alta-disponibilidad">
+<h2>Análisis de configuraciones de alta disponibilidad<a class="headerlink" href="#analisis-de-configuraciones-de-alta-disponibilidad" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="funcionamiento-ininterrumpido">
+<h2>Funcionamiento ininterrumpido.<a class="headerlink" href="#funcionamiento-ininterrumpido" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="integridad-de-datos-y-recuperacion-de-servicio">
+<h2>Integridad de datos y recuperación de servicio.<a class="headerlink" href="#integridad-de-datos-y-recuperacion-de-servicio" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="servidores-redundantes">
+<h2>Servidores redundantes.<a class="headerlink" href="#servidores-redundantes" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="sistemas-de-clusters">
+<h2>Sistemas de  clusters .<a class="headerlink" href="#sistemas-de-clusters" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="san-nas-fiberchannel">
+<h2>SAN, NAS, FiberChannel<a class="headerlink" href="#san-nas-fiberchannel" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="balanceadores-de-carga">
+<h2>Balanceadores de carga.<a class="headerlink" href="#balanceadores-de-carga" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad">
+<h2>Instalación y configuración de soluciones de alta disponibilidad.<a class="headerlink" href="#instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="vitalizacion-de-sistemas">
+<h2>Vitalización de sistemas.<a class="headerlink" href="#vitalizacion-de-sistemas" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="posibilidades-de-la-virtualizacion-de-sistemas">
+<h2>Posibilidades de la virtualización de sistemas.<a class="headerlink" href="#posibilidades-de-la-virtualizacion-de-sistemas" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="herramientas-para-la-virtualizacion">
+<h2>Herramientas para la virtualización.<a class="headerlink" href="#herramientas-para-la-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="configuracion-y-utilizacion-de-maquinas-virtuales">
+<h2>Configuración y utilización de maquinas virtuales.<a class="headerlink" href="#configuracion-y-utilizacion-de-maquinas-virtuales" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="alta-disponibilidad-y-virtualizacion">
+<h2>Alta disponibilidad y virtualización.<a class="headerlink" href="#alta-disponibilidad-y-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="simulacion-de-servicios-con-virtualizacion">
+<h2>Simulación de servicios con virtualización.<a class="headerlink" href="#simulacion-de-servicios-con-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Apuntes de Seguridad y alta disponibilidad</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navegación</h3>
+<p class="caption"><span class="caption-text">Contenidos:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html">Adopción de pautas de seguridad informática</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Implantación de soluciones de alta disponibilidad</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#definicion-y-objetivos">Definición y objetivos.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analisis-de-configuraciones-de-alta-disponibilidad">Análisis de configuraciones de alta disponibilidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funcionamiento-ininterrumpido">Funcionamiento ininterrumpido.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integridad-de-datos-y-recuperacion-de-servicio">Integridad de datos y recuperación de servicio.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#servidores-redundantes">Servidores redundantes.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sistemas-de-clusters">Sistemas de  clusters .</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#san-nas-fiberchannel">SAN, NAS, FiberChannel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#balanceadores-de-carga">Balanceadores de carga.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad">Instalación y configuración de soluciones de alta disponibilidad.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vitalizacion-de-sistemas">Vitalización de sistemas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#posibilidades-de-la-virtualizacion-de-sistemas">Posibilidades de la virtualización de sistemas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#herramientas-para-la-virtualizacion">Herramientas para la virtualización.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuracion-y-utilizacion-de-maquinas-virtuales">Configuración y utilización de maquinas virtuales.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alta-disponibilidad-y-virtualizacion">Alta disponibilidad y virtualización.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulacion-de-servicios-con-virtualizacion">Simulación de servicios con virtualización.</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../tema_proxys/tema_proxys.html" title="capítulo anterior">Instalación y configuración de servidores  proxy</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Oscar GG.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tema_sad/tema_sad.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
