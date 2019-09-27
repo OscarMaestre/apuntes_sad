@@ -84,8 +84,8 @@ Amenazas. Tipos.
 
 Clasificando por lugar
 
-* Interna
-* Externa
+* Interna: los problemas originados dentro de la propia empresa son **los más frecuentes y los de impacto más grave**
+* Externa: son las originadas fuera de la propia empresa.
 
 Clasificando por mecanismo
 
@@ -95,10 +95,39 @@ Clasificando por mecanismo
 
 Amenazas físicas.
 -----------------------------------------------------------------------------------------------
+Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.
+
+
+* Rotura intencionada.
+* Desastre natural: terremotos, inundaciones, incendios, etc...
+    ** Se debe disponer de la protección antiincendios adecuada.
+    ** No todos los extintores son apropiados para todo.
+    ** Los seguros no suelen cubrir eventos de este tipo.
+    ** Se desaconseja la instalación de centros de datos en bajos o sótanos.
+
+En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.
+
+
+* Barreras físicas.
+    ** Los servidores deberían estar cerrados con llaves y con acceso restringido.
+    ** Controles de acceso con tarjeta y/o guardia de seguridad.
+    ** En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
+    ** Puertas con apertura programada.
+* Protección eléctrica.
+
 
 
 Amenazas lógicas.
 -----------------------------------------------------------------------------------------------
+
+
+¿Qué problemas podrían causarse por motivos de un uso inapropiado de software?
+
+* Ataques a nivel de red IP. P.ej ataques de tipo "spoofing". Phishing. MITM
+* A nivel de SO. Buffer overflow. Errores humanos.
+* A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.
+* Malware: spyware, ransomware, virus, DOS (Denial of service).
+
 
 
 Seguridad física y ambiental
@@ -185,4 +214,12 @@ A lo largo del curso usaremos GNU/Linux, un sistema operativo de tipo UNIX de li
 * Se puede ejecutar un comando escribiendo el nombre de dicho comando. Si el comando no está en las rutas de búsqueda se puede escribir la ruta completa.
 * Se puede redirigir la salida de un comando hacia un fichero (usando ``<comando> > <fichero>``  o redirigir la salida de un comando hacia otro comando con ``<comando> | <comando>`` 
 * Un comando de cualquier tipo podría necesitar **permisos de administrador**. En ese caso tendremos que usar el comando ``sudo`` de esta manera: ``sudo <comando>`` .
+
+* Para construir ficheros que almacenen un conjunto de ficheros usaremos un comando llamado ``tar`` . Podremos comprimir un fichero usando compresores como ``gzip`` o ``bzip`` 
+
+    ** El comando ``tar`` acepta una serie de opciones por medio de un guión.
+        *** Por ejemplo podemos usar ``tar -cf copiaseguridad.tar .gnupg`` 
+        *** Para extraer el contenido de un fichero se usa ``tar -xf copiaseguridad.tar`` 
+    ** El comando ``gzip`` o ``bzip2`` permiten comprimir un fichero.
+
 
