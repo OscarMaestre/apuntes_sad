@@ -384,8 +384,10 @@ A lo largo del curso usaremos GNU/Linux, un sistema operativo de tipo UNIX de li
 * Para construir ficheros que almacenen un conjunto de ficheros usaremos un comando llamado ``tar`` . Podremos comprimir un fichero usando compresores como ``gzip`` o ``bzip`` 
 
     ** El comando ``tar`` acepta una serie de opciones por medio de un guión.
+    
         *** Por ejemplo podemos usar ``tar -cf copiaseguridad.tar .gnupg`` 
         *** Para extraer el contenido de un fichero se usa ``tar -xf copiaseguridad.tar`` 
+
     ** El comando ``gzip`` o ``bzip2`` permiten comprimir un fichero.
 
 

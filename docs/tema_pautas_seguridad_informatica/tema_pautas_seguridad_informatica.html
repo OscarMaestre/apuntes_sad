@@ -104,8 +104,8 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 <h2>Amenazas. Tipos.<a class="headerlink" href="#amenazas-tipos" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Clasificando por lugar</p>
 <ul class="simple">
-<li>Interna</li>
-<li>Externa</li>
+<li>Interna: los problemas originados dentro de la propia empresa son <strong>los más frecuentes y los de impacto más grave</strong></li>
+<li>Externa: son las originadas fuera de la propia empresa.</li>
 </ul>
 <p>Clasificando por mecanismo</p>
 <ul class="simple">
@@ -115,9 +115,40 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 </div>
 <div class="section" id="amenazas-fisicas">
 <h2>Amenazas físicas.<a class="headerlink" href="#amenazas-fisicas" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.</p>
+<ul class="simple">
+<li>Rotura intencionada.</li>
+<li><dl class="first docutils">
+<dt>Desastre natural: terremotos, inundaciones, incendios, etc…</dt>
+<dd>** Se debe disponer de la protección antiincendios adecuada.
+** No todos los extintores son apropiados para todo.
+** Los seguros no suelen cubrir eventos de este tipo.
+** Se desaconseja la instalación de centros de datos en bajos o sótanos.</dd>
+</dl>
+</li>
+</ul>
+<p>En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Barreras físicas.</dt>
+<dd>** Los servidores deberían estar cerrados con llaves y con acceso restringido.
+** Controles de acceso con tarjeta y/o guardia de seguridad.
+** En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
+** Puertas con apertura programada.</dd>
+</dl>
+</li>
+<li>Protección eléctrica.</li>
+</ul>
 </div>
 <div class="section" id="amenazas-logicas">
 <h2>Amenazas lógicas.<a class="headerlink" href="#amenazas-logicas" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>¿Qué problemas podrían causarse por motivos de un uso inapropiado de software?</p>
+<ul class="simple">
+<li>Ataques a nivel de red IP. P.ej ataques de tipo «spoofing». Phishing. MITM</li>
+<li>A nivel de SO. Buffer overflow. Errores humanos.</li>
+<li>A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.</li>
+<li>Malware: spyware, ransomware, virus, DOS (Denial of service).</li>
+</ul>
 </div>
 <div class="section" id="seguridad-fisica-y-ambiental">
 <h2>Seguridad física y ambiental<a class="headerlink" href="#seguridad-fisica-y-ambiental" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -127,12 +158,122 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 </div>
 <div class="section" id="sistemas-de-alimentacion-ininterrumpida">
 <h2>Sistemas de alimentación ininterrumpida.<a class="headerlink" href="#sistemas-de-alimentacion-ininterrumpida" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Un sistema de alimentación ininterrumpida o SAI protege contra problemas eléctricos comunes que pueden afectar al funcionamiento normal de un sistema informático.</p>
+<ul class="simple">
+<li>Bajadas de tensión. Produce daños a largo plazo.</li>
+<li>Interrupciones del suministro. Da lugar a perjuicios económicos.</li>
+<li>Subidas de tensión puntuales. Menores o iguales de 4 milisegundos y producen daños en dias/semanas.</li>
+<li>Subidas de tensión sostenidas. Dura mas de 4 milisegundos y produce daños en escasos minutos e instantáneos.</li>
+</ul>
+<p>En líneas generales el parámetro principal que debemos mirar en un SAI es su «potencia aparente».</p>
+<p>La potencia aparente de un SAI se mide en «voltio-amperios» o «kilo-voltio-amperios» o «KVA» (también pronunciado como «kabeas» o «kivas»)</p>
+<p>Lo que nos interesa es la potencia eficaz que se obtiene multiplicando la aparente por 0,75. En algunos SAI nos indican el factor de potencia. En ese caso, sí podemos saber directamente la potencia eficaz multiplicando la potencia aparente por ese factor.</p>
+<p>Pot eficaz (Watios) = Pot. apar (VA) Factor de pot.</p>
+<p>Supongamos un SAI en el que la caja simplemente indica 2000VA (o 2KVAS). Si no nos dicen nada, asumiremos que en realidad ese SAI ofrece 2000*0,75 = 1500 W</p>
+<p>Si tuviésemos 3 ordenadores y cada uno consumiese 650W está claro que no podríamos conectar los 3.</p>
+<p>Si un SAI se anuncia indicando que ofrece 1500KVA y 850W de potencia ¿qué factor de potencia ofrece?</p>
+<ul class="simple">
+<li>Los 1500KVA son la «nominal/máxima/aparente»</li>
+<li>Los 850W son la «eficaz/de salida»</li>
+</ul>
+<p>Si Eficaz=Aparente * FdP entonces</p>
+<p>FDP=Eficaz/aparente</p>
+<p>FDP=850/1500</p>
+<p>Cuando se diseña un edificio con instalaciones informáticas es frecuente que con el tiempo haya cambios y finalmente sea necesario ampliar. Por ello, se recomienda incrementar nuestros cálculos en torno a un 20-30%</p>
+<p>Supongamos que deseamos instalar servidores que en su conjunto consumen 1300W.</p>
+<p>¿Que potencia aparente deberíamos buscar al comprar un SAI?</p>
+<p>No nos dicen el factor de potencia así que usaremos 0,75. Así la potencia aparente debería ser Eficaz/0,75 es decir 1733 VA. Como dicha potencia podría resulta insuficiente en el futuro, incrementaremos, por ejemplo un 20% multiplicando los VA por 1,20. Así, 1733 * 1,20 = 2080 VA.</p>
 </div>
 <div class="section" id="seguridad-logica">
 <h2>Seguridad lógica.<a class="headerlink" href="#seguridad-logica" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Implica  restringir el acceso a datos en función de la persona que lo intente:</p>
+<ul class="simple">
+<li>Claves de acceso.</li>
+<li>Tarjetas de identificación.</li>
+<li>Copias de seguridad.</li>
+<li>Listas de control de acceso.</li>
+<li>Control horario.</li>
+<li>Roles.</li>
+<li>Cortafuegos.</li>
+<li>Distribución de carga.</li>
+<li>Redundancia de sistemas</li>
+</ul>
 </div>
 <div class="section" id="criptografia">
 <h2>Criptografía.<a class="headerlink" href="#criptografia" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>La Criptografía es la técnica que transforma mensajes en otros mensajes cuyo contenido no se pde conocer. Un mecanismo muy básico es por ejemplo el «cifrado César».</p>
+<p>ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+XYZABCDEFGHIJKLMNÑOPQRSTUVW</p>
+<p>ATACAD AL AMANECER
+XQXZXA X…</p>
+<p>El cifrado César es un «mecanismo de sustitución». Existen otros mecanismos basados en la «transposición».</p>
+<p>Si hacemos una transposición de 4 columnas del mensaje «ATACAD AL AMANECER» se obtiene esto.</p>
+<p>ATAC
+AD A
+L AM
+ANEC
+ER</p>
+<p>AALAETD NRA AE CAMC</p>
+<p>Algunos sistemas de cifrado «combinan otros sistemas». Supongamos que alguien aplica un «César desplazamiento 3» con un «transposición de 4 columnas».</p>
+<p>ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+XYZABCDEFGHIJKLMNÑOPQRSTUVW</p>
+<p>ATACAD AL AMANECER
+XQXZXA XI XJXKBZBO</p>
+<p>XQXZ
+XA X
+I XJ
+XKBZ
+BO</p>
+<p>XXIXBQA KOX XB ZXJZ</p>
+<p>A veces una sustitución puede usar una clave como «2527»</p>
+<p>ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+252725272527252725272527252
+DH….</p>
+<p>Existen diversas técnicas llamadas «criptoanálisis» que investigan como descifrar mensajes cifrados.</p>
+<ul class="simple">
+<li>Averiguar el idioma en que se escribió.</li>
+<li>Buscar palabras comunes: «el» «la» «los» «las», «con»</li>
+<li>Usar «fuerza bruta»</li>
+</ul>
+<p>Como el uso de la informática ha simplificado muchísimo el atacar claves se investigaron nuevos mecanismos de criptografía: los asimétricos.</p>
+<p>En los viejos sistemas se podía descifrar un mensaje si alguien obtenía la clave, solo había que hacer el proceso inverso</p>
+<p>Los sistemas asimétricos utilizan una clave de cifrado y otra de descifrado. Aunque se tenga una clave es matemáticamente imposible averiguar la otra clave por lo que se puede dar a todo el mundo una de las claves (llamada habitualmente clave pública) y conservar la otra (llamada clave privada). Además, podemos usar las claves para lo que queramos y por ejemplo en unos casos cifraremos con la clave pública y en otros tal vez cifremos con la clave privada.</p>
+<p>En los puntos siguiente veremos como usar la criptografía asimétrica para dos cosas distintas: la autenticación y la privacidad.</p>
+<div class="section" id="autenticacion">
+<h3>Autenticación<a class="headerlink" href="#autenticacion" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La autenticación consiste en «comprobar que alguien es quien dice ser», ¿como conseguirlo?. Muy sencillo.</p>
+<p>En primer lugar tendremos tres elementos:</p>
+<ol class="arabic simple">
+<li>Un servidor (como por ejemplo Amazon) que desea ofrecer garantías a sus clientes de que cuando se conectan a Amazon realmente se conectan a un servidor de Amazon.</li>
+<li>Por otro lado tendremos clientes que desean obtener la garantía de que cuando escriben <code class="docutils literal notranslate"><span class="pre">http://amazon.es</span></code> <strong>realmente se están conectando a un servidor de Amazon</strong></li>
+<li>Por último tendremos un tercero que se encarga de verificar el proceso para ambos llamada CA o «autoridad de certificación».</li>
+</ol>
+<p>Así,el proceso es el siguiente:</p>
+<ol class="arabic simple">
+<li>Amazon envía a la CA una «petición de firma de certificado».</li>
+<li>La CA lo recibe y lo cifra con su clave privada.</li>
+<li>La CA da su clave pública (que se usará para descifrar) a todos los navegadores, que lo incorporan de serie en la instalación.</li>
+<li>Amazon pone en sus servidores el certificado «firmado» por la CA</li>
+<li>Cuando el cliente se conecta a Amazon, el servidor le envía el certificado.</li>
+<li>El cliente descarga el certificado y lo descifra con la clave pública de la CA, obteniendo un fichero válido que le garantiza que esa máquina realmente es Amazon.</li>
+</ol>
+</div>
+<div class="section" id="privacidad">
+<h3>Privacidad<a class="headerlink" href="#privacidad" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Una vez que Amazon ha ofrecido garantías a su cliente ahora se necesita usar la criptografía para que el usuario pueda hacer sus compras sin que nadie espíe. Ahora las claves se usarán al revés.</p>
+<ol class="arabic simple">
+<li>El cliente se conecta a Amazon (despues de haber comprobado que el certificado es correcto)</li>
+<li>Amazon envía al cliente su clave de cifrado.</li>
+<li>El cliente la recibe y cifra el pedido con la clave pública de cifrado de Amazon.</li>
+<li>El mensaje viaja por la red pero nadie podrá descifrarlo.</li>
+<li>El mensaje llega a Amazon y usa su clave privada para descifrar.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="cifrado-de-ficheros-en-linea-de-comandos">
+<h2>Cifrado de ficheros en línea de comandos<a class="headerlink" href="#cifrado-de-ficheros-en-linea-de-comandos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Existe una utilidad de libre distribución llamada <code class="docutils literal notranslate"><span class="pre">gpg</span></code> que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica.</p>
+<p>Se debe empezar por generar una pareja de claves.</p>
 </div>
 <div class="section" id="listas-de-control-de-acceso">
 <h2>Listas de control de acceso.<a class="headerlink" href="#listas-de-control-de-acceso" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -170,21 +311,45 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 <div class="section" id="el-sistema-operativo-unix">
 <h2>El sistema operativo Unix<a class="headerlink" href="#el-sistema-operativo-unix" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>A lo largo del curso usaremos GNU/Linux, un sistema operativo de tipo UNIX de libre distribución. Aunque GNU/Linux suele empaquetarse en «distribuciones» que suelen incluir un entorno gráfico en este módulo aprenderemos a movernos por el sistema utilizando los comandos.</p>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">mkdir</span></code> nos permite crear directorios.</li>
-<li><code class="docutils literal notranslate"><span class="pre">cd</span></code> nos permite movernos a un directorio.</li>
-<li><code class="docutils literal notranslate"><span class="pre">rm</span></code> nos permite borrar ficheros.</li>
-<li><code class="docutils literal notranslate"><span class="pre">rmdir</span></code> nos permite borrar un directorio <strong>siempre y cuando esté vacío</strong>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">ls</span></code> muestra los ficheros del directorio actual.</li>
-<li><code class="docutils literal notranslate"><span class="pre">cat</span></code> nos permite imprimir un fichero por pantalla.</li>
-<li><code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">&lt;comando&gt;</span></code> nos permite obtener ayuda sobre un cierto comando (o incluso fichero de configuración).</li>
-<li><code class="docutils literal notranslate"><span class="pre">pwd</span></code> nos muestra el nombre del directorio actual.</li>
-<li><code class="docutils literal notranslate"><span class="pre">nano</span></code> nos da acceso a un pequeño editor de texto que nos permitirá editar, entre otras cosas, los ficheros de configuración del sistema.</li>
-<li>Cuando se manipulan ficheros se puede ocultar un fichero <em>usando el punto como primer carácter de un fichero</em>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">apt-get</span></code> nos permitirá instalar sofware de los repositorios del empaquetador de la distribución.</li>
-<li>Se puede ejecutar un comando escribiendo el nombre de dicho comando. Si el comando no está en las rutas de búsqueda se puede escribir la ruta completa.</li>
-<li>Se puede redirigir la salida de un comando hacia un fichero (usando <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">&gt;</span> <span class="pre">&lt;fichero&gt;</span></code>  o redirigir la salida de un comando hacia otro comando con <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">|</span> <span class="pre">&lt;comando&gt;</span></code></li>
-<li>Un comando de cualquier tipo podría necesitar <strong>permisos de administrador</strong>. En ese caso tendremos que usar el comando <code class="docutils literal notranslate"><span class="pre">sudo</span></code> de esta manera: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">&lt;comando&gt;</span></code> .</li>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">mkdir</span></code> nos permite crear directorios.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">cd</span></code> nos permite movernos a un directorio.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">rm</span></code> nos permite borrar ficheros.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">rmdir</span></code> nos permite borrar un directorio <strong>siempre y cuando esté vacío</strong>.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">ls</span></code> muestra los ficheros del directorio actual.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">cat</span></code> nos permite imprimir un fichero por pantalla.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">&lt;comando&gt;</span></code> nos permite obtener ayuda sobre un cierto comando (o incluso fichero de configuración).</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">pwd</span></code> nos muestra el nombre del directorio actual.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">nano</span></code> nos da acceso a un pequeño editor de texto que nos permitirá editar, entre otras cosas, los ficheros de configuración del sistema.</p>
+</li>
+<li><p class="first">Cuando se manipulan ficheros se puede ocultar un fichero <em>usando el punto como primer carácter de un fichero</em>.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">apt-get</span></code> nos permitirá instalar sofware de los repositorios del empaquetador de la distribución.</p>
+</li>
+<li><p class="first">Se puede ejecutar un comando escribiendo el nombre de dicho comando. Si el comando no está en las rutas de búsqueda se puede escribir la ruta completa.</p>
+</li>
+<li><p class="first">Se puede redirigir la salida de un comando hacia un fichero (usando <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">&gt;</span> <span class="pre">&lt;fichero&gt;</span></code>  o redirigir la salida de un comando hacia otro comando con <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">|</span> <span class="pre">&lt;comando&gt;</span></code></p>
+</li>
+<li><p class="first">Un comando de cualquier tipo podría necesitar <strong>permisos de administrador</strong>. En ese caso tendremos que usar el comando <code class="docutils literal notranslate"><span class="pre">sudo</span></code> de esta manera: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">&lt;comando&gt;</span></code> .</p>
+</li>
+<li><p class="first">Para construir ficheros que almacenen un conjunto de ficheros usaremos un comando llamado <code class="docutils literal notranslate"><span class="pre">tar</span></code> . Podremos comprimir un fichero usando compresores como <code class="docutils literal notranslate"><span class="pre">gzip</span></code> o <code class="docutils literal notranslate"><span class="pre">bzip</span></code></p>
+<blockquote>
+<div><p>** El comando <code class="docutils literal notranslate"><span class="pre">tar</span></code> acepta una serie de opciones por medio de un guión.</p>
+<blockquote>
+<div><p><strong>* Por ejemplo podemos usar ``tar -cf copiaseguridad.tar .gnupg``
+*</strong> Para extraer el contenido de un fichero se usa <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-xf</span> <span class="pre">copiaseguridad.tar</span></code></p>
+</div></blockquote>
+<p>** El comando <code class="docutils literal notranslate"><span class="pre">gzip</span></code> o <code class="docutils literal notranslate"><span class="pre">bzip2</span></code> permiten comprimir un fichero.</p>
+</div></blockquote>
+</li>
 </ul>
 </div>
 </div>
@@ -219,7 +384,12 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 <li class="toctree-l2"><a class="reference internal" href="#ubicacion-y-proteccion-fisica-de-los-equipos-y-servidores">Ubicación y protección física de los equipos y servidores.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sistemas-de-alimentacion-ininterrumpida">Sistemas de alimentación ininterrumpida.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#seguridad-logica">Seguridad lógica.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#criptografia">Criptografía.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#criptografia">Criptografía.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#autenticacion">Autenticación</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#privacidad">Privacidad</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cifrado-de-ficheros-en-linea-de-comandos">Cifrado de ficheros en línea de comandos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#listas-de-control-de-acceso">Listas de control de acceso.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#establecimiento-de-politicas-de-contrasenas">Establecimiento de políticas de contraseñas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#politicas-de-almacenamiento">Políticas de almacenamiento.</a></li>

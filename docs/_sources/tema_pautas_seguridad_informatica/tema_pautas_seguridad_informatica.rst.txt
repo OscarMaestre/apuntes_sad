@@ -84,8 +84,8 @@ Amenazas. Tipos.
 
 Clasificando por lugar
 
-* Interna
-* Externa
+* Interna: los problemas originados dentro de la propia empresa son **los más frecuentes y los de impacto más grave**
+* Externa: son las originadas fuera de la propia empresa.
 
 Clasificando por mecanismo
 
@@ -95,10 +95,39 @@ Clasificando por mecanismo
 
 Amenazas físicas.
 -----------------------------------------------------------------------------------------------
+Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.
+
+
+* Rotura intencionada.
+* Desastre natural: terremotos, inundaciones, incendios, etc...
+    ** Se debe disponer de la protección antiincendios adecuada.
+    ** No todos los extintores son apropiados para todo.
+    ** Los seguros no suelen cubrir eventos de este tipo.
+    ** Se desaconseja la instalación de centros de datos en bajos o sótanos.
+
+En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.
+
+
+* Barreras físicas.
+    ** Los servidores deberían estar cerrados con llaves y con acceso restringido.
+    ** Controles de acceso con tarjeta y/o guardia de seguridad.
+    ** En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
+    ** Puertas con apertura programada.
+* Protección eléctrica.
+
 
 
 Amenazas lógicas.
 -----------------------------------------------------------------------------------------------
+
+
+¿Qué problemas podrían causarse por motivos de un uso inapropiado de software?
+
+* Ataques a nivel de red IP. P.ej ataques de tipo "spoofing". Phishing. MITM
+* A nivel de SO. Buffer overflow. Errores humanos.
+* A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.
+* Malware: spyware, ransomware, virus, DOS (Denial of service).
+
 
 
 Seguridad física y ambiental
@@ -111,14 +140,180 @@ Ubicación y protección física de los equipos y servidores.
 
 Sistemas de alimentación ininterrumpida.
 -----------------------------------------------------------------------------------------------
+Un sistema de alimentación ininterrumpida o SAI protege contra problemas eléctricos comunes que pueden afectar al funcionamiento normal de un sistema informático.
+
+* Bajadas de tensión. Produce daños a largo plazo.
+* Interrupciones del suministro. Da lugar a perjuicios económicos.
+* Subidas de tensión puntuales. Menores o iguales de 4 milisegundos y producen daños en dias/semanas.
+* Subidas de tensión sostenidas. Dura mas de 4 milisegundos y produce daños en escasos minutos e instantáneos.
+
+
+
+En líneas generales el parámetro principal que debemos mirar en un SAI es su "potencia aparente".
+
+La potencia aparente de un SAI se mide en "voltio-amperios" o "kilo-voltio-amperios" o "KVA" (también pronunciado como "kabeas" o "kivas")
+
+
+
+
+Lo que nos interesa es la potencia eficaz que se obtiene multiplicando la aparente por 0,75. En algunos SAI nos indican el factor de potencia. En ese caso, sí podemos saber directamente la potencia eficaz multiplicando la potencia aparente por ese factor.
+
+
+
+Pot eficaz (Watios) = Pot. apar (VA) Factor de pot.
+
+Supongamos un SAI en el que la caja simplemente indica 2000VA (o 2KVAS). Si no nos dicen nada, asumiremos que en realidad ese SAI ofrece 2000*0,75 = 1500 W
+
+Si tuviésemos 3 ordenadores y cada uno consumiese 650W está claro que no podríamos conectar los 3.
+
+
+Si un SAI se anuncia indicando que ofrece 1500KVA y 850W de potencia ¿qué factor de potencia ofrece?
+
+* Los 1500KVA son la "nominal/máxima/aparente"
+* Los 850W son la "eficaz/de salida"
+
+Si Eficaz=Aparente * FdP entonces
+
+FDP=Eficaz/aparente
+
+FDP=850/1500
+
+
+
+Cuando se diseña un edificio con instalaciones informáticas es frecuente que con el tiempo haya cambios y finalmente sea necesario ampliar. Por ello, se recomienda incrementar nuestros cálculos en torno a un 20-30%
+
+Supongamos que deseamos instalar servidores que en su conjunto consumen 1300W.
+
+¿Que potencia aparente deberíamos buscar al comprar un SAI?
+
+
+No nos dicen el factor de potencia así que usaremos 0,75. Así la potencia aparente debería ser Eficaz/0,75 es decir 1733 VA. Como dicha potencia podría resulta insuficiente en el futuro, incrementaremos, por ejemplo un 20% multiplicando los VA por 1,20. Así, 1733 * 1,20 = 2080 VA.
+
 
 
 Seguridad lógica.
 -----------------------------------------------------------------------------------------------
+Implica  restringir el acceso a datos en función de la persona que lo intente:
+
+* Claves de acceso.
+* Tarjetas de identificación.
+* Copias de seguridad.
+* Listas de control de acceso.
+* Control horario.
+* Roles.
+* Cortafuegos.
+* Distribución de carga.
+* Redundancia de sistemas
 
 
 Criptografía.
 -----------------------------------------------------------------------------------------------
+
+La Criptografía es la técnica que transforma mensajes en otros mensajes cuyo contenido no se pde conocer. Un mecanismo muy básico es por ejemplo el "cifrado César".
+
+
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+XYZABCDEFGHIJKLMNÑOPQRSTUVW
+
+ATACAD AL AMANECER
+XQXZXA X...
+
+El cifrado César es un "mecanismo de sustitución". Existen otros mecanismos basados en la "transposición".
+
+
+
+Si hacemos una transposición de 4 columnas del mensaje "ATACAD AL AMANECER" se obtiene esto.
+
+ATAC
+AD A
+L AM
+ANEC
+ER  
+
+AALAETD NRA AE CAMC
+
+Algunos sistemas de cifrado "combinan otros sistemas". Supongamos que alguien aplica un "César desplazamiento 3" con un "transposición de 4 columnas".
+
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+XYZABCDEFGHIJKLMNÑOPQRSTUVW
+
+ATACAD AL AMANECER
+XQXZXA XI XJXKBZBO
+
+XQXZ
+XA X
+I XJ
+XKBZ
+BO
+
+XXIXBQA KOX XB ZXJZ
+
+
+A veces una sustitución puede usar una clave como "2527"
+
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+252725272527252725272527252
+DH....
+
+
+Existen diversas técnicas llamadas "criptoanálisis" que investigan como descifrar mensajes cifrados.
+
+* Averiguar el idioma en que se escribió.
+* Buscar palabras comunes: "el" "la" "los" "las", "con"
+* Usar "fuerza bruta"
+
+
+Como el uso de la informática ha simplificado muchísimo el atacar claves se investigaron nuevos mecanismos de criptografía: los asimétricos.
+
+En los viejos sistemas se podía descifrar un mensaje si alguien obtenía la clave, solo había que hacer el proceso inverso
+
+Los sistemas asimétricos utilizan una clave de cifrado y otra de descifrado. Aunque se tenga una clave es matemáticamente imposible averiguar la otra clave por lo que se puede dar a todo el mundo una de las claves (llamada habitualmente clave pública) y conservar la otra (llamada clave privada). Además, podemos usar las claves para lo que queramos y por ejemplo en unos casos cifraremos con la clave pública y en otros tal vez cifremos con la clave privada.
+
+En los puntos siguiente veremos como usar la criptografía asimétrica para dos cosas distintas: la autenticación y la privacidad.
+
+Autenticación
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La autenticación consiste en "comprobar que alguien es quien dice ser", ¿como conseguirlo?. Muy sencillo.
+
+
+En primer lugar tendremos tres elementos:
+
+1.  Un servidor (como por ejemplo Amazon) que desea ofrecer garantías a sus clientes de que cuando se conectan a Amazon realmente se conectan a un servidor de Amazon.
+
+2. Por otro lado tendremos clientes que desean obtener la garantía de que cuando escriben ``http://amazon.es`` **realmente se están conectando a un servidor de Amazon** 
+
+3. Por último tendremos un tercero que se encarga de verificar el proceso para ambos llamada CA o "autoridad de certificación".
+
+Así,el proceso es el siguiente:
+
+1. Amazon envía a la CA una "petición de firma de certificado".
+2. La CA lo recibe y lo cifra con su clave privada.
+3. La CA da su clave pública (que se usará para descifrar) a todos los navegadores, que lo incorporan de serie en la instalación.
+4. Amazon pone en sus servidores el certificado "firmado" por la CA
+5. Cuando el cliente se conecta a Amazon, el servidor le envía el certificado.
+6. El cliente descarga el certificado y lo descifra con la clave pública de la CA, obteniendo un fichero válido que le garantiza que esa máquina realmente es Amazon.
+
+Privacidad
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Una vez que Amazon ha ofrecido garantías a su cliente ahora se necesita usar la criptografía para que el usuario pueda hacer sus compras sin que nadie espíe. Ahora las claves se usarán al revés.
+
+1. El cliente se conecta a Amazon (despues de haber comprobado que el certificado es correcto)
+2. Amazon envía al cliente su clave de cifrado.
+3. El cliente la recibe y cifra el pedido con la clave pública de cifrado de Amazon.
+4. El mensaje viaja por la red pero nadie podrá descifrarlo.
+5. El mensaje llega a Amazon y usa su clave privada para descifrar.
+
+Cifrado de ficheros en línea de comandos
+--------------------------------------------------
+
+Existe una utilidad de libre distribución llamada ``gpg`` que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica. 
+
+Se debe empezar por generar una pareja de claves.
+
+
+
 
 
 Listas de control de acceso.
@@ -185,4 +380,14 @@ A lo largo del curso usaremos GNU/Linux, un sistema operativo de tipo UNIX de li
 * Se puede ejecutar un comando escribiendo el nombre de dicho comando. Si el comando no está en las rutas de búsqueda se puede escribir la ruta completa.
 * Se puede redirigir la salida de un comando hacia un fichero (usando ``<comando> > <fichero>``  o redirigir la salida de un comando hacia otro comando con ``<comando> | <comando>`` 
 * Un comando de cualquier tipo podría necesitar **permisos de administrador**. En ese caso tendremos que usar el comando ``sudo`` de esta manera: ``sudo <comando>`` .
+
+* Para construir ficheros que almacenen un conjunto de ficheros usaremos un comando llamado ``tar`` . Podremos comprimir un fichero usando compresores como ``gzip`` o ``bzip`` 
+
+    ** El comando ``tar`` acepta una serie de opciones por medio de un guión.
+    
+        *** Por ejemplo podemos usar ``tar -cf copiaseguridad.tar .gnupg`` 
+        *** Para extraer el contenido de un fichero se usa ``tar -xf copiaseguridad.tar`` 
+
+    ** El comando ``gzip`` o ``bzip2`` permiten comprimir un fichero.
+
 
