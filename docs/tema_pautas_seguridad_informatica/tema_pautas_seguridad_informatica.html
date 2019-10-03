@@ -152,9 +152,18 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 </div>
 <div class="section" id="seguridad-fisica-y-ambiental">
 <h2>Seguridad física y ambiental<a class="headerlink" href="#seguridad-fisica-y-ambiental" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="ubicacion-y-proteccion-fisica-de-los-equipos-y-servidores">
-<h2>Ubicación y protección física de los equipos y servidores.<a class="headerlink" href="#ubicacion-y-proteccion-fisica-de-los-equipos-y-servidores" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>La seguridad física y ambiental implica controlar tres grandes tipos de posibles acciones:</p>
+<ul class="simple">
+<li>Engaños/fraudes.</li>
+<li>Robos/pérdidas.</li>
+<li>Sabotajes.</li>
+</ul>
+<p>Para evitarlos se suele recurrir a una o varias medidas de las siguientes:</p>
+<ul class="simple">
+<li>Sistemas biométricos.</li>
+<li>Personal de seguridad.</li>
+<li>Protección electrónica como sensores de presencia, infrarrojos, de movimiento.</li>
+</ul>
 </div>
 <div class="section" id="sistemas-de-alimentacion-ininterrumpida">
 <h2>Sistemas de alimentación ininterrumpida.<a class="headerlink" href="#sistemas-de-alimentacion-ininterrumpida" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -272,8 +281,15 @@ DH….</p>
 </div>
 <div class="section" id="cifrado-de-ficheros-en-linea-de-comandos">
 <h2>Cifrado de ficheros en línea de comandos<a class="headerlink" href="#cifrado-de-ficheros-en-linea-de-comandos" title="Enlazar permanentemente con este título">¶</a></h2>
-<p>Existe una utilidad de libre distribución llamada <code class="docutils literal notranslate"><span class="pre">gpg</span></code> que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica.</p>
-<p>Se debe empezar por generar una pareja de claves.</p>
+<p>Existe una utilidad de libre distribución llamada <code class="docutils literal notranslate"><span class="pre">gpg</span></code> que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica. Este programa asume que usaremos la clave pública para cifrar y la privada para descifrar.</p>
+<ul class="simple">
+<li>Se debe empezar por generar una pareja de claves usando el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--full-generate-keys</span></code> (el proceso de generación de claves puede ser muy lento, se recomienda tener paciencia y a ser posible abrir otra consola y trabajar en ella).</li>
+<li>Una vez generado tendremos un directorio llamado <code class="docutils literal notranslate"><span class="pre">.gnupg</span></code> en el que se almacenan las claves. Podemos listar las claves de nuestro almacén con <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--list-keys</span></code></li>
+<li>Una vez se tenga generada la clave la costumbre es tener preparado un «certificado de revocación». Se utilizará si creemos que nos han robado alguna clave y distribuiremos el fichero para avisar de que no se debe confiar en nuestras claves. Esto se hace con el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--gen-revoke</span> <span class="pre">&quot;usuario&quot;</span> <span class="pre">--output</span> <span class="pre">ClaveRevocada.asc</span></code> . Se pueden usar otros nombres de fichero pero la costumbre es usar la extensión <code class="docutils literal notranslate"><span class="pre">.asc</span></code></li>
+<li>A continuación se suele extraer nuestra clave pública del almacén de claves y ponerla en un fichero con el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--export</span> <span class="pre">&lt;usuario&gt;</span> <span class="pre">--output</span> <span class="pre">ClavePublicaUsuario.gpg</span></code> . Se generará un fichero binario en <code class="docutils literal notranslate"><span class="pre">ClavePublicaUsuario.gpg</span></code> . Si deseamos generar un fichero con ASCII normal podemos hacer esto <a href="#id1"><span class="problematic" id="id2">``</span></a>gpg –armor –export &lt;usuario&gt; –output ClavePublicaUsuario.gpg ``</li>
+<li>Una vez que alguien nos haya pasado su clave pública deberemos incorporarla a nuestro almacén usando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--import</span> <span class="pre">&lt;fichero.gpg&gt;</span></code></li>
+<li>Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que <strong>solo esa persona podrá descifrar</strong> . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--output</span> <span class="pre">ficherocifrado.doc.gpg</span> <span class="pre">--recipient</span> <span class="pre">persona&#64;mail.com</span> <span class="pre">ficherooriginal.doc</span></code></li>
+</ul>
 </div>
 <div class="section" id="listas-de-control-de-acceso">
 <h2>Listas de control de acceso.<a class="headerlink" href="#listas-de-control-de-acceso" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -381,7 +397,6 @@ DH….</p>
 <li class="toctree-l2"><a class="reference internal" href="#amenazas-fisicas">Amenazas físicas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#amenazas-logicas">Amenazas lógicas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#seguridad-fisica-y-ambiental">Seguridad física y ambiental</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ubicacion-y-proteccion-fisica-de-los-equipos-y-servidores">Ubicación y protección física de los equipos y servidores.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sistemas-de-alimentacion-ininterrumpida">Sistemas de alimentación ininterrumpida.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#seguridad-logica">Seguridad lógica.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#criptografia">Criptografía.</a><ul>

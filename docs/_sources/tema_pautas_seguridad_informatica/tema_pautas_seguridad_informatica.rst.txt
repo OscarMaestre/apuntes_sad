@@ -133,9 +133,19 @@ Amenazas lógicas.
 Seguridad física y ambiental
 -----------------------------------------------------------------------------------------------
 
+La seguridad física y ambiental implica controlar tres grandes tipos de posibles acciones:
 
-Ubicación y protección física de los equipos y servidores.
------------------------------------------------------------------------------------------------
+* Engaños/fraudes.
+* Robos/pérdidas.
+* Sabotajes.
+
+Para evitarlos se suele recurrir a una o varias medidas de las siguientes:
+
+* Sistemas biométricos.
+* Personal de seguridad.
+* Protección electrónica como sensores de presencia, infrarrojos, de movimiento.
+
+
 
 
 Sistemas de alimentación ininterrumpida.
@@ -308,9 +318,16 @@ Una vez que Amazon ha ofrecido garantías a su cliente ahora se necesita usar la
 Cifrado de ficheros en línea de comandos
 --------------------------------------------------
 
-Existe una utilidad de libre distribución llamada ``gpg`` que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica. 
+Existe una utilidad de libre distribución llamada ``gpg`` que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica. Este programa asume que usaremos la clave pública para cifrar y la privada para descifrar.
 
-Se debe empezar por generar una pareja de claves.
+* Se debe empezar por generar una pareja de claves usando el comando ``gpg --full-generate-keys`` (el proceso de generación de claves puede ser muy lento, se recomienda tener paciencia y a ser posible abrir otra consola y trabajar en ella).
+* Una vez generado tendremos un directorio llamado ``.gnupg`` en el que se almacenan las claves. Podemos listar las claves de nuestro almacén con ``gpg --list-keys`` 
+* Una vez se tenga generada la clave la costumbre es tener preparado un "certificado de revocación". Se utilizará si creemos que nos han robado alguna clave y distribuiremos el fichero para avisar de que no se debe confiar en nuestras claves. Esto se hace con el comando ``gpg --gen-revoke "usuario" --output ClaveRevocada.asc`` . Se pueden usar otros nombres de fichero pero la costumbre es usar la extensión ``.asc`` 
+* A continuación se suele extraer nuestra clave pública del almacén de claves y ponerla en un fichero con el comando ``gpg --export <usuario> --output ClavePublicaUsuario.gpg`` . Se generará un fichero binario en ``ClavePublicaUsuario.gpg`` . Si deseamos generar un fichero con ASCII normal podemos hacer esto ``gpg --armor --export <usuario> --output ClavePublicaUsuario.gpg `` 
+* Una vez que alguien nos haya pasado su clave pública deberemos incorporarla a nuestro almacén usando ``gpg --import <fichero.gpg>`` 
+* Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que **solo esa persona podrá descifrar** . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con ``gpg --output ficherocifrado.doc.gpg --recipient persona@mail.com ficherooriginal.doc`` 
+
+
 
 
 
