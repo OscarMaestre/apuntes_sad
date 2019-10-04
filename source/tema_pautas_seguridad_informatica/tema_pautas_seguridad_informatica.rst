@@ -328,7 +328,7 @@ Existe una utilidad de libre distribución llamada ``gpg`` que existe para mucho
 * Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que **solo esa persona podrá descifrar** . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con ``gpg --output ficherocifrado.doc.gpg --recipient persona@mail.com ficherooriginal.doc`` 
 
 
-
+Un 
 
 
 
@@ -406,5 +406,48 @@ A lo largo del curso usaremos GNU/Linux, un sistema operativo de tipo UNIX de li
         *** Para extraer el contenido de un fichero se usa ``tar -xf copiaseguridad.tar`` 
 
     ** El comando ``gzip`` o ``bzip2`` permiten comprimir un fichero.
+
+
+Anexo: Guest additions
+--------------------------------------------------------------------------------
+
+Las "Guest Additions" permiten que VirtualBox pueda "conectar directorios" entre el sistema operativo anfitrión y el invitado. Por ello, a menudo resulta útil tenerlas instaladas.
+
+Si bien en los sistemas operativos invitado con entorno gráfico la instalación es muy sencilla en los sistemas basados en comandos (como Ubuntu Server) el proceso puede resulta un poco más largo.
+
+En primer lugar las Guest Additions instalan módulos en el núcleo y es posible que para ello requiera de ciertos paquetes. Tendremos que instalar estos paquetes con "sudo apt-get install dkms build-essential"
+
+
+* En el menú "Dispositivos" de VirtualBox elegir "Insertar CD de VirtualBox Guest Additions".
+
+* Enganchamos el dispositivo ``/dev/cdrom`` a algún punto del sistema, por ejemplo dentro de ``/media`` .
+
+* Usando el comando ``sudo mkdir /media/cdrom`` podremos crear un directorio "cdrom" dentro de "media".
+
+* Una vez creado el directorio usamos el comando ``sudo mount /dev/cdrom /media/cdrom`` .
+
+* Nos vamos al directorio con ``cd /media/cdrom``  y ejecutamos ``ls`` .
+
+* Deberiamos ver un fichero llamado ``VBoxLinuxAdditions.run`` . Lo ejecutamos como administrador con ``sudo ./VBoxLinuxAdditions.run`` 
+
+* Existe un comando para apagar/reiniciar el sistema y es ``sudo shutdown -r now`` (-r para reiniciar o -h para parar).
+
+* Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del sistema anfitrión para "conectarla" con el sistema operativo invitado.
+
+* Reiniciamos la máquina y ejecutamos el comando ``mount`` 
+
+* Puede ser necesario añadir nuestro usuario al grupo "vboxsf" que es el grupo con el que se "monta" el directorio compartido. Para hacer esto usaremos el comando ``sudo usermod -a -G vboxsf pepito`` 
+
+
+
+
+
+
+
+
+
+
+
+
 
 

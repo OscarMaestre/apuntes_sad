@@ -9,19 +9,49 @@
 \usepackage[utf8]{inputenc}
 \ifdefined\DeclareUnicodeCharacter
 % support both utf8 and utf8x syntaxes
-\edef\sphinxdqmaybe{\ifdefined\DeclareUnicodeCharacterAsOptional\string"\fi}
-  \DeclareUnicodeCharacter{\sphinxdqmaybe00A0}{\nobreakspace}
-  \DeclareUnicodeCharacter{\sphinxdqmaybe2500}{\sphinxunichar{2500}}
-  \DeclareUnicodeCharacter{\sphinxdqmaybe2502}{\sphinxunichar{2502}}
-  \DeclareUnicodeCharacter{\sphinxdqmaybe2514}{\sphinxunichar{2514}}
-  \DeclareUnicodeCharacter{\sphinxdqmaybe251C}{\sphinxunichar{251C}}
-  \DeclareUnicodeCharacter{\sphinxdqmaybe2572}{\textbackslash}
+  \ifdefined\DeclareUnicodeCharacterAsOptional
+    \def\sphinxDUC#1{\DeclareUnicodeCharacter{"#1}}
+  \else
+    \let\sphinxDUC\DeclareUnicodeCharacter
+  \fi
+  \sphinxDUC{00A0}{\nobreakspace}
+  \sphinxDUC{2500}{\sphinxunichar{2500}}
+  \sphinxDUC{2502}{\sphinxunichar{2502}}
+  \sphinxDUC{2514}{\sphinxunichar{2514}}
+  \sphinxDUC{251C}{\sphinxunichar{251C}}
+  \sphinxDUC{2572}{\textbackslash}
 \fi
 \usepackage{cmap}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amstext}
 \usepackage{babel}
+
+
+
 \usepackage{times}
+\expandafter\ifx\csname T@LGR\endcsname\relax
+\else
+% LGR was declared as font encoding
+  \substitutefont{LGR}{\rmdefault}{cmr}
+  \substitutefont{LGR}{\sfdefault}{cmss}
+  \substitutefont{LGR}{\ttdefault}{cmtt}
+\fi
+\expandafter\ifx\csname T@X2\endcsname\relax
+  \expandafter\ifx\csname T@T2A\endcsname\relax
+  \else
+  % T2A was declared as font encoding
+    \substitutefont{T2A}{\rmdefault}{cmr}
+    \substitutefont{T2A}{\sfdefault}{cmss}
+    \substitutefont{T2A}{\ttdefault}{cmtt}
+  \fi
+\else
+% X2 was declared as font encoding
+  \substitutefont{X2}{\rmdefault}{cmr}
+  \substitutefont{X2}{\sfdefault}{cmss}
+  \substitutefont{X2}{\ttdefault}{cmtt}
+\fi
+
+
 \usepackage[Sonny]{fncychap}
 \ChNameVar{\Large\normalfont\sffamily}
 \ChTitleVar{\Large\normalfont\sffamily}
@@ -38,24 +68,13 @@
 \urlstyle{same}
 \addto\captionsspanish{\renewcommand{\contentsname}{Contenidos:}}
 
-\addto\captionsspanish{\renewcommand{\figurename}{Figura}}
-\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
-\addto\captionsspanish{\renewcommand{\literalblockname}{Lista}}
-
-\addto\captionsspanish{\renewcommand{\literalblockcontinuedname}{proviene de la página anterior}}
-\addto\captionsspanish{\renewcommand{\literalblockcontinuesname}{continué en la próxima página}}
-\addto\captionsspanish{\renewcommand{\sphinxnonalphabeticalgroupname}{Non-alphabetical}}
-\addto\captionsspanish{\renewcommand{\sphinxsymbolsname}{Símbolos}}
-\addto\captionsspanish{\renewcommand{\sphinxnumbersname}{Numbers}}
-
-\addto\extrasspanish{\def\pageautorefname{página}}
-
+\usepackage{sphinxmessages}
 \setcounter{tocdepth}{2}
 
 
 
 \title{Apuntes de Seguridad y alta disponibilidad Documentation}
-\date{23 de septiembre de 2019}
+\date{04 de octubre de 2019}
 \release{1.0}
 \author{Oscar GG}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -69,7 +88,7 @@
 \fi
 
 \pagestyle{empty}
-\maketitle
+\sphinxmaketitle
 \pagestyle{plain}
 \sphinxtableofcontents
 \pagestyle{normal}
@@ -197,10 +216,10 @@ En líneas generales, ningún programa web debe confiar en lo que escriben sus u
 Clasificando por lugar
 \begin{itemize}
 \item {} 
-Interna
+Interna: los problemas originados dentro de la propia empresa son \sphinxstylestrong{los más frecuentes y los de impacto más grave}
 
 \item {} 
-Externa
+Externa: son las originadas fuera de la propia empresa.
 
 \end{itemize}
 
@@ -217,24 +236,333 @@ Lógicas
 
 \section{Amenazas físicas.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:amenazas-fisicas}}
+Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.
+\begin{itemize}
+\item {} 
+Rotura intencionada.
+
+\item {} \begin{description}
+\item[{Desastre natural: terremotos, inundaciones, incendios, etc…}] \leavevmode
+** Se debe disponer de la protección antiincendios adecuada.
+** No todos los extintores son apropiados para todo.
+** Los seguros no suelen cubrir eventos de este tipo.
+** Se desaconseja la instalación de centros de datos en bajos o sótanos.
+
+\end{description}
+
+\end{itemize}
+
+En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.
+\begin{itemize}
+\item {} \begin{description}
+\item[{Barreras físicas.}] \leavevmode
+** Los servidores deberían estar cerrados con llaves y con acceso restringido.
+** Controles de acceso con tarjeta y/o guardia de seguridad.
+** En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
+** Puertas con apertura programada.
+
+\end{description}
+
+\item {} 
+Protección eléctrica.
+
+\end{itemize}
+
 
 \section{Amenazas lógicas.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:amenazas-logicas}}
+¿Qué problemas podrían causarse por motivos de un uso inapropiado de software?
+\begin{itemize}
+\item {} 
+Ataques a nivel de red IP. P.ej ataques de tipo «spoofing». Phishing. MITM
+
+\item {} 
+A nivel de SO. Buffer overflow. Errores humanos.
+
+\item {} 
+A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.
+
+\item {} 
+Malware: spyware, ransomware, virus, DOS (Denial of service).
+
+\end{itemize}
+
 
 \section{Seguridad física y ambiental}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:seguridad-fisica-y-ambiental}}
+La seguridad física y ambiental implica controlar tres grandes tipos de posibles acciones:
+\begin{itemize}
+\item {} 
+Engaños/fraudes.
 
-\section{Ubicación y protección física de los equipos y servidores.}
-\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:ubicacion-y-proteccion-fisica-de-los-equipos-y-servidores}}
+\item {} 
+Robos/pérdidas.
+
+\item {} 
+Sabotajes.
+
+\end{itemize}
+
+Para evitarlos se suele recurrir a una o varias medidas de las siguientes:
+\begin{itemize}
+\item {} 
+Sistemas biométricos.
+
+\item {} 
+Personal de seguridad.
+
+\item {} 
+Protección electrónica como sensores de presencia, infrarrojos, de movimiento.
+
+\end{itemize}
+
 
 \section{Sistemas de alimentación ininterrumpida.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:sistemas-de-alimentacion-ininterrumpida}}
+Un sistema de alimentación ininterrumpida o SAI protege contra problemas eléctricos comunes que pueden afectar al funcionamiento normal de un sistema informático.
+\begin{itemize}
+\item {} 
+Bajadas de tensión. Produce daños a largo plazo.
+
+\item {} 
+Interrupciones del suministro. Da lugar a perjuicios económicos.
+
+\item {} 
+Subidas de tensión puntuales. Menores o iguales de 4 milisegundos y producen daños en dias/semanas.
+
+\item {} 
+Subidas de tensión sostenidas. Dura mas de 4 milisegundos y produce daños en escasos minutos e instantáneos.
+
+\end{itemize}
+
+En líneas generales el parámetro principal que debemos mirar en un SAI es su «potencia aparente».
+
+La potencia aparente de un SAI se mide en «voltio-amperios» o «kilo-voltio-amperios» o «KVA» (también pronunciado como «kabeas» o «kivas»)
+
+Lo que nos interesa es la potencia eficaz que se obtiene multiplicando la aparente por 0,75. En algunos SAI nos indican el factor de potencia. En ese caso, sí podemos saber directamente la potencia eficaz multiplicando la potencia aparente por ese factor.
+
+Pot eficaz (Watios) = Pot. apar (VA) Factor de pot.
+
+Supongamos un SAI en el que la caja simplemente indica 2000VA (o 2KVAS). Si no nos dicen nada, asumiremos que en realidad ese SAI ofrece 2000*0,75 = 1500 W
+
+Si tuviésemos 3 ordenadores y cada uno consumiese 650W está claro que no podríamos conectar los 3.
+
+Si un SAI se anuncia indicando que ofrece 1500KVA y 850W de potencia ¿qué factor de potencia ofrece?
+\begin{itemize}
+\item {} 
+Los 1500KVA son la «nominal/máxima/aparente»
+
+\item {} 
+Los 850W son la «eficaz/de salida»
+
+\end{itemize}
+
+Si Eficaz=Aparente * FdP entonces
+
+FDP=Eficaz/aparente
+
+FDP=850/1500
+
+Cuando se diseña un edificio con instalaciones informáticas es frecuente que con el tiempo haya cambios y finalmente sea necesario ampliar. Por ello, se recomienda incrementar nuestros cálculos en torno a un 20-30\%
+
+Supongamos que deseamos instalar servidores que en su conjunto consumen 1300W.
+
+¿Que potencia aparente deberíamos buscar al comprar un SAI?
+
+No nos dicen el factor de potencia así que usaremos 0,75. Así la potencia aparente debería ser Eficaz/0,75 es decir 1733 VA. Como dicha potencia podría resulta insuficiente en el futuro, incrementaremos, por ejemplo un 20\% multiplicando los VA por 1,20. Así, 1733 * 1,20 = 2080 VA.
+
 
 \section{Seguridad lógica.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:seguridad-logica}}
+Implica  restringir el acceso a datos en función de la persona que lo intente:
+\begin{itemize}
+\item {} 
+Claves de acceso.
+
+\item {} 
+Tarjetas de identificación.
+
+\item {} 
+Copias de seguridad.
+
+\item {} 
+Listas de control de acceso.
+
+\item {} 
+Control horario.
+
+\item {} 
+Roles.
+
+\item {} 
+Cortafuegos.
+
+\item {} 
+Distribución de carga.
+
+\item {} 
+Redundancia de sistemas
+
+\end{itemize}
+
 
 \section{Criptografía.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:criptografia}}
+La Criptografía es la técnica que transforma mensajes en otros mensajes cuyo contenido no se pde conocer. Un mecanismo muy básico es por ejemplo el «cifrado César».
+
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+XYZABCDEFGHIJKLMNÑOPQRSTUVW
+
+ATACAD AL AMANECER
+XQXZXA X…
+
+El cifrado César es un «mecanismo de sustitución». Existen otros mecanismos basados en la «transposición».
+
+Si hacemos una transposición de 4 columnas del mensaje «ATACAD AL AMANECER» se obtiene esto.
+
+ATAC
+AD A
+L AM
+ANEC
+ER
+
+AALAETD NRA AE CAMC
+
+Algunos sistemas de cifrado «combinan otros sistemas». Supongamos que alguien aplica un «César desplazamiento 3» con un «transposición de 4 columnas».
+
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+XYZABCDEFGHIJKLMNÑOPQRSTUVW
+
+ATACAD AL AMANECER
+XQXZXA XI XJXKBZBO
+
+XQXZ
+XA X
+I XJ
+XKBZ
+BO
+
+XXIXBQA KOX XB ZXJZ
+
+A veces una sustitución puede usar una clave como «2527»
+
+ABCDEFGHIJKLMNÑOPQRSTUVWXYZ
+252725272527252725272527252
+DH….
+
+Existen diversas técnicas llamadas «criptoanálisis» que investigan como descifrar mensajes cifrados.
+\begin{itemize}
+\item {} 
+Averiguar el idioma en que se escribió.
+
+\item {} 
+Buscar palabras comunes: «el» «la» «los» «las», «con»
+
+\item {} 
+Usar «fuerza bruta»
+
+\end{itemize}
+
+Como el uso de la informática ha simplificado muchísimo el atacar claves se investigaron nuevos mecanismos de criptografía: los asimétricos.
+
+En los viejos sistemas se podía descifrar un mensaje si alguien obtenía la clave, solo había que hacer el proceso inverso
+
+Los sistemas asimétricos utilizan una clave de cifrado y otra de descifrado. Aunque se tenga una clave es matemáticamente imposible averiguar la otra clave por lo que se puede dar a todo el mundo una de las claves (llamada habitualmente clave pública) y conservar la otra (llamada clave privada). Además, podemos usar las claves para lo que queramos y por ejemplo en unos casos cifraremos con la clave pública y en otros tal vez cifremos con la clave privada.
+
+En los puntos siguiente veremos como usar la criptografía asimétrica para dos cosas distintas: la autenticación y la privacidad.
+
+
+\subsection{Autenticación}
+\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:autenticacion}}
+La autenticación consiste en «comprobar que alguien es quien dice ser», ¿como conseguirlo?. Muy sencillo.
+
+En primer lugar tendremos tres elementos:
+\begin{enumerate}
+\sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
+\item {} 
+Un servidor (como por ejemplo Amazon) que desea ofrecer garantías a sus clientes de que cuando se conectan a Amazon realmente se conectan a un servidor de Amazon.
+
+\item {} 
+Por otro lado tendremos clientes que desean obtener la garantía de que cuando escriben \sphinxcode{\sphinxupquote{http://amazon.es}} \sphinxstylestrong{realmente se están conectando a un servidor de Amazon}
+
+\item {} 
+Por último tendremos un tercero que se encarga de verificar el proceso para ambos llamada CA o «autoridad de certificación».
+
+\end{enumerate}
+
+Así,el proceso es el siguiente:
+\begin{enumerate}
+\sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
+\item {} 
+Amazon envía a la CA una «petición de firma de certificado».
+
+\item {} 
+La CA lo recibe y lo cifra con su clave privada.
+
+\item {} 
+La CA da su clave pública (que se usará para descifrar) a todos los navegadores, que lo incorporan de serie en la instalación.
+
+\item {} 
+Amazon pone en sus servidores el certificado «firmado» por la CA
+
+\item {} 
+Cuando el cliente se conecta a Amazon, el servidor le envía el certificado.
+
+\item {} 
+El cliente descarga el certificado y lo descifra con la clave pública de la CA, obteniendo un fichero válido que le garantiza que esa máquina realmente es Amazon.
+
+\end{enumerate}
+
+
+\subsection{Privacidad}
+\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:privacidad}}
+Una vez que Amazon ha ofrecido garantías a su cliente ahora se necesita usar la criptografía para que el usuario pueda hacer sus compras sin que nadie espíe. Ahora las claves se usarán al revés.
+\begin{enumerate}
+\sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
+\item {} 
+El cliente se conecta a Amazon (despues de haber comprobado que el certificado es correcto)
+
+\item {} 
+Amazon envía al cliente su clave de cifrado.
+
+\item {} 
+El cliente la recibe y cifra el pedido con la clave pública de cifrado de Amazon.
+
+\item {} 
+El mensaje viaja por la red pero nadie podrá descifrarlo.
+
+\item {} 
+El mensaje llega a Amazon y usa su clave privada para descifrar.
+
+\end{enumerate}
+
+
+\section{Cifrado de ficheros en línea de comandos}
+\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:cifrado-de-ficheros-en-linea-de-comandos}}
+Existe una utilidad de libre distribución llamada \sphinxcode{\sphinxupquote{gpg}} que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica. Este programa asume que usaremos la clave pública para cifrar y la privada para descifrar.
+\begin{itemize}
+\item {} 
+Se debe empezar por generar una pareja de claves usando el comando \sphinxcode{\sphinxupquote{gpg -{-}full-generate-keys}} (el proceso de generación de claves puede ser muy lento, se recomienda tener paciencia y a ser posible abrir otra consola y trabajar en ella).
+
+\item {} 
+Una vez generado tendremos un directorio llamado \sphinxcode{\sphinxupquote{.gnupg}} en el que se almacenan las claves. Podemos listar las claves de nuestro almacén con \sphinxcode{\sphinxupquote{gpg -{-}list-keys}}
+
+\item {} 
+Una vez se tenga generada la clave la costumbre es tener preparado un «certificado de revocación». Se utilizará si creemos que nos han robado alguna clave y distribuiremos el fichero para avisar de que no se debe confiar en nuestras claves. Esto se hace con el comando \sphinxcode{\sphinxupquote{gpg -{-}gen-revoke "usuario" -{-}output ClaveRevocada.asc}} . Se pueden usar otros nombres de fichero pero la costumbre es usar la extensión \sphinxcode{\sphinxupquote{.asc}}
+
+\item {} 
+A continuación se suele extraer nuestra clave pública del almacén de claves y ponerla en un fichero con el comando \sphinxcode{\sphinxupquote{gpg -{-}export \textless{}usuario\textgreater{} -{-}output ClavePublicaUsuario.gpg}} . Se generará un fichero binario en \sphinxcode{\sphinxupquote{ClavePublicaUsuario.gpg}} . Si deseamos generar un fichero con ASCII normal podemos hacer esto {\color{red}\bfseries{}{}`{}`}gpg \textendash{}armor \textendash{}export \textless{}usuario\textgreater{} \textendash{}output ClavePublicaUsuario.gpg {}`{}`
+
+\item {} 
+Una vez que alguien nos haya pasado su clave pública deberemos incorporarla a nuestro almacén usando \sphinxcode{\sphinxupquote{gpg -{-}import \textless{}fichero.gpg\textgreater{}}}
+
+\item {} 
+Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que \sphinxstylestrong{solo esa persona podrá descifrar} . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con \sphinxcode{\sphinxupquote{gpg -{-}output ficherocifrado.doc.gpg -{-}recipient persona@mail.com ficherooriginal.doc}}
+
+\end{itemize}
+
+Un
+
 
 \section{Listas de control de acceso.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:listas-de-control-de-acceso}}
@@ -314,6 +642,58 @@ Se puede redirigir la salida de un comando hacia un fichero (usando \sphinxcode{
 
 \item {} 
 Un comando de cualquier tipo podría necesitar \sphinxstylestrong{permisos de administrador}. En ese caso tendremos que usar el comando \sphinxcode{\sphinxupquote{sudo}} de esta manera: \sphinxcode{\sphinxupquote{sudo \textless{}comando\textgreater{}}} .
+
+\item {} 
+Para construir ficheros que almacenen un conjunto de ficheros usaremos un comando llamado \sphinxcode{\sphinxupquote{tar}} . Podremos comprimir un fichero usando compresores como \sphinxcode{\sphinxupquote{gzip}} o \sphinxcode{\sphinxupquote{bzip}}
+\begin{quote}
+
+** El comando \sphinxcode{\sphinxupquote{tar}} acepta una serie de opciones por medio de un guión.
+\begin{quote}
+
+\sphinxstylestrong{* Por ejemplo podemos usar {}`{}`tar -cf copiaseguridad.tar .gnupg{}`{}`
+*} Para extraer el contenido de un fichero se usa \sphinxcode{\sphinxupquote{tar -xf copiaseguridad.tar}}
+\end{quote}
+
+** El comando \sphinxcode{\sphinxupquote{gzip}} o \sphinxcode{\sphinxupquote{bzip2}} permiten comprimir un fichero.
+\end{quote}
+
+\end{itemize}
+
+
+\section{Anexo: Guest additions}
+\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:anexo-guest-additions}}
+Las «Guest Additions» permiten que VirtualBox pueda «conectar directorios» entre el sistema operativo anfitrión y el invitado. Por ello, a menudo resulta útil tenerlas instaladas.
+
+Si bien en los sistemas operativos invitado con entorno gráfico la instalación es muy sencilla en los sistemas basados en comandos (como Ubuntu Server) el proceso puede resulta un poco más largo.
+
+En primer lugar las Guest Additions instalan módulos en el núcleo y es posible que para ello requiera de ciertos paquetes. Tendremos que instalar estos paquetes con «sudo apt-get install dkms build-essential»
+\begin{itemize}
+\item {} 
+En el menú «Dispositivos» de VirtualBox elegir «Insertar CD de VirtualBox Guest Additions».
+
+\item {} 
+Enganchamos el dispositivo \sphinxcode{\sphinxupquote{/dev/cdrom}} a algún punto del sistema, por ejemplo dentro de \sphinxcode{\sphinxupquote{/media}} .
+
+\item {} 
+Usando el comando \sphinxcode{\sphinxupquote{sudo mkdir /media/cdrom}} podremos crear un directorio «cdrom» dentro de «media».
+
+\item {} 
+Una vez creado el directorio usamos el comando \sphinxcode{\sphinxupquote{sudo mount /dev/cdrom /media/cdrom}} .
+
+\item {} 
+Nos vamos al directorio con \sphinxcode{\sphinxupquote{cd /media/cdrom}}  y ejecutamos \sphinxcode{\sphinxupquote{ls}} .
+
+\item {} 
+Deberiamos ver un fichero llamado \sphinxcode{\sphinxupquote{VBoxLinuxAdditions.run}} . Lo ejecutamos como administrador con \sphinxcode{\sphinxupquote{sudo ./VBoxLinuxAdditions.run}}
+
+\item {} 
+Existe un comando para apagar/reiniciar el sistema y es \sphinxcode{\sphinxupquote{sudo shutdown -r now}} (-r para reiniciar o -h para parar).
+
+\item {} 
+Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del sistema anfitrión para «conectarla» con el sistema operativo invitado.
+
+\item {} 
+Reiniciamos la máquina y ejecutamos el comando \sphinxcode{\sphinxupquote{mount}}
 
 \end{itemize}
 
@@ -401,9 +781,7 @@ Los datos penales no podrán usarse para otros fines y su tratamiento solo podr�
 \label{\detokenize{tema_lopd/tema_lopd:articulo-11-transparencia-e-informacion-al-afectado}}
 El responsable debe cumplir con el deber de información y decir al afectado:
 \begin{enumerate}
-\def\theenumi{\arabic{enumi}}
-\def\labelenumi{\theenumi .}
-\makeatletter\def\p@enumii{\p@enumi \theenumi .}\makeatother
+\sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
 \item {} 
 La identidad del responsable o su representante.
 
