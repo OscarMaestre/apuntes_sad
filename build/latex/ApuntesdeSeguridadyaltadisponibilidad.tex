@@ -74,7 +74,7 @@
 
 
 \title{Apuntes de Seguridad y alta disponibilidad Documentation}
-\date{04 de octubre de 2019}
+\date{08 de octubre de 2019}
 \release{1.0}
 \author{Oscar GG}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -559,9 +559,10 @@ Una vez que alguien nos haya pasado su clave pública deberemos incorporarla a n
 \item {} 
 Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que \sphinxstylestrong{solo esa persona podrá descifrar} . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con \sphinxcode{\sphinxupquote{gpg -{-}output ficherocifrado.doc.gpg -{-}recipient persona@mail.com ficherooriginal.doc}}
 
-\end{itemize}
+\item {} 
+Finalmente podremos descifrar un fichero que nos hayan enviado usando \sphinxcode{\sphinxupquote{gpg -{-}decrypt \textless{}ficheroparanosotros\textgreater{}}} .
 
-Un
+\end{itemize}
 
 
 \section{Listas de control de acceso.}
@@ -694,6 +695,9 @@ Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del si
 
 \item {} 
 Reiniciamos la máquina y ejecutamos el comando \sphinxcode{\sphinxupquote{mount}}
+
+\item {} 
+Puede ser necesario añadir nuestro usuario al grupo «vboxsf» que es el grupo con el que se «monta» el directorio compartido. Para hacer esto usaremos el comando \sphinxcode{\sphinxupquote{sudo usermod -a -G vboxsf pepito}}
 
 \end{itemize}
 
