@@ -433,7 +433,7 @@ En primer lugar las Guest Additions instalan módulos en el núcleo y es posible
 
 * Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del sistema anfitrión para "conectarla" con el sistema operativo invitado.
 
-* Reiniciamos la máquina y ejecutamos el comando ``mount`` 
+* Reiniciamos la máquina y ejecutamos el comando ``mount``.
 
 * Puede ser necesario añadir nuestro usuario al grupo "vboxsf" que es el grupo con el que se "monta" el directorio compartido. Para hacer esto usaremos el comando ``sudo usermod -a -G vboxsf pepito`` 
 
