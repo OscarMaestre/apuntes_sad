@@ -13,8 +13,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
     <link rel="next" title="Legislación y normas sobre seguridad" href="../tema_lopd/tema_lopd.html" />
@@ -294,6 +294,18 @@ DH….</p>
 </div>
 <div class="section" id="listas-de-control-de-acceso">
 <h2>Listas de control de acceso.<a class="headerlink" href="#listas-de-control-de-acceso" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En los sistemas UNIX (como GNU/Linux) tradicionalmente se han usado permisos basados en usuarios y grupos. Así, cuando se crear un usuario (con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">adduser</span> <span class="pre">nombreusuario</span></code>) tradicionamente se crea un grupo con el mismo nombre y en el que está solo ese usuario.</p>
+<p>Cuando un usuario cualquiera crea un fichero, ese fichero tiene asignados automáticamente unos permisos que pueden ser</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">r</span></code> si se puede leer el fichero</li>
+<li><code class="docutils literal notranslate"><span class="pre">w</span></code> si se puede escribir/modificar el fichero.</li>
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code> si se puede ejecutar.</li>
+</ul>
+<p>Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usuarios en general. Así, un fichero cualquiera puede mostrar unos permisos como estos (necesitaremos el comando <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code> para ver los permisos).</p>
+<div class="figure" id="id1">
+<a class="reference internal image-reference" href="../_images/permisos_grupos.png"><img alt="Ejemplos de permisos" src="../_images/permisos_grupos.png" style="width: 329.5px; height: 34.0px;" /></a>
+<p class="caption"><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span></p>
+</div>
 </div>
 <div class="section" id="establecimiento-de-politicas-de-contrasenas">
 <h2>Establecimiento de políticas de contraseñas.<a class="headerlink" href="#establecimiento-de-politicas-de-contrasenas" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -383,7 +395,7 @@ DH….</p>
 <li>Deberiamos ver un fichero llamado <code class="docutils literal notranslate"><span class="pre">VBoxLinuxAdditions.run</span></code> . Lo ejecutamos como administrador con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">./VBoxLinuxAdditions.run</span></code></li>
 <li>Existe un comando para apagar/reiniciar el sistema y es <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">shutdown</span> <span class="pre">-r</span> <span class="pre">now</span></code> (-r para reiniciar o -h para parar).</li>
 <li>Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del sistema anfitrión para «conectarla» con el sistema operativo invitado.</li>
-<li>Reiniciamos la máquina y ejecutamos el comando <code class="docutils literal notranslate"><span class="pre">mount</span></code></li>
+<li>Reiniciamos la máquina y ejecutamos el comando <code class="docutils literal notranslate"><span class="pre">mount</span></code>.</li>
 <li>Puede ser necesario añadir nuestro usuario al grupo «vboxsf» que es el grupo con el que se «monta» el directorio compartido. Para hacer esto usaremos el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">vboxsf</span> <span class="pre">pepito</span></code></li>
 </ul>
 </div>
@@ -483,7 +495,7 @@ DH….</p>
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

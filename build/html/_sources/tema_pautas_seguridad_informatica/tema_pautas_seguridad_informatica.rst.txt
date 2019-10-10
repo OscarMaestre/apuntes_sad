@@ -335,6 +335,22 @@ Existe una utilidad de libre distribución llamada ``gpg`` que existe para mucho
 Listas de control de acceso.
 -----------------------------------------------------------------------------------------------
 
+En los sistemas UNIX (como GNU/Linux) tradicionalmente se han usado permisos basados en usuarios y grupos. Así, cuando se crear un usuario (con ``sudo adduser nombreusuario``) tradicionamente se crea un grupo con el mismo nombre y en el que está solo ese usuario.
+
+Cuando un usuario cualquiera crea un fichero, ese fichero tiene asignados automáticamente unos permisos que pueden ser
+
+* ``r`` si se puede leer el fichero
+* ``w`` si se puede escribir/modificar el fichero.
+* ``x`` si se puede ejecutar.
+
+Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usuarios en general. Así, un fichero cualquiera puede mostrar unos permisos como estos (necesitaremos el comando ``ls -l`` para ver los permisos).
+
+.. figure:: img/permisos_grupos.png
+   :scale: 50%
+   :alt: Ejemplos de permisos
+
+   Ejemplos de permisos en un sistema GNU/Linux
+
 
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
@@ -433,7 +449,7 @@ En primer lugar las Guest Additions instalan módulos en el núcleo y es posible
 
 * Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del sistema anfitrión para "conectarla" con el sistema operativo invitado.
 
-* Reiniciamos la máquina y ejecutamos el comando ``mount`` 
+* Reiniciamos la máquina y ejecutamos el comando ``mount``.
 
 * Puede ser necesario añadir nuestro usuario al grupo "vboxsf" que es el grupo con el que se "monta" el directorio compartido. Para hacer esto usaremos el comando ``sudo usermod -a -G vboxsf pepito`` 
 

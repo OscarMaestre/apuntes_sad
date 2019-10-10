@@ -335,6 +335,39 @@ Existe una utilidad de libre distribución llamada ``gpg`` que existe para mucho
 Listas de control de acceso.
 -----------------------------------------------------------------------------------------------
 
+En los sistemas UNIX (como GNU/Linux) tradicionalmente se han usado permisos basados en usuarios y grupos. Así, cuando se crear un usuario (con ``sudo adduser nombreusuario``) tradicionamente se crea un grupo con el mismo nombre y en el que está solo ese usuario.
+
+Cuando un usuario cualquiera crea un fichero, ese fichero tiene asignados automáticamente unos permisos que pueden ser
+
+* ``r`` si se puede leer el fichero
+* ``w`` si se puede escribir/modificar el fichero.
+* ``x`` si se puede ejecutar.
+
+Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usuarios en general. Así, un fichero cualquiera puede mostrar unos permisos como estos (necesitaremos el comando ``ls -l`` para ver los permisos).
+
+.. figure:: img/permisos_grupos.png
+   :scale: 50%
+   :alt: Ejemplos de permisos
+
+   Ejemplos de permisos en un sistema GNU/Linux
+
+Si examinamos el fichero ``Makefile`` veremos que tiene unos permisos como estos ``-rw-rw-r--`` y veremos también que pone ``profesor profesor`` . Por este orden, esto significa
+
+* El usuario propietario del fichero se llama ``profesor``. El grupo asignado a este fichero es ``profesor`` (recuérdese que puede cambiarse el propietario con ``chown`` y el grupo con ``chgrp`` )
+
+* El primer permiso tiene un ``-``. Este primer permiso indica el tipo de fichero, que puede ser "fichero normal" (-), "directorio" (veriamos "d"), "enlace" (l)...
+* Despues vemos ``rw-``. Este primer grupo de tres permisos es el aplicado al propietario (que este caso es ``profesor``). Este grupo significa que el propietario puede leer y escribir en este fichero, pero no ejecutar.
+* Despues vemos ``rw-``. Estos son los permisos que se aplicarán al grupo, que en este caso es el grupo "profesor" (no pasa nada porque un grupo se llame igual que un usuario). Esto significa que cualquier usuario asignado al grupo "profesor" también podrá leer y escribir el fichero.
+* Por último vemos ``r--`` . Esto significa que cualquier otro usuario que ni sea ``profesor`` ni pertenezca al grupo ``profesor`` podrá hacer nada que no sea leer en el fichero.
+
+Este sistema de permisos ha funcionado muy bien durante mucho tiempo, sin embargo con el tiempo ha mostrado algunas flaquezas.
+
+.. figure:: img/ficherorestringido.png
+   :scale: 50%
+   :alt: Problema con los permisos
+
+   Un ejemplo de problema con los permisos
+
 
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
