@@ -369,6 +369,25 @@ Este sistema de permisos ha funcionado muy bien durante mucho tiempo, sin embarg
    Un ejemplo de problema con los permisos
 
 
+
+Ejercicio con permisos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Crea los usuario ``info01``, ``info02``, ``conta01`` y ``conta02``. Inicia sesión con cada uno de ellos y haz que cada uno de ellos cree un fichero con su mismo nombre, es decir ``info01.txt``, ``info02.txt``, ``conta01.txt`` y ``conta02.txt``.
+
+Los comandos serían ``sudo adduser info01``, ``sudo adduser info02``, ``sudo adduser conta01`` y ``sudo adduser conta02``.
+
+Una vez hecho esto, nos salimos con el comando ``exit`` e iniciamos sesión con, por ejemplo, *conta01*. El sistema nos dejará en el directorio ``/home/conta01`` y en él podremos crear el fichero. Puedes asegurarte de que estás en el directorio correcto con ``pwd`` . Puedes crear el fichero con ``nano conta01.txt`` y rellenando el fichero con el texto que quieras. Sal de la consola y repite el proceso con el resto de usuario.
+
+Ahora hay que establecer permisos, por ejemplo usaremos la configuración ``-rw-r-----`` que hace lo siguiente:
+
+* Permite leer y escribir (rw-) al propietario.
+* Permite leer a los usuarios que estén en el grupo del fichero (r--).
+* No deja hacer **nada** a los otros (---).
+
+¿Que harías si deseas permitir que el fichero ``conta01.txt``  sea de lectura y escritura para ``conta01`` y además para ``info01``?
+
+
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
 
