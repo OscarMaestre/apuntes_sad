@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Apuntes de Seguridad y alta disponibilidad &#8212; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -13,8 +11,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Adopción de pautas de seguridad informática" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html" />
@@ -55,8 +53,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#cifrado-de-ficheros-en-linea-de-comandos">Cifrado de ficheros en línea de comandos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#listas-de-control-de-acceso">Listas de control de acceso.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#establecimiento-de-politicas-de-contrasenas">Establecimiento de políticas de contraseñas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#listas-de-control-de-acceso">Listas de control de acceso.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#ejercicio-con-permisos">Ejercicio con permisos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#respuesta">Respuesta</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#politicas-de-almacenamiento">Políticas de almacenamiento.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#copias-de-seguridad-e-imagenes-de-respaldo">Copias de seguridad e imágenes de respaldo.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html#medios-de-almacenamiento">Medios de almacenamiento.</a></li>
@@ -148,7 +149,7 @@
 <li class="toctree-l2"><a class="reference internal" href="tema_sad/tema_sad.html#san-nas-fiberchannel">SAN, NAS, FiberChannel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_sad/tema_sad.html#balanceadores-de-carga">Balanceadores de carga.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_sad/tema_sad.html#instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad">Instalación y configuración de soluciones de alta disponibilidad.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tema_sad/tema_sad.html#vitalizacion-de-sistemas">Vitalización de sistemas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tema_sad/tema_sad.html#virtualizacion-de-sistemas">Virtualización de sistemas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_sad/tema_sad.html#posibilidades-de-la-virtualizacion-de-sistemas">Posibilidades de la virtualización de sistemas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_sad/tema_sad.html#herramientas-para-la-virtualizacion">Herramientas para la virtualización.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_sad/tema_sad.html#configuracion-y-utilizacion-de-maquinas-virtuales">Configuración y utilización de maquinas virtuales.</a></li>
@@ -196,13 +197,11 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Búsqueda rápida</h3>
+  <h3 id="searchlabel">Búsqueda rápida</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Ir a" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -223,7 +222,7 @@
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

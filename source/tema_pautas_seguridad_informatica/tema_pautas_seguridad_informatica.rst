@@ -385,9 +385,34 @@ Ahora hay que establecer permisos, por ejemplo usaremos la configuración ``-rw-
 * Permite leer a los usuarios que estén en el grupo del fichero (r--).
 * No deja hacer **nada** a los otros (---).
 
-¿Que harías si deseas permitir que el fichero ``conta01.txt``  sea de lectura y escritura para ``conta01`` y además para ``info01``?
+¿Que harías si deseas permitir algo como lo siguiente?
 
+* Que el fichero ``conta01.txt``  sea de lectura y escritura para ``conta02``
+* Que el fichero ``conta01.txt``  de lectura y escritura para ``info01``.
+* Que el fichero ``conta01.txt``  sea de lectura para info02.
 
+La solución a este problema sería compleja. Por ejemplo podríamos hacer esto:
+
+* Siendo administradores crear un grupo: ``sudo addgroup info01conta02``.
+* Siendo administradores modificar los usuarios info01 y conta02 para que pertenezcan al nuevo grupo con ``sudo usermod -a -G info01conta02 info01`` y ``sudo usermod -a -G info01conta02 conta02`` .
+* Cambiar el grupo del fichero ``conta01.txt`` con ``sudo chgrp info01conta02 conta01.txt`` 
+* Dar al fichero conta01 permisos de lectura y escritura para el grupo con ``sudo chmod g+w conta01.txt`` 
+* Dar permisos de lectura **a otros usuarios** con ``chmod o+w conta01.txt`` 
+
+Sin embargo el último caso es **un agujero de seguridad** . Sin querer vamos a dar permisos de lectura a info02 *y a todos los demás usuarios*
+
+Se necesita usar el comando setfacl que funciona de esta manera:
+
+* Podemos añadir permisos con ``setfacl -m u:info01:rw conta01.txt``. Podemos hacer esto desde el usuario normal ``conta01`` .
+* Ejecutamos ``setfacl -m u:conta02:rw conta01.txt`` .
+* Ejecutamos ``setfacl -m u:info02:w conta01.txt`` 
+
+Para consultar los permisos de un archivo usaremos ``getfacl conta01.txt``. Si nos equivocamos y deseamos borrar una entrada de la lista usaremos cosas como ``setfacl -x u:conta02  conta01.txt`` 
+
+Respuesta
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Una posibilidad sería empezar a crear grupos 
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
 

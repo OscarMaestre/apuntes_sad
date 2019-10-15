@@ -38,7 +38,7 @@ Instalación y configuración de soluciones de alta disponibilidad.
 -----------------------------------------------------------------------------------------------
 
 
-Vitalización de sistemas.
+Virtualización de sistemas.
 -----------------------------------------------------------------------------------------------
 
 

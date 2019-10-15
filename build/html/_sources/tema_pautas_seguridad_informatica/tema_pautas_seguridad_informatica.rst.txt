@@ -351,7 +351,68 @@ Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usu
 
    Ejemplos de permisos en un sistema GNU/Linux
 
+Si examinamos el fichero ``Makefile`` veremos que tiene unos permisos como estos ``-rw-rw-r--`` y veremos también que pone ``profesor profesor`` . Por este orden, esto significa
 
+* El usuario propietario del fichero se llama ``profesor``. El grupo asignado a este fichero es ``profesor`` (recuérdese que puede cambiarse el propietario con ``chown`` y el grupo con ``chgrp`` )
+
+* El primer permiso tiene un ``-``. Este primer permiso indica el tipo de fichero, que puede ser "fichero normal" (-), "directorio" (veriamos "d"), "enlace" (l)...
+* Despues vemos ``rw-``. Este primer grupo de tres permisos es el aplicado al propietario (que este caso es ``profesor``). Este grupo significa que el propietario puede leer y escribir en este fichero, pero no ejecutar.
+* Despues vemos ``rw-``. Estos son los permisos que se aplicarán al grupo, que en este caso es el grupo "profesor" (no pasa nada porque un grupo se llame igual que un usuario). Esto significa que cualquier usuario asignado al grupo "profesor" también podrá leer y escribir el fichero.
+* Por último vemos ``r--`` . Esto significa que cualquier otro usuario que ni sea ``profesor`` ni pertenezca al grupo ``profesor`` podrá hacer nada que no sea leer en el fichero.
+
+Este sistema de permisos ha funcionado muy bien durante mucho tiempo, sin embargo con el tiempo ha mostrado algunas flaquezas.
+
+.. figure:: img/ficherorestringido.png
+   :scale: 50%
+   :alt: Problema con los permisos
+
+   Un ejemplo de problema con los permisos
+
+
+
+Ejercicio con permisos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Crea los usuario ``info01``, ``info02``, ``conta01`` y ``conta02``. Inicia sesión con cada uno de ellos y haz que cada uno de ellos cree un fichero con su mismo nombre, es decir ``info01.txt``, ``info02.txt``, ``conta01.txt`` y ``conta02.txt``.
+
+Los comandos serían ``sudo adduser info01``, ``sudo adduser info02``, ``sudo adduser conta01`` y ``sudo adduser conta02``.
+
+Una vez hecho esto, nos salimos con el comando ``exit`` e iniciamos sesión con, por ejemplo, *conta01*. El sistema nos dejará en el directorio ``/home/conta01`` y en él podremos crear el fichero. Puedes asegurarte de que estás en el directorio correcto con ``pwd`` . Puedes crear el fichero con ``nano conta01.txt`` y rellenando el fichero con el texto que quieras. Sal de la consola y repite el proceso con el resto de usuario.
+
+Ahora hay que establecer permisos, por ejemplo usaremos la configuración ``-rw-r-----`` que hace lo siguiente:
+
+* Permite leer y escribir (rw-) al propietario.
+* Permite leer a los usuarios que estén en el grupo del fichero (r--).
+* No deja hacer **nada** a los otros (---).
+
+¿Que harías si deseas permitir algo como lo siguiente?
+
+* Que el fichero ``conta01.txt``  sea de lectura y escritura para ``conta02``
+* Que el fichero ``conta01.txt``  de lectura y escritura para ``info01``.
+* Que el fichero ``conta01.txt``  sea de lectura para info02.
+
+La solución a este problema sería compleja. Por ejemplo podríamos hacer esto:
+
+* Siendo administradores crear un grupo: ``sudo addgroup info01conta02``.
+* Siendo administradores modificar los usuarios info01 y conta02 para que pertenezcan al nuevo grupo con ``sudo usermod -a -G info01conta02 info01`` y ``sudo usermod -a -G info01conta02 conta02`` .
+* Cambiar el grupo del fichero ``conta01.txt`` con ``sudo chgrp info01conta02 conta01.txt`` 
+* Dar al fichero conta01 permisos de lectura y escritura para el grupo con ``sudo chmod g+w conta01.txt`` 
+* Dar permisos de lectura **a otros usuarios** con ``chmod o+w conta01.txt`` 
+
+Sin embargo el último caso es **un agujero de seguridad** . Sin querer vamos a dar permisos de lectura a info02 *y a todos los demás usuarios*
+
+Se necesita usar el comando setfacl que funciona de esta manera:
+
+* Podemos añadir permisos con ``setfacl -m u:info01:rw conta01.txt``. Podemos hacer esto desde el usuario normal ``conta01`` .
+* Ejecutamos ``setfacl -m u:conta02:rw conta01.txt`` .
+* Ejecutamos ``setfacl -m u:info02:w conta01.txt`` 
+
+Para consultar los permisos de un archivo usaremos ``getfacl conta01.txt``. Si nos equivocamos y deseamos borrar una entrada de la lista usaremos cosas como ``setfacl -x u:conta02  conta01.txt`` 
+
+Respuesta
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Una posibilidad sería empezar a crear grupos 
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
 
