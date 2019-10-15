@@ -409,10 +409,7 @@ Se necesita usar el comando setfacl que funciona de esta manera:
 
 Para consultar los permisos de un archivo usaremos ``getfacl conta01.txt``. Si nos equivocamos y deseamos borrar una entrada de la lista usaremos cosas como ``setfacl -x u:conta02  conta01.txt`` 
 
-Respuesta
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Una posibilidad sería empezar a crear grupos 
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
 
