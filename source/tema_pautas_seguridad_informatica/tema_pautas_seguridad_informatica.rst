@@ -413,6 +413,14 @@ Para consultar los permisos de un archivo usaremos ``getfacl conta01.txt``. Si n
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
 
+Por incómodo que resulte, las contraseñas:
+
+* Deben ser largas (de 8 símbolos o más)
+* Deben mezclar todos los siguientes conjuntos posibles, o al menos el máximo posible: mayúsculas, minúsculas, números y símbolos especiales.
+* Deben cambiarse con las máxima periodicidad posible.
+* Deben ser lo más distintas posibles a las claves antiguas.
+* Deberían caducar automáticamente.
+* No deberían almacenarse como "texto plano" en ningún sitio. Lo típico es almacenar contraseñas "cifradas".
 
 Políticas de almacenamiento.
 -----------------------------------------------------------------------------------------------
