@@ -425,17 +425,73 @@ Por incómodo que resulte, las contraseñas:
 Políticas de almacenamiento.
 -----------------------------------------------------------------------------------------------
 
+Se debe determinar lo siguiente en cuanto a los datos:
+
+* ¿Qué datos se va a almacenar? Hay que recordar que la LOPD marca las principales directrices a tener en cuenta sobre la información almacenada.
+* ¿Donde se va a almacenar? Los distintos medios tienen distintas características.
+* ¿Qué mecanismos de copia se van a implementar? Por su excesivo tamaño tal vez no siempre podamos hacer una copia entera de todo el disco duro.
+
+En cuanto al primer punto debemos recordar lo básico sobre los datos según la LOPD.
+
+* Datos de nivel básico.
+* Datos de nivel medio.
+* Datos de nivel alto.
+
 
 Copias de seguridad e imágenes de respaldo.
 -----------------------------------------------------------------------------------------------
+
+No es lo mismo una copia de seguridad que una imagen. 
+
+En cuanto a las copias de seguridad podemos hablar de:
+
+* Copias completas.
+* Copias incrementales.
+* Copias diferenciales.
 
 
 Medios de almacenamiento.
 -----------------------------------------------------------------------------------------------
 
+* La "nube".
+* Otros ordenadores.
+* NAS.
+* Dispositivos USB.
+* Medios ópticos.
+* Discos magnéticos.
+* Cinta magnética.
+* Discos SSD.
+* Imprimir los datos.
+
+
+
+
+
 
 Sistemas biométricos. Funcionamiento. Estándares.
 -----------------------------------------------------------------------------------------------
+Por desgracia la siguiente figura ilustra muy bien el problema actual con los estándares biométricos:
+
+.. figure:: img/standards.png
+   :scale: 50%
+   :align: center
+   :alt: Un estándar debería ser único.
+
+   El problema actual con los estándares.
+
+
+De hecho podemos nombrar los siguientes estándares:
+
+* BioAPI: con el apoyo de IBM y Hewlett-Packard.
+* BAPI: propiedad de I/O Software pero utilizado por Microsoft.
+* ANSI X.9: pensada para la industria financiera e impulsado por los Estados Unidos.
+* CBEFF: pensado para ficheros que almacenen información biométrica.
+* Estándares del NIST estadounidense (National Institute of Standards and Technology).
+
+A fecha de hoy ninguno de ellos ha triunfado sobre los demás y de hecho por el momento cada fabricante tiene sus propios mecanismos, software y drivers (con el consiguiente problema para los administradores de sistemas).
+
+
+
 
 
 Análisis forense en sistemas informáticos
@@ -519,6 +575,7 @@ En primer lugar las Guest Additions instalan módulos en el núcleo y es posible
 
 * Puede ser necesario añadir nuestro usuario al grupo "vboxsf" que es el grupo con el que se "monta" el directorio compartido. Para hacer esto usaremos el comando ``sudo usermod -a -G vboxsf pepito`` 
 
+* Si en el momento de la instalación no indicamos correctamente nuestro país es posible que la hora del sistema no sea la hora local. Podemos ajustar la hora usando el comando ``sudo timedatectl set-timezone Europe/Madrid`` .
 
 
 
