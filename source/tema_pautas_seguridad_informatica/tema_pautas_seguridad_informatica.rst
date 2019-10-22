@@ -433,10 +433,11 @@ Se debe determinar lo siguiente en cuanto a los datos:
 
 En cuanto al primer punto debemos recordar lo básico sobre los datos según la LOPD.
 
-* Datos de nivel básico.
-* Datos de nivel medio.
-* Datos de nivel alto.
+* Datos de nivel básico: en general información como nombre, apellidos, datos postales, información laboral...
+* Datos de nivel medio: información financiera, infracciones administrativas, multas...
+* Datos de nivel alto: filiación política, confesiones y/o religiones, sexualidad, datos sanitarios
 
+¿Qué ocurre con las IP, datos sobre navegador, sistema operativo, etc...?
 
 Copias de seguridad e imágenes de respaldo.
 -----------------------------------------------------------------------------------------------
@@ -453,13 +454,13 @@ En cuanto a las copias de seguridad podemos hablar de:
 Medios de almacenamiento.
 -----------------------------------------------------------------------------------------------
 
-* La "nube".
-* Otros ordenadores.
-* NAS.
-* Dispositivos USB.
-* Medios ópticos.
-* Discos magnéticos.
-* Cinta magnética.
+* La "nube". Se debe recordar que "la nube" es "el ordenador de otra persona sobre el cual no tengo ningún control".
+* Otros ordenadores. Ventajas: tenemos control sobre ellos, fácil accesibilidad, coste medio...
+* NAS: Network Attached Storage. Coste medio, facilidad de uso, alta disponibilidad.
+* Dispositivos USB: muy versátiles, pero muy sensibles a campos magnéticos/golpes.
+* Medios ópticos. Ofrecen una mayor tasa de supervivencia que los USB extraíbles.
+* Discos magnéticos: ofrecen la mejor tasa coste/supervivencia.
+* Cinta magnética. Ofrecen de lejos, el mejor coste. Sin embargo son muy lentas de recuperar y rellenar
 * Discos SSD.
 * Imprimir los datos.
 
