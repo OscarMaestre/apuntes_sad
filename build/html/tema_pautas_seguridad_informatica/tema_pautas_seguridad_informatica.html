@@ -13,8 +13,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
     <link rel="next" title="Legislación y normas sobre seguridad" href="../tema_lopd/tema_lopd.html" />
@@ -376,33 +376,57 @@ DH….</p>
 </ul>
 <p>En cuanto al primer punto debemos recordar lo básico sobre los datos según la LOPD.</p>
 <ul class="simple">
-<li>Datos de nivel básico.</li>
-<li>Datos de nivel medio.</li>
-<li>Datos de nivel alto.</li>
+<li>Datos de nivel básico: en general información como nombre, apellidos, datos postales, información laboral…</li>
+<li>Datos de nivel medio: información financiera, infracciones administrativas, multas…</li>
+<li>Datos de nivel alto: filiación política, confesiones y/o religiones, sexualidad, datos sanitarios</li>
 </ul>
+<p>¿Qué ocurre con las IP, datos sobre navegador, sistema operativo, etc…?</p>
 </div>
 <div class="section" id="copias-de-seguridad-e-imagenes-de-respaldo">
 <h2>Copias de seguridad e imágenes de respaldo.<a class="headerlink" href="#copias-de-seguridad-e-imagenes-de-respaldo" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>No es lo mismo una copia de seguridad que una imagen.</p>
 <p>En cuanto a las copias de seguridad podemos hablar de:</p>
 <ul class="simple">
-<li>Copias completas.</li>
-<li>Copias incrementales.</li>
-<li>Copias diferenciales.</li>
+<li>Copias completas. Son muy fáciles de aplicar y muy fáciles de recuperar pero pueden consumir muchísimo espacio.</li>
+<li>Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa <strong>más todas las incrementales</strong> lo cual puede ser muy lento.</li>
+<li>Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado <strong>con respecto a la última copia completa</strong> . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.</li>
+</ul>
+<p>En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa «Configuración de copia de seguridad» y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.</p>
+<p>En UNIX las copias se hacen de otra manera.</p>
+<ul class="simple">
+<li>En primer lugar necesitaremos el comando <code class="docutils literal notranslate"><span class="pre">tar</span></code> . Podemos crear un archivo llamado <code class="docutils literal notranslate"><span class="pre">usuarios.tar</span></code> que almacene todos los directorios de todos los usuarios ejecutando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">tar</span> <span class="pre">-cf</span> <span class="pre">/home/usuario.tar</span> <span class="pre">/home/</span></code></li>
+<li>Para programar la ejecución de la copia habrá que «editar la tabla de trabajos programados» que se hace con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">crontab</span> <span class="pre">-e</span></code> .En realidad cada usuario tiene su propia tabla de trabajos pero como queremos leer directorios de otros usuarios ejecutaremos la tarea de copia desde la tabla de trabajos del administrador.</li>
+<li>Una vez que ejecutemos <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-e</span></code> veremos un fichero que permite indicar tareas y el horario de ejecución usando el formato <code class="docutils literal notranslate"><span class="pre">minutos</span> <span class="pre">horas</span> <span class="pre">dia-del-mes</span> <span class="pre">mes</span> <span class="pre">dia-de-la-semana</span> <span class="pre">comando</span></code> .</li>
+</ul>
+<p>Así podemos escribir algo como esto:</p>
+<ul class="simple">
+<li><ul class="first">
+<li><ul class="first">
+<li><ul class="first">
+<li><ul class="first">
+<li>tar -cf /home/usuarios$(date “+%d-%M-%Y%H%M”).tar /home/*</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="medios-de-almacenamiento">
 <h2>Medios de almacenamiento.<a class="headerlink" href="#medios-de-almacenamiento" title="Enlazar permanentemente con este título">¶</a></h2>
 <ul class="simple">
-<li>La «nube».</li>
-<li>Otros ordenadores.</li>
-<li>NAS.</li>
-<li>Dispositivos USB.</li>
-<li>Medios ópticos.</li>
-<li>Discos magnéticos.</li>
-<li>Cinta magnética.</li>
-<li>Discos SSD.</li>
-<li>Imprimir los datos.</li>
+<li>La «nube». Se debe recordar que «la nube» es «el ordenador de otra persona sobre el cual no tengo ningún control».</li>
+<li>Otros ordenadores. Ventajas: tenemos control sobre ellos, fácil accesibilidad, coste medio…</li>
+<li>NAS: Network Attached Storage. Coste medio, facilidad de uso, alta disponibilidad.</li>
+<li>Dispositivos USB: muy versátiles, pero muy sensibles a campos magnéticos/golpes.</li>
+<li>Medios ópticos. Ofrecen una mayor tasa de supervivencia que los USB extraíbles.</li>
+<li>Discos magnéticos: ofrecen la mejor tasa coste/supervivencia.</li>
+<li>Cinta magnética. Ofrecen de lejos, el mejor coste. Sin embargo son muy lentas de recuperar y rellenar</li>
+<li>Discos SSD. Son variantes de los dispositivos USB, pero normalmente usan una conexión al dispositivo que es más rápida que un USB.</li>
+<li>Imprimir los datos. No es tan inútil como podría parecer, la duración de los datos impresos puede ser muy alta y además son muy difíciles de «robar».</li>
 </ul>
 </div>
 <div class="section" id="sistemas-biometricos-funcionamiento-estandares">
@@ -412,6 +436,15 @@ DH….</p>
 <a class="reference internal image-reference" href="../_images/standards.png"><img alt="Un estándar debería ser único." src="../_images/standards.png" style="width: 250.0px; height: 141.5px;" /></a>
 <p class="caption"><span class="caption-text">El problema actual con los estándares.</span></p>
 </div>
+<p>De hecho podemos nombrar los siguientes estándares:</p>
+<ul class="simple">
+<li>BioAPI: con el apoyo de IBM y Hewlett-Packard.</li>
+<li>BAPI: propiedad de I/O Software pero utilizado por Microsoft.</li>
+<li>ANSI X.9: pensada para la industria financiera e impulsado por los Estados Unidos.</li>
+<li>CBEFF: pensado para ficheros que almacenen información biométrica.</li>
+<li>Estándares del NIST estadounidense (National Institute of Standards and Technology).</li>
+</ul>
+<p>A fecha de hoy ninguno de ellos ha triunfado sobre los demás y de hecho por el momento cada fabricante tiene sus propios mecanismos, software y drivers (con el consiguiente problema para los administradores de sistemas).</p>
 </div>
 <div class="section" id="analisis-forense-en-sistemas-informaticos">
 <h2>Análisis forense en sistemas informáticos<a class="headerlink" href="#analisis-forense-en-sistemas-informaticos" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -590,7 +623,7 @@ DH….</p>
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

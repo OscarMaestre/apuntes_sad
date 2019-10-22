@@ -9,49 +9,19 @@
 \usepackage[utf8]{inputenc}
 \ifdefined\DeclareUnicodeCharacter
 % support both utf8 and utf8x syntaxes
-  \ifdefined\DeclareUnicodeCharacterAsOptional
-    \def\sphinxDUC#1{\DeclareUnicodeCharacter{"#1}}
-  \else
-    \let\sphinxDUC\DeclareUnicodeCharacter
-  \fi
-  \sphinxDUC{00A0}{\nobreakspace}
-  \sphinxDUC{2500}{\sphinxunichar{2500}}
-  \sphinxDUC{2502}{\sphinxunichar{2502}}
-  \sphinxDUC{2514}{\sphinxunichar{2514}}
-  \sphinxDUC{251C}{\sphinxunichar{251C}}
-  \sphinxDUC{2572}{\textbackslash}
+\edef\sphinxdqmaybe{\ifdefined\DeclareUnicodeCharacterAsOptional\string"\fi}
+  \DeclareUnicodeCharacter{\sphinxdqmaybe00A0}{\nobreakspace}
+  \DeclareUnicodeCharacter{\sphinxdqmaybe2500}{\sphinxunichar{2500}}
+  \DeclareUnicodeCharacter{\sphinxdqmaybe2502}{\sphinxunichar{2502}}
+  \DeclareUnicodeCharacter{\sphinxdqmaybe2514}{\sphinxunichar{2514}}
+  \DeclareUnicodeCharacter{\sphinxdqmaybe251C}{\sphinxunichar{251C}}
+  \DeclareUnicodeCharacter{\sphinxdqmaybe2572}{\textbackslash}
 \fi
 \usepackage{cmap}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amstext}
 \usepackage{babel}
-
-
-
 \usepackage{times}
-\expandafter\ifx\csname T@LGR\endcsname\relax
-\else
-% LGR was declared as font encoding
-  \substitutefont{LGR}{\rmdefault}{cmr}
-  \substitutefont{LGR}{\sfdefault}{cmss}
-  \substitutefont{LGR}{\ttdefault}{cmtt}
-\fi
-\expandafter\ifx\csname T@X2\endcsname\relax
-  \expandafter\ifx\csname T@T2A\endcsname\relax
-  \else
-  % T2A was declared as font encoding
-    \substitutefont{T2A}{\rmdefault}{cmr}
-    \substitutefont{T2A}{\sfdefault}{cmss}
-    \substitutefont{T2A}{\ttdefault}{cmtt}
-  \fi
-\else
-% X2 was declared as font encoding
-  \substitutefont{X2}{\rmdefault}{cmr}
-  \substitutefont{X2}{\sfdefault}{cmss}
-  \substitutefont{X2}{\ttdefault}{cmtt}
-\fi
-
-
 \usepackage[Sonny]{fncychap}
 \ChNameVar{\Large\normalfont\sffamily}
 \ChTitleVar{\Large\normalfont\sffamily}
@@ -68,13 +38,24 @@
 \urlstyle{same}
 \addto\captionsspanish{\renewcommand{\contentsname}{Contenidos:}}
 
-\usepackage{sphinxmessages}
+\addto\captionsspanish{\renewcommand{\figurename}{Figura}}
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+\addto\captionsspanish{\renewcommand{\literalblockname}{Lista}}
+
+\addto\captionsspanish{\renewcommand{\literalblockcontinuedname}{proviene de la página anterior}}
+\addto\captionsspanish{\renewcommand{\literalblockcontinuesname}{continué en la próxima página}}
+\addto\captionsspanish{\renewcommand{\sphinxnonalphabeticalgroupname}{Non-alphabetical}}
+\addto\captionsspanish{\renewcommand{\sphinxsymbolsname}{Símbolos}}
+\addto\captionsspanish{\renewcommand{\sphinxnumbersname}{Numbers}}
+
+\addto\extrasspanish{\def\pageautorefname{página}}
+
 \setcounter{tocdepth}{2}
 
 
 
 \title{Apuntes de Seguridad y alta disponibilidad Documentation}
-\date{08 de octubre de 2019}
+\date{22 de octubre de 2019}
 \release{1.0}
 \author{Oscar GG}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -88,7 +69,7 @@
 \fi
 
 \pagestyle{empty}
-\sphinxmaketitle
+\maketitle
 \pagestyle{plain}
 \sphinxtableofcontents
 \pagestyle{normal}
@@ -478,7 +459,9 @@ La autenticación consiste en «comprobar que alguien es quien dice ser», ¿com
 
 En primer lugar tendremos tres elementos:
 \begin{enumerate}
-\sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
+\def\theenumi{\arabic{enumi}}
+\def\labelenumi{\theenumi .}
+\makeatletter\def\p@enumii{\p@enumi \theenumi .}\makeatother
 \item {} 
 Un servidor (como por ejemplo Amazon) que desea ofrecer garantías a sus clientes de que cuando se conectan a Amazon realmente se conectan a un servidor de Amazon.
 
@@ -492,7 +475,9 @@ Por último tendremos un tercero que se encarga de verificar el proceso para amb
 
 Así,el proceso es el siguiente:
 \begin{enumerate}
-\sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
+\def\theenumi{\arabic{enumi}}
+\def\labelenumi{\theenumi .}
+\makeatletter\def\p@enumii{\p@enumi \theenumi .}\makeatother
 \item {} 
 Amazon envía a la CA una «petición de firma de certificado».
 
@@ -518,7 +503,9 @@ El cliente descarga el certificado y lo descifra con la clave pública de la CA,
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:privacidad}}
 Una vez que Amazon ha ofrecido garantías a su cliente ahora se necesita usar la criptografía para que el usuario pueda hacer sus compras sin que nadie espíe. Ahora las claves se usarán al revés.
 \begin{enumerate}
-\sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
+\def\theenumi{\arabic{enumi}}
+\def\labelenumi{\theenumi .}
+\makeatletter\def\p@enumii{\p@enumi \theenumi .}\makeatother
 \item {} 
 El cliente se conecta a Amazon (despues de haber comprobado que el certificado es correcto)
 
@@ -551,7 +538,7 @@ Una vez generado tendremos un directorio llamado \sphinxcode{\sphinxupquote{.gnu
 Una vez se tenga generada la clave la costumbre es tener preparado un «certificado de revocación». Se utilizará si creemos que nos han robado alguna clave y distribuiremos el fichero para avisar de que no se debe confiar en nuestras claves. Esto se hace con el comando \sphinxcode{\sphinxupquote{gpg -{-}gen-revoke "usuario" -{-}output ClaveRevocada.asc}} . Se pueden usar otros nombres de fichero pero la costumbre es usar la extensión \sphinxcode{\sphinxupquote{.asc}}
 
 \item {} 
-A continuación se suele extraer nuestra clave pública del almacén de claves y ponerla en un fichero con el comando \sphinxcode{\sphinxupquote{gpg -{-}export \textless{}usuario\textgreater{} -{-}output ClavePublicaUsuario.gpg}} . Se generará un fichero binario en \sphinxcode{\sphinxupquote{ClavePublicaUsuario.gpg}} . Si deseamos generar un fichero con ASCII normal podemos hacer esto {\color{red}\bfseries{}{}`{}`}gpg \textendash{}armor \textendash{}export \textless{}usuario\textgreater{} \textendash{}output ClavePublicaUsuario.gpg {}`{}`
+A continuación se suele extraer nuestra clave pública del almacén de claves y ponerla en un fichero con el comando \sphinxcode{\sphinxupquote{gpg -{-}export \textless{}usuario\textgreater{} -{-}output ClavePublicaUsuario.gpg}} . Se generará un fichero binario en \sphinxcode{\sphinxupquote{ClavePublicaUsuario.gpg}} . Si deseamos generar un fichero con ASCII normal podemos hacer esto \sphinxcode{\sphinxupquote{gpg -{-}armor -{-}export \textless{}usuario\textgreater{} -{-}output ClavePublicaUsuario.gpg}}
 
 \item {} 
 Una vez que alguien nos haya pasado su clave pública deberemos incorporarla a nuestro almacén usando \sphinxcode{\sphinxupquote{gpg -{-}import \textless{}fichero.gpg\textgreater{}}}
@@ -567,21 +554,302 @@ Finalmente podremos descifrar un fichero que nos hayan enviado usando \sphinxcod
 
 \section{Listas de control de acceso.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:listas-de-control-de-acceso}}
+En los sistemas UNIX (como GNU/Linux) tradicionalmente se han usado permisos basados en usuarios y grupos. Así, cuando se crear un usuario (con \sphinxcode{\sphinxupquote{sudo adduser nombreusuario}}) tradicionamente se crea un grupo con el mismo nombre y en el que está solo ese usuario.
+
+Cuando un usuario cualquiera crea un fichero, ese fichero tiene asignados automáticamente unos permisos que pueden ser
+\begin{itemize}
+\item {} 
+\sphinxcode{\sphinxupquote{r}} si se puede leer el fichero
+
+\item {} 
+\sphinxcode{\sphinxupquote{w}} si se puede escribir/modificar el fichero.
+
+\item {} 
+\sphinxcode{\sphinxupquote{x}} si se puede ejecutar.
+
+\end{itemize}
+
+Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usuarios en general. Así, un fichero cualquiera puede mostrar unos permisos como estos (necesitaremos el comando \sphinxcode{\sphinxupquote{ls -l}} para ver los permisos).
+
+\begin{figure}[htbp]
+\centering
+\capstart
+
+\noindent\sphinxincludegraphics[scale=0.5]{{permisos_grupos}.png}
+\caption{Ejemplos de permisos en un sistema GNU/Linux}\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:id1}}\end{figure}
+
+Si examinamos el fichero \sphinxcode{\sphinxupquote{Makefile}} veremos que tiene unos permisos como estos \sphinxcode{\sphinxupquote{-rw-rw-r-{-}}} y veremos también que pone \sphinxcode{\sphinxupquote{profesor profesor}} . Por este orden, esto significa
+\begin{itemize}
+\item {} 
+El usuario propietario del fichero se llama \sphinxcode{\sphinxupquote{profesor}}. El grupo asignado a este fichero es \sphinxcode{\sphinxupquote{profesor}} (recuérdese que puede cambiarse el propietario con \sphinxcode{\sphinxupquote{chown}} y el grupo con \sphinxcode{\sphinxupquote{chgrp}} )
+
+\item {} 
+El primer permiso tiene un \sphinxcode{\sphinxupquote{-}}. Este primer permiso indica el tipo de fichero, que puede ser «fichero normal» (-), «directorio» (veriamos «d»), «enlace» (l)…
+
+\item {} 
+Despues vemos \sphinxcode{\sphinxupquote{rw-}}. Este primer grupo de tres permisos es el aplicado al propietario (que este caso es \sphinxcode{\sphinxupquote{profesor}}). Este grupo significa que el propietario puede leer y escribir en este fichero, pero no ejecutar.
+
+\item {} 
+Despues vemos \sphinxcode{\sphinxupquote{rw-}}. Estos son los permisos que se aplicarán al grupo, que en este caso es el grupo «profesor» (no pasa nada porque un grupo se llame igual que un usuario). Esto significa que cualquier usuario asignado al grupo «profesor» también podrá leer y escribir el fichero.
+
+\item {} 
+Por último vemos \sphinxcode{\sphinxupquote{r-{-}}} . Esto significa que cualquier otro usuario que ni sea \sphinxcode{\sphinxupquote{profesor}} ni pertenezca al grupo \sphinxcode{\sphinxupquote{profesor}} podrá hacer nada que no sea leer en el fichero.
+
+\end{itemize}
+
+Este sistema de permisos ha funcionado muy bien durante mucho tiempo, sin embargo con el tiempo ha mostrado algunas flaquezas.
+
+\begin{figure}[htbp]
+\centering
+\capstart
+
+\noindent\sphinxincludegraphics[scale=0.5]{{ficherorestringido}.png}
+\caption{Un ejemplo de problema con los permisos}\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:id2}}\end{figure}
+
+
+\subsection{Ejercicio con permisos}
+\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:ejercicio-con-permisos}}
+Crea los usuario \sphinxcode{\sphinxupquote{info01}}, \sphinxcode{\sphinxupquote{info02}}, \sphinxcode{\sphinxupquote{conta01}} y \sphinxcode{\sphinxupquote{conta02}}. Inicia sesión con cada uno de ellos y haz que cada uno de ellos cree un fichero con su mismo nombre, es decir \sphinxcode{\sphinxupquote{info01.txt}}, \sphinxcode{\sphinxupquote{info02.txt}}, \sphinxcode{\sphinxupquote{conta01.txt}} y \sphinxcode{\sphinxupquote{conta02.txt}}.
+
+Los comandos serían \sphinxcode{\sphinxupquote{sudo adduser info01}}, \sphinxcode{\sphinxupquote{sudo adduser info02}}, \sphinxcode{\sphinxupquote{sudo adduser conta01}} y \sphinxcode{\sphinxupquote{sudo adduser conta02}}.
+
+Una vez hecho esto, nos salimos con el comando \sphinxcode{\sphinxupquote{exit}} e iniciamos sesión con, por ejemplo, \sphinxstyleemphasis{conta01}. El sistema nos dejará en el directorio \sphinxcode{\sphinxupquote{/home/conta01}} y en él podremos crear el fichero. Puedes asegurarte de que estás en el directorio correcto con \sphinxcode{\sphinxupquote{pwd}} . Puedes crear el fichero con \sphinxcode{\sphinxupquote{nano conta01.txt}} y rellenando el fichero con el texto que quieras. Sal de la consola y repite el proceso con el resto de usuario.
+
+Ahora hay que establecer permisos, por ejemplo usaremos la configuración \sphinxcode{\sphinxupquote{-rw-r-{-}-{-}-}} que hace lo siguiente:
+\begin{itemize}
+\item {} 
+Permite leer y escribir (rw-) al propietario.
+
+\item {} 
+Permite leer a los usuarios que estén en el grupo del fichero (r\textendash{}).
+
+\item {} 
+No deja hacer \sphinxstylestrong{nada} a los otros (—).
+
+\end{itemize}
+
+¿Que harías si deseas permitir algo como lo siguiente?
+\begin{itemize}
+\item {} 
+Que el fichero \sphinxcode{\sphinxupquote{conta01.txt}}  sea de lectura y escritura para \sphinxcode{\sphinxupquote{conta02}}
+
+\item {} 
+Que el fichero \sphinxcode{\sphinxupquote{conta01.txt}}  de lectura y escritura para \sphinxcode{\sphinxupquote{info01}}.
+
+\item {} 
+Que el fichero \sphinxcode{\sphinxupquote{conta01.txt}}  sea de lectura para info02.
+
+\end{itemize}
+
+La solución a este problema sería compleja. Por ejemplo podríamos hacer esto:
+\begin{itemize}
+\item {} 
+Siendo administradores crear un grupo: \sphinxcode{\sphinxupquote{sudo addgroup info01conta02}}.
+
+\item {} 
+Siendo administradores modificar los usuarios info01 y conta02 para que pertenezcan al nuevo grupo con \sphinxcode{\sphinxupquote{sudo usermod -a -G info01conta02 info01}} y \sphinxcode{\sphinxupquote{sudo usermod -a -G info01conta02 conta02}} .
+
+\item {} 
+Cambiar el grupo del fichero \sphinxcode{\sphinxupquote{conta01.txt}} con \sphinxcode{\sphinxupquote{sudo chgrp info01conta02 conta01.txt}}
+
+\item {} 
+Dar al fichero conta01 permisos de lectura y escritura para el grupo con \sphinxcode{\sphinxupquote{sudo chmod g+w conta01.txt}}
+
+\item {} 
+Dar permisos de lectura \sphinxstylestrong{a otros usuarios} con \sphinxcode{\sphinxupquote{chmod o+w conta01.txt}}
+
+\end{itemize}
+
+Sin embargo el último caso es \sphinxstylestrong{un agujero de seguridad} . Sin querer vamos a dar permisos de lectura a info02 \sphinxstyleemphasis{y a todos los demás usuarios}
+
+Se necesita usar el comando setfacl que funciona de esta manera:
+\begin{itemize}
+\item {} 
+Podemos añadir permisos con \sphinxcode{\sphinxupquote{setfacl -m u:info01:rw conta01.txt}}. Podemos hacer esto desde el usuario normal \sphinxcode{\sphinxupquote{conta01}} .
+
+\item {} 
+Ejecutamos \sphinxcode{\sphinxupquote{setfacl -m u:conta02:rw conta01.txt}} .
+
+\item {} 
+Ejecutamos \sphinxcode{\sphinxupquote{setfacl -m u:info02:w conta01.txt}}
+
+\end{itemize}
+
+Para consultar los permisos de un archivo usaremos \sphinxcode{\sphinxupquote{getfacl conta01.txt}}. Si nos equivocamos y deseamos borrar una entrada de la lista usaremos cosas como \sphinxcode{\sphinxupquote{setfacl -x u:conta02  conta01.txt}}
+
 
 \section{Establecimiento de políticas de contraseñas.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:establecimiento-de-politicas-de-contrasenas}}
+Por incómodo que resulte, las contraseñas:
+\begin{itemize}
+\item {} 
+Deben ser largas (de 8 símbolos o más)
+
+\item {} 
+Deben mezclar todos los siguientes conjuntos posibles, o al menos el máximo posible: mayúsculas, minúsculas, números y símbolos especiales.
+
+\item {} 
+Deben cambiarse con las máxima periodicidad posible.
+
+\item {} 
+Deben ser lo más distintas posibles a las claves antiguas.
+
+\item {} 
+Deberían caducar automáticamente.
+
+\item {} 
+No deberían almacenarse como «texto plano» en ningún sitio. Lo típico es almacenar contraseñas «cifradas».
+
+\end{itemize}
+
 
 \section{Políticas de almacenamiento.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:politicas-de-almacenamiento}}
+Se debe determinar lo siguiente en cuanto a los datos:
+\begin{itemize}
+\item {} 
+¿Qué datos se va a almacenar? Hay que recordar que la LOPD marca las principales directrices a tener en cuenta sobre la información almacenada.
+
+\item {} 
+¿Donde se va a almacenar? Los distintos medios tienen distintas características.
+
+\item {} 
+¿Qué mecanismos de copia se van a implementar? Por su excesivo tamaño tal vez no siempre podamos hacer una copia entera de todo el disco duro.
+
+\end{itemize}
+
+En cuanto al primer punto debemos recordar lo básico sobre los datos según la LOPD.
+\begin{itemize}
+\item {} 
+Datos de nivel básico: en general información como nombre, apellidos, datos postales, información laboral…
+
+\item {} 
+Datos de nivel medio: información financiera, infracciones administrativas, multas…
+
+\item {} 
+Datos de nivel alto: filiación política, confesiones y/o religiones, sexualidad, datos sanitarios
+
+\end{itemize}
+
+¿Qué ocurre con las IP, datos sobre navegador, sistema operativo, etc…?
+
 
 \section{Copias de seguridad e imágenes de respaldo.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:copias-de-seguridad-e-imagenes-de-respaldo}}
+No es lo mismo una copia de seguridad que una imagen.
+
+En cuanto a las copias de seguridad podemos hablar de:
+\begin{itemize}
+\item {} 
+Copias completas. Son muy fáciles de aplicar y muy fáciles de recuperar pero pueden consumir muchísimo espacio.
+
+\item {} 
+Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa \sphinxstylestrong{más todas las incrementales} lo cual puede ser muy lento.
+
+\item {} 
+Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado \sphinxstylestrong{con respecto a la última copia completa} . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.
+
+\end{itemize}
+
+En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa «Configuración de copia de seguridad» y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.
+
+En UNIX las copias se hacen de otra manera.
+\begin{itemize}
+\item {} 
+En primer lugar necesitaremos el comando \sphinxcode{\sphinxupquote{tar}} . Podemos crear un archivo llamado \sphinxcode{\sphinxupquote{usuarios.tar}} que almacene todos los directorios de todos los usuarios ejecutando \sphinxcode{\sphinxupquote{sudo tar -cf /home/usuario.tar /home/}}
+
+\item {} 
+Para programar la ejecución de la copia habrá que «editar la tabla de trabajos programados» que se hace con \sphinxcode{\sphinxupquote{sudo crontab -e}} .En realidad cada usuario tiene su propia tabla de trabajos pero como queremos leer directorios de otros usuarios ejecutaremos la tarea de copia desde la tabla de trabajos del administrador.
+
+\item {} 
+Una vez que ejecutemos \sphinxcode{\sphinxupquote{crontab -e}} veremos un fichero que permite indicar tareas y el horario de ejecución usando el formato \sphinxcode{\sphinxupquote{minutos horas dia-del-mes mes dia-de-la-semana comando}} .
+
+\end{itemize}
+
+Así podemos escribir algo como esto:
+\begin{itemize}
+\item {} \begin{itemize}
+\item {} \begin{itemize}
+\item {} \begin{itemize}
+\item {} \begin{itemize}
+\item {} 
+tar -cf /home/usuarios\$(date “+\%d-\%M-\%Y\%H\%M”).tar /home/*
+
+\end{itemize}
+
+\end{itemize}
+
+\end{itemize}
+
+\end{itemize}
+
+\end{itemize}
+
 
 \section{Medios de almacenamiento.}
-\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:medios-de-almacenamiento}}
+\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:medios-de-almacenamiento}}\begin{itemize}
+\item {} 
+La «nube». Se debe recordar que «la nube» es «el ordenador de otra persona sobre el cual no tengo ningún control».
+
+\item {} 
+Otros ordenadores. Ventajas: tenemos control sobre ellos, fácil accesibilidad, coste medio…
+
+\item {} 
+NAS: Network Attached Storage. Coste medio, facilidad de uso, alta disponibilidad.
+
+\item {} 
+Dispositivos USB: muy versátiles, pero muy sensibles a campos magnéticos/golpes.
+
+\item {} 
+Medios ópticos. Ofrecen una mayor tasa de supervivencia que los USB extraíbles.
+
+\item {} 
+Discos magnéticos: ofrecen la mejor tasa coste/supervivencia.
+
+\item {} 
+Cinta magnética. Ofrecen de lejos, el mejor coste. Sin embargo son muy lentas de recuperar y rellenar
+
+\item {} 
+Discos SSD. Son variantes de los dispositivos USB, pero normalmente usan una conexión al dispositivo que es más rápida que un USB.
+
+\item {} 
+Imprimir los datos. No es tan inútil como podría parecer, la duración de los datos impresos puede ser muy alta y además son muy difíciles de «robar».
+
+\end{itemize}
+
 
 \section{Sistemas biométricos. Funcionamiento. Estándares.}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:sistemas-biometricos-funcionamiento-estandares}}
+Por desgracia la siguiente figura ilustra muy bien el problema actual con los estándares biométricos:
+
+\begin{figure}[htbp]
+\centering
+\capstart
+
+\noindent\sphinxincludegraphics[scale=0.5]{{standards}.png}
+\caption{El problema actual con los estándares.}\label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:id3}}\end{figure}
+
+De hecho podemos nombrar los siguientes estándares:
+\begin{itemize}
+\item {} 
+BioAPI: con el apoyo de IBM y Hewlett-Packard.
+
+\item {} 
+BAPI: propiedad de I/O Software pero utilizado por Microsoft.
+
+\item {} 
+ANSI X.9: pensada para la industria financiera e impulsado por los Estados Unidos.
+
+\item {} 
+CBEFF: pensado para ficheros que almacenen información biométrica.
+
+\item {} 
+Estándares del NIST estadounidense (National Institute of Standards and Technology).
+
+\end{itemize}
+
+A fecha de hoy ninguno de ellos ha triunfado sobre los demás y de hecho por el momento cada fabricante tiene sus propios mecanismos, software y drivers (con el consiguiente problema para los administradores de sistemas).
+
 
 \section{Análisis forense en sistemas informáticos}
 \label{\detokenize{tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica:analisis-forense-en-sistemas-informaticos}}
@@ -694,10 +962,13 @@ Existe un comando para apagar/reiniciar el sistema y es \sphinxcode{\sphinxupquo
 Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del sistema anfitrión para «conectarla» con el sistema operativo invitado.
 
 \item {} 
-Reiniciamos la máquina y ejecutamos el comando \sphinxcode{\sphinxupquote{mount}}
+Reiniciamos la máquina y ejecutamos el comando \sphinxcode{\sphinxupquote{mount}}.
 
 \item {} 
 Puede ser necesario añadir nuestro usuario al grupo «vboxsf» que es el grupo con el que se «monta» el directorio compartido. Para hacer esto usaremos el comando \sphinxcode{\sphinxupquote{sudo usermod -a -G vboxsf pepito}}
+
+\item {} 
+Si en el momento de la instalación no indicamos correctamente nuestro país es posible que la hora del sistema no sea la hora local. Podemos ajustar la hora usando el comando \sphinxcode{\sphinxupquote{sudo timedatectl set-timezone Europe/Madrid}} .
 
 \end{itemize}
 
@@ -785,7 +1056,9 @@ Los datos penales no podrán usarse para otros fines y su tratamiento solo podr�
 \label{\detokenize{tema_lopd/tema_lopd:articulo-11-transparencia-e-informacion-al-afectado}}
 El responsable debe cumplir con el deber de información y decir al afectado:
 \begin{enumerate}
-\sphinxsetlistlabels{\arabic}{enumi}{enumii}{}{.}%
+\def\theenumi{\arabic{enumi}}
+\def\labelenumi{\theenumi .}
+\makeatletter\def\p@enumii{\p@enumi \theenumi .}\makeatother
 \item {} 
 La identidad del responsable o su representante.
 
@@ -971,8 +1244,8 @@ Las actividades del responsable serán gratuitas.
 \section{Instalación y configuración de soluciones de alta disponibilidad.}
 \label{\detokenize{tema_sad/tema_sad:instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad}}
 
-\section{Vitalización de sistemas.}
-\label{\detokenize{tema_sad/tema_sad:vitalizacion-de-sistemas}}
+\section{Virtualización de sistemas.}
+\label{\detokenize{tema_sad/tema_sad:virtualizacion-de-sistemas}}
 
 \section{Posibilidades de la virtualización de sistemas.}
 \label{\detokenize{tema_sad/tema_sad:posibilidades-de-la-virtualizacion-de-sistemas}}

@@ -433,10 +433,11 @@ Se debe determinar lo siguiente en cuanto a los datos:
 
 En cuanto al primer punto debemos recordar lo básico sobre los datos según la LOPD.
 
-* Datos de nivel básico.
-* Datos de nivel medio.
-* Datos de nivel alto.
+* Datos de nivel básico: en general información como nombre, apellidos, datos postales, información laboral...
+* Datos de nivel medio: información financiera, infracciones administrativas, multas...
+* Datos de nivel alto: filiación política, confesiones y/o religiones, sexualidad, datos sanitarios
 
+¿Qué ocurre con las IP, datos sobre navegador, sistema operativo, etc...?
 
 Copias de seguridad e imágenes de respaldo.
 -----------------------------------------------------------------------------------------------
@@ -445,23 +446,37 @@ No es lo mismo una copia de seguridad que una imagen.
 
 En cuanto a las copias de seguridad podemos hablar de:
 
-* Copias completas.
-* Copias incrementales.
-* Copias diferenciales.
+* Copias completas. Son muy fáciles de aplicar y muy fáciles de recuperar pero pueden consumir muchísimo espacio.
+* Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa **más todas las incrementales** lo cual puede ser muy lento.
+* Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado **con respecto a la última copia completa** . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.
 
+
+En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa "Configuración de copia de seguridad" y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.
+
+
+En UNIX las copias se hacen de otra manera.
+
+* En primer lugar necesitaremos el comando ``tar`` . Podemos crear un archivo llamado ``usuarios.tar`` que almacene todos los directorios de todos los usuarios ejecutando ``sudo tar -cf /home/usuario.tar /home/`` 
+* Para programar la ejecución de la copia habrá que "editar la tabla de trabajos programados" que se hace con ``sudo crontab -e`` .En realidad cada usuario tiene su propia tabla de trabajos pero como queremos leer directorios de otros usuarios ejecutaremos la tarea de copia desde la tabla de trabajos del administrador.
+
+* Una vez que ejecutemos ``crontab -e`` veremos un fichero que permite indicar tareas y el horario de ejecución usando el formato ``minutos horas dia-del-mes mes dia-de-la-semana comando`` .
+
+Así podemos escribir algo como esto:
+
+* * * * * tar -cf /home/usuarios$(date '+\%d-\%M-\%Y\%H\%M').tar /home/*
 
 Medios de almacenamiento.
 -----------------------------------------------------------------------------------------------
 
-* La "nube".
-* Otros ordenadores.
-* NAS.
-* Dispositivos USB.
-* Medios ópticos.
-* Discos magnéticos.
-* Cinta magnética.
-* Discos SSD.
-* Imprimir los datos.
+* La "nube". Se debe recordar que "la nube" es "el ordenador de otra persona sobre el cual no tengo ningún control".
+* Otros ordenadores. Ventajas: tenemos control sobre ellos, fácil accesibilidad, coste medio...
+* NAS: Network Attached Storage. Coste medio, facilidad de uso, alta disponibilidad.
+* Dispositivos USB: muy versátiles, pero muy sensibles a campos magnéticos/golpes.
+* Medios ópticos. Ofrecen una mayor tasa de supervivencia que los USB extraíbles.
+* Discos magnéticos: ofrecen la mejor tasa coste/supervivencia.
+* Cinta magnética. Ofrecen de lejos, el mejor coste. Sin embargo son muy lentas de recuperar y rellenar
+* Discos SSD. Son variantes de los dispositivos USB, pero normalmente usan una conexión al dispositivo que es más rápida que un USB.
+* Imprimir los datos. No es tan inútil como podría parecer, la duración de los datos impresos puede ser muy alta y además son muy difíciles de "robar".
 
 
 
@@ -479,6 +494,16 @@ Por desgracia la siguiente figura ilustra muy bien el problema actual con los es
 
    El problema actual con los estándares.
 
+
+De hecho podemos nombrar los siguientes estándares:
+
+* BioAPI: con el apoyo de IBM y Hewlett-Packard.
+* BAPI: propiedad de I/O Software pero utilizado por Microsoft.
+* ANSI X.9: pensada para la industria financiera e impulsado por los Estados Unidos.
+* CBEFF: pensado para ficheros que almacenen información biométrica.
+* Estándares del NIST estadounidense (National Institute of Standards and Technology).
+
+A fecha de hoy ninguno de ellos ha triunfado sobre los demás y de hecho por el momento cada fabricante tiene sus propios mecanismos, software y drivers (con el consiguiente problema para los administradores de sistemas).
 
 
 

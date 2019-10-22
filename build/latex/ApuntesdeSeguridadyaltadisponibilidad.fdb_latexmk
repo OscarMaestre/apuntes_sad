@@ -1,10 +1,10 @@
 # Fdb version 3
-["makeindex ApuntesdeSeguridadyaltadisponibilidad.idx"] 1568216834 "ApuntesdeSeguridadyaltadisponibilidad.idx" "ApuntesdeSeguridadyaltadisponibilidad.ind" "ApuntesdeSeguridadyaltadisponibilidad" 1569253271
+["makeindex ApuntesdeSeguridadyaltadisponibilidad.idx"] 1568216834 "ApuntesdeSeguridadyaltadisponibilidad.idx" "ApuntesdeSeguridadyaltadisponibilidad.ind" "ApuntesdeSeguridadyaltadisponibilidad" 1571742060
   "ApuntesdeSeguridadyaltadisponibilidad.idx" 1569253267 0 d41d8cd98f00b204e9800998ecf8427e ""
   (generated)
-  "ApuntesdeSeguridadyaltadisponibilidad.ind"
   "ApuntesdeSeguridadyaltadisponibilidad.ilg"
-["pdflatex"] 1569253267 "ApuntesdeSeguridadyaltadisponibilidad.tex" "ApuntesdeSeguridadyaltadisponibilidad.pdf" "ApuntesdeSeguridadyaltadisponibilidad" 1569253271
+  "ApuntesdeSeguridadyaltadisponibilidad.ind"
+["pdflatex"] 1571742060 "ApuntesdeSeguridadyaltadisponibilidad.tex" "ApuntesdeSeguridadyaltadisponibilidad.pdf" "ApuntesdeSeguridadyaltadisponibilidad" 1571742060
   "/etc/texmf/web2c/texmf.cnf" 1536324598 838 1a7f35fa13839e48fb114eb1d6de2cf3 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -37,6 +37,7 @@
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr12.tfm" 1480098701 1288 655e228510b4c2a1abe905c368440826 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr17.tfm" 1480098701 1292 296a67155bdbfc32aa9c636f21e91433 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1480098701 1124 6c73e740cf17375f03eec0ee63599741 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1480098733 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb" 1480098746 45758 19968a0990191524e34e1994d4a31cb6 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb" 1480098746 35941 f27169cc74234d5bd5e4cca5abafaabb ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb" 1480098746 39013 b244066151b1e3e718f9b8e88a5ff23b ""
@@ -151,17 +152,20 @@
   "ApuntesdeSeguridadyaltadisponibilidad.aux" 1569253268 29568 b27c09c2e882d6d6d39fcac4eb6f12c2 ""
   "ApuntesdeSeguridadyaltadisponibilidad.ind" 1568216834 0 d41d8cd98f00b204e9800998ecf8427e "makeindex ApuntesdeSeguridadyaltadisponibilidad.idx"
   "ApuntesdeSeguridadyaltadisponibilidad.out" 1569253268 25760 09033a1c2d74d67c281bbf19be5845fe ""
-  "ApuntesdeSeguridadyaltadisponibilidad.tex" 1569253266 26780 fca3cc3e7559b663684d563f9e8821d3 ""
+  "ApuntesdeSeguridadyaltadisponibilidad.tex" 1571742060 56182 038b4e42dce35ba485b68b285783fb5d ""
   "ApuntesdeSeguridadyaltadisponibilidad.toc" 1569253268 10732 7710ef56b033ed53b08048c73e1fb80b ""
+  "ficherorestringido.png" 1571250119 6941 65c8e3186c142775cdc4fed460b25563 ""
   "footnotehyper-sphinx.sty" 1541013876 8888 1bbd7bdeae8c8bed1d10d551bddb1cc9 ""
+  "permisos_grupos.png" 1571250119 4760 857f0e57b1d641457daca75b47b75988 ""
   "sphinx.sty" 1541013876 69913 6a504e8686d0f955660c2147d7b57d6f ""
-  "sphinxhighlight.sty" 1569253271 8137 38a433148fcb7611515a989ff1750dd5 ""
+  "sphinxhighlight.sty" 1571742060 8137 38a433148fcb7611515a989ff1750dd5 ""
   "sphinxmanual.cls" 1541013876 3529 fa4d4e9f811425ef5966e441eeee9f7f ""
   "sphinxmulticell.sty" 1541013876 14618 0defbdc8536ad2e67f1eac6a1431bc55 ""
+  "standards.png" 1571742039 24305 f6730132df8eba09ebb81aff33e5ae11 ""
   (generated)
-  "ApuntesdeSeguridadyaltadisponibilidad.idx"
-  "ApuntesdeSeguridadyaltadisponibilidad.out"
-  "ApuntesdeSeguridadyaltadisponibilidad.aux"
   "ApuntesdeSeguridadyaltadisponibilidad.log"
-  "ApuntesdeSeguridadyaltadisponibilidad.toc"
+  "ApuntesdeSeguridadyaltadisponibilidad.out"
   "ApuntesdeSeguridadyaltadisponibilidad.pdf"
+  "ApuntesdeSeguridadyaltadisponibilidad.idx"
+  "ApuntesdeSeguridadyaltadisponibilidad.aux"
+  "ApuntesdeSeguridadyaltadisponibilidad.toc"
