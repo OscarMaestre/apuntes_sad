@@ -446,10 +446,24 @@ No es lo mismo una copia de seguridad que una imagen.
 
 En cuanto a las copias de seguridad podemos hablar de:
 
-* Copias completas.
-* Copias incrementales.
-* Copias diferenciales.
+* Copias completas. Son muy fáciles de aplicar y muy fáciles de recuperar pero pueden consumir muchísimo espacio.
+* Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa **más todas las incrementales** lo cual puede ser muy lento.
+* Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado **con respecto a la última copia completa** . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.
 
+
+En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa "Configuración de copia de seguridad" y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.
+
+
+En UNIX las copias se hacen de otra manera.
+
+* En primer lugar necesitaremos el comando ``tar`` . Podemos crear un archivo llamado ``usuarios.tar`` que almacene todos los directorios de todos los usuarios ejecutando ``sudo tar -cf /home/usuario.tar /home/`` 
+* Para programar la ejecución de la copia habrá que "editar la tabla de trabajos programados" que se hace con ``sudo crontab -e`` .En realidad cada usuario tiene su propia tabla de trabajos pero como queremos leer directorios de otros usuarios ejecutaremos la tarea de copia desde la tabla de trabajos del administrador.
+
+* Una vez que ejecutemos ``crontab -e`` veremos un fichero que permite indicar tareas y el horario de ejecución usando el formato ``minutos horas dia-del-mes mes dia-de-la-semana comando`` .
+
+Así podemos escribir algo como esto:
+
+* * * * * tar -cf /home/usuarios$(date '+\%d-\%M-\%Y\%H\%M').tar /home/*
 
 Medios de almacenamiento.
 -----------------------------------------------------------------------------------------------
@@ -461,8 +475,8 @@ Medios de almacenamiento.
 * Medios ópticos. Ofrecen una mayor tasa de supervivencia que los USB extraíbles.
 * Discos magnéticos: ofrecen la mejor tasa coste/supervivencia.
 * Cinta magnética. Ofrecen de lejos, el mejor coste. Sin embargo son muy lentas de recuperar y rellenar
-* Discos SSD.
-* Imprimir los datos.
+* Discos SSD. Son variantes de los dispositivos USB, pero normalmente usan una conexión al dispositivo que es más rápida que un USB.
+* Imprimir los datos. No es tan inútil como podría parecer, la duración de los datos impresos puede ser muy alta y además son muy difíciles de "robar".
 
 
 
