@@ -9,6 +9,12 @@ Un cortafuegos o "firewall" es un programa que examina los paquetes de red entra
 
 A pesar de ser un software existen fabricantes de hardware que venden "dispositivos cortafuegos". Estos dispositivos suelen ser routers que incluyen de serie el software cortafuegos.
 
+Recordatorio de los conceptos básicos de redes
+--------------------------------------------------------------------------------
+
+* Dirección IP: todo paquete de datos lleva una IP de origen y una de destino.
+* Puerto: número asociado a un cierto programa o servicio. Todo paquete lleva un puerto de origen y un puerto de destino.
+
 Utilización de cortafuegos.
 -----------------------------------------------------------------------------------------------
 
