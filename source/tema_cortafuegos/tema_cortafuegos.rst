@@ -2,7 +2,12 @@ Instalación y configuración de cortafuegos
 =================================================
 
 
+Definición de cortafuegos
+--------------------------------------------------------------------------------
 
+Un cortafuegos o "firewall" es un programa que examina los paquetes de red entrantes y salientes y decide autorizar o no el paso en función de las reglas que dictamine el administrador.
+
+A pesar de ser un software existen fabricantes de hardware que venden "dispositivos cortafuegos". Estos dispositivos suelen ser routers que incluyen de serie el software cortafuegos.
 
 Utilización de cortafuegos.
 -----------------------------------------------------------------------------------------------

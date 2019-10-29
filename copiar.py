@@ -8,3 +8,5 @@ print ("Borrando " + RUTA_DIRECTORIO_DESTINO)
 shutil.rmtree ( RUTA_DIRECTORIO_DESTINO , ignore_errors=True)
 
 shutil.copytree(RUTA_APUNTES, RUTA_DIRECTORIO_DESTINO, ignore=None)
+
+shutil.copyfile(".nojekyll", RUTA_DIRECTORIO_DESTINO +os.sep+ ".nojekyll", );
