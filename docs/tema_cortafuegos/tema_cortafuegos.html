@@ -80,6 +80,31 @@
 <div class="section" id="cortafuegos-hardware">
 <h2>Cortafuegos hardware.<a class="headerlink" href="#cortafuegos-hardware" title="Enlazar permanentemente con este título">¶</a></h2>
 </div>
+<div class="section" id="anexo-configuracion-de-ip-en-linux-con-netplan">
+<h2>Anexo: configuración de IP en Linux con Netplan<a class="headerlink" href="#anexo-configuracion-de-ip-en-linux-con-netplan" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>La herramienta <code class="docutils literal notranslate"><span class="pre">netplan</span></code> utiliza ficheros YAML para configurar la IP en Linux. En distribuciones Linux orientadas a servidores es la herramienta que se usará en el futuro para configurar todos los parámetros de red. La estructura de estos ficheros permite indicar parámetros y subparámetros de configuración usando 4 espacios. Así, el fichero típico de <code class="docutils literal notranslate"><span class="pre">netplan</span></code> es como sigue:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">network</span><span class="p">:</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span> <span class="c1">#Version de YAML que se usan</span>
+    <span class="nt">ethernets</span><span class="p">:</span> <span class="c1">#Configuración de tarjetas Ethernet</span>
+        <span class="l l-Scalar l-Scalar-Plain">enp0s3:#Nombre de la tarjeta a configurar</span>
+            <span class="l l-Scalar l-Scalar-Plain">#Se pueden poner muchas direcciones</span>
+            <span class="l l-Scalar l-Scalar-Plain">#usando corchetes y separando por comas</span>
+            <span class="l l-Scalar l-Scalar-Plain">addresses</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">192.168.100/24</span><span class="p p-Indicator">]</span>
+            <span class="c1">#Dirección del router que nos permitirá</span>
+            <span class="c1">#salir al exterior</span>
+            <span class="nt">gateway4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.100.1</span>
+            <span class="nt">nameservers</span><span class="p">:</span>
+                <span class="nt">addresses</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">10.15.0.220</span><span class="p p-Indicator">,</span> <span class="nv">8.8.8.8</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="anexo-ejercicio-de-configuracion">
+<h2>Anexo: ejercicio de configuración<a class="headerlink" href="#anexo-ejercicio-de-configuracion" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="figure align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
+<p class="caption"><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span><a class="headerlink" href="#id1" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
 </div>
 
 
@@ -116,6 +141,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#cortafuegos-libres-y-propietarios">Cortafuegos libres y propietarios.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#distribuciones-libres-para-implementar-cortafuegos-en-maquinas-dedicadas">Distribuciones libres para implementar cortafuegos en máquinas dedicadas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cortafuegos-hardware">Cortafuegos hardware.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#anexo-configuracion-de-ip-en-linux-con-netplan">Anexo: configuración de IP en Linux con Netplan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#anexo-ejercicio-de-configuracion">Anexo: ejercicio de configuración</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>

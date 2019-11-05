@@ -57,3 +57,34 @@ Distribuciones libres para implementar cortafuegos en máquinas dedicadas.
 
 Cortafuegos hardware.
 -----------------------------------------------------------------------------------------------
+
+
+Anexo: configuración de IP en Linux con Netplan
+--------------------------------------------------------------------------------
+
+
+La herramienta ``netplan`` utiliza ficheros YAML para configurar la IP en Linux. En distribuciones Linux orientadas a servidores es la herramienta que se usará en el futuro para configurar todos los parámetros de red. La estructura de estos ficheros permite indicar parámetros y subparámetros de configuración usando 4 espacios. Así, el fichero típico de ``netplan`` es como sigue:
+
+.. code-block:: YAML
+
+    network:
+        version: 2 #Version de YAML que se usan
+        ethernets: #Configuración de tarjetas Ethernet
+            enp0s3:#Nombre de la tarjeta a configurar
+                #Se pueden poner muchas direcciones
+                #usando corchetes y separando por comas
+                addresses: [192.168.100/24]
+                #Dirección del router que nos permitirá
+                #salir al exterior
+                gateway4: 192.168.100.1
+                nameservers:
+                    addresses: [10.15.0.220, 8.8.8.8]
+
+Anexo: ejercicio de configuración
+--------------------------------------------------------------------------------
+
+.. figure:: img/Esquema-de-red.png
+   :scale: 50%
+   :alt: Ejemplos de permisos
+
+   Ejemplos de permisos en un sistema GNU/Linux
