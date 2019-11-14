@@ -15,16 +15,66 @@ Recordatorio de los conceptos básicos de redes
 * Dirección IP: todo paquete de datos lleva una IP de origen y una de destino.
 * Puerto: número asociado a un cierto programa o servicio. Todo paquete lleva un puerto de origen y un puerto de destino.
 
+Cuando un paquete llega a una máquina es posible que haya que tomar una decisión como:
+
+* Permitir el paso del paquete.
+* Denegar el paso.
+* Redirigirlo a otra máquina
+
+Para ello podemos usar cualquier parámetro de TCP/IP, como por ejemplo.
+
+* Autorizar o no dependiendo de la IP de origen.
+* Autorizar o no dependiendo de la IP de destino.
+* Basarnos en el puerto de destino. Dado que los puertos de origen suelen ser aleatorios **es muy poco probable que nos basemos en el puerto de origen** . Debe recordarse también que hay que indicar claramente si el puerto será **TCP o UDP**. 
+* También es posible que usemos otros protocolos para tomar la decisión, por ejemplo ``<prohibir todos los paquetes ICMP>`` 
+* Aunque es poco probable es posible que haya que examinar algún flag del protocolo (RST, SYN, ACK...)
+
 Utilización de cortafuegos.
 -----------------------------------------------------------------------------------------------
+
+Un cortafuegos es un programa que se ejecuta en los niveles más básicos del sistema operativo. Para utilizar esta capacidad es posible que tengamos dos grandes tipos de interfaz.
+
+* Un interfaz gráfico (estilo Windows): en este curso analizaremos como usar el cortafuegos de Windows 2016.
+* Un interfaz basado en comandos (estilo Unix): en este curso veremos como funciona ``nftables`` 
+
 
 
 Filtrado de paquetes de datos.
 -----------------------------------------------------------------------------------------------
 
 
+
 Tipos de cortafuegos. Características. Funciones principal.
 -----------------------------------------------------------------------------------------------
+
+Hay muchas maneras de organizar la arquitectura del cortafuegos de una red. En este curso usaremos la más simple, reflejada en la figura siguiente. En ella, un dispositivo controla todo el tráfico de entrada y salida de una red. Por desgracia tiene el inconveniente de que si un intruso logra "saltarse" el cortafuegos tendrá acceso total a toda la red.
+
+
+.. figure:: img/Cortafuegos.png
+   :scale: 50%
+   :align: center
+   :alt: Estructura de un cortafuegos (Fuente:Wikipedia)
+   
+   Estructura de un cortafuegos (Fuente:Wikipedia)
+
+
+El mecanismo más utilizado hoy en día es la creación de una "zona desmilitarizada" o DMZ y requiere varios dispositivos. También se conoce por el nombre de "screened host".
+
+
+
+
+
+.. figure:: img/dmz.png
+   :scale: 50%
+   :align: center
+   :alt: Arquitectura de una DMZ (Fuente: RedIris).
+
+   Arquitectura de una DMZ (Fuente: RedIris).
+
+
+
+
+
 
 
 Instalación de cortafuegos. Ubicación.
@@ -87,4 +137,4 @@ Anexo: ejercicio de configuración
    :scale: 50%
    :alt: Ejemplos de permisos
 
-   Ejemplos de permisos en un sistema GNU/Linux
+   Ejemplos de configuración de una red.
