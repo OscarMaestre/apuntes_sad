@@ -1,9 +1,11 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Instalación y configuración de cortafuegos &#8212; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -43,24 +45,101 @@
 <div class="section" id="recordatorio-de-los-conceptos-basicos-de-redes">
 <h2>Recordatorio de los conceptos básicos de redes<a class="headerlink" href="#recordatorio-de-los-conceptos-basicos-de-redes" title="Enlazar permanentemente con este título">¶</a></h2>
 <ul class="simple">
-<li><p>Dirección IP: todo paquete de datos lleva una IP de origen y una de destino.</p></li>
-<li><p>Puerto: número asociado a un cierto programa o servicio. Todo paquete lleva un puerto de origen y un puerto de destino.</p></li>
+<li>Dirección IP: todo paquete de datos lleva una IP de origen y una de destino.</li>
+<li>Puerto: número asociado a un cierto programa o servicio. Todo paquete lleva un puerto de origen y un puerto de destino.</li>
+</ul>
+<p>Cuando un paquete llega a una máquina es posible que haya que tomar una decisión como:</p>
+<ul class="simple">
+<li>Permitir el paso del paquete.</li>
+<li>Denegar el paso.</li>
+<li>Redirigirlo a otra máquina</li>
+</ul>
+<p>Para ello podemos usar cualquier parámetro de TCP/IP, como por ejemplo.</p>
+<ul class="simple">
+<li>Autorizar o no dependiendo de la IP de origen.</li>
+<li>Autorizar o no dependiendo de la IP de destino.</li>
+<li>Basarnos en el puerto de destino. Dado que los puertos de origen suelen ser aleatorios <strong>es muy poco probable que nos basemos en el puerto de origen</strong> . Debe recordarse también que hay que indicar claramente si el puerto será <strong>TCP o UDP</strong>.</li>
+<li>También es posible que usemos otros protocolos para tomar la decisión, por ejemplo <code class="docutils literal notranslate"><span class="pre">&lt;prohibir</span> <span class="pre">todos</span> <span class="pre">los</span> <span class="pre">paquetes</span> <span class="pre">ICMP&gt;</span></code></li>
+<li>Aunque es poco probable es posible que haya que examinar algún flag del protocolo (RST, SYN, ACK…)</li>
 </ul>
 </div>
 <div class="section" id="utilizacion-de-cortafuegos">
 <h2>Utilización de cortafuegos.<a class="headerlink" href="#utilizacion-de-cortafuegos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Un cortafuegos es un programa que se ejecuta en los niveles más básicos del sistema operativo. Para utilizar esta capacidad es posible que tengamos dos grandes tipos de interfaz.</p>
+<ul class="simple">
+<li>Un interfaz gráfico (estilo Windows): en este curso analizaremos como usar el cortafuegos de Windows 2016.</li>
+<li>Un interfaz basado en comandos (estilo Unix): en este curso veremos como funciona <code class="docutils literal notranslate"><span class="pre">nftables</span></code></li>
+</ul>
 </div>
 <div class="section" id="filtrado-de-paquetes-de-datos">
 <h2>Filtrado de paquetes de datos.<a class="headerlink" href="#filtrado-de-paquetes-de-datos" title="Enlazar permanentemente con este título">¶</a></h2>
 </div>
 <div class="section" id="tipos-de-cortafuegos-caracteristicas-funciones-principal">
 <h2>Tipos de cortafuegos. Características. Funciones principal.<a class="headerlink" href="#tipos-de-cortafuegos-caracteristicas-funciones-principal" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Hay muchas maneras de organizar la arquitectura del cortafuegos de una red. En este curso usaremos la más simple, reflejada en la figura siguiente. En ella, un dispositivo controla todo el tráfico de entrada y salida de una red. Por desgracia tiene el inconveniente de que si un intruso logra «saltarse» el cortafuegos tendrá acceso total a toda la red.</p>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/Cortafuegos.png"><img alt="Estructura de un cortafuegos (Fuente:Wikipedia)" src="../_images/Cortafuegos.png" style="width: 150.0px; height: 82.5px;" /></a>
+<p class="caption"><span class="caption-text">Estructura de un cortafuegos (Fuente:Wikipedia)</span></p>
+</div>
+<p>El mecanismo más utilizado hoy en día es la creación de una «zona desmilitarizada» o DMZ y requiere varios dispositivos. También se conoce por el nombre de «screened host».</p>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/dmz.png"><img alt="Arquitectura de una DMZ (Fuente: RedIris)." src="../_images/dmz.png" style="width: 250.0px; height: 150.0px;" /></a>
+<p class="caption"><span class="caption-text">Arquitectura de una DMZ (Fuente: RedIris).</span></p>
+</div>
 </div>
 <div class="section" id="instalacion-de-cortafuegos-ubicacion">
 <h2>Instalación de cortafuegos. Ubicación.<a class="headerlink" href="#instalacion-de-cortafuegos-ubicacion" title="Enlazar permanentemente con este título">¶</a></h2>
 </div>
 <div class="section" id="reglas-de-filtrado-de-cortafuegos">
 <h2>Reglas de filtrado de cortafuegos.<a class="headerlink" href="#reglas-de-filtrado-de-cortafuegos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>NFTables es la nueva arquitectura de filtrado y manipulación de paquetes de red en el núcleo de Linux.Como NFTables puede procesar muchos datos de red es importante saber que distingue entre varias «familias de protocolos de red». En concreto podemos usar estas familias:</p>
+<ul class="simple">
+<li>«ip»: se refiere a IPv4</li>
+<li>«ip6»: para IPv6</li>
+<li>«inet»: para tratar tanto con IPv4 como IPv6.</li>
+<li>«arp»: para tramas Ethernet.</li>
+<li>«bridge»: para tramas que «crucen» este equipo cuando esté siendo usado como switch.</li>
+<li>«netdev»: en general solo para programadores que deseen examinar todo el tráfico que entre en la tarjeta.</li>
+</ul>
+<p>El comando básico de acceso a todas las operaciones es <code class="docutils literal notranslate"><span class="pre">nft</span></code>. En líneas generales <code class="docutils literal notranslate"><span class="pre">nft</span></code> examina los paquetes y analiza las reglas que se le dan para decidir que hacer con un paquete de red. Para ello es importante tener claro que <code class="docutils literal notranslate"><span class="pre">nft</span></code> usa «hooks», «tablas», «cadenas» y «reglas».</p>
+<p>Un «hook» es una etapa en la que está un paquete. En el dibujo siguiente se puede ver las etapas en las que está un paquete IP</p>
+<div class="figure" id="id3">
+<a class="reference internal image-reference" href="../_images/hooks.png"><img alt="Hooks" src="../_images/hooks.png" style="width: 656.8000000000001px; height: 124.0px;" /></a>
+<p class="caption"><span class="caption-text">«Hooks» o etapas de un paquete de red. (Figura sacada de la web de NFTables)</span></p>
+</div>
+<ul class="simple">
+<li>«Prerouting»: el paquete aún no ha entrado en la tabla de enrutamiento.</li>
+<li>«Input»: el paquete era para nosotros pero aún no ha entrado en ningún programa.</li>
+<li>«Output»: un paquete sale de un programa nuestro pero aún no se ha decidido qué hacer con él.</li>
+<li>«Postrouting»: un paquete que sale de un programa nuestro ya ha cruzado la tabla de enrutamiento.</li>
+<li>«Forwarding»: se usa para paquetes que «cruzan» nuestra máquina pero no van dirigidas a «esta máquina».</li>
+</ul>
+<p>Es decir, el tráfico que «entre» verá los hooks «prerouting» e «input». El que sale de nuestro ordenador verá «ouput» y «postrouting». El tráfico que atraviesa nuestro equipo Linux cuando esté funcionando como router verá «forwarding».</p>
+<ul class="simple">
+<li>Una «tabla» indica el protocolo que queremos analizar, puede ser «ip», «ip6», «arp», «bridge» y otros. Así, tenemos comandos como <code class="docutils literal notranslate"><span class="pre">nft</span> <span class="pre">list</span> <span class="pre">tables</span></code> o <code class="docutils literal notranslate"><span class="pre">nft</span> <span class="pre">list</span> <span class="pre">tables</span> <span class="pre">ip</span></code> que nos permiten examinar qué hemos hecho con los distintos protocolos. Por ejemplo, podemos crear una tabla con el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">TablaFiltradoSQL</span></code> y la podemos borrar con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">delete</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">TablaFiltradoSQL</span></code>. Es decir la pauta es <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">(add|remove)</span> <span class="pre">table</span> <span class="pre">&lt;familia&gt;</span> <span class="pre">&lt;NombreDeLaTabla&gt;</span></code>.</li>
+<li><dl class="first docutils">
+<dt>Una «cadena» indica un conjunto de reglas que <code class="docutils literal notranslate"><span class="pre">nft</span></code> irá examinando por orden para decidr qué hacer con un paquete. En una cadena hay que indicar:</dt>
+<dd><ul class="first last">
+<li>Qué tipo de manipulación queremos aplicar en un protocolo. Las posibles manipulaciones son «filter», «route» y «nat».</li>
+<li>En una cadena también hay que indicar la etapa o hook.</li>
+<li>Se debe indicar la prioridad, que es un número que determina el orden de las reglas.</li>
+<li>Se debe indicar la política que será una de dos: <code class="docutils literal notranslate"><span class="pre">accept</span></code> o <code class="docutils literal notranslate"><span class="pre">drop</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Una «regla» siempre va metida dentro de una cadena. Toda regla tiene:</dt>
+<dd><ul class="first last">
+<li>Un identificador o «handle», que podríamos también llamar el «código de regla».</li>
+<li>Una posición dentro de la cadena. Si por ejemplo creamos primero la regla 10, y luego la 20, podemos despues insertar una regla entre medias con la posición 15. De hecho es aconsejable no usar números de regla consecutivos.</li>
+<li>Una regla PUEDE llevar un «match» que permite crear «condiciones» para saber si una regla se aplica o no. Por ejemplo una regla se podría aplicar solo a paquetes que superen una cierta longitud.</li>
+<li>Si ponemos un «match» entonces DEBE haber una sentencia, que indique lo que se tiene que hacer en ese caso.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 </div>
 <div class="section" id="pruebas-de-funcionamiento-sondeo">
 <h2>Pruebas de funcionamiento. Sondeo.<a class="headerlink" href="#pruebas-de-funcionamiento-sondeo" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -100,9 +179,9 @@
 </div>
 <div class="section" id="anexo-ejercicio-de-configuracion">
 <h2>Anexo: ejercicio de configuración<a class="headerlink" href="#anexo-ejercicio-de-configuracion" title="Enlazar permanentemente con este título">¶</a></h2>
-<div class="figure align-default" id="id1">
+<div class="figure" id="id4">
 <a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
-<p class="caption"><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span><a class="headerlink" href="#id1" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">Ejemplos de configuración de una red.</span></p>
 </div>
 </div>
 </div>
@@ -161,11 +240,13 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Búsqueda rápida</h3>
+  <h3>Búsqueda rápida</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -186,7 +267,7 @@
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
