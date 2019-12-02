@@ -100,19 +100,22 @@ Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acció
 
 * Rotura intencionada.
 * Desastre natural: terremotos, inundaciones, incendios, etc...
-    ** Se debe disponer de la protección antiincendios adecuada.
-    ** No todos los extintores son apropiados para todo.
-    ** Los seguros no suelen cubrir eventos de este tipo.
-    ** Se desaconseja la instalación de centros de datos en bajos o sótanos.
+
+    * Se debe disponer de la protección antiincendios adecuada.
+    * No todos los extintores son apropiados para todo.
+    * Los seguros no suelen cubrir eventos de este tipo.
+    * Se desaconseja la instalación de centros de datos en bajos o sótanos.
 
 En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.
 
 
 * Barreras físicas.
-    ** Los servidores deberían estar cerrados con llaves y con acceso restringido.
-    ** Controles de acceso con tarjeta y/o guardia de seguridad.
-    ** En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
-    ** Puertas con apertura programada.
+
+    * Los servidores deberían estar cerrados con llaves y con acceso restringido.
+    * Controles de acceso con tarjeta y/o guardia de seguridad.
+    * En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
+    * Puertas con apertura programada.
+    
 * Protección eléctrica.
 
 
@@ -463,7 +466,9 @@ En UNIX las copias se hacen de otra manera.
 
 Así podemos escribir algo como esto:
 
-* * * * * tar -cf /home/usuarios$(date '+\%d-\%M-\%Y\%H\%M').tar /home/*
+.. code-block:: none
+
+    * * * * * tar -cf /home/usuarios$(date '+\%d-\%M-\%Y\%H\%M').tar /home/*
 
 Medios de almacenamiento.
 -----------------------------------------------------------------------------------------------

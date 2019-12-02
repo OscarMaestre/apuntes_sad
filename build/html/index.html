@@ -13,8 +13,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Adopción de pautas de seguridad informática" href="tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html" />
@@ -78,9 +78,14 @@
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#recordatorio-de-los-conceptos-basicos-de-redes">Recordatorio de los conceptos básicos de redes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#utilizacion-de-cortafuegos">Utilización de cortafuegos.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#filtrado-de-paquetes-de-datos">Filtrado de paquetes de datos.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#tipos-de-cortafuegos-caracteristicas-funciones-principal">Tipos de cortafuegos. Características. Funciones principal.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#tipos-de-cortafuegos-caracteristicas-funciones-principales">Tipos de cortafuegos. Características. Funciones principales.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#instalacion-de-cortafuegos-ubicacion">Instalación de cortafuegos. Ubicación.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#reglas-de-filtrado-de-cortafuegos">Reglas de filtrado de cortafuegos.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#reglas-de-filtrado-de-cortafuegos">Reglas de filtrado de cortafuegos.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#gestion-de-tablas">Gestión de tablas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#gestion-de-cadenas">Gestión de cadenas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#gestion-de-reglas">Gestión de reglas</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#pruebas-de-funcionamiento-sondeo">Pruebas de funcionamiento. Sondeo.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#registros-de-sucesos-de-un-cortafuegos">Registros de sucesos de un cortafuegos.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#cortafuegos-integrados-en-los-sistemas-operativos">Cortafuegos integrados en los sistemas operativos.</a></li>
@@ -89,6 +94,7 @@
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#cortafuegos-hardware">Cortafuegos hardware.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#anexo-configuracion-de-ip-en-linux-con-netplan">Anexo: configuración de IP en Linux con Netplan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#anexo-ejercicio-de-configuracion">Anexo: ejercicio de configuración</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tema_cortafuegos/tema_cortafuegos.html#anexo-resolucion-de-problemas">Anexo: resolución de problemas</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a><ul>
@@ -230,7 +236,7 @@
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

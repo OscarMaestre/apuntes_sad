@@ -41,10 +41,19 @@ Un cortafuegos es un programa que se ejecuta en los niveles más básicos del si
 
 Filtrado de paquetes de datos.
 -----------------------------------------------------------------------------------------------
+Una de las utilidades principales de un cortafuegos es denegar la entrada o salida de ciertos tipos de tráfico basándonos en distintos parámetros que ya se han mencionado antes:
+
+* La IP de origen y/o destino.
+* El puerto de origen y/o destino.
+* El protocolo.
+* Otros parámetros...
+
+En los apartados posteriores veremos como usar un cortafuegos de red para permitir o denegar tráfico basándonos en estos datos.
 
 
 
-Tipos de cortafuegos. Características. Funciones principal.
+
+Tipos de cortafuegos. Características. Funciones principales.
 -----------------------------------------------------------------------------------------------
 
 Hay muchas maneras de organizar la arquitectura del cortafuegos de una red. En este curso usaremos la más simple, reflejada en la figura siguiente. En ella, un dispositivo controla todo el tráfico de entrada y salida de una red. Por desgracia tiene el inconveniente de que si un intruso logra "saltarse" el cortafuegos tendrá acceso total a toda la red.
@@ -79,6 +88,21 @@ El mecanismo más utilizado hoy en día es la creación de una "zona desmilitari
 
 Instalación de cortafuegos. Ubicación.
 -----------------------------------------------------------------------------------------------
+
+En GNU/Linux podemos instalar **NFTables**, una arquitectura de filtrado de paquetes que se integra con el núcleo de Linux y reemplaza al anterior **IPTables** . Para instalarlo podemos hacer lo siguiente:
+
+* Ejecutar ``sudo apt-get update`` y ``sudo apt-get upgrade`` para asegurarnos de recargar la información de interés sobre paquetes.
+* Ejecutar ``sudo apt-get remove iptables`` para asegurarnos de que no tengamos varios sistemas de filtrado ejecutándose a la vez.
+* Ejecutar ``sudo apt-get install nftables`` para instalar **NFTables** .
+
+Una vez hecho esto deberíamos tener disponible el comando ``nft`` que permite el acceso al sistema de filtrado.
+
+.. WARNING::
+   El comando ``nft`` debe ejecutarse **SIEMPRE** como administrador. Si olvidamos poner ``sudo nft ...`` es probable que el comando *no devuelva ningún error* ya que es posible permitir a otros usuarios ejecutar el comando. Así, aunque no se diga expresamente **DEBEREMOS EJECUTAR SIEMPRE ESTE COMANDO COMO SUPERUSUARIOS**  . Otra alternativa es convertirnos primero en superusuarios con ``sudo su`` y a partir de ahí lanzar todos los comandos que necesitemos.
+
+
+En este tema usaremos unas de las configuraciones más habituales: situar el cortafuegos entre nuestra red y el resto de Internet, haciendo que nuestro equipo no solo haga NAT sino que también permita filtrar el tráfico entre ambas redes.
+
 
 
 Reglas de filtrado de cortafuegos.
@@ -122,17 +146,47 @@ Es decir, el tráfico que "entre" verá los hooks "prerouting" e "input". El que
 	
 * Una "tabla" indica el protocolo que queremos analizar, puede ser "ip", "ip6", "arp", "bridge" y otros. Así, tenemos comandos como ``nft list tables`` o ``nft list tables ip`` que nos permiten examinar qué hemos hecho con los distintos protocolos. Por ejemplo, podemos crear una tabla con el comando ``sudo nft add table ip TablaFiltradoSQL`` y la podemos borrar con ``sudo nft delete table ip TablaFiltradoSQL``. Es decir la pauta es ``sudo nft (add|remove) table <familia> <NombreDeLaTabla>``.
 
-* Una "cadena" indica un conjunto de reglas que ``nft`` irá examinando por orden para decidr qué hacer con un paquete. En una cadena hay que indicar:
+* Una "cadena" indica un conjunto de reglas que ``nft`` irá examinando por orden para decidr qué hacer con un paquete. Una cadena puede ser "base" o "no base". Una cadena "base" puede ver TODO el tráfico TCP y una "no base" al principio no ve nada. En una cadena hay que indicar:
 	* Qué tipo de manipulación queremos aplicar en un protocolo. Las posibles manipulaciones son "filter", "route" y "nat". 
 	* En una cadena también hay que indicar la etapa o hook.
-	* Se debe indicar la prioridad, que es un número que determina el orden de las reglas.
-	* Se debe indicar la política que será una de dos: ``accept`` o ``drop``.
+	* Se debe indicar la prioridad, que es un número que determina el orden de las reglas. Una regla con la prioridad 20 se examina antes que una con prioridad 30.
+	* Se debe indicar la política que será una de dos: ``accept`` o ``drop``. Si no se pone nada se asume que la política es "accept".
 	
 * Una "regla" siempre va metida dentro de una cadena. Toda regla tiene:
 	* Un identificador o "handle", que podríamos también llamar el "código de regla".
 	* Una posición dentro de la cadena. Si por ejemplo creamos primero la regla 10, y luego la 20, podemos despues insertar una regla entre medias con la posición 15. De hecho es aconsejable no usar números de regla consecutivos.
 	* Una regla PUEDE llevar un "match" que permite crear "condiciones" para saber si una regla se aplica o no. Por ejemplo una regla se podría aplicar solo a paquetes que superen una cierta longitud.
 	* Si ponemos un "match" entonces DEBE haber una sentencia, que indique lo que se tiene que hacer en ese caso.
+
+
+
+Gestión de tablas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+En los puntos siguientes vemos algunas operaciones básicas con tablas:
+
+* Crear una tabla que trabaje con el protocolo IPv4: ``nft add table ip filtradoBD`` 
+* Crear una tabla que trabaje con IP en general (ya sea version 4 o 6): ``nft add table inet filtradoWeb`` 
+* Ver las tablas del cortafuegos: ``nft list tables`` 
+* Borrar una tabla: ``sudo nft delete table ip filtradoBD`` o ``sudo nft delete table inet filtradoWeb`` 
+
+.. DANGER:: 
+   Se puede borrar **absolutamente todas las tablas** usando el comando ``nft flush ruleset``.
+
+Gestión de cadenas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Supongamos una tabla cualquiera de tipo "ip" y llamada por ejemplo "filtradoUsuarios". Podemos trabajar con ella con comandos como los siguientes:
+
+* Creamos una cadena para examinar por ejemplo el trafico de entrada, pero refiriéndonos **"tráfico cuyo destino sera algún servidor que esté instalado en el mismo ordenador del cortafuegos** . Dicha cadena se llamara "traficoEntrada": ``sudo nft add chain ip filtradoUsuarios traficoEntrada {type filter hook input priority 0\; }`` 
+
+
+Gestión de reglas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Supongamos una tabla cualquiera de tipo "ip" y llamada por ejemplo "filtradoUsuarios" y supongamos que dentro hay una cadena llamada "tráficoEntrada" y que dicha regla examina el tráfico de entrada.
+
+* Podemos por ejemplo rechazar que alguien se conecte desde fuera poniendo una regla que prohiba el tráfico de entrada que intente conectarse a nuestro puerto 22 (el de SSH). Recordemos que dichas personas usarán como puerto de destino el 22.
+* Podemos borrar toda la cadena con ``nft flush chain ip filtradoUsuarios traficoEntrada`` 
+* Podemos borrar una regla si conocemos su handle. Para averiguarlo podemos listar la tabla con ``nft list table ip filtradoUsuarios`` 
 
 
 Pruebas de funcionamiento. Sondeo.
@@ -190,3 +244,36 @@ Anexo: ejercicio de configuración
    Ejemplos de configuración de una red.
    
   
+Se supone que tenemos dos máquinas
+
+* La máquina de la izquierda es un cliente. Todo su tráfico pasa por la máquina central que no solo hace NAT sino que también regula el tráfico de entrada y salida por medio de un cortafuegos. La máquina de la izquierda puede ser de cualquier tipo, en nuestro caso usaremos una máquina con Windows 7.
+* La máquina central será una Ubuntu Server con dos tarjetas de red configuradas mediante ``netplan``.
+
+En la Ubuntu Server habrá que hacer algunas operaciones:
+
+* Se debe activar el enrutamiento. Esto puede hacerse con el comando ``echo 1 > /proc/sys/net/ip_forward``  pero se desactivará en el siguiente reinicio. Por eso es mejor dejar activado el enrutamiento en el arranque editando el fichero ``/etc/sysctl.conf`` . Se debe escribir una línea en el fichero que ponga "net.ipv4.ip_forward=1" (es muy posible que ya exista la línea y solo haya que quitar el comentario inicial). Una vez modificado se puede ejecutar ``sysctl -p`` para iniciar el servicio (que quedará activado para siempre).
+
+* Se debe poner en marcha el NAT. Para ello podemos añadir los siguiente al fichero ``/etc/nftables.conf`` 
+
+.. code-block:: none
+
+
+    table ip nat {
+        chain prerouting {
+            type nat hook prerouting priority 0; policy accept;
+        }
+        chain postrouting {
+            type nat hook postrouting priority 100; policy accept;
+            oifname "wan0" masquerade
+        }
+    }
+
+
+Anexo: resolución de problemas
+--------------------------------------------------------------------------------
+
+Si algo va mal comprueba lo siguiente:
+
+* Lanza el comando ``nft``  como superusuario, es decir en realidad debes hacer ``sudo nft``.
+* Si has aplicado una regla y parece que no funciona, asegúrate de que la pones en el "hook" correcto.
+* Si no puedes enrutar, asegúrate de que has activado el enrutado o "forwarding" en el núcleo. Repasa el fichero y ábrelo con ``sudo nano /etc/sysctl.conf`` . La línea que controla el forwarding debe ser así ``net.ipv4.forward=1`` .

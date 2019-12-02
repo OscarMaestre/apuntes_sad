@@ -13,8 +13,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
     <link rel="next" title="Instalación y configuración de cortafuegos" href="../tema_cortafuegos/tema_cortafuegos.html" />
@@ -116,28 +116,34 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 <div class="section" id="amenazas-fisicas">
 <h2>Amenazas físicas.<a class="headerlink" href="#amenazas-fisicas" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.</p>
-<ul class="simple">
-<li>Rotura intencionada.</li>
-<li><dl class="first docutils">
-<dt>Desastre natural: terremotos, inundaciones, incendios, etc…</dt>
-<dd>** Se debe disponer de la protección antiincendios adecuada.
-** No todos los extintores son apropiados para todo.
-** Los seguros no suelen cubrir eventos de este tipo.
-** Se desaconseja la instalación de centros de datos en bajos o sótanos.</dd>
-</dl>
+<ul>
+<li><p class="first">Rotura intencionada.</p>
+</li>
+<li><p class="first">Desastre natural: terremotos, inundaciones, incendios, etc…</p>
+<blockquote>
+<div><ul class="simple">
+<li>Se debe disponer de la protección antiincendios adecuada.</li>
+<li>No todos los extintores son apropiados para todo.</li>
+<li>Los seguros no suelen cubrir eventos de este tipo.</li>
+<li>Se desaconseja la instalación de centros de datos en bajos o sótanos.</li>
+</ul>
+</div></blockquote>
 </li>
 </ul>
 <p>En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.</p>
-<ul class="simple">
-<li><dl class="first docutils">
-<dt>Barreras físicas.</dt>
-<dd>** Los servidores deberían estar cerrados con llaves y con acceso restringido.
-** Controles de acceso con tarjeta y/o guardia de seguridad.
-** En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
-** Puertas con apertura programada.</dd>
-</dl>
+<ul>
+<li><p class="first">Barreras físicas.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Los servidores deberían estar cerrados con llaves y con acceso restringido.</li>
+<li>Controles de acceso con tarjeta y/o guardia de seguridad.</li>
+<li>En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.</li>
+<li>Puertas con apertura programada.</li>
+</ul>
+</div></blockquote>
 </li>
-<li>Protección eléctrica.</li>
+<li><p class="first">Protección eléctrica.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="amenazas-logicas">
@@ -399,21 +405,9 @@ DH….</p>
 <li>Una vez que ejecutemos <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-e</span></code> veremos un fichero que permite indicar tareas y el horario de ejecución usando el formato <code class="docutils literal notranslate"><span class="pre">minutos</span> <span class="pre">horas</span> <span class="pre">dia-del-mes</span> <span class="pre">mes</span> <span class="pre">dia-de-la-semana</span> <span class="pre">comando</span></code> .</li>
 </ul>
 <p>Así podemos escribir algo como esto:</p>
-<ul class="simple">
-<li><ul class="first">
-<li><ul class="first">
-<li><ul class="first">
-<li><ul class="first">
-<li>tar -cf /home/usuarios$(date “+%d-%M-%Y%H%M”).tar /home/*</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>* * * * * tar -cf /home/usuarios$(date &#39;+\%d-\%M-\%Y\%H\%M&#39;).tar /home/*
+</pre></div>
+</div>
 </div>
 <div class="section" id="medios-de-almacenamiento">
 <h2>Medios de almacenamiento.<a class="headerlink" href="#medios-de-almacenamiento" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -623,7 +617,7 @@ DH….</p>
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
