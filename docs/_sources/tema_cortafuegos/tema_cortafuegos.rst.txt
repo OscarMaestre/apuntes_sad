@@ -115,8 +115,8 @@ NFTables es la nueva arquitectura de filtrado y manipulación de paquetes de red
 * "ip": se refiere a IPv4
 * "ip6": para IPv6
 * "inet": para tratar tanto con IPv4 como IPv6.
-* "arp": para tramas Ethernet.
-* "bridge": para tramas que "crucen" este equipo cuando esté siendo usado como switch.
+* "arp": para tramas Ethernet. No lo usaremos en este tema.
+* "bridge": para tramas Ethernet que "crucen" este equipo cuando esté siendo usado como switch. No lo usaremos en este tema.
 * "netdev": en general solo para programadores que deseen examinar todo el tráfico que entre en la tarjeta.
 
 
@@ -253,7 +253,8 @@ En la Ubuntu Server habrá que hacer algunas operaciones:
 
 * Se debe activar el enrutamiento. Esto puede hacerse con el comando ``echo 1 > /proc/sys/net/ip_forward``  pero se desactivará en el siguiente reinicio. Por eso es mejor dejar activado el enrutamiento en el arranque editando el fichero ``/etc/sysctl.conf`` . Se debe escribir una línea en el fichero que ponga "net.ipv4.ip_forward=1" (es muy posible que ya exista la línea y solo haya que quitar el comentario inicial). Una vez modificado se puede ejecutar ``sysctl -p`` para iniciar el servicio (que quedará activado para siempre).
 
-* Se debe poner en marcha el NAT. Para ello podemos añadir los siguiente al fichero ``/etc/nftables.conf`` 
+* Se debe instalar en Ubuntu el servidor web con ``sudo apt-get install apache2`` 
+* Se debe poner en marcha el NAT. Para ello podemos añadir algo como lo siguiente al fichero ``/etc/nftables.conf``. Por favor, recuerda cambiar el nombre de la interfaz de salida, es posible que en tu máquina no se llame ``enp0s8``  
 
 .. code-block:: none
 
@@ -264,10 +265,27 @@ En la Ubuntu Server habrá que hacer algunas operaciones:
         }
         chain postrouting {
             type nat hook postrouting priority 100; policy accept;
-            oifname "wan0" masquerade
+            oifname "enp0s8" masquerade
         }
     }
 
+Ejemplo: denegación del servidor web al exterior
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Se nos pide lo siguiente: *"permitir que los clientes de dentro de la red SÍ puedan ver el servidor web instalado en el propio servidor donde está el cortafuegos"* 
+
+.. WARNING::
+   En los párrafos siguientes se muestra una decisión que "técnicamente funciona" pero que puede ser una mala decisión por motivos que se comentarán despues.
+
+Supongamos que creamos una tabla donde meteremos todas las decisiones que afectan al servidor web. Usaremos ``nft add table ip filtradoweb``.
+
+Supongamos también que creamos una cadena que se ocupará de denegar el tráfico web en la etapa de "prerouting" con ``nft add chain ip filtradoweb denegacionApache {type filter hook prerouting priority 0 \; policy accept \;}`` 
+
+
+Comentario: antes hemos dicho que hay malas decisiones.
+
+* Por ejemplo, la política por defecto es "accept". Quizá fuera más seguro poner por defecto "drop" y luego permitir solo lo que nos interese.
+* Examinamos el tráfico en la etapa de "prerouting" pero eso obliga al sistema operativo a comprobar muchísimos paquetes, algunos de los cuales no irán dirigidos a nosotros. Otra posibilidad sería vincular nuestra cadena a la etapa "input"
 
 Anexo: resolución de problemas
 --------------------------------------------------------------------------------
