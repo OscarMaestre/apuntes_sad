@@ -91,8 +91,8 @@ NFTables es la nueva arquitectura de filtrado y manipulación de paquetes de red
 * "ip": se refiere a IPv4
 * "ip6": para IPv6
 * "inet": para tratar tanto con IPv4 como IPv6.
-* "arp": para tramas Ethernet.
-* "bridge": para tramas que "crucen" este equipo cuando esté siendo usado como switch.
+* "arp": para tramas Ethernet. No lo usaremos en este tema.
+* "bridge": para tramas Ethernet que "crucen" este equipo cuando esté siendo usado como switch. No lo usaremos en este tema.
 * "netdev": en general solo para programadores que deseen examinar todo el tráfico que entre en la tarjeta.
 
 
