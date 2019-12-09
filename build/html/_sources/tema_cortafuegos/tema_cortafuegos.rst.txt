@@ -146,7 +146,7 @@ Es decir, el tráfico que "entre" verá los hooks "prerouting" e "input". El que
 	
 * Una "tabla" indica el protocolo que queremos analizar, puede ser "ip", "ip6", "arp", "bridge" y otros. Así, tenemos comandos como ``nft list tables`` o ``nft list tables ip`` que nos permiten examinar qué hemos hecho con los distintos protocolos. Por ejemplo, podemos crear una tabla con el comando ``sudo nft add table ip TablaFiltradoSQL`` y la podemos borrar con ``sudo nft delete table ip TablaFiltradoSQL``. Es decir la pauta es ``sudo nft (add|remove) table <familia> <NombreDeLaTabla>``.
 
-* Una "cadena" indica un conjunto de reglas que ``nft`` irá examinando por orden para decidr qué hacer con un paquete. Una cadena puede ser "base" o "no base". Una cadena "base" puede ver TODO el tráfico TCP y una "no base" al principio no ve nada. En una cadena hay que indicar:
+* Una "cadena" indica un conjunto de reglas que ``nft`` irá examinando por orden para decidir qué hacer con un paquete. Una cadena puede ser "base" o "no base". Una cadena "base" puede ver TODO el tráfico TCP y una "no base" al principio no ve nada. En una cadena hay que indicar:
 	* Qué tipo de manipulación queremos aplicar en un protocolo. Las posibles manipulaciones son "filter", "route" y "nat". 
 	* En una cadena también hay que indicar la etapa o hook.
 	* Se debe indicar la prioridad, que es un número que determina el orden de las reglas. Una regla con la prioridad 20 se examina antes que una con prioridad 30.
@@ -182,12 +182,34 @@ Supongamos una tabla cualquiera de tipo "ip" y llamada por ejemplo "filtradoUsua
 
 Gestión de reglas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Supongamos una tabla cualquiera de tipo "ip" y llamada por ejemplo "filtradoUsuarios" y supongamos que dentro hay una cadena llamada "tráficoEntrada" y que dicha regla examina el tráfico de entrada.
+Supongamos una tabla cualquiera de tipo "ip" y llamada por ejemplo "filtradoUsuarios" y supongamos que dentro hay una cadena llamada "traficoEntrada" y que dicha regla examina el tráfico de entrada.
 
 * Podemos por ejemplo rechazar que alguien se conecte desde fuera poniendo una regla que prohiba el tráfico de entrada que intente conectarse a nuestro puerto 22 (el de SSH). Recordemos que dichas personas usarán como puerto de destino el 22.
 * Podemos borrar toda la cadena con ``nft flush chain ip filtradoUsuarios traficoEntrada`` 
 * Podemos borrar una regla si conocemos su handle. Para averiguarlo podemos listar la tabla con ``nft list table ip filtradoUsuarios`` 
 
+En general, en todos los casos necesitamos un mecanismo para **determinar qué campos de un paquete queremos examinar, los "matches"**. En NFTables, un match puede ser algo como esto:
+
+* Comprobar la IP de origen; ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip saddr 192.168.47.5 drop``. Esta regla **descarta** (drop) paquetes cuya IP de origen (Source ADDRess) sea 192.168.47.5.
+* Comprobar la IP de destino; ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip daddr 10.45.10.10 drop``. Esta regla **descarta** (drop) paquetes cuya IP de destino (Destination ADDRess) sea 10.45.10.10.
+* Se pueden usar rangos de IP: ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip daddr 10.45.10.0/24 drop``. Esta regla **descarta** (drop) paquetes cuya IP de destino (Destination ADDRess) sea del tipo 10.45.10.xxx.
+* Comprobar ambos campos a la vez: ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip saddr 192.168.47.5 daddr 10.45.10.10 drop``. Esta regla descarta los paquetes cuya IP de origen sea 192.168.47.5 y vayan destinados a la IP 10.45.10.10.
+* Comprobar el puerto de origen: ``sudo nft add rule ip filtradoUsuarios traficoEntrada tcp dport 80 drop``. Esta regla descarta **TODO EL TRÁFICO** cuyo puerto de destino sea el 80.
+* Mezclar campos: ``sudo nft add rule ip filtradoUsuarios traficoEntrada tcp dport 80 drop ip saddr 192.168.47.5 tcp dport 443``. Esta regla **descarta todo el tráfico cuyo IP de origen sea 192.168.47.5 y cuyo puerto de destino sea el 443** 
+* Usar rangos de puertos incluso mezclando con rangos de IP:  ``sudo nft add rule ip filtradoUsuarios traficoEntrada tcp dport 80 drop ip saddr 192.168.1.0/24 tcp dport 1-1024``. Esta regla **descarta todo el tráfico cuyo IP de origen sea 192.168.1.xxx y cuyo puerto de destino esté entre 1 y 1024** 
+* Usar cantidad de tráfico: examinemos las siguientes reglas:
+
+    * ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip saddr 192.168.1.45 limit rate 100kbytes/second accept`` : se autoriza el tráfico desde la IP que se mantenga en un ratio de hasta 100kbytes por segundos.
+    * La regla de arriba no basta para limitar el tráfico, pero si ahora añadimos esto ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip saddr 192.168.1.45 limit rate over 100kbytes/second drop`` ahora tenemos una segunda regla que indica que **si se excede el límite de 100kbytes/seg entonces el tráfico se descarta**. Esto constituye un mecanismo excelente para "regular el tráfico".
+
+
+Acciones sobre paquetes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hemos visto hasta ahora la acción ``drop`` (descartar), pero se pueden usar también:
+
+* ``counter``: nos permite hacer un recuento de bytes/paquetes que cumplen una cierta regla (y por ejemplo "llevar la contabilidad de descargas".
+* ``accept`` : si una cadena utiliza por defecto la acción ``drop`` es posible que nos interese permitir algunos paquetes.
 
 Pruebas de funcionamiento. Sondeo.
 -----------------------------------------------------------------------------------------------
