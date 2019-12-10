@@ -317,3 +317,59 @@ Si algo va mal comprueba lo siguiente:
 * Lanza el comando ``nft``  como superusuario, es decir en realidad debes hacer ``sudo nft``.
 * Si has aplicado una regla y parece que no funciona, asegúrate de que la pones en el "hook" correcto.
 * Si no puedes enrutar, asegúrate de que has activado el enrutado o "forwarding" en el núcleo. Repasa el fichero y ábrelo con ``sudo nano /etc/sysctl.conf`` . La línea que controla el forwarding debe ser así ``net.ipv4.forward=1`` .
+
+Un ejercicio comentado
+--------------------------------------------------------------------------------
+
+Supongamos que tenemos la misma configuración de siempre, que volvemos a mostrar en la figura siguiente:
+
+.. figure:: img/Esquema-de-red.png
+   :scale: 50%
+   :alt: Ejemplos de permisos
+
+   Ejemplos de configuración de una red.
+   
+Y supongamos que nos piden lo siguiente:
+
+    *Asumiendo que los ordenadores de la izquierda son una "red interna" y que el resto son "el exterior" instalar un servidor web en el equipo del cortafuegos y conseguir que solo "el interior" pueda conectarse al servidor web* 
+
+Solución 1 (errónea)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Ejecutamos ``sudo nft flush ruleset`` para limpiar el cortafuegos.
+2. Construimos una tabla con ``sudo nft add table ip filtradoWeb`` y comprobamos su creación con ``sudo nft list tables`` 
+3. Comprobamos que realmente ni siquiera hay cadenas en la tabla creada con ``sudo nft list table ip filtradoWeb`` 
+
+
+.. DANGER::
+   A partir de aquí lo vamos a hacer mal simplemente para hacer la prueba
+
+4. Construimos una cadena que examine el tráfico en ``prerouting`` con ``sudo nft add chain ip filtradoWeb filtradoApache { type filter hook prerouting priority 0\; policy accept\;   }`` 
+
+5. Comprobamos que la cadena se ha creado con ``sudo nft list table ip filtradoWeb`` 
+
+6. Prohibimos el tráfico cuyo puerto de destino sea el 80 con ``sudo nft add rule ip filtradoWeb filtradoApache tcp dport 80 drop`` 
+
+Por desgracia aquí hay algunos problemas:
+
+* En primer lugar, esta configuración **NO FUNCIONA** . Se ha prohibido *todo el tráfico web* incluyendo, sin querer, a los de la red interna.
+* Además, hemos añadido comprobaciones en la etapa ``prerouting`` lo que sobrecarga mucho el cortafuegos, al obligarle a examinar **TODO EL TRÁFICO**. En realidad solo nos interesaba el tráfico de entrada, así que probablemente deberíamos haber usado la etapa ``input`` 
+
+Una solución un poco mejor
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Borramos las reglas con ``sudo nft flush ruleset`` 
+2. Reconstruimos la tabla con ``sudo nft add table ip filtradoWeb`` 
+3. Reconstruimos la cadena con ``sudo nft add chain ip filtradoWeb filtradoApache { type filter hook prerouting priority 0\; policy accept\;   }`` 
+4. Prohibimos el tráfico de las direcciones de la red "externa" con ``sudo nft add rule ip filtradoWeb filtradoApache ip saddr 10.0.0.0/8 drop `` 
+
+Esto funciona un poco mejor, pero en realidad "fuera" podría haber muchos rangos distintos, por lo que quizá hubiera que poner muchos (y quizá demasiados) rangos de IPs.
+
+Una solución (un poco mejor)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Borramos las reglas con ``sudo nft flush ruleset`` 
+2. Reconstruimos la tabla con ``sudo nft add table ip filtradoWeb`` 
+3. Reconstruimos la cadena con ``sudo nft add chain ip filtradoWeb filtradoApache { type filter hook prerouting priority 0\; policy accept\;   }`` 
+4. Ejecutamos ``sudo nft add rule ip filtradoWeb filtradoApache iifname enp0s8 tcp dport 80 drop`` 
+
+Esta última regla es un poco mejor, porque ahora descartamos indicando que "prohibimos el tráfico que intente entrar al puerto 80 usando como interfaz de entrada (iifname o "input interface name") la tarjeta enp0s8" (o la que sea)
