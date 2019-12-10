@@ -83,14 +83,14 @@
 <div class="section" id="tipos-de-cortafuegos-caracteristicas-funciones-principales">
 <h2>Tipos de cortafuegos. Características. Funciones principales.<a class="headerlink" href="#tipos-de-cortafuegos-caracteristicas-funciones-principales" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Hay muchas maneras de organizar la arquitectura del cortafuegos de una red. En este curso usaremos la más simple, reflejada en la figura siguiente. En ella, un dispositivo controla todo el tráfico de entrada y salida de una red. Por desgracia tiene el inconveniente de que si un intruso logra «saltarse» el cortafuegos tendrá acceso total a toda la red.</p>
-<div class="figure align-center" id="id4">
+<div class="figure align-center" id="id2">
 <a class="reference internal image-reference" href="../_images/Cortafuegos.png"><img alt="Estructura de un cortafuegos (Fuente:Wikipedia)" src="../_images/Cortafuegos.png" style="width: 150.0px; height: 82.5px;" /></a>
-<p class="caption"><span class="caption-text">Estructura de un cortafuegos (Fuente:Wikipedia)</span><a class="headerlink" href="#id4" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">Estructura de un cortafuegos (Fuente:Wikipedia)</span><a class="headerlink" href="#id2" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 <p>El mecanismo más utilizado hoy en día es la creación de una «zona desmilitarizada» o DMZ y requiere varios dispositivos. También se conoce por el nombre de «screened host».</p>
-<div class="figure align-center" id="id5">
+<div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/dmz.png"><img alt="Arquitectura de una DMZ (Fuente: RedIris)." src="../_images/dmz.png" style="width: 250.0px; height: 150.0px;" /></a>
-<p class="caption"><span class="caption-text">Arquitectura de una DMZ (Fuente: RedIris).</span><a class="headerlink" href="#id5" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">Arquitectura de una DMZ (Fuente: RedIris).</span><a class="headerlink" href="#id3" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 </div>
 <div class="section" id="instalacion-de-cortafuegos-ubicacion">
@@ -121,9 +121,9 @@
 </ul>
 <p>El comando básico de acceso a todas las operaciones es <code class="docutils literal notranslate"><span class="pre">nft</span></code>. En líneas generales <code class="docutils literal notranslate"><span class="pre">nft</span></code> examina los paquetes y analiza las reglas que se le dan para decidir que hacer con un paquete de red. Para ello es importante tener claro que <code class="docutils literal notranslate"><span class="pre">nft</span></code> usa «hooks», «tablas», «cadenas» y «reglas».</p>
 <p>Un «hook» es una etapa en la que está un paquete. En el dibujo siguiente se puede ver las etapas en las que está un paquete IP</p>
-<div class="figure align-default" id="id6">
+<div class="figure align-default" id="id4">
 <a class="reference internal image-reference" href="../_images/hooks.png"><img alt="Hooks" src="../_images/hooks.png" style="width: 656.8000000000001px; height: 124.0px;" /></a>
-<p class="caption"><span class="caption-text">«Hooks» o etapas de un paquete de red. (Figura sacada de la web de NFTables)</span><a class="headerlink" href="#id6" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">«Hooks» o etapas de un paquete de red. (Figura sacada de la web de NFTables)</span><a class="headerlink" href="#id4" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 <ul class="simple">
 <li><p>«Prerouting»: el paquete aún no ha entrado en la tabla de enrutamiento.</p></li>
@@ -251,9 +251,9 @@
 </div>
 <div class="section" id="anexo-ejercicio-de-configuracion">
 <h2>Anexo: ejercicio de configuración<a class="headerlink" href="#anexo-ejercicio-de-configuracion" title="Enlazar permanentemente con este título">¶</a></h2>
-<div class="figure align-default" id="id7">
+<div class="figure align-default" id="id5">
 <a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
-<p class="caption"><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id7" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id5" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 <p>Se supone que tenemos dos máquinas</p>
 <ul class="simple">
@@ -305,9 +305,9 @@
 <div class="section" id="un-ejercicio-comentado">
 <h2>Un ejercicio comentado<a class="headerlink" href="#un-ejercicio-comentado" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Supongamos que tenemos la misma configuración de siempre, que volvemos a mostrar en la figura siguiente:</p>
-<div class="figure align-default" id="id8">
+<div class="figure align-default" id="id6">
 <a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
-<p class="caption"><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id8" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id6" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 <p>Y supongamos que nos piden lo siguiente:</p>
 <blockquote>
@@ -341,12 +341,12 @@
 <li><p>Borramos las reglas con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code></p></li>
 <li><p>Reconstruimos la tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code></p></li>
 <li><p>Reconstruimos la cadena con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">chain</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">filtradoApache</span> <span class="pre">{</span> <span class="pre">type</span> <span class="pre">filter</span> <span class="pre">hook</span> <span class="pre">prerouting</span> <span class="pre">priority</span> <span class="pre">0\;</span> <span class="pre">policy</span> <span class="pre">accept\;</span>&#160;&#160; <span class="pre">}</span></code></p></li>
-<li><p>Prohibimos el tráfico de las direcciones de la red «externa» con <a href="#id1"><span class="problematic" id="id2">``</span></a>sudo nft add rule ip filtradoWeb filtradoApache ip saddr 10.0.0.0/8 drop ``</p></li>
+<li><p>Prohibimos el tráfico de las direcciones de la red «externa» con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">filtradoApache</span> <span class="pre">ip</span> <span class="pre">saddr</span> <span class="pre">10.0.0.0/8</span> <span class="pre">drop</span></code></p></li>
 </ol>
 <p>Esto funciona un poco mejor, pero en realidad «fuera» podría haber muchos rangos distintos, por lo que quizá hubiera que poner muchos (y quizá demasiados) rangos de IPs.</p>
 </div>
-<div class="section" id="id3">
-<h3>Una solución (un poco mejor)<a class="headerlink" href="#id3" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="section" id="id1">
+<h3>Una solución (un poco mejor)<a class="headerlink" href="#id1" title="Enlazar permanentemente con este título">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Borramos las reglas con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code></p></li>
 <li><p>Reconstruimos la tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code></p></li>
@@ -354,6 +354,32 @@
 <li><p>Ejecutamos <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">filtradoApache</span> <span class="pre">iifname</span> <span class="pre">enp0s8</span> <span class="pre">tcp</span> <span class="pre">dport</span> <span class="pre">80</span> <span class="pre">drop</span></code></p></li>
 </ol>
 <p>Esta última regla es un poco mejor, porque ahora descartamos indicando que «prohibimos el tráfico que intente entrar al puerto 80 usando como interfaz de entrada (iifname o «input interface name») la tarjeta enp0s8» (o la que sea)</p>
+</div>
+<div class="section" id="otra-solucion">
+<h3>Otra solución<a class="headerlink" href="#otra-solucion" title="Enlazar permanentemente con este título">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Borramos las reglas con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code></p></li>
+<li><p>Vamos a crear una tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code></p></li>
+<li><p>Examinamos el tráfico de entrada con una cadena que examine la etapa de red <code class="docutils literal notranslate"><span class="pre">input</span></code> con el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">chain</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">filtradoEntrada</span> <span class="pre">{type</span> <span class="pre">filter</span> <span class="pre">hook</span> <span class="pre">input</span> <span class="pre">priority</span> <span class="pre">0\;</span> <span class="pre">policy</span> <span class="pre">accept\;}</span></code></p></li>
+<li><p>Cerramos el tráfico que entra por la tarjeta que nos conecta al exterior con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">filtradoEntrada</span> <span class="pre">iifname</span> <span class="pre">enp0s8</span> <span class="pre">tcp</span> <span class="pre">dport</span> <span class="pre">80</span> <span class="pre">drop</span></code></p></li>
+</ol>
+</div>
+<div class="section" id="otra-solucion-mas-segura">
+<h3>Otra solución (más segura)<a class="headerlink" href="#otra-solucion-mas-segura" title="Enlazar permanentemente con este título">¶</a></h3>
+<ol class="arabic">
+<li><p>Borramos las reglas con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code></p></li>
+<li><p>Vamos a crear una tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code></p></li>
+<li><p>Ahora creamos una cadena en la que la política por defecto <strong>va a ser mucho más segura</strong>. Usamos el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">chain</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">prohibicionEntrada</span> <span class="pre">{type</span> <span class="pre">filter</span> <span class="pre">hook</span> <span class="pre">input</span> <span class="pre">priority</span> <span class="pre">0\;</span> <span class="pre">policy</span> <span class="pre">drop\;}</span></code></p></li>
+<li><p>Ahora todo el tráfico web está prohibido, así que podríamos empezar a dar permiso a quien corresponda.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Podríamos dar permiso solo a una cierta IP con el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">prohibicionEntrada</span> <span class="pre">ip</span> <span class="pre">saddr</span> <span class="pre">192.168.100.10</span> <span class="pre">tcp</span> <span class="pre">dport</span> <span class="pre">80</span> <span class="pre">accept</span></code></p></li>
+<li><p>Podríamos dar permiso a todo el tráfico que entre por una cierta tarjeta con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">prohibicionEntrada</span> <span class="pre">iifname</span> <span class="pre">enp0s3</span> <span class="pre">tcp</span> <span class="pre">dport</span> <span class="pre">80</span> <span class="pre">accept</span></code></p></li>
+<li><p>Se puede dar permiso a un rango de IPs usando una ip de red con su máscara con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span> <span class="pre">prohibicionEntrada</span> <span class="pre">192.168.100.0/24</span> <span class="pre">tcp</span> <span class="pre">dport</span> <span class="pre">80</span> <span class="pre">accept</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -407,7 +433,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#un-ejercicio-comentado">Un ejercicio comentado</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#solucion-1-erronea">Solución 1 (errónea)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#una-solucion-un-poco-mejor">Una solución un poco mejor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">Una solución (un poco mejor)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Una solución (un poco mejor)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#otra-solucion">Otra solución</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#otra-solucion-mas-segura">Otra solución (más segura)</a></li>
 </ul>
 </li>
 </ul>

@@ -361,7 +361,7 @@ Una solución un poco mejor
 1. Borramos las reglas con ``sudo nft flush ruleset`` 
 2. Reconstruimos la tabla con ``sudo nft add table ip filtradoWeb`` 
 3. Reconstruimos la cadena con ``sudo nft add chain ip filtradoWeb filtradoApache { type filter hook prerouting priority 0\; policy accept\;   }`` 
-4. Prohibimos el tráfico de las direcciones de la red "externa" con ``sudo nft add rule ip filtradoWeb filtradoApache ip saddr 10.0.0.0/8 drop `` 
+4. Prohibimos el tráfico de las direcciones de la red "externa" con ``sudo nft add rule ip filtradoWeb filtradoApache ip saddr 10.0.0.0/8 drop`` 
 
 Esto funciona un poco mejor, pero en realidad "fuera" podría haber muchos rangos distintos, por lo que quizá hubiera que poner muchos (y quizá demasiados) rangos de IPs.
 
@@ -373,3 +373,23 @@ Una solución (un poco mejor)
 4. Ejecutamos ``sudo nft add rule ip filtradoWeb filtradoApache iifname enp0s8 tcp dport 80 drop`` 
 
 Esta última regla es un poco mejor, porque ahora descartamos indicando que "prohibimos el tráfico que intente entrar al puerto 80 usando como interfaz de entrada (iifname o "input interface name") la tarjeta enp0s8" (o la que sea)
+
+Otra solución
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Borramos las reglas con ``sudo nft flush ruleset`` 
+2. Vamos a crear una tabla con ``sudo nft add table ip filtradoWeb`` 
+3. Examinamos el tráfico de entrada con una cadena que examine la etapa de red ``input`` con el comando ``sudo nft add chain ip filtradoWeb filtradoEntrada {type filter hook input priority 0\; policy accept\;}`` 
+4. Cerramos el tráfico que entra por la tarjeta que nos conecta al exterior con ``sudo nft add rule ip filtradoWeb filtradoEntrada iifname enp0s8 tcp dport 80 drop`` 
+
+Otra solución (más segura)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Borramos las reglas con ``sudo nft flush ruleset`` 
+2. Vamos a crear una tabla con ``sudo nft add table ip filtradoWeb`` 
+3. Ahora creamos una cadena en la que la política por defecto **va a ser mucho más segura**. Usamos el comando ``sudo nft add chain ip filtradoWeb prohibicionEntrada {type filter hook input priority 0\; policy drop\;}`` 
+4. Ahora todo el tráfico web está prohibido, así que podríamos empezar a dar permiso a quien corresponda.
+
+    * Podríamos dar permiso solo a una cierta IP con el comando ``sudo nft add rule ip filtradoWeb prohibicionEntrada ip saddr 192.168.100.10 tcp dport 80 accept`` 
+    * Podríamos dar permiso a todo el tráfico que entre por una cierta tarjeta con ``sudo nft add rule ip filtradoWeb prohibicionEntrada iifname enp0s3 tcp dport 80 accept`` 
+    * Se puede dar permiso a un rango de IPs usando una ip de red con su máscara con ``sudo nft add rule ip filtradoWeb prohibicionEntrada 192.168.100.0/24 tcp dport 80 accept`` 
