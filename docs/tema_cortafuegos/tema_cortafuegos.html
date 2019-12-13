@@ -156,6 +156,12 @@
 </dl>
 </li>
 </ul>
+<p>Una vez configurado todo podemos hacer lo siguiente:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">list</span> <span class="pre">ruleset</span></code> muestra <strong>toda la configuración del cortafuegos</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">list</span> <span class="pre">ruleset</span> <span class="pre">&gt;</span> <span class="pre">ficheronftables.conf</span></code></p></li>
+<li><p>Si el fichero anterior lo ponemos «encima» del fichero <code class="docutils literal notranslate"><span class="pre">/etc/nftables.conf</span></code> el sistema operativo recargará esta configuración. El comando sería algo como <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">cp</span> <span class="pre">ficheronftables.conf</span> <span class="pre">/etc/nftables.conf</span></code></p></li>
+</ul>
 <div class="section" id="gestion-de-tablas">
 <h3>Gestión de tablas<a class="headerlink" href="#gestion-de-tablas" title="Enlazar permanentemente con este título">¶</a></h3>
 <p>En los puntos siguientes vemos algunas operaciones básicas con tablas:</p>

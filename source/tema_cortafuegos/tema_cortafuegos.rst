@@ -159,6 +159,15 @@ Es decir, el tráfico que "entre" verá los hooks "prerouting" e "input". El que
 	* Si ponemos un "match" entonces DEBE haber una sentencia, que indique lo que se tiene que hacer en ese caso.
 
 
+Una vez configurado todo podemos hacer lo siguiente:
+
+* ``sudo nft list ruleset`` muestra **toda la configuración del cortafuegos** 
+
+* ``sudo nft list ruleset > ficheronftables.conf`` 
+
+* Si el fichero anterior lo ponemos "encima" del fichero ``/etc/nftables.conf`` el sistema operativo recargará esta configuración. El comando sería algo como ``sudo cp ficheronftables.conf /etc/nftables.conf`` 
+
+
 
 Gestión de tablas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
