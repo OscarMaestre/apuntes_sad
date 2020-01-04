@@ -206,7 +206,7 @@ En general, en todos los casos necesitamos un mecanismo para **determinar qué c
 * Comprobar el puerto de origen: ``sudo nft add rule ip filtradoUsuarios traficoEntrada tcp dport 80 drop``. Esta regla descarta **TODO EL TRÁFICO** cuyo puerto de destino sea el 80.
 * Mezclar campos: ``sudo nft add rule ip filtradoUsuarios traficoEntrada tcp dport 80 drop ip saddr 192.168.47.5 tcp dport 443``. Esta regla **descarta todo el tráfico cuyo IP de origen sea 192.168.47.5 y cuyo puerto de destino sea el 443** 
 * Usar rangos de puertos incluso mezclando con rangos de IP:  ``sudo nft add rule ip filtradoUsuarios traficoEntrada tcp dport 80 drop ip saddr 192.168.1.0/24 tcp dport 1-1024``. Esta regla **descarta todo el tráfico cuyo IP de origen sea 192.168.1.xxx y cuyo puerto de destino esté entre 1 y 1024** 
-* Usar cantidad de tráfico: examinemos las siguientes reglas:
+* Usar cantidad de tráfico: examinemos las siguientes reglas (nota, es importante que las reglas que limitan la cantidad de tráfico vayan en la cadena correcta, en concreto en ``prerouting``:
 
     * ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip saddr 192.168.1.45 limit rate 100kbytes/second accept`` : se autoriza el tráfico desde la IP que se mantenga en un ratio de hasta 100kbytes por segundos.
     * La regla de arriba no basta para limitar el tráfico, pero si ahora añadimos esto ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip saddr 192.168.1.45 limit rate over 100kbytes/second drop`` ahora tenemos una segunda regla que indica que **si se excede el límite de 100kbytes/seg entonces el tráfico se descarta**. Esto constituye un mecanismo excelente para "regular el tráfico".
