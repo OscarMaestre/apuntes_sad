@@ -28,3 +28,5 @@ try:
     probar_conexiones()
 except FileNotFoundError:
     print("No tienes el fichero "+FICHERO_CONEXIONES)
+    
+input("Pulsa una tecla para cerrar");
