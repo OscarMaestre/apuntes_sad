@@ -1,4 +1,4 @@
-pyinstaller -F probar_conexiones.py
+pyinstaller -F probar_conexiones_de_salida.py
 copy conexiones.txt dist
 
 rmdir /S /Q __pycache__
