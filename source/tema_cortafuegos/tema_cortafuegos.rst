@@ -226,11 +226,16 @@ Pruebas de funcionamiento. Sondeo.
 
 Registros de sucesos de un cortafuegos.
 -----------------------------------------------------------------------------------------------
+Se puede registrar el tráfico que entra en un cortafuegos como ``nft`` . Para ello, se debe usar la acción ``log`` por ejemplo mediante reglas como las siguientes:
 
+* ``sudo nft add rule ip tablaFiltrado cadenaEntrada log`` . Esto registra *absolutamente todo el tráfico* que circule por esa cadena. Aunque puede ser de mucha utilidad, esto puede ser excesivo.
+* ``sudo nft add rule ip tablaFiltrado cadenaEntrada tcp dport 80 log`` . Esto registra solo el tráfico de entrada HTTP.
+
+Los registros del cortafuegos van al fichero ``/etc/syslog`` 
 
 Cortafuegos integrados en los sistemas operativos.
 -----------------------------------------------------------------------------------------------
-
+Windows incluye un cortafuegos como parte integral de su
 
 Cortafuegos libres y propietarios.
 -----------------------------------------------------------------------------------------------
