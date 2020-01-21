@@ -208,6 +208,7 @@
 </ul>
 </div></blockquote>
 </li>
+<li><p>Podemos «abrir puertos» en el cortafuegos con NAT usando reglas como esta en la tabla que haga NAT: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">tablaNAT</span> <span class="pre">natEntrada</span> <span class="pre">tcp</span> <span class="pre">dport</span> <span class="pre">80</span> <span class="pre">dnat</span> <span class="pre">to</span> <span class="pre">192.168.100.10:80</span></code> que significa algo como «cuando llegue una conexión al puerto 80 de la ip de este cortafuegos redirigir la conexión hacie al puerto 80 de la IP 192.168.100.10»</p></li>
 </ul>
 </div>
 <div class="section" id="acciones-sobre-paquetes">
@@ -221,12 +222,25 @@
 </div>
 <div class="section" id="pruebas-de-funcionamiento-sondeo">
 <h2>Pruebas de funcionamiento. Sondeo.<a class="headerlink" href="#pruebas-de-funcionamiento-sondeo" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Para comprobar el funcionamiento de un cortafuegos se pueden usar varias técnicas:</p>
+<ul class="simple">
+<li><p>Usar una herramienta genérica de gestión de redes, como <code class="docutils literal notranslate"><span class="pre">netcat</span></code>.</p></li>
+<li><p>Usar una herramienta específica de comprobación de puertos como <code class="docutils literal notranslate"><span class="pre">nmap</span></code></p></li>
+<li><p>Usar los ficheros de <code class="docutils literal notranslate"><span class="pre">log</span></code> para registrar la actividad de la red.</p></li>
+</ul>
 </div>
 <div class="section" id="registros-de-sucesos-de-un-cortafuegos">
 <h2>Registros de sucesos de un cortafuegos.<a class="headerlink" href="#registros-de-sucesos-de-un-cortafuegos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Se puede registrar el tráfico que entra en un cortafuegos como <code class="docutils literal notranslate"><span class="pre">nft</span></code> . Para ello, se debe usar la acción <code class="docutils literal notranslate"><span class="pre">log</span></code> por ejemplo mediante reglas como las siguientes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">tablaFiltrado</span> <span class="pre">cadenaEntrada</span> <span class="pre">log</span></code> . Esto registra <em>absolutamente todo el tráfico</em> que circule por esa cadena. Aunque puede ser de mucha utilidad, esto puede ser excesivo.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">tablaFiltrado</span> <span class="pre">cadenaEntrada</span> <span class="pre">tcp</span> <span class="pre">dport</span> <span class="pre">80</span> <span class="pre">log</span></code> . Esto registra solo el tráfico de entrada HTTP.</p></li>
+</ul>
+<p>Los registros del cortafuegos van al fichero <code class="docutils literal notranslate"><span class="pre">/etc/syslog</span></code></p>
 </div>
 <div class="section" id="cortafuegos-integrados-en-los-sistemas-operativos">
 <h2>Cortafuegos integrados en los sistemas operativos.<a class="headerlink" href="#cortafuegos-integrados-en-los-sistemas-operativos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Windows incluye un cortafuegos como parte integral de su</p>
 </div>
 <div class="section" id="cortafuegos-libres-y-propietarios">
 <h2>Cortafuegos libres y propietarios.<a class="headerlink" href="#cortafuegos-libres-y-propietarios" title="Enlazar permanentemente con este título">¶</a></h2>
