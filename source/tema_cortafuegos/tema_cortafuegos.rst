@@ -211,6 +211,8 @@ En general, en todos los casos necesitamos un mecanismo para **determinar qué c
     * ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip saddr 192.168.1.45 limit rate 100kbytes/second accept`` : se autoriza el tráfico desde la IP que se mantenga en un ratio de hasta 100kbytes por segundos.
     * La regla de arriba no basta para limitar el tráfico, pero si ahora añadimos esto ``sudo nft add rule ip filtradoUsuarios traficoEntrada ip saddr 192.168.1.45 limit rate over 100kbytes/second drop`` ahora tenemos una segunda regla que indica que **si se excede el límite de 100kbytes/seg entonces el tráfico se descarta**. Esto constituye un mecanismo excelente para "regular el tráfico".
 
+* Podemos "abrir puertos" en el cortafuegos con NAT usando reglas como esta en la tabla que haga NAT: ``sudo nft add rule ip tablaNAT natEntrada tcp dport 80 dnat to 192.168.100.10:80`` que significa algo como "cuando llegue una conexión al puerto 80 de la ip de este cortafuegos redirigir la conexión hacie al puerto 80 de la IP 192.168.100.10"
+
 
 Acciones sobre paquetes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -222,7 +224,11 @@ Hemos visto hasta ahora la acción ``drop`` (descartar), pero se pueden usar tam
 
 Pruebas de funcionamiento. Sondeo.
 -----------------------------------------------------------------------------------------------
+Para comprobar el funcionamiento de un cortafuegos se pueden usar varias técnicas:
 
+* Usar una herramienta genérica de gestión de redes, como ``netcat``.
+* Usar una herramienta específica de comprobación de puertos como ``nmap`` 
+* Usar los ficheros de ``log`` para registrar la actividad de la red.
 
 Registros de sucesos de un cortafuegos.
 -----------------------------------------------------------------------------------------------
