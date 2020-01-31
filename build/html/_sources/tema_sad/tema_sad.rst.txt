@@ -18,6 +18,19 @@ Evidentemente lograr una disponibilidad del 100% es imposible pero en este bloqu
 
 Virtualización de sistemas.
 -----------------------------------------------------------------------------------------------
+Muchos sistemas operativos que tengan que trabajar como invitados pueden beneficiarse de ciertas posibilidades instalando un software que VirtualBox llama "Guest additions".
+
+Las "Guest additions" ("añadidos para el sistema operativo invitado") son un conjunto de drivers y programas que mejoran la experiencia de uso y el rendimiento de los sistemas operativos invitados. En general, es buena idea instalarlas ya que ofrecen:
+
+* Mejor soporte para el ratón, tarjeta de vídeo y comunicación entre el anfitrión  el invitado.
+* Capacidad para compartir carpetas entre el anfitrión y el invitado.
+* Mejor sincronización de la hora entre anfitrión e invitado.
+* Posibilidad de compartir datos entre el portapapeles del anfitrión e invitado.
+* Inicio de sesión automático.
+
+Modos de red en VirtualBox
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 
 * No conectado.
