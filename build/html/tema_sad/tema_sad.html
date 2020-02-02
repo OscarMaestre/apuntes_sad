@@ -13,8 +13,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
     <link rel="prev" title="Instalación y configuración de servidores proxy" href="../tema_proxys/tema_proxys.html" />
@@ -67,15 +67,49 @@
 </div>
 <div class="section" id="posibilidades-de-la-virtualizacion-de-sistemas">
 <h2>Posibilidades de la virtualización de sistemas.<a class="headerlink" href="#posibilidades-de-la-virtualizacion-de-sistemas" title="Enlazar permanentemente con este título">¶</a></h2>
+<ul class="simple">
+<li>Posibilidad de mover entornos a distintos lugares (remotos o no)</li>
+<li>Facilidad de recuperación de un entorno corrupto.</li>
+<li>Fácil replicación de entornos.</li>
+</ul>
 </div>
 <div class="section" id="herramientas-para-la-virtualizacion">
 <h2>Herramientas para la virtualización.<a class="headerlink" href="#herramientas-para-la-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
+<ul class="simple">
+<li>VirtualBox</li>
+<li>VMWare</li>
+</ul>
+<p>Y para gestionar la virtualización tenemos:</p>
+<ul class="simple">
+<li>Vagrant</li>
+<li>Docker</li>
+<li>Kubernetes</li>
+</ul>
 </div>
 <div class="section" id="configuracion-y-utilizacion-de-maquinas-virtuales">
 <h2>Configuración y utilización de maquinas virtuales.<a class="headerlink" href="#configuracion-y-utilizacion-de-maquinas-virtuales" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A continuación explicamos como virtualizar un servidor web «oculto» detrás del NAT de VirtualBox.</p>
+<ul class="simple">
+<li>Una vez instalado el sistema operativo dentro de VirtualBox deberemos configurar la red de dicho sistema operativo.</li>
+<li>Cuando estamos dentro de VirtualBox y con la tarjeta en modo NAT, VirtualBox se convierte en «router NAT» para sus invitados y les asigna una IP como 10.0.2.15/24. Si nuestro invitado tiene la red en modo DHCP tomará esa IP aunque si queremos podemos modificarla.</li>
+<li>Un sistema operativo que esté dentro de una red con NAT <strong>no puede recibir conexiones iniciadas en el exterior</strong> por lo que habrá que abrir puertos dentro de VirtualBox.</li>
+<li>Para abrir puertos deberemos tener apagado el sistema operativo invitado.</li>
+<li>Una vez apagado, nos vamos a la configuración de la máquina virtual y en la categoría «Red» veremos que con la tarjeta en modo NAT podemos abrir un menú «Avanzado» que ofrece un botón «Reenvío de puertos».</li>
+<li>Si deseamos por ejemplo tener un servidor web seguro virtualizado podemos pedirle a VirtualBox que cuando alguien se conecte a la IP del anfitrión usando el puerto seguro redirija dicha conexión al sistema operativo invitado usando datos como los siguientes:</li>
+</ul>
+<div class="figure">
+<img alt="../_images/puertos_nat_vbox.png" src="../_images/puertos_nat_vbox.png" />
+</div>
 </div>
 <div class="section" id="alta-disponibilidad-y-virtualizacion">
 <h2>Alta disponibilidad y virtualización.<a class="headerlink" href="#alta-disponibilidad-y-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Para «exportar» nuestra máquina y facilitar su gestión con Vagrant se debe:</p>
+<ul class="simple">
+<li>Instalar un sistema operativo como Windows 7 o superior o alguna variante de Linux.</li>
+<li>Al principio como mínimo se debe tener una tarjeta en modo NAT y además se debe anotar la MAC de dicha tarjeta.</li>
+<li>Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">linux-headers-$(uname</span> <span class="pre">-r)</span> <span class="pre">build-essential</span> <span class="pre">dkms</span></code></li>
+<li>Se deben instalar las «Guest Additions» en el anfitrión.</li>
+</ul>
 </div>
 <div class="section" id="simulacion-de-servicios-con-virtualizacion">
 <h2>Simulación de servicios con virtualización.<a class="headerlink" href="#simulacion-de-servicios-con-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -186,7 +220,7 @@
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

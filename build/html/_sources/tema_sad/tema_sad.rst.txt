@@ -39,19 +39,56 @@ En la figura siguiente, sacada de la web de VirtualBox se ilustra "quien puede v
 
 Posibilidades de la virtualización de sistemas.
 -----------------------------------------------------------------------------------------------
+* Posibilidad de mover entornos a distintos lugares (remotos o no)
+* Facilidad de recuperación de un entorno corrupto.
+* Fácil replicación de entornos.
 
 
 Herramientas para la virtualización.
 -----------------------------------------------------------------------------------------------
 
+* VirtualBox
+* VMWare
+
+Y para gestionar la virtualización tenemos:
+
+* Vagrant
+* Docker
+* Kubernetes
 
 Configuración y utilización de maquinas virtuales.
 -----------------------------------------------------------------------------------------------
+A continuación explicamos como virtualizar un servidor web "oculto" detrás del NAT de VirtualBox.
+
+* Una vez instalado el sistema operativo dentro de VirtualBox deberemos configurar la red de dicho sistema operativo.
+* Cuando estamos dentro de VirtualBox y con la tarjeta en modo NAT, VirtualBox se convierte en "router NAT" para sus invitados y les asigna una IP como 10.0.2.15/24. Si nuestro invitado tiene la red en modo DHCP tomará esa IP aunque si queremos podemos modificarla.
+* Un sistema operativo que esté dentro de una red con NAT **no puede recibir conexiones iniciadas en el exterior** por lo que habrá que abrir puertos dentro de VirtualBox.
+* Para abrir puertos deberemos tener apagado el sistema operativo invitado.
+* Una vez apagado, nos vamos a la configuración de la máquina virtual y en la categoría "Red" veremos que con la tarjeta en modo NAT podemos abrir un menú "Avanzado" que ofrece un botón "Reenvío de puertos".
+* Si deseamos por ejemplo tener un servidor web seguro virtualizado podemos pedirle a VirtualBox que cuando alguien se conecte a la IP del anfitrión usando el puerto seguro redirija dicha conexión al sistema operativo invitado usando datos como los siguientes:
+
+
+
+.. figure:: img/puertos_nat_vbox.png
+
+   :scale: 50%
+
+   :align: center
+
+   :alt: Apertura de puertos en VirtualBox en modo NAT
+
+
+
 
 
 Alta disponibilidad y virtualización.
 -----------------------------------------------------------------------------------------------
+Para "exportar" nuestra máquina y facilitar su gestión con Vagrant se debe:
 
+* Instalar un sistema operativo como Windows 7 o superior o alguna variante de Linux.
+* Al principio como mínimo se debe tener una tarjeta en modo NAT y además se debe anotar la MAC de dicha tarjeta.
+* Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con ``sudo apt-get install linux-headers-$(uname -r) build-essential dkms`` 
+* Se deben instalar las "Guest Additions" en el anfitrión.
 
 Simulación de servicios con virtualización.
 -----------------------------------------------------------------------------------------------
