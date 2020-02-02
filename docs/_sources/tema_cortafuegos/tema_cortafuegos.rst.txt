@@ -412,4 +412,4 @@ Otra solución (más segura)
 
     * Podríamos dar permiso solo a una cierta IP con el comando ``sudo nft add rule ip filtradoWeb prohibicionEntrada ip saddr 192.168.100.10 tcp dport 80 accept`` 
     * Podríamos dar permiso a todo el tráfico que entre por una cierta tarjeta con ``sudo nft add rule ip filtradoWeb prohibicionEntrada iifname enp0s3 tcp dport 80 accept`` 
-    * Se puede dar permiso a un rango de IPs usando una ip de red con su máscara con ``sudo nft add rule ip filtradoWeb prohibicionEntrada 192.168.100.0/24 tcp dport 80 accept`` 
+    * Se puede dar permiso a un rango de IPs usando una ip de red con su máscara con ``sudo nft add rule ip filtradoWeb prohibicionEntrada saddr 192.168.100.0/24 tcp dport 80 accept`` 

@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Implantación de soluciones de alta disponibilidad &#8212; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +15,8 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
-    <link rel="prev" title="Instalación y configuración de servidores proxy" href="../tema_proxys/tema_proxys.html" />
+    <link rel="next" title="Legislación y normas sobre seguridad" href="../tema_lopd/tema_lopd.html" />
+    <link rel="prev" title="Instalación y configuración de cortafuegos" href="../tema_cortafuegos/tema_cortafuegos.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -41,28 +40,40 @@
 <p>En el tema «Pautas de seguridad informática» definíamos disponibilidad  de la siguiente manera: <em>capacidad de respuesta a una peticiones con las mínimas pausas por causas involuntarias</em> .</p>
 <p>También decíamos que se mide la disponibilidad de un SI en «nueves».</p>
 <ul class="simple">
-<li>Se dice que un SI ofrece una disponibilidad de «2 nueves», si está disponible el 99% del tiempo.</li>
-<li>Se dice que un SI ofrece una disponibilidad de «3 nueves», si lo está al 99.9%.</li>
-<li>Se dice que un SI ofrece una disponibilidad de «4 nueves» si lo está al 99.99%.</li>
-<li>Se dice que un SI ofrece una disponibilidad de «5 nueves» si lo está al 99.999%</li>
+<li><p>Se dice que un SI ofrece una disponibilidad de «2 nueves», si está disponible el 99% del tiempo.</p></li>
+<li><p>Se dice que un SI ofrece una disponibilidad de «3 nueves», si lo está al 99.9%.</p></li>
+<li><p>Se dice que un SI ofrece una disponibilidad de «4 nueves» si lo está al 99.99%.</p></li>
+<li><p>Se dice que un SI ofrece una disponibilidad de «5 nueves» si lo está al 99.999%</p></li>
 </ul>
 <p>Evidentemente lograr una disponibilidad del 100% es imposible pero en este bloque analizaremos como lograr la máxima disponibilidad en un entorno informático.</p>
 </div>
 <div class="section" id="virtualizacion-de-sistemas">
 <h2>Virtualización de sistemas.<a class="headerlink" href="#virtualizacion-de-sistemas" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Muchos sistemas operativos que tengan que trabajar como invitados pueden beneficiarse de ciertas posibilidades instalando un software que VirtualBox llama «Guest additions».</p>
+<p>Las «Guest additions» («añadidos para el sistema operativo invitado») son un conjunto de drivers y programas que mejoran la experiencia de uso y el rendimiento de los sistemas operativos invitados. En general, es buena idea instalarlas ya que ofrecen:</p>
 <ul class="simple">
-<li>No conectado.</li>
-<li>NAT: Network Address Translation es el proceso por el cual una máquina intercepta las peticiones de red de otra y las efectúa en su lugar (sustituyendo la IP). Cuando llega la respuesta, la máquina interceptora modifica esa respuesta para que la IP de destino sea la de la máquina interceptada. En el caso de VirtualBox el modo NAT hace que el programa VirtualBox “intercepte” las peticiones que salen desde el SO “invitado”. Si algún ordenador de fuera desea iniciar una conexión hacia el SO invitado, VirtualBox prohibirá dicha conexión. Será necesario abrir puertos.</li>
-<li>Red NAT: Facilita la creación de servidores protegidos detrás de un servicio NAT. Supongamos que queremos un servidor HTTP y uno FTP. Podríamos ponerlos en dos máquinas virtuales cada una con su NAT. Pero esto implicaría «tratar a las máquinas por separado». Creando una red NAT podemos simplificar un poco la apertura de puertos trabajando con una sola red NAT.</li>
-<li>Bridge/adaptador puente: el SO invitado no tendrá ninguna restricción y se portará como uno más de la red. El SO invitado necesitará su propia IP separada y distinta del anfitrión.</li>
-<li>Red interna: En este modo podemos crear «redes ficticias que no se ven desde fuera del anfitrión». Consiste en crear redes con un cierto nombre y los distintos invitados que estén asociados a esa «red ficticia» podrán verse entre sí  pero no podrán salir al exterior.</li>
-<li>Solo anfitrión: el invitado solo “ve” al anfitrión.</li>
-<li>Red genérica: solo se usará cuando virtualicemos sistemas operativos que no tengan drivers para alguna de las tarjetas</li>
+<li><p>Mejor soporte para el ratón, tarjeta de vídeo y comunicación entre el anfitrión  el invitado.</p></li>
+<li><p>Capacidad para compartir carpetas entre el anfitrión y el invitado.</p></li>
+<li><p>Mejor sincronización de la hora entre anfitrión e invitado.</p></li>
+<li><p>Posibilidad de compartir datos entre el portapapeles del anfitrión e invitado.</p></li>
+<li><p>Inicio de sesión automático.</p></li>
+</ul>
+<div class="section" id="modos-de-red-en-virtualbox">
+<h3>Modos de red en VirtualBox<a class="headerlink" href="#modos-de-red-en-virtualbox" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li><p>No conectado.</p></li>
+<li><p>NAT: Network Address Translation es el proceso por el cual una máquina intercepta las peticiones de red de otra y las efectúa en su lugar (sustituyendo la IP). Cuando llega la respuesta, la máquina interceptora modifica esa respuesta para que la IP de destino sea la de la máquina interceptada. En el caso de VirtualBox el modo NAT hace que el programa VirtualBox “intercepte” las peticiones que salen desde el SO “invitado”. Si algún ordenador de fuera desea iniciar una conexión hacia el SO invitado, VirtualBox prohibirá dicha conexión. Será necesario abrir puertos.</p></li>
+<li><p>Red NAT: Facilita la creación de servidores protegidos detrás de un servicio NAT. Supongamos que queremos un servidor HTTP y uno FTP. Podríamos ponerlos en dos máquinas virtuales cada una con su NAT. Pero esto implicaría «tratar a las máquinas por separado». Creando una red NAT podemos simplificar un poco la apertura de puertos trabajando con una sola red NAT.</p></li>
+<li><p>Bridge/adaptador puente: el SO invitado no tendrá ninguna restricción y se portará como uno más de la red. El SO invitado necesitará su propia IP separada y distinta del anfitrión.</p></li>
+<li><p>Red interna: En este modo podemos crear «redes ficticias que no se ven desde fuera del anfitrión». Consiste en crear redes con un cierto nombre y los distintos invitados que estén asociados a esa «red ficticia» podrán verse entre sí  pero no podrán salir al exterior.</p></li>
+<li><p>Solo anfitrión: el invitado solo “ve” al anfitrión.</p></li>
+<li><p>Red genérica: solo se usará cuando virtualicemos sistemas operativos que no tengan drivers para alguna de las tarjetas</p></li>
 </ul>
 <p>En la figura siguiente, sacada de la web de VirtualBox se ilustra «quien puede ver a quien»</p>
-<div class="figure" id="id1">
+<div class="figure align-default" id="id1">
 <a class="reference internal image-reference" href="../_images/modos_virtual_box.png"><img alt="Hooks" src="../_images/modos_virtual_box.png" style="width: 802.4000000000001px; height: 200.0px;" /></a>
-<p class="caption"><span class="caption-text">Modos de red en VirtualBox</span></p>
+<p class="caption"><span class="caption-text">Modos de red en VirtualBox</span><a class="headerlink" href="#id1" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
 </div>
 </div>
 <div class="section" id="posibilidades-de-la-virtualizacion-de-sistemas">
@@ -127,12 +138,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html">Adopción de pautas de seguridad informática</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Implantación de soluciones de alta disponibilidad</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#definicion-y-objetivos">Definición y objetivos.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#virtualizacion-de-sistemas">Virtualización de sistemas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#virtualizacion-de-sistemas">Virtualización de sistemas.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modos-de-red-en-virtualbox">Modos de red en VirtualBox</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#posibilidades-de-la-virtualizacion-de-sistemas">Posibilidades de la virtualización de sistemas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#herramientas-para-la-virtualizacion">Herramientas para la virtualización.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuracion-y-utilizacion-de-maquinas-virtuales">Configuración y utilización de maquinas virtuales.</a></li>
@@ -148,24 +159,26 @@
 <li class="toctree-l2"><a class="reference internal" href="#instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad">Instalación y configuración de soluciones de alta disponibilidad.</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../tema_proxys/tema_proxys.html" title="capítulo anterior">Instalación y configuración de servidores  proxy</a></li>
+      <li>Previous: <a href="../tema_cortafuegos/tema_cortafuegos.html" title="capítulo anterior">Instalación y configuración de cortafuegos</a></li>
+      <li>Next: <a href="../tema_lopd/tema_lopd.html" title="próximo capítulo">Legislación y normas sobre seguridad</a></li>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Búsqueda rápida</h3>
+  <h3 id="searchlabel">Búsqueda rápida</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Ir a" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -186,7 +199,7 @@
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
