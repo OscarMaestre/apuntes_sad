@@ -71,40 +71,48 @@ Y para gestionar la virtualización tenemos:
 
 Configuración y utilización de maquinas virtuales.
 -----------------------------------------------------------------------------------------------
-A continuación explicamos como virtualizar un servidor web "oculto" detrás del NAT de VirtualBox.
-
-* Una vez instalado el sistema operativo dentro de VirtualBox deberemos configurar la red de dicho sistema operativo.
-* Cuando estamos dentro de VirtualBox y con la tarjeta en modo NAT, VirtualBox se convierte en "router NAT" para sus invitados y les asigna una IP como 10.0.2.15/24. Si nuestro invitado tiene la red en modo DHCP tomará esa IP aunque si queremos podemos modificarla.
-* Un sistema operativo que esté dentro de una red con NAT **no puede recibir conexiones iniciadas en el exterior** por lo que habrá que abrir puertos dentro de VirtualBox.
-* Para abrir puertos deberemos tener apagado el sistema operativo invitado.
-* Una vez apagado, nos vamos a la configuración de la máquina virtual y en la categoría "Red" veremos que con la tarjeta en modo NAT podemos abrir un menú "Avanzado" que ofrece un botón "Reenvío de puertos".
-* Si deseamos por ejemplo tener un servidor web seguro virtualizado podemos pedirle a VirtualBox que cuando alguien se conecte a la IP del anfitrión usando el puerto seguro redirija dicha conexión al sistema operativo invitado usando datos como los siguientes:
-
-
-
-.. figure:: img/puertos_nat_vbox.png
-
-   :scale: 50%
-
-   :align: center
-
-   :alt: Apertura de puertos en VirtualBox en modo NAT
-
-
-
-
+Durante el primer curso ya se ha explicado el funcionamiento básico de este software por lo que aquí no volveremos a repetir lo ya visto.
 
 Alta disponibilidad y virtualización.
 -----------------------------------------------------------------------------------------------
+
+En pocas palabras podemos reconstruir un sistema virtualizado previamente usando solo estos comandos:
+
+* ``vagrant init maquina/usr`` : Inicializa un directorio con la configuración de esa máquina.
+* ``vagrant up`` : "Levanta" la máquina, instalándola, recuperando su estado tal y como se hubiera quedado y configurándola desde cero. Por defecto, las máquinas suelen tener el usuario "vagrant" con la clave "vagrant".
+
+
 Para "exportar" nuestra máquina y facilitar su gestión con Vagrant se debe:
 
 * Instalar un sistema operativo como Windows 7 o superior o alguna variante de Linux.
 * Al principio como mínimo se debe tener una tarjeta en modo NAT y además se debe anotar la MAC de dicha tarjeta.
 * Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con ``sudo apt-get install linux-headers-$(uname -r) build-essential dkms`` 
 * Se deben instalar las "Guest Additions" en el anfitrión.
+* Se debe instalar OpenSSH con ``sudo apt-get install openssh-server``.
+* Es recomendable crear el usuario "vagrant" y ponerle la clave Vagrant. También es importante permitir que ese usuario pueda ser administrador y que además no necesite indicar su clave de administrador cada vez. Esto puede hacerse editando los parámetros de administración con ``visudo`` y poniendo la línea ``vagrant ALL=(ALL) NOPASSWD: ALL`` 
 
 Simulación de servicios con virtualización.
 -----------------------------------------------------------------------------------------------
+
+
+A continuación explicamos como virtualizar un servidor web "oculto" detrás del NAT de VirtualBox.
+
+* Una vez instalado el sistema operativo dentro de VirtualBox deberemos configurar la red de dicho sistema operativo.
+* Cuando estamos dentro de VirtualBox y con la tarjeta en modo NAT, VirtualBox se convierte en "router NAT" para sus invitados y les asigna una IP como 10.0.2.15/24 con gateway 10.0.2.2. Si nuestro invitado tiene la red en modo DHCP tomará esa IP aunque si queremos podemos modificarla.
+* Un sistema operativo que esté dentro de una red con NAT **no puede recibir conexiones iniciadas en el exterior** por lo que habrá que abrir puertos dentro de VirtualBox.
+* Para abrir puertos deberemos tener apagado el sistema operativo invitado.
+* Una vez apagado, nos vamos a la configuración de la máquina virtual y en la categoría "Red" veremos que con la tarjeta en modo NAT podemos abrir un menú "Avanzado" que ofrece un botón "Reenvío de puertos".
+* Si deseamos por ejemplo tener un servidor web seguro virtualizado podemos pedirle a VirtualBox que cuando alguien se conecte a la IP del anfitrión usando el puerto seguro redirija dicha conexión al sistema operativo invitado usando datos como los siguientes:
+
+
+.. figure:: img/puertos_nat_vbox.png
+   :scale: 50%
+   :align: center
+   :alt: Apertura de puertos en VirtualBox en modo NAT
+
+   Apertura de puertos en VirtualBox en modo NAT
+
+
 
 
 
@@ -125,7 +133,7 @@ Servidores redundantes.
 -----------------------------------------------------------------------------------------------
 
 
-Sistemas de  clusters .
+Sistemas de  clusters.
 -----------------------------------------------------------------------------------------------
 
 
