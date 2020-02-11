@@ -78,7 +78,7 @@ Alta disponibilidad y virtualización.
 
 En pocas palabras podemos reconstruir un sistema virtualizado previamente usando solo estos comandos:
 
-* ``vagrant init maquina/usr`` : Inicializa un directorio con la configuración de esa máquina.
+* ``vagrant init maquina/usr`` : Inicializa un directorio con la configuración de esa máquina (cuidado, en Windows hay que cambiar y en lugar de escribir cosas como ``vagrant init d:\directorio\maquina.box`` usar ``vagrant init d:/directorio/maquina.box``, es decir cambiar la barra \ por la /).
 * ``vagrant up`` : "Levanta" la máquina, instalándola, recuperando su estado tal y como se hubiera quedado y configurándola desde cero. Por defecto, las máquinas suelen tener el usuario "vagrant" con la clave "vagrant".
 
 
@@ -89,7 +89,13 @@ Para "exportar" nuestra máquina y facilitar su gestión con Vagrant se debe:
 * Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con ``sudo apt-get install linux-headers-$(uname -r) build-essential dkms`` 
 * Se deben instalar las "Guest Additions" en el anfitrión.
 * Se debe instalar OpenSSH con ``sudo apt-get install openssh-server``.
-* Es recomendable crear el usuario "vagrant" y ponerle la clave Vagrant. También es importante permitir que ese usuario pueda ser administrador y que además no necesite indicar su clave de administrador cada vez. Esto puede hacerse editando los parámetros de administración con ``visudo`` y poniendo la línea ``vagrant ALL=(ALL) NOPASSWD: ALL`` 
+* Es recomendable crear el usuario "vagrant" y ponerle la clave Vagrant. También es importante permitir que ese usuario pueda ser administrador y que además no necesite indicar su clave de administrador cada vez. Esto puede hacerse editando los parámetros de administración con ``visudo`` y poniendo la línea ``vagrant ALL=(ALL) NOPASSWD: ALL``
+
+* Se debe iniciar sesión en la máquina virtual con el usuario "vagrant" y la clave "vagrant". Nos conectaremos a nuestra propia máquina con ``ssh localhost`` y despues nos salimos (eso permite que se cree el directorio .ssh).  Se debe meter la clave pública de Vagrant dentro del directorio ssh con ``cat vagrant.pub > .ssh/authorized_keys`` 
+
+* Vamos a permitir que todo el mundo pueda leer ese fichero y ese directorio de claves usando ``chmod 0700 .ssh`` 
+
+* Una vez hecho todo esto podemos apagar la máquina virtual, cerrar VirtualBox y abrir la línea de comandos y crear un directorio vacío. Dentro de él inicializaremos el directorio para que sea un directorio inicializado por Vagrant con el comando ``vagrant init`` y luego exportaremos la máquina con ``vagrant package --base <nombredemaquina> --output Maquina.box`` .
 
 Simulación de servicios con virtualización.
 -----------------------------------------------------------------------------------------------
