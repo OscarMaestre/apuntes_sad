@@ -1,9 +1,11 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Adopción de pautas de seguridad informática &#8212; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -39,17 +41,17 @@
 <h2>Fiabilidad, confidencialidad, integridad y disponibilidad.<a class="headerlink" href="#fiabilidad-confidencialidad-integridad-y-disponibilidad" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>A continuación definimos los siguientes términos</p>
 <ul class="simple">
-<li><p>Fiabilidad: la capacidad de conseguir que un SI ofrezca la información sin pausas entre peticiones.</p></li>
-<li><p>confidencialidad: capacidad de conseguir que la información se muestre solo a las personas que estén autorizadas para ello.</p></li>
-<li><p>Integridad: capacidad de conseguir que la información no se altere por causas involuntarias.</p></li>
-<li><p>Disponibilidad: capacidad de respuesta a una peticiones con las mínimas pausas por causas involuntarias.</p></li>
+<li>Fiabilidad: la capacidad de conseguir que un SI ofrezca la información sin pausas entre peticiones.</li>
+<li>confidencialidad: capacidad de conseguir que la información se muestre solo a las personas que estén autorizadas para ello.</li>
+<li>Integridad: capacidad de conseguir que la información no se altere por causas involuntarias.</li>
+<li>Disponibilidad: capacidad de respuesta a una peticiones con las mínimas pausas por causas involuntarias.</li>
 </ul>
 <p>En relación con el último punto, se mide la disponibilidad de un SI en «nueves».</p>
 <ul class="simple">
-<li><p>Se dice que un SI ofrece una disponibilidad de «2 nueves», si está disponible el 99% del tiempo.</p></li>
-<li><p>Se dice que un SI ofrece una disponibilidad de «3 nueves», si lo está al 99.9%.</p></li>
-<li><p>Se dice que un SI ofrece una disponibilidad de «4 nueves» si lo está al 99.99%.</p></li>
-<li><p>Se dice que un SI ofrece una disponibilidad de «5 nueves» si lo está al 99.999%</p></li>
+<li>Se dice que un SI ofrece una disponibilidad de «2 nueves», si está disponible el 99% del tiempo.</li>
+<li>Se dice que un SI ofrece una disponibilidad de «3 nueves», si lo está al 99.9%.</li>
+<li>Se dice que un SI ofrece una disponibilidad de «4 nueves» si lo está al 99.99%.</li>
+<li>Se dice que un SI ofrece una disponibilidad de «5 nueves» si lo está al 99.999%</li>
 </ul>
 <p>Ejercicio: Si un año tiene 365 días, calcular cuanto tiempo podría estar como «no disponible» cada uno de los sistemas que hemos enumerado en el punto anterior.</p>
 </div>
@@ -58,36 +60,38 @@
 <p>«Vulnerable»: medida de la capacidad de un sistema para fallar de manera inesperada. En pocas palabras una vulnerabilidad es un punto débil.</p>
 <p>Como resulta evidente en un SI hay tres grandes elementos que son susceptibles de ser vulnerables:</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt>Hardware.</dt><dd><ul>
-<li><p>Fluido eléctrico.</p></li>
-<li><p>Placa base.</p></li>
-<li><p>RAM: errores muy difíciles de detectar.</p></li>
-<li><p>Discos: hay abundantes estadísticas acerca de sus tasas de fallos.</p></li>
-<li><p>Tarjetas gráficas.</p></li>
-<li><p>Interconexiones. cables y/o soldaduras</p></li>
+<li><dl class="first docutils">
+<dt>Hardware.</dt>
+<dd><ul class="first last">
+<li>Fluido eléctrico.</li>
+<li>Placa base.</li>
+<li>RAM: errores muy difíciles de detectar.</li>
+<li>Discos: hay abundantes estadísticas acerca de sus tasas de fallos.</li>
+<li>Tarjetas gráficas.</li>
+<li>Interconexiones. cables y/o soldaduras</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>Software.</dt><dd><ul>
-<li><p>Sistema operativo: es importante tener activada la actualización automática que aplica «parches» sin necesidad de recordar aplicarlas manualmente. Para evitar la aplicación de actualizaciones que puedan estropear otras partes se suele aconsejar NO TENER ACTIVADA LA ACTUALIZACIÓN AUTOMÁTICA en equipos críticos y sí tenerla en otros equipos que actúen como «cobayas.»</p></li>
-<li><p>Aplicaciones. También pueden mostrar fallos que den lugar a consecuencias muy desagradables especialmente con los datos.</p></li>
+<li><dl class="first docutils">
+<dt>Software.</dt>
+<dd><ul class="first last">
+<li>Sistema operativo: es importante tener activada la actualización automática que aplica «parches» sin necesidad de recordar aplicarlas manualmente. Para evitar la aplicación de actualizaciones que puedan estropear otras partes se suele aconsejar NO TENER ACTIVADA LA ACTUALIZACIÓN AUTOMÁTICA en equipos críticos y sí tenerla en otros equipos que actúen como «cobayas.»</li>
+<li>Aplicaciones. También pueden mostrar fallos que den lugar a consecuencias muy desagradables especialmente con los datos.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><p>Datos. Hoy en día son casi con total seguridad el activo más valioso de la empresa. Para protegerlos habrá que tomar muchas medidas de seguridad.</p></li>
+<li>Datos. Hoy en día son casi con total seguridad el activo más valioso de la empresa. Para protegerlos habrá que tomar muchas medidas de seguridad.</li>
 </ul>
 </div>
 <div class="section" id="analisis-de-las-principales-vulnerabilidades-de-un-sistema-informatico">
 <h2>Análisis de las principales vulnerabilidades de un sistema informático.<a class="headerlink" href="#analisis-de-las-principales-vulnerabilidades-de-un-sistema-informatico" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Cuando se habla de vulnerabilidad, se asocia este término con problemas software. Una vulnerabilidad puede conllevar una serie de problemas muy graves:</p>
 <ul class="simple">
-<li><p>Que un intruso consiga permisos de administración en un sistema.</p></li>
-<li><p>Que un virus informático consiga tomar el control de los equipos de la empresa.</p></li>
-<li><p>Que un software o individuo consiga borrar/alterar/cifrar datos de la empresa.</p></li>
+<li>Que un intruso consiga permisos de administración en un sistema.</li>
+<li>Que un virus informático consiga tomar el control de los equipos de la empresa.</li>
+<li>Que un software o individuo consiga borrar/alterar/cifrar datos de la empresa.</li>
 </ul>
 <p>En Internet todas las vulnerabilidades detectadas se publican como un informe CVE (Common Vulnerability Exposure)</p>
 <p>Recientemente se han descubierto <strong>vulnerabilidades a nivel de microprocesador</strong>.
@@ -100,79 +104,81 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 <h2>Amenazas. Tipos.<a class="headerlink" href="#amenazas-tipos" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Clasificando por lugar</p>
 <ul class="simple">
-<li><p>Interna: los problemas originados dentro de la propia empresa son <strong>los más frecuentes y los de impacto más grave</strong></p></li>
-<li><p>Externa: son las originadas fuera de la propia empresa.</p></li>
+<li>Interna: los problemas originados dentro de la propia empresa son <strong>los más frecuentes y los de impacto más grave</strong></li>
+<li>Externa: son las originadas fuera de la propia empresa.</li>
 </ul>
 <p>Clasificando por mecanismo</p>
 <ul class="simple">
-<li><p>Físicas</p></li>
-<li><p>Lógicas</p></li>
+<li>Físicas</li>
+<li>Lógicas</li>
 </ul>
 </div>
 <div class="section" id="amenazas-fisicas">
 <h2>Amenazas físicas.<a class="headerlink" href="#amenazas-fisicas" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.</p>
 <ul>
-<li><p>Rotura intencionada.</p></li>
-<li><p>Desastre natural: terremotos, inundaciones, incendios, etc…</p>
+<li><p class="first">Rotura intencionada.</p>
+</li>
+<li><p class="first">Desastre natural: terremotos, inundaciones, incendios, etc…</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>Se debe disponer de la protección antiincendios adecuada.</p></li>
-<li><p>No todos los extintores son apropiados para todo.</p></li>
-<li><p>Los seguros no suelen cubrir eventos de este tipo.</p></li>
-<li><p>Se desaconseja la instalación de centros de datos en bajos o sótanos.</p></li>
+<li>Se debe disponer de la protección antiincendios adecuada.</li>
+<li>No todos los extintores son apropiados para todo.</li>
+<li>Los seguros no suelen cubrir eventos de este tipo.</li>
+<li>Se desaconseja la instalación de centros de datos en bajos o sótanos.</li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
 <p>En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.</p>
 <ul>
-<li><p>Barreras físicas.</p>
+<li><p class="first">Barreras físicas.</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>Los servidores deberían estar cerrados con llaves y con acceso restringido.</p></li>
-<li><p>Controles de acceso con tarjeta y/o guardia de seguridad.</p></li>
-<li><p>En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.</p></li>
-<li><p>Puertas con apertura programada.</p></li>
+<li>Los servidores deberían estar cerrados con llaves y con acceso restringido.</li>
+<li>Controles de acceso con tarjeta y/o guardia de seguridad.</li>
+<li>En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.</li>
+<li>Puertas con apertura programada.</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p>Protección eléctrica.</p></li>
+<li><p class="first">Protección eléctrica.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="amenazas-logicas">
 <h2>Amenazas lógicas.<a class="headerlink" href="#amenazas-logicas" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>¿Qué problemas podrían causarse por motivos de un uso inapropiado de software?</p>
 <ul class="simple">
-<li><p>Ataques a nivel de red IP. P.ej ataques de tipo «spoofing». Phishing. MITM</p></li>
-<li><p>A nivel de SO. Buffer overflow. Errores humanos.</p></li>
-<li><p>A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.</p></li>
-<li><p>Malware: spyware, ransomware, virus, DOS (Denial of service).</p></li>
+<li>Ataques a nivel de red IP. P.ej ataques de tipo «spoofing». Phishing. MITM</li>
+<li>A nivel de SO. Buffer overflow. Errores humanos.</li>
+<li>A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.</li>
+<li>Malware: spyware, ransomware, virus, DOS (Denial of service).</li>
 </ul>
 </div>
 <div class="section" id="seguridad-fisica-y-ambiental">
 <h2>Seguridad física y ambiental<a class="headerlink" href="#seguridad-fisica-y-ambiental" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>La seguridad física y ambiental implica controlar tres grandes tipos de posibles acciones:</p>
 <ul class="simple">
-<li><p>Engaños/fraudes.</p></li>
-<li><p>Robos/pérdidas.</p></li>
-<li><p>Sabotajes.</p></li>
+<li>Engaños/fraudes.</li>
+<li>Robos/pérdidas.</li>
+<li>Sabotajes.</li>
 </ul>
 <p>Para evitarlos se suele recurrir a una o varias medidas de las siguientes:</p>
 <ul class="simple">
-<li><p>Sistemas biométricos.</p></li>
-<li><p>Personal de seguridad.</p></li>
-<li><p>Protección electrónica como sensores de presencia, infrarrojos, de movimiento.</p></li>
+<li>Sistemas biométricos.</li>
+<li>Personal de seguridad.</li>
+<li>Protección electrónica como sensores de presencia, infrarrojos, de movimiento.</li>
 </ul>
 </div>
 <div class="section" id="sistemas-de-alimentacion-ininterrumpida">
 <h2>Sistemas de alimentación ininterrumpida.<a class="headerlink" href="#sistemas-de-alimentacion-ininterrumpida" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Un sistema de alimentación ininterrumpida o SAI protege contra problemas eléctricos comunes que pueden afectar al funcionamiento normal de un sistema informático.</p>
 <ul class="simple">
-<li><p>Bajadas de tensión. Produce daños a largo plazo.</p></li>
-<li><p>Interrupciones del suministro. Da lugar a perjuicios económicos.</p></li>
-<li><p>Subidas de tensión puntuales. Menores o iguales de 4 milisegundos y producen daños en dias/semanas.</p></li>
-<li><p>Subidas de tensión sostenidas. Dura mas de 4 milisegundos y produce daños en escasos minutos e instantáneos.</p></li>
+<li>Bajadas de tensión. Produce daños a largo plazo.</li>
+<li>Interrupciones del suministro. Da lugar a perjuicios económicos.</li>
+<li>Subidas de tensión puntuales. Menores o iguales de 4 milisegundos y producen daños en dias/semanas.</li>
+<li>Subidas de tensión sostenidas. Dura mas de 4 milisegundos y produce daños en escasos minutos e instantáneos.</li>
 </ul>
 <p>En líneas generales el parámetro principal que debemos mirar en un SAI es su «potencia aparente».</p>
 <p>La potencia aparente de un SAI se mide en «voltio-amperios» o «kilo-voltio-amperios» o «KVA» (también pronunciado como «kabeas» o «kivas»)</p>
@@ -182,8 +188,8 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 <p>Si tuviésemos 3 ordenadores y cada uno consumiese 650W está claro que no podríamos conectar los 3.</p>
 <p>Si un SAI se anuncia indicando que ofrece 1500KVA y 850W de potencia ¿qué factor de potencia ofrece?</p>
 <ul class="simple">
-<li><p>Los 1500KVA son la «nominal/máxima/aparente»</p></li>
-<li><p>Los 850W son la «eficaz/de salida»</p></li>
+<li>Los 1500KVA son la «nominal/máxima/aparente»</li>
+<li>Los 850W son la «eficaz/de salida»</li>
 </ul>
 <p>Si Eficaz=Aparente * FdP entonces</p>
 <p>FDP=Eficaz/aparente</p>
@@ -197,15 +203,15 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 <h2>Seguridad lógica.<a class="headerlink" href="#seguridad-logica" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Implica  restringir el acceso a datos en función de la persona que lo intente:</p>
 <ul class="simple">
-<li><p>Claves de acceso.</p></li>
-<li><p>Tarjetas de identificación.</p></li>
-<li><p>Copias de seguridad.</p></li>
-<li><p>Listas de control de acceso.</p></li>
-<li><p>Control horario.</p></li>
-<li><p>Roles.</p></li>
-<li><p>Cortafuegos.</p></li>
-<li><p>Distribución de carga.</p></li>
-<li><p>Redundancia de sistemas</p></li>
+<li>Claves de acceso.</li>
+<li>Tarjetas de identificación.</li>
+<li>Copias de seguridad.</li>
+<li>Listas de control de acceso.</li>
+<li>Control horario.</li>
+<li>Roles.</li>
+<li>Cortafuegos.</li>
+<li>Distribución de carga.</li>
+<li>Redundancia de sistemas</li>
 </ul>
 </div>
 <div class="section" id="criptografia">
@@ -240,9 +246,9 @@ BO</p>
 DH….</p>
 <p>Existen diversas técnicas llamadas «criptoanálisis» que investigan como descifrar mensajes cifrados.</p>
 <ul class="simple">
-<li><p>Averiguar el idioma en que se escribió.</p></li>
-<li><p>Buscar palabras comunes: «el» «la» «los» «las», «con»</p></li>
-<li><p>Usar «fuerza bruta»</p></li>
+<li>Averiguar el idioma en que se escribió.</li>
+<li>Buscar palabras comunes: «el» «la» «los» «las», «con»</li>
+<li>Usar «fuerza bruta»</li>
 </ul>
 <p>Como el uso de la informática ha simplificado muchísimo el atacar claves se investigaron nuevos mecanismos de criptografía: los asimétricos.</p>
 <p>En los viejos sistemas se podía descifrar un mensaje si alguien obtenía la clave, solo había que hacer el proceso inverso</p>
@@ -253,29 +259,29 @@ DH….</p>
 <p>La autenticación consiste en «comprobar que alguien es quien dice ser», ¿como conseguirlo?. Muy sencillo.</p>
 <p>En primer lugar tendremos tres elementos:</p>
 <ol class="arabic simple">
-<li><p>Un servidor (como por ejemplo Amazon) que desea ofrecer garantías a sus clientes de que cuando se conectan a Amazon realmente se conectan a un servidor de Amazon.</p></li>
-<li><p>Por otro lado tendremos clientes que desean obtener la garantía de que cuando escriben <code class="docutils literal notranslate"><span class="pre">http://amazon.es</span></code> <strong>realmente se están conectando a un servidor de Amazon</strong></p></li>
-<li><p>Por último tendremos un tercero que se encarga de verificar el proceso para ambos llamada CA o «autoridad de certificación».</p></li>
+<li>Un servidor (como por ejemplo Amazon) que desea ofrecer garantías a sus clientes de que cuando se conectan a Amazon realmente se conectan a un servidor de Amazon.</li>
+<li>Por otro lado tendremos clientes que desean obtener la garantía de que cuando escriben <code class="docutils literal notranslate"><span class="pre">http://amazon.es</span></code> <strong>realmente se están conectando a un servidor de Amazon</strong></li>
+<li>Por último tendremos un tercero que se encarga de verificar el proceso para ambos llamada CA o «autoridad de certificación».</li>
 </ol>
 <p>Así,el proceso es el siguiente:</p>
 <ol class="arabic simple">
-<li><p>Amazon envía a la CA una «petición de firma de certificado».</p></li>
-<li><p>La CA lo recibe y lo cifra con su clave privada.</p></li>
-<li><p>La CA da su clave pública (que se usará para descifrar) a todos los navegadores, que lo incorporan de serie en la instalación.</p></li>
-<li><p>Amazon pone en sus servidores el certificado «firmado» por la CA</p></li>
-<li><p>Cuando el cliente se conecta a Amazon, el servidor le envía el certificado.</p></li>
-<li><p>El cliente descarga el certificado y lo descifra con la clave pública de la CA, obteniendo un fichero válido que le garantiza que esa máquina realmente es Amazon.</p></li>
+<li>Amazon envía a la CA una «petición de firma de certificado».</li>
+<li>La CA lo recibe y lo cifra con su clave privada.</li>
+<li>La CA da su clave pública (que se usará para descifrar) a todos los navegadores, que lo incorporan de serie en la instalación.</li>
+<li>Amazon pone en sus servidores el certificado «firmado» por la CA</li>
+<li>Cuando el cliente se conecta a Amazon, el servidor le envía el certificado.</li>
+<li>El cliente descarga el certificado y lo descifra con la clave pública de la CA, obteniendo un fichero válido que le garantiza que esa máquina realmente es Amazon.</li>
 </ol>
 </div>
 <div class="section" id="privacidad">
 <h3>Privacidad<a class="headerlink" href="#privacidad" title="Enlazar permanentemente con este título">¶</a></h3>
 <p>Una vez que Amazon ha ofrecido garantías a su cliente ahora se necesita usar la criptografía para que el usuario pueda hacer sus compras sin que nadie espíe. Ahora las claves se usarán al revés.</p>
 <ol class="arabic simple">
-<li><p>El cliente se conecta a Amazon (despues de haber comprobado que el certificado es correcto)</p></li>
-<li><p>Amazon envía al cliente su clave de cifrado.</p></li>
-<li><p>El cliente la recibe y cifra el pedido con la clave pública de cifrado de Amazon.</p></li>
-<li><p>El mensaje viaja por la red pero nadie podrá descifrarlo.</p></li>
-<li><p>El mensaje llega a Amazon y usa su clave privada para descifrar.</p></li>
+<li>El cliente se conecta a Amazon (despues de haber comprobado que el certificado es correcto)</li>
+<li>Amazon envía al cliente su clave de cifrado.</li>
+<li>El cliente la recibe y cifra el pedido con la clave pública de cifrado de Amazon.</li>
+<li>El mensaje viaja por la red pero nadie podrá descifrarlo.</li>
+<li>El mensaje llega a Amazon y usa su clave privada para descifrar.</li>
 </ol>
 </div>
 </div>
@@ -283,13 +289,13 @@ DH….</p>
 <h2>Cifrado de ficheros en línea de comandos<a class="headerlink" href="#cifrado-de-ficheros-en-linea-de-comandos" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Existe una utilidad de libre distribución llamada <code class="docutils literal notranslate"><span class="pre">gpg</span></code> que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica. Este programa asume que usaremos la clave pública para cifrar y la privada para descifrar.</p>
 <ul class="simple">
-<li><p>Se debe empezar por generar una pareja de claves usando el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--full-generate-keys</span></code> (el proceso de generación de claves puede ser muy lento, se recomienda tener paciencia y a ser posible abrir otra consola y trabajar en ella).</p></li>
-<li><p>Una vez generado tendremos un directorio llamado <code class="docutils literal notranslate"><span class="pre">.gnupg</span></code> en el que se almacenan las claves. Podemos listar las claves de nuestro almacén con <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--list-keys</span></code></p></li>
-<li><p>Una vez se tenga generada la clave la costumbre es tener preparado un «certificado de revocación». Se utilizará si creemos que nos han robado alguna clave y distribuiremos el fichero para avisar de que no se debe confiar en nuestras claves. Esto se hace con el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--gen-revoke</span> <span class="pre">&quot;usuario&quot;</span> <span class="pre">--output</span> <span class="pre">ClaveRevocada.asc</span></code> . Se pueden usar otros nombres de fichero pero la costumbre es usar la extensión <code class="docutils literal notranslate"><span class="pre">.asc</span></code></p></li>
-<li><p>A continuación se suele extraer nuestra clave pública del almacén de claves y ponerla en un fichero con el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--export</span> <span class="pre">&lt;usuario&gt;</span> <span class="pre">--output</span> <span class="pre">ClavePublicaUsuario.gpg</span></code> . Se generará un fichero binario en <code class="docutils literal notranslate"><span class="pre">ClavePublicaUsuario.gpg</span></code> . Si deseamos generar un fichero con ASCII normal podemos hacer esto <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--armor</span> <span class="pre">--export</span> <span class="pre">&lt;usuario&gt;</span> <span class="pre">--output</span> <span class="pre">ClavePublicaUsuario.gpg</span></code></p></li>
-<li><p>Una vez que alguien nos haya pasado su clave pública deberemos incorporarla a nuestro almacén usando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--import</span> <span class="pre">&lt;fichero.gpg&gt;</span></code></p></li>
-<li><p>Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que <strong>solo esa persona podrá descifrar</strong> . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--output</span> <span class="pre">ficherocifrado.doc.gpg</span> <span class="pre">--recipient</span> <span class="pre">persona&#64;mail.com</span> <span class="pre">ficherooriginal.doc</span></code></p></li>
-<li><p>Finalmente podremos descifrar un fichero que nos hayan enviado usando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--decrypt</span> <span class="pre">&lt;ficheroparanosotros&gt;</span></code> .</p></li>
+<li>Se debe empezar por generar una pareja de claves usando el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--full-generate-keys</span></code> (el proceso de generación de claves puede ser muy lento, se recomienda tener paciencia y a ser posible abrir otra consola y trabajar en ella).</li>
+<li>Una vez generado tendremos un directorio llamado <code class="docutils literal notranslate"><span class="pre">.gnupg</span></code> en el que se almacenan las claves. Podemos listar las claves de nuestro almacén con <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--list-keys</span></code></li>
+<li>Una vez se tenga generada la clave la costumbre es tener preparado un «certificado de revocación». Se utilizará si creemos que nos han robado alguna clave y distribuiremos el fichero para avisar de que no se debe confiar en nuestras claves. Esto se hace con el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--gen-revoke</span> <span class="pre">&quot;usuario&quot;</span> <span class="pre">--output</span> <span class="pre">ClaveRevocada.asc</span></code> . Se pueden usar otros nombres de fichero pero la costumbre es usar la extensión <code class="docutils literal notranslate"><span class="pre">.asc</span></code></li>
+<li>A continuación se suele extraer nuestra clave pública del almacén de claves y ponerla en un fichero con el comando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--export</span> <span class="pre">&lt;usuario&gt;</span> <span class="pre">--output</span> <span class="pre">ClavePublicaUsuario.gpg</span></code> . Se generará un fichero binario en <code class="docutils literal notranslate"><span class="pre">ClavePublicaUsuario.gpg</span></code> . Si deseamos generar un fichero con ASCII normal podemos hacer esto <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--armor</span> <span class="pre">--export</span> <span class="pre">&lt;usuario&gt;</span> <span class="pre">--output</span> <span class="pre">ClavePublicaUsuario.gpg</span></code></li>
+<li>Una vez que alguien nos haya pasado su clave pública deberemos incorporarla a nuestro almacén usando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--import</span> <span class="pre">&lt;fichero.gpg&gt;</span></code></li>
+<li>Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que <strong>solo esa persona podrá descifrar</strong> . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--output</span> <span class="pre">ficherocifrado.doc.gpg</span> <span class="pre">--recipient</span> <span class="pre">persona&#64;mail.com</span> <span class="pre">ficherooriginal.doc</span></code></li>
+<li>Finalmente podremos descifrar un fichero que nos hayan enviado usando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--decrypt</span> <span class="pre">&lt;ficheroparanosotros&gt;</span></code> .</li>
 </ul>
 </div>
 <div class="section" id="listas-de-control-de-acceso">
@@ -297,27 +303,27 @@ DH….</p>
 <p>En los sistemas UNIX (como GNU/Linux) tradicionalmente se han usado permisos basados en usuarios y grupos. Así, cuando se crear un usuario (con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">adduser</span> <span class="pre">nombreusuario</span></code>) tradicionamente se crea un grupo con el mismo nombre y en el que está solo ese usuario.</p>
 <p>Cuando un usuario cualquiera crea un fichero, ese fichero tiene asignados automáticamente unos permisos que pueden ser</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">r</span></code> si se puede leer el fichero</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code> si se puede escribir/modificar el fichero.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> si se puede ejecutar.</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">r</span></code> si se puede leer el fichero</li>
+<li><code class="docutils literal notranslate"><span class="pre">w</span></code> si se puede escribir/modificar el fichero.</li>
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code> si se puede ejecutar.</li>
 </ul>
 <p>Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usuarios en general. Así, un fichero cualquiera puede mostrar unos permisos como estos (necesitaremos el comando <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code> para ver los permisos).</p>
-<div class="figure align-default" id="id1">
+<div class="figure" id="id1">
 <a class="reference internal image-reference" href="../_images/permisos_grupos.png"><img alt="Ejemplos de permisos" src="../_images/permisos_grupos.png" style="width: 329.5px; height: 34.0px;" /></a>
-<p class="caption"><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span><a class="headerlink" href="#id1" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span></p>
 </div>
 <p>Si examinamos el fichero <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> veremos que tiene unos permisos como estos <code class="docutils literal notranslate"><span class="pre">-rw-rw-r--</span></code> y veremos también que pone <code class="docutils literal notranslate"><span class="pre">profesor</span> <span class="pre">profesor</span></code> . Por este orden, esto significa</p>
 <ul class="simple">
-<li><p>El usuario propietario del fichero se llama <code class="docutils literal notranslate"><span class="pre">profesor</span></code>. El grupo asignado a este fichero es <code class="docutils literal notranslate"><span class="pre">profesor</span></code> (recuérdese que puede cambiarse el propietario con <code class="docutils literal notranslate"><span class="pre">chown</span></code> y el grupo con <code class="docutils literal notranslate"><span class="pre">chgrp</span></code> )</p></li>
-<li><p>El primer permiso tiene un <code class="docutils literal notranslate"><span class="pre">-</span></code>. Este primer permiso indica el tipo de fichero, que puede ser «fichero normal» (-), «directorio» (veriamos «d»), «enlace» (l)…</p></li>
-<li><p>Despues vemos <code class="docutils literal notranslate"><span class="pre">rw-</span></code>. Este primer grupo de tres permisos es el aplicado al propietario (que este caso es <code class="docutils literal notranslate"><span class="pre">profesor</span></code>). Este grupo significa que el propietario puede leer y escribir en este fichero, pero no ejecutar.</p></li>
-<li><p>Despues vemos <code class="docutils literal notranslate"><span class="pre">rw-</span></code>. Estos son los permisos que se aplicarán al grupo, que en este caso es el grupo «profesor» (no pasa nada porque un grupo se llame igual que un usuario). Esto significa que cualquier usuario asignado al grupo «profesor» también podrá leer y escribir el fichero.</p></li>
-<li><p>Por último vemos <code class="docutils literal notranslate"><span class="pre">r--</span></code> . Esto significa que cualquier otro usuario que ni sea <code class="docutils literal notranslate"><span class="pre">profesor</span></code> ni pertenezca al grupo <code class="docutils literal notranslate"><span class="pre">profesor</span></code> podrá hacer nada que no sea leer en el fichero.</p></li>
+<li>El usuario propietario del fichero se llama <code class="docutils literal notranslate"><span class="pre">profesor</span></code>. El grupo asignado a este fichero es <code class="docutils literal notranslate"><span class="pre">profesor</span></code> (recuérdese que puede cambiarse el propietario con <code class="docutils literal notranslate"><span class="pre">chown</span></code> y el grupo con <code class="docutils literal notranslate"><span class="pre">chgrp</span></code> )</li>
+<li>El primer permiso tiene un <code class="docutils literal notranslate"><span class="pre">-</span></code>. Este primer permiso indica el tipo de fichero, que puede ser «fichero normal» (-), «directorio» (veriamos «d»), «enlace» (l)…</li>
+<li>Despues vemos <code class="docutils literal notranslate"><span class="pre">rw-</span></code>. Este primer grupo de tres permisos es el aplicado al propietario (que este caso es <code class="docutils literal notranslate"><span class="pre">profesor</span></code>). Este grupo significa que el propietario puede leer y escribir en este fichero, pero no ejecutar.</li>
+<li>Despues vemos <code class="docutils literal notranslate"><span class="pre">rw-</span></code>. Estos son los permisos que se aplicarán al grupo, que en este caso es el grupo «profesor» (no pasa nada porque un grupo se llame igual que un usuario). Esto significa que cualquier usuario asignado al grupo «profesor» también podrá leer y escribir el fichero.</li>
+<li>Por último vemos <code class="docutils literal notranslate"><span class="pre">r--</span></code> . Esto significa que cualquier otro usuario que ni sea <code class="docutils literal notranslate"><span class="pre">profesor</span></code> ni pertenezca al grupo <code class="docutils literal notranslate"><span class="pre">profesor</span></code> podrá hacer nada que no sea leer en el fichero.</li>
 </ul>
 <p>Este sistema de permisos ha funcionado muy bien durante mucho tiempo, sin embargo con el tiempo ha mostrado algunas flaquezas.</p>
-<div class="figure align-default" id="id2">
+<div class="figure" id="id2">
 <a class="reference internal image-reference" href="../_images/ficherorestringido.png"><img alt="Problema con los permisos" src="../_images/ficherorestringido.png" style="width: 293.5px; height: 137.0px;" /></a>
-<p class="caption"><span class="caption-text">Un ejemplo de problema con los permisos</span><a class="headerlink" href="#id2" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">Un ejemplo de problema con los permisos</span></p>
 </div>
 <div class="section" id="ejercicio-con-permisos">
 <h3>Ejercicio con permisos<a class="headerlink" href="#ejercicio-con-permisos" title="Enlazar permanentemente con este título">¶</a></h3>
@@ -326,30 +332,30 @@ DH….</p>
 <p>Una vez hecho esto, nos salimos con el comando <code class="docutils literal notranslate"><span class="pre">exit</span></code> e iniciamos sesión con, por ejemplo, <em>conta01</em>. El sistema nos dejará en el directorio <code class="docutils literal notranslate"><span class="pre">/home/conta01</span></code> y en él podremos crear el fichero. Puedes asegurarte de que estás en el directorio correcto con <code class="docutils literal notranslate"><span class="pre">pwd</span></code> . Puedes crear el fichero con <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">conta01.txt</span></code> y rellenando el fichero con el texto que quieras. Sal de la consola y repite el proceso con el resto de usuario.</p>
 <p>Ahora hay que establecer permisos, por ejemplo usaremos la configuración <code class="docutils literal notranslate"><span class="pre">-rw-r-----</span></code> que hace lo siguiente:</p>
 <ul class="simple">
-<li><p>Permite leer y escribir (rw-) al propietario.</p></li>
-<li><p>Permite leer a los usuarios que estén en el grupo del fichero (r–).</p></li>
-<li><p>No deja hacer <strong>nada</strong> a los otros (—).</p></li>
+<li>Permite leer y escribir (rw-) al propietario.</li>
+<li>Permite leer a los usuarios que estén en el grupo del fichero (r–).</li>
+<li>No deja hacer <strong>nada</strong> a los otros (—).</li>
 </ul>
 <p>¿Que harías si deseas permitir algo como lo siguiente?</p>
 <ul class="simple">
-<li><p>Que el fichero <code class="docutils literal notranslate"><span class="pre">conta01.txt</span></code>  sea de lectura y escritura para <code class="docutils literal notranslate"><span class="pre">conta02</span></code></p></li>
-<li><p>Que el fichero <code class="docutils literal notranslate"><span class="pre">conta01.txt</span></code>  de lectura y escritura para <code class="docutils literal notranslate"><span class="pre">info01</span></code>.</p></li>
-<li><p>Que el fichero <code class="docutils literal notranslate"><span class="pre">conta01.txt</span></code>  sea de lectura para info02.</p></li>
+<li>Que el fichero <code class="docutils literal notranslate"><span class="pre">conta01.txt</span></code>  sea de lectura y escritura para <code class="docutils literal notranslate"><span class="pre">conta02</span></code></li>
+<li>Que el fichero <code class="docutils literal notranslate"><span class="pre">conta01.txt</span></code>  de lectura y escritura para <code class="docutils literal notranslate"><span class="pre">info01</span></code>.</li>
+<li>Que el fichero <code class="docutils literal notranslate"><span class="pre">conta01.txt</span></code>  sea de lectura para info02.</li>
 </ul>
 <p>La solución a este problema sería compleja. Por ejemplo podríamos hacer esto:</p>
 <ul class="simple">
-<li><p>Siendo administradores crear un grupo: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">addgroup</span> <span class="pre">info01conta02</span></code>.</p></li>
-<li><p>Siendo administradores modificar los usuarios info01 y conta02 para que pertenezcan al nuevo grupo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">info01conta02</span> <span class="pre">info01</span></code> y <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">info01conta02</span> <span class="pre">conta02</span></code> .</p></li>
-<li><p>Cambiar el grupo del fichero <code class="docutils literal notranslate"><span class="pre">conta01.txt</span></code> con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chgrp</span> <span class="pre">info01conta02</span> <span class="pre">conta01.txt</span></code></p></li>
-<li><p>Dar al fichero conta01 permisos de lectura y escritura para el grupo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chmod</span> <span class="pre">g+w</span> <span class="pre">conta01.txt</span></code></p></li>
-<li><p>Dar permisos de lectura <strong>a otros usuarios</strong> con <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">o+w</span> <span class="pre">conta01.txt</span></code></p></li>
+<li>Siendo administradores crear un grupo: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">addgroup</span> <span class="pre">info01conta02</span></code>.</li>
+<li>Siendo administradores modificar los usuarios info01 y conta02 para que pertenezcan al nuevo grupo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">info01conta02</span> <span class="pre">info01</span></code> y <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">info01conta02</span> <span class="pre">conta02</span></code> .</li>
+<li>Cambiar el grupo del fichero <code class="docutils literal notranslate"><span class="pre">conta01.txt</span></code> con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chgrp</span> <span class="pre">info01conta02</span> <span class="pre">conta01.txt</span></code></li>
+<li>Dar al fichero conta01 permisos de lectura y escritura para el grupo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chmod</span> <span class="pre">g+w</span> <span class="pre">conta01.txt</span></code></li>
+<li>Dar permisos de lectura <strong>a otros usuarios</strong> con <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">o+w</span> <span class="pre">conta01.txt</span></code></li>
 </ul>
 <p>Sin embargo el último caso es <strong>un agujero de seguridad</strong> . Sin querer vamos a dar permisos de lectura a info02 <em>y a todos los demás usuarios</em></p>
 <p>Se necesita usar el comando setfacl que funciona de esta manera:</p>
 <ul class="simple">
-<li><p>Podemos añadir permisos con <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:info01:rw</span> <span class="pre">conta01.txt</span></code>. Podemos hacer esto desde el usuario normal <code class="docutils literal notranslate"><span class="pre">conta01</span></code> .</p></li>
-<li><p>Ejecutamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:conta02:rw</span> <span class="pre">conta01.txt</span></code> .</p></li>
-<li><p>Ejecutamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:info02:w</span> <span class="pre">conta01.txt</span></code></p></li>
+<li>Podemos añadir permisos con <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:info01:rw</span> <span class="pre">conta01.txt</span></code>. Podemos hacer esto desde el usuario normal <code class="docutils literal notranslate"><span class="pre">conta01</span></code> .</li>
+<li>Ejecutamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:conta02:rw</span> <span class="pre">conta01.txt</span></code> .</li>
+<li>Ejecutamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:info02:w</span> <span class="pre">conta01.txt</span></code></li>
 </ul>
 <p>Para consultar los permisos de un archivo usaremos <code class="docutils literal notranslate"><span class="pre">getfacl</span> <span class="pre">conta01.txt</span></code>. Si nos equivocamos y deseamos borrar una entrada de la lista usaremos cosas como <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-x</span> <span class="pre">u:conta02</span>&#160; <span class="pre">conta01.txt</span></code></p>
 </div>
@@ -358,27 +364,27 @@ DH….</p>
 <h2>Establecimiento de políticas de contraseñas.<a class="headerlink" href="#establecimiento-de-politicas-de-contrasenas" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Por incómodo que resulte, las contraseñas:</p>
 <ul class="simple">
-<li><p>Deben ser largas (de 8 símbolos o más)</p></li>
-<li><p>Deben mezclar todos los siguientes conjuntos posibles, o al menos el máximo posible: mayúsculas, minúsculas, números y símbolos especiales.</p></li>
-<li><p>Deben cambiarse con las máxima periodicidad posible.</p></li>
-<li><p>Deben ser lo más distintas posibles a las claves antiguas.</p></li>
-<li><p>Deberían caducar automáticamente.</p></li>
-<li><p>No deberían almacenarse como «texto plano» en ningún sitio. Lo típico es almacenar contraseñas «cifradas».</p></li>
+<li>Deben ser largas (de 8 símbolos o más)</li>
+<li>Deben mezclar todos los siguientes conjuntos posibles, o al menos el máximo posible: mayúsculas, minúsculas, números y símbolos especiales.</li>
+<li>Deben cambiarse con las máxima periodicidad posible.</li>
+<li>Deben ser lo más distintas posibles a las claves antiguas.</li>
+<li>Deberían caducar automáticamente.</li>
+<li>No deberían almacenarse como «texto plano» en ningún sitio. Lo típico es almacenar contraseñas «cifradas».</li>
 </ul>
 </div>
 <div class="section" id="politicas-de-almacenamiento">
 <h2>Políticas de almacenamiento.<a class="headerlink" href="#politicas-de-almacenamiento" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Se debe determinar lo siguiente en cuanto a los datos:</p>
 <ul class="simple">
-<li><p>¿Qué datos se va a almacenar? Hay que recordar que la LOPD marca las principales directrices a tener en cuenta sobre la información almacenada.</p></li>
-<li><p>¿Donde se va a almacenar? Los distintos medios tienen distintas características.</p></li>
-<li><p>¿Qué mecanismos de copia se van a implementar? Por su excesivo tamaño tal vez no siempre podamos hacer una copia entera de todo el disco duro.</p></li>
+<li>¿Qué datos se va a almacenar? Hay que recordar que la LOPD marca las principales directrices a tener en cuenta sobre la información almacenada.</li>
+<li>¿Donde se va a almacenar? Los distintos medios tienen distintas características.</li>
+<li>¿Qué mecanismos de copia se van a implementar? Por su excesivo tamaño tal vez no siempre podamos hacer una copia entera de todo el disco duro.</li>
 </ul>
 <p>En cuanto al primer punto debemos recordar lo básico sobre los datos según la LOPD.</p>
 <ul class="simple">
-<li><p>Datos de nivel básico: en general información como nombre, apellidos, datos postales, información laboral…</p></li>
-<li><p>Datos de nivel medio: información financiera, infracciones administrativas, multas…</p></li>
-<li><p>Datos de nivel alto: filiación política, confesiones y/o religiones, sexualidad, datos sanitarios</p></li>
+<li>Datos de nivel básico: en general información como nombre, apellidos, datos postales, información laboral…</li>
+<li>Datos de nivel medio: información financiera, infracciones administrativas, multas…</li>
+<li>Datos de nivel alto: filiación política, confesiones y/o religiones, sexualidad, datos sanitarios</li>
 </ul>
 <p>¿Qué ocurre con las IP, datos sobre navegador, sistema operativo, etc…?</p>
 </div>
@@ -387,16 +393,16 @@ DH….</p>
 <p>No es lo mismo una copia de seguridad que una imagen.</p>
 <p>En cuanto a las copias de seguridad podemos hablar de:</p>
 <ul class="simple">
-<li><p>Copias completas. Son muy fáciles de aplicar y muy fáciles de recuperar pero pueden consumir muchísimo espacio.</p></li>
-<li><p>Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa <strong>más todas las incrementales</strong> lo cual puede ser muy lento.</p></li>
-<li><p>Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado <strong>con respecto a la última copia completa</strong> . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.</p></li>
+<li>Copias completas. Son muy fáciles de aplicar y muy fáciles de recuperar pero pueden consumir muchísimo espacio.</li>
+<li>Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa <strong>más todas las incrementales</strong> lo cual puede ser muy lento.</li>
+<li>Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado <strong>con respecto a la última copia completa</strong> . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.</li>
 </ul>
 <p>En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa «Configuración de copia de seguridad» y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.</p>
 <p>En UNIX las copias se hacen de otra manera.</p>
 <ul class="simple">
-<li><p>En primer lugar necesitaremos el comando <code class="docutils literal notranslate"><span class="pre">tar</span></code> . Podemos crear un archivo llamado <code class="docutils literal notranslate"><span class="pre">usuarios.tar</span></code> que almacene todos los directorios de todos los usuarios ejecutando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">tar</span> <span class="pre">-cf</span> <span class="pre">/home/usuario.tar</span> <span class="pre">/home/</span></code></p></li>
-<li><p>Para programar la ejecución de la copia habrá que «editar la tabla de trabajos programados» que se hace con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">crontab</span> <span class="pre">-e</span></code> .En realidad cada usuario tiene su propia tabla de trabajos pero como queremos leer directorios de otros usuarios ejecutaremos la tarea de copia desde la tabla de trabajos del administrador.</p></li>
-<li><p>Una vez que ejecutemos <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-e</span></code> veremos un fichero que permite indicar tareas y el horario de ejecución usando el formato <code class="docutils literal notranslate"><span class="pre">minutos</span> <span class="pre">horas</span> <span class="pre">dia-del-mes</span> <span class="pre">mes</span> <span class="pre">dia-de-la-semana</span> <span class="pre">comando</span></code> .</p></li>
+<li>En primer lugar necesitaremos el comando <code class="docutils literal notranslate"><span class="pre">tar</span></code> . Podemos crear un archivo llamado <code class="docutils literal notranslate"><span class="pre">usuarios.tar</span></code> que almacene todos los directorios de todos los usuarios ejecutando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">tar</span> <span class="pre">-cf</span> <span class="pre">/home/usuario.tar</span> <span class="pre">/home/</span></code></li>
+<li>Para programar la ejecución de la copia habrá que «editar la tabla de trabajos programados» que se hace con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">crontab</span> <span class="pre">-e</span></code> .En realidad cada usuario tiene su propia tabla de trabajos pero como queremos leer directorios de otros usuarios ejecutaremos la tarea de copia desde la tabla de trabajos del administrador.</li>
+<li>Una vez que ejecutemos <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-e</span></code> veremos un fichero que permite indicar tareas y el horario de ejecución usando el formato <code class="docutils literal notranslate"><span class="pre">minutos</span> <span class="pre">horas</span> <span class="pre">dia-del-mes</span> <span class="pre">mes</span> <span class="pre">dia-de-la-semana</span> <span class="pre">comando</span></code> .</li>
 </ul>
 <p>Así podemos escribir algo como esto:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>* * * * * tar -cf /home/usuarios$(date &#39;+\%d-\%M-\%Y\%H\%M&#39;).tar /home/*
@@ -406,15 +412,15 @@ DH….</p>
 <div class="section" id="medios-de-almacenamiento">
 <h2>Medios de almacenamiento.<a class="headerlink" href="#medios-de-almacenamiento" title="Enlazar permanentemente con este título">¶</a></h2>
 <ul class="simple">
-<li><p>La «nube». Se debe recordar que «la nube» es «el ordenador de otra persona sobre el cual no tengo ningún control».</p></li>
-<li><p>Otros ordenadores. Ventajas: tenemos control sobre ellos, fácil accesibilidad, coste medio…</p></li>
-<li><p>NAS: Network Attached Storage. Coste medio, facilidad de uso, alta disponibilidad.</p></li>
-<li><p>Dispositivos USB: muy versátiles, pero muy sensibles a campos magnéticos/golpes.</p></li>
-<li><p>Medios ópticos. Ofrecen una mayor tasa de supervivencia que los USB extraíbles.</p></li>
-<li><p>Discos magnéticos: ofrecen la mejor tasa coste/supervivencia.</p></li>
-<li><p>Cinta magnética. Ofrecen de lejos, el mejor coste. Sin embargo son muy lentas de recuperar y rellenar</p></li>
-<li><p>Discos SSD. Son variantes de los dispositivos USB, pero normalmente usan una conexión al dispositivo que es más rápida que un USB.</p></li>
-<li><p>Imprimir los datos. No es tan inútil como podría parecer, la duración de los datos impresos puede ser muy alta y además son muy difíciles de «robar».</p></li>
+<li>La «nube». Se debe recordar que «la nube» es «el ordenador de otra persona sobre el cual no tengo ningún control».</li>
+<li>Otros ordenadores. Ventajas: tenemos control sobre ellos, fácil accesibilidad, coste medio…</li>
+<li>NAS: Network Attached Storage. Coste medio, facilidad de uso, alta disponibilidad.</li>
+<li>Dispositivos USB: muy versátiles, pero muy sensibles a campos magnéticos/golpes.</li>
+<li>Medios ópticos. Ofrecen una mayor tasa de supervivencia que los USB extraíbles.</li>
+<li>Discos magnéticos: ofrecen la mejor tasa coste/supervivencia.</li>
+<li>Cinta magnética. Ofrecen de lejos, el mejor coste. Sin embargo son muy lentas de recuperar y rellenar</li>
+<li>Discos SSD. Son variantes de los dispositivos USB, pero normalmente usan una conexión al dispositivo que es más rápida que un USB.</li>
+<li>Imprimir los datos. No es tan inútil como podría parecer, la duración de los datos impresos puede ser muy alta y además son muy difíciles de «robar».</li>
 </ul>
 </div>
 <div class="section" id="sistemas-biometricos-funcionamiento-estandares">
@@ -422,15 +428,15 @@ DH….</p>
 <p>Por desgracia la siguiente figura ilustra muy bien el problema actual con los estándares biométricos:</p>
 <div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/standards.png"><img alt="Un estándar debería ser único." src="../_images/standards.png" style="width: 250.0px; height: 141.5px;" /></a>
-<p class="caption"><span class="caption-text">El problema actual con los estándares.</span><a class="headerlink" href="#id3" title="Enlace permanente a esta imagen">¶</a></p>
+<p class="caption"><span class="caption-text">El problema actual con los estándares.</span></p>
 </div>
 <p>De hecho podemos nombrar los siguientes estándares:</p>
 <ul class="simple">
-<li><p>BioAPI: con el apoyo de IBM y Hewlett-Packard.</p></li>
-<li><p>BAPI: propiedad de I/O Software pero utilizado por Microsoft.</p></li>
-<li><p>ANSI X.9: pensada para la industria financiera e impulsado por los Estados Unidos.</p></li>
-<li><p>CBEFF: pensado para ficheros que almacenen información biométrica.</p></li>
-<li><p>Estándares del NIST estadounidense (National Institute of Standards and Technology).</p></li>
+<li>BioAPI: con el apoyo de IBM y Hewlett-Packard.</li>
+<li>BAPI: propiedad de I/O Software pero utilizado por Microsoft.</li>
+<li>ANSI X.9: pensada para la industria financiera e impulsado por los Estados Unidos.</li>
+<li>CBEFF: pensado para ficheros que almacenen información biométrica.</li>
+<li>Estándares del NIST estadounidense (National Institute of Standards and Technology).</li>
 </ul>
 <p>A fecha de hoy ninguno de ellos ha triunfado sobre los demás y de hecho por el momento cada fabricante tiene sus propios mecanismos, software y drivers (con el consiguiente problema para los administradores de sistemas).</p>
 </div>
@@ -453,21 +459,35 @@ DH….</p>
 <h2>El sistema operativo Unix<a class="headerlink" href="#el-sistema-operativo-unix" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>A lo largo del curso usaremos GNU/Linux, un sistema operativo de tipo UNIX de libre distribución. Aunque GNU/Linux suele empaquetarse en «distribuciones» que suelen incluir un entorno gráfico en este módulo aprenderemos a movernos por el sistema utilizando los comandos.</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">mkdir</span></code> nos permite crear directorios.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> nos permite movernos a un directorio.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rm</span></code> nos permite borrar ficheros.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rmdir</span></code> nos permite borrar un directorio <strong>siempre y cuando esté vacío</strong>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ls</span></code> muestra los ficheros del directorio actual.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cat</span></code> nos permite imprimir un fichero por pantalla.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">&lt;comando&gt;</span></code> nos permite obtener ayuda sobre un cierto comando (o incluso fichero de configuración).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pwd</span></code> nos muestra el nombre del directorio actual.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">nano</span></code> nos da acceso a un pequeño editor de texto que nos permitirá editar, entre otras cosas, los ficheros de configuración del sistema.</p></li>
-<li><p>Cuando se manipulan ficheros se puede ocultar un fichero <em>usando el punto como primer carácter de un fichero</em>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">apt-get</span></code> nos permitirá instalar sofware de los repositorios del empaquetador de la distribución.</p></li>
-<li><p>Se puede ejecutar un comando escribiendo el nombre de dicho comando. Si el comando no está en las rutas de búsqueda se puede escribir la ruta completa.</p></li>
-<li><p>Se puede redirigir la salida de un comando hacia un fichero (usando <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">&gt;</span> <span class="pre">&lt;fichero&gt;</span></code>  o redirigir la salida de un comando hacia otro comando con <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">|</span> <span class="pre">&lt;comando&gt;</span></code></p></li>
-<li><p>Un comando de cualquier tipo podría necesitar <strong>permisos de administrador</strong>. En ese caso tendremos que usar el comando <code class="docutils literal notranslate"><span class="pre">sudo</span></code> de esta manera: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">&lt;comando&gt;</span></code> .</p></li>
-<li><p>Para construir ficheros que almacenen un conjunto de ficheros usaremos un comando llamado <code class="docutils literal notranslate"><span class="pre">tar</span></code> . Podremos comprimir un fichero usando compresores como <code class="docutils literal notranslate"><span class="pre">gzip</span></code> o <code class="docutils literal notranslate"><span class="pre">bzip</span></code></p>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">mkdir</span></code> nos permite crear directorios.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">cd</span></code> nos permite movernos a un directorio.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">rm</span></code> nos permite borrar ficheros.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">rmdir</span></code> nos permite borrar un directorio <strong>siempre y cuando esté vacío</strong>.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">ls</span></code> muestra los ficheros del directorio actual.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">cat</span></code> nos permite imprimir un fichero por pantalla.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">&lt;comando&gt;</span></code> nos permite obtener ayuda sobre un cierto comando (o incluso fichero de configuración).</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">pwd</span></code> nos muestra el nombre del directorio actual.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">nano</span></code> nos da acceso a un pequeño editor de texto que nos permitirá editar, entre otras cosas, los ficheros de configuración del sistema.</p>
+</li>
+<li><p class="first">Cuando se manipulan ficheros se puede ocultar un fichero <em>usando el punto como primer carácter de un fichero</em>.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">apt-get</span></code> nos permitirá instalar sofware de los repositorios del empaquetador de la distribución.</p>
+</li>
+<li><p class="first">Se puede ejecutar un comando escribiendo el nombre de dicho comando. Si el comando no está en las rutas de búsqueda se puede escribir la ruta completa.</p>
+</li>
+<li><p class="first">Se puede redirigir la salida de un comando hacia un fichero (usando <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">&gt;</span> <span class="pre">&lt;fichero&gt;</span></code>  o redirigir la salida de un comando hacia otro comando con <code class="docutils literal notranslate"><span class="pre">&lt;comando&gt;</span> <span class="pre">|</span> <span class="pre">&lt;comando&gt;</span></code></p>
+</li>
+<li><p class="first">Un comando de cualquier tipo podría necesitar <strong>permisos de administrador</strong>. En ese caso tendremos que usar el comando <code class="docutils literal notranslate"><span class="pre">sudo</span></code> de esta manera: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">&lt;comando&gt;</span></code> .</p>
+</li>
+<li><p class="first">Para construir ficheros que almacenen un conjunto de ficheros usaremos un comando llamado <code class="docutils literal notranslate"><span class="pre">tar</span></code> . Podremos comprimir un fichero usando compresores como <code class="docutils literal notranslate"><span class="pre">gzip</span></code> o <code class="docutils literal notranslate"><span class="pre">bzip</span></code></p>
 <blockquote>
 <div><p>** El comando <code class="docutils literal notranslate"><span class="pre">tar</span></code> acepta una serie de opciones por medio de un guión.</p>
 <blockquote>
@@ -485,17 +505,17 @@ DH….</p>
 <p>Si bien en los sistemas operativos invitado con entorno gráfico la instalación es muy sencilla en los sistemas basados en comandos (como Ubuntu Server) el proceso puede resulta un poco más largo.</p>
 <p>En primer lugar las Guest Additions instalan módulos en el núcleo y es posible que para ello requiera de ciertos paquetes. Tendremos que instalar estos paquetes con «sudo apt-get install dkms build-essential»</p>
 <ul class="simple">
-<li><p>En el menú «Dispositivos» de VirtualBox elegir «Insertar CD de VirtualBox Guest Additions».</p></li>
-<li><p>Enganchamos el dispositivo <code class="docutils literal notranslate"><span class="pre">/dev/cdrom</span></code> a algún punto del sistema, por ejemplo dentro de <code class="docutils literal notranslate"><span class="pre">/media</span></code> .</p></li>
-<li><p>Usando el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">mkdir</span> <span class="pre">/media/cdrom</span></code> podremos crear un directorio «cdrom» dentro de «media».</p></li>
-<li><p>Una vez creado el directorio usamos el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">mount</span> <span class="pre">/dev/cdrom</span> <span class="pre">/media/cdrom</span></code> .</p></li>
-<li><p>Nos vamos al directorio con <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/media/cdrom</span></code>  y ejecutamos <code class="docutils literal notranslate"><span class="pre">ls</span></code> .</p></li>
-<li><p>Deberiamos ver un fichero llamado <code class="docutils literal notranslate"><span class="pre">VBoxLinuxAdditions.run</span></code> . Lo ejecutamos como administrador con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">./VBoxLinuxAdditions.run</span></code></p></li>
-<li><p>Existe un comando para apagar/reiniciar el sistema y es <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">shutdown</span> <span class="pre">-r</span> <span class="pre">now</span></code> (-r para reiniciar o -h para parar).</p></li>
-<li><p>Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del sistema anfitrión para «conectarla» con el sistema operativo invitado.</p></li>
-<li><p>Reiniciamos la máquina y ejecutamos el comando <code class="docutils literal notranslate"><span class="pre">mount</span></code>.</p></li>
-<li><p>Puede ser necesario añadir nuestro usuario al grupo «vboxsf» que es el grupo con el que se «monta» el directorio compartido. Para hacer esto usaremos el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">vboxsf</span> <span class="pre">pepito</span></code></p></li>
-<li><p>Si en el momento de la instalación no indicamos correctamente nuestro país es posible que la hora del sistema no sea la hora local. Podemos ajustar la hora usando el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">timedatectl</span> <span class="pre">set-timezone</span> <span class="pre">Europe/Madrid</span></code> .</p></li>
+<li>En el menú «Dispositivos» de VirtualBox elegir «Insertar CD de VirtualBox Guest Additions».</li>
+<li>Enganchamos el dispositivo <code class="docutils literal notranslate"><span class="pre">/dev/cdrom</span></code> a algún punto del sistema, por ejemplo dentro de <code class="docutils literal notranslate"><span class="pre">/media</span></code> .</li>
+<li>Usando el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">mkdir</span> <span class="pre">/media/cdrom</span></code> podremos crear un directorio «cdrom» dentro de «media».</li>
+<li>Una vez creado el directorio usamos el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">mount</span> <span class="pre">/dev/cdrom</span> <span class="pre">/media/cdrom</span></code> .</li>
+<li>Nos vamos al directorio con <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/media/cdrom</span></code>  y ejecutamos <code class="docutils literal notranslate"><span class="pre">ls</span></code> .</li>
+<li>Deberiamos ver un fichero llamado <code class="docutils literal notranslate"><span class="pre">VBoxLinuxAdditions.run</span></code> . Lo ejecutamos como administrador con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">./VBoxLinuxAdditions.run</span></code></li>
+<li>Existe un comando para apagar/reiniciar el sistema y es <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">shutdown</span> <span class="pre">-r</span> <span class="pre">now</span></code> (-r para reiniciar o -h para parar).</li>
+<li>Una vez ejecutado, debemos ir al menú de VirtualBox y elegir una carpeta del sistema anfitrión para «conectarla» con el sistema operativo invitado.</li>
+<li>Reiniciamos la máquina y ejecutamos el comando <code class="docutils literal notranslate"><span class="pre">mount</span></code>.</li>
+<li>Puede ser necesario añadir nuestro usuario al grupo «vboxsf» que es el grupo con el que se «monta» el directorio compartido. Para hacer esto usaremos el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">vboxsf</span> <span class="pre">pepito</span></code></li>
+<li>Si en el momento de la instalación no indicamos correctamente nuestro país es posible que la hora del sistema no sea la hora local. Podemos ajustar la hora usando el comando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">timedatectl</span> <span class="pre">set-timezone</span> <span class="pre">Europe/Madrid</span></code> .</li>
 </ul>
 </div>
 </div>
@@ -570,11 +590,13 @@ DH….</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Búsqueda rápida</h3>
+  <h3>Búsqueda rápida</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -595,7 +617,7 @@ DH….</p>
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
