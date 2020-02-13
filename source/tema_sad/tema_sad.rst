@@ -91,6 +91,30 @@ Para "exportar" nuestra máquina y facilitar su gestión con Vagrant se debe:
 * Se debe instalar OpenSSH con ``sudo apt-get install openssh-server``.
 * Es recomendable crear el usuario "vagrant" y ponerle la clave Vagrant. También es importante permitir que ese usuario pueda ser administrador y que además no necesite indicar su clave de administrador cada vez. Esto puede hacerse editando los parámetros de administración con ``visudo`` y poniendo la línea ``vagrant ALL=(ALL) NOPASSWD: ALL`` 
 
+El fichero ``Vagrantfile`` 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Este fichero controla como se inicializará la máquina virtual y ofrece un completo script con parámetros comentados, mencionamos algunos de los más utilizados. Como curiosidad utiliza un lenguaje de programación llamado "Ruby".Cada línea del fichero configura algo y suele indicar distintos parámetros usando las comas como separador.
+
+Por defecto, las máquinas virtuales tienen una sola tarjeta en modo "NAT". Pero podemos crear una máquina en modo puente poniendo en el ``Vagrantfile`` algo como esto que crea una tarjeta en modo puente asociada a la tarjeta ``enp0s25`` y luego obliga a que en cada arranque se configure la IP, la máscara y la puerta de enlace (obsérvese que ademas no usa ``netplan`` , aunque podría usarse si es necesario).
+
+.. code-block:: ruby
+    
+    config.vm.network "public_network", bridge:"enp0s25"
+    config.vm.provision "shell",
+        run:"always",
+        inline:"ifconfig enp0s3 192.168.1.41 netmask 255.255.255.0; route add default gw 192.168.1.1"
+
+
+También podemos hacer que una cierta máquina instale software en el momento de ser recuperada haciendo algo como esto
+
+.. code-block:: ruby
+
+    config.vm.provision "shell", inline: <<-SHELL
+        apt-get update
+        apt-get install -y apache2
+    SHELL
+
 Simulación de servicios con virtualización.
 -----------------------------------------------------------------------------------------------
 
