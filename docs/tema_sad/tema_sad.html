@@ -113,7 +113,7 @@
 </ul>
 <p>Para «exportar» nuestra máquina y facilitar su gestión con Vagrant se debe:</p>
 <ul class="simple">
-<li>Instalar un sistema operativo como Windows 7 o superior o alguna variante de Linux.</li>
+<li>Instalar un sistema operativo invitado como Windows 7 o superior o alguna variante de Linux.</li>
 <li>Al principio como mínimo se debe tener una tarjeta en modo NAT y además se debe anotar la MAC de dicha tarjeta.</li>
 <li>Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">linux-headers-$(uname</span> <span class="pre">-r)</span> <span class="pre">build-essential</span> <span class="pre">dkms</span></code></li>
 <li>Se deben instalar las «Guest Additions» en el anfitrión.</li>
@@ -123,6 +123,36 @@
 <li>Vamos a permitir que todo el mundo pueda leer ese fichero y ese directorio de claves usando <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">0700</span> <span class="pre">.ssh</span></code></li>
 <li>Una vez hecho todo esto podemos apagar la máquina virtual, cerrar VirtualBox y abrir la línea de comandos y crear un directorio vacío. Dentro de él inicializaremos el directorio para que sea un directorio inicializado por Vagrant con el comando <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span></code> y luego exportaremos la máquina con <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">package</span> <span class="pre">--base</span> <span class="pre">&lt;nombredemaquina&gt;</span> <span class="pre">--output</span> <span class="pre">Maquina.box</span></code> .</li>
 </ul>
+<div class="section" id="el-fichero-vagrantfile">
+<h3>El fichero <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code><a class="headerlink" href="#el-fichero-vagrantfile" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Este fichero controla como se inicializará la máquina virtual y ofrece un completo script con parámetros comentados, mencionamos algunos de los más utilizados. Como curiosidad utiliza un lenguaje de programación llamado «Ruby».Cada línea del fichero configura algo y suele indicar distintos parámetros usando las comas como separador.</p>
+<p>Por defecto, las máquinas virtuales tienen una sola tarjeta en modo «NAT». A menudo querremos «abrir puertos» y conseguir que alguien pueda conectarse a un servicio virtualizado. Para ello podemos editar la configuración y poner algo como esto:</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="c1">#Esto hace que la tarjeta de red del invitado esté</span>
+<span class="c1">#en modo NAT y que use DHCP para configurarse.</span>
+<span class="c1">#Probablemente la dirección que se nos asigne sea</span>
+<span class="c1">#algo como 10.0.2.15</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="s2">&quot;dhcp&quot;</span>
+<span class="c1">#Con esto conseguimos que cuando se conecte al 8000 del anfitrión</span>
+<span class="c1">#en realidad se redirija la conexión al 80 del invitado</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="ss">guest</span><span class="p">:</span><span class="mi">80</span><span class="p">,</span> <span class="ss">host</span><span class="p">:</span><span class="mi">8000</span>
+</pre></div>
+</div>
+<p>Pero podemos crear una máquina en modo puente poniendo en el <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> algo como esto que crea una tarjeta en modo puente asociada a la tarjeta <code class="docutils literal notranslate"><span class="pre">enp0s25</span></code> y luego obliga a que en cada arranque se configure la IP, la máscara y la puerta de enlace (obsérvese que ademas no usa <code class="docutils literal notranslate"><span class="pre">netplan</span></code> , aunque podría usarse si es necesario).</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span><span class="p">,</span> <span class="ss">bridge</span><span class="p">:</span><span class="s2">&quot;enp0s25&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+    <span class="ss">run</span><span class="p">:</span><span class="s2">&quot;always&quot;</span><span class="p">,</span>
+    <span class="ss">inline</span><span class="p">:</span><span class="s2">&quot;ifconfig enp0s3 192.168.1.41 netmask 255.255.255.0; route add default gw 192.168.1.1&quot;</span>
+</pre></div>
+</div>
+<p>Si estamos en Windows deberemos poner en <code class="docutils literal notranslate"><span class="pre">bridge</span></code> el nombre de la tarjeta de red a la que queramos vincular la máquina virtual. Probablemente en Windows el nombre del «bridge» o tarjeta de red sea algo como <em>«Conexión de área local»</em>  o  <em>«Conexión de área local 1»</em> .</p>
+<p>También podemos hacer que una cierta máquina instale software en el momento de ser recuperada haciendo algo como esto</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="o">&lt;&lt;-</span><span class="dl">SHELL</span>
+<span class="sh">    apt-get update</span>
+<span class="sh">    apt-get install -y apache2</span>
+<span class="dl">SHELL</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="simulacion-de-servicios-con-virtualizacion">
 <h2>Simulación de servicios con virtualización.<a class="headerlink" href="#simulacion-de-servicios-con-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -187,6 +217,21 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 <p>También podemos reiniciar un servicio con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">restart</span> <span class="pre">&lt;id_container&gt;</span></code> e incluso ver los logs del servicio con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">logs</span> <span class="pre">&lt;id_container&gt;</span></code> .</p>
 <p>Si queremos tener el mismo servicio para distintos clientes está claro que no podremos u    sar el mismo nombre, podemos lanzar un servicio con distintos nombres usando algo como <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-d</span> <span class="pre">--name</span> <span class="pre">ApacheCliente1</span> <span class="pre">httpd</span></code> lo que <strong>crea y ejecuta un contenedor llamado ApacheCliente1</strong> . Hay que recordar que aunque lo paremos no podremos volver a ejecutarlo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-d</span> <span class="pre">--name</span> <span class="pre">ApacheCliente1</span> <span class="pre">httpd</span></code> ya que eso <code class="docutils literal notranslate"><span class="pre">intentaría</span> <span class="pre">volver</span> <span class="pre">a</span> <span class="pre">crear</span> <span class="pre">el</span> <span class="pre">contenedor</span></code> (cosa imposible porque ya existe). Un contenedor puede volver a ejecutarse con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">restart</span> <span class="pre">ApacheCliente1</span></code></p>
 </div>
+<div class="section" id="conexiones-de-red-en-docker">
+<h3>Conexiones de red en Docker<a class="headerlink" href="#conexiones-de-red-en-docker" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres «redes por defecto» con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">network</span> <span class="pre">ls</span></code> :</p>
+<ul class="simple">
+<li>Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16</li>
+<li>Host:</li>
+<li>Overlay:</li>
+<li>Macvlan:</li>
+<li>None:</li>
+</ul>
+</div>
+<div class="section" id="creando-nuestra-propia-red-en-docker">
+<h3>Creando nuestra propia red en Docker<a class="headerlink" href="#creando-nuestra-propia-red-en-docker" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Podemos crear nuestra propia red para un grupo separado de servidores usando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">network</span> <span class="pre">create</span> <span class="pre">--driver</span> <span class="pre">bridge</span> <span class="pre">&lt;nombredered&gt;</span></code> . Docker creará una red separada con otro prefijo IP separado (172.18.0.0/16, 172.19.0.0/16)</p>
+</div>
 </div>
 <div class="section" id="funcionamiento-ininterrumpido">
 <h2>Funcionamiento ininterrumpido.<a class="headerlink" href="#funcionamiento-ininterrumpido" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -241,13 +286,18 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 <li class="toctree-l2"><a class="reference internal" href="#posibilidades-de-la-virtualizacion-de-sistemas">Posibilidades de la virtualización de sistemas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#herramientas-para-la-virtualizacion">Herramientas para la virtualización.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuracion-y-utilizacion-de-maquinas-virtuales">Configuración y utilización de maquinas virtuales.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#alta-disponibilidad-y-virtualizacion">Alta disponibilidad y virtualización.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alta-disponibilidad-y-virtualizacion">Alta disponibilidad y virtualización.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#el-fichero-vagrantfile">El fichero <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#simulacion-de-servicios-con-virtualizacion">Simulación de servicios con virtualización.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#analisis-de-configuraciones-de-alta-disponibilidad">Análisis de configuraciones de alta disponibilidad</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hardware-duplicado">Hardware duplicado</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#virtualizacion">Virtualización</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#contenedores">Contenedores</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usando-docker">Usando Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conexiones-de-red-en-docker">Conexiones de red en Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creando-nuestra-propia-red-en-docker">Creando nuestra propia red en Docker</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#funcionamiento-ininterrumpido">Funcionamiento ininterrumpido.</a></li>

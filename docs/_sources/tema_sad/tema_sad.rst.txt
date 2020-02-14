@@ -84,7 +84,7 @@ En pocas palabras podemos reconstruir un sistema virtualizado previamente usando
 
 Para "exportar" nuestra máquina y facilitar su gestión con Vagrant se debe:
 
-* Instalar un sistema operativo como Windows 7 o superior o alguna variante de Linux.
+* Instalar un sistema operativo invitado como Windows 7 o superior o alguna variante de Linux.
 * Al principio como mínimo se debe tener una tarjeta en modo NAT y además se debe anotar la MAC de dicha tarjeta.
 * Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con ``sudo apt-get install linux-headers-$(uname -r) build-essential dkms`` 
 * Se deben instalar las "Guest Additions" en el anfitrión.
@@ -96,6 +96,44 @@ Para "exportar" nuestra máquina y facilitar su gestión con Vagrant se debe:
 * Vamos a permitir que todo el mundo pueda leer ese fichero y ese directorio de claves usando ``chmod 0700 .ssh`` 
 
 * Una vez hecho todo esto podemos apagar la máquina virtual, cerrar VirtualBox y abrir la línea de comandos y crear un directorio vacío. Dentro de él inicializaremos el directorio para que sea un directorio inicializado por Vagrant con el comando ``vagrant init`` y luego exportaremos la máquina con ``vagrant package --base <nombredemaquina> --output Maquina.box`` .
+
+El fichero ``Vagrantfile`` 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Este fichero controla como se inicializará la máquina virtual y ofrece un completo script con parámetros comentados, mencionamos algunos de los más utilizados. Como curiosidad utiliza un lenguaje de programación llamado "Ruby".Cada línea del fichero configura algo y suele indicar distintos parámetros usando las comas como separador.
+
+Por defecto, las máquinas virtuales tienen una sola tarjeta en modo "NAT". A menudo querremos "abrir puertos" y conseguir que alguien pueda conectarse a un servicio virtualizado. Para ello podemos editar la configuración y poner algo como esto:
+
+.. code-block:: ruby
+
+    #Esto hace que la tarjeta de red del invitado esté
+    #en modo NAT y que use DHCP para configurarse.
+    #Probablemente la dirección que se nos asigne sea
+    #algo como 10.0.2.15
+    config.vm.network "private_network", type: "dhcp"
+    #Con esto conseguimos que cuando se conecte al 8000 del anfitrión
+    #en realidad se redirija la conexión al 80 del invitado
+    config.vm.network "forwarded_port", guest:80, host:8000
+
+Pero podemos crear una máquina en modo puente poniendo en el ``Vagrantfile`` algo como esto que crea una tarjeta en modo puente asociada a la tarjeta ``enp0s25`` y luego obliga a que en cada arranque se configure la IP, la máscara y la puerta de enlace (obsérvese que ademas no usa ``netplan`` , aunque podría usarse si es necesario).
+
+.. code-block:: ruby
+    
+    config.vm.network "public_network", bridge:"enp0s25"
+    config.vm.provision "shell",
+        run:"always",
+        inline:"ifconfig enp0s3 192.168.1.41 netmask 255.255.255.0; route add default gw 192.168.1.1"
+
+Si estamos en Windows deberemos poner en ``bridge`` el nombre de la tarjeta de red a la que queramos vincular la máquina virtual. Probablemente en Windows el nombre del "bridge" o tarjeta de red sea algo como *"Conexión de área local"*  o  *"Conexión de área local 1"* .
+
+También podemos hacer que una cierta máquina instale software en el momento de ser recuperada haciendo algo como esto
+
+.. code-block:: ruby
+
+    config.vm.provision "shell", inline: <<-SHELL
+        apt-get update
+        apt-get install -y apache2
+    SHELL
 
 Simulación de servicios con virtualización.
 -----------------------------------------------------------------------------------------------
@@ -198,6 +236,22 @@ También podemos reiniciar un servicio con ``sudo docker restart <id_container>`
 
 
 Si queremos tener el mismo servicio para distintos clientes está claro que no podremos u    sar el mismo nombre, podemos lanzar un servicio con distintos nombres usando algo como ``sudo docker run -d --name ApacheCliente1 httpd`` lo que **crea y ejecuta un contenedor llamado ApacheCliente1** . Hay que recordar que aunque lo paremos no podremos volver a ejecutarlo con ``sudo docker run -d --name ApacheCliente1 httpd`` ya que eso ``intentaría volver a crear el contenedor`` (cosa imposible porque ya existe). Un contenedor puede volver a ejecutarse con ``sudo docker restart ApacheCliente1`` 
+
+Conexiones de red en Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "redes por defecto" con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con ``sudo docker network ls`` :
+
+* Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16
+* Host:
+* Overlay:
+* Macvlan:
+* None:
+
+Creando nuestra propia red en Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Podemos crear nuestra propia red para un grupo separado de servidores usando ``sudo docker network create --driver bridge <nombredered>`` . Docker creará una red separada con otro prefijo IP separado (172.18.0.0/16, 172.19.0.0/16)
 
 Funcionamiento ininterrumpido.
 -----------------------------------------------------------------------------------------------
