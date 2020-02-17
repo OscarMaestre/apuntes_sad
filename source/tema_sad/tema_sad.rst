@@ -237,6 +237,26 @@ También podemos reiniciar un servicio con ``sudo docker restart <id_container>`
 
 Si queremos tener el mismo servicio para distintos clientes está claro que no podremos u    sar el mismo nombre, podemos lanzar un servicio con distintos nombres usando algo como ``sudo docker run -d --name ApacheCliente1 httpd`` lo que **crea y ejecuta un contenedor llamado ApacheCliente1** . Hay que recordar que aunque lo paremos no podremos volver a ejecutarlo con ``sudo docker run -d --name ApacheCliente1 httpd`` ya que eso ``intentaría volver a crear el contenedor`` (cosa imposible porque ya existe). Un contenedor puede volver a ejecutarse con ``sudo docker restart ApacheCliente1`` 
 
+
+Un ejemplo simple de Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Docker también se puede automatizar con fichero ``Dockerfile`` 
+
+.. code-block:: bash
+
+    FROM httpd
+    COPY index.html /usr/local/apache2/htdocs/index.html
+    EXPOSE 80
+    ENTRYPOINT ["apachectl", "start"]
+
+* Construyamos una imagen con ``sudo docker build . -t ImagenPropia`` 
+* Creemos un contenedor de prueba con ``sudo docker run -dti --name Servidor1 ImagenPropia /bin/bash`` 
+* Este contenedor ahora ejecuta Apache usando como HTML el fichero que le hayamos pasado.
+* Cuando queramos, podemos detener el contenedor y borrar con ``sudo docker stop Servidor1; sudo docker rm Servidor1`` 
+
+Este ejemplo tan simple reconstruye un servidor Apache con el HTML que necesitemos.
+
 Conexiones de red en Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
