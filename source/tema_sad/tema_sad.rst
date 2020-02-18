@@ -342,11 +342,13 @@ En primer lugar usamos ``vagrant init e:/maquinas/UbuntuServerBase.box`` . Esto 
     config.vm.network "forwarded_port", guest: 80, host: 80
     config.vm.synced_folder "e:/directorio_auxiliar", "/var/www/html"
     config.vm.provision "shell", inline: <<-SHELL
+        systemctl disable apt-daily.timer
+	    systemctl disable apt-daily.service
         apt-get update
         apt-get install -y apache2
     SHELL
     end
-    
+
 Con esto, recuperamos la máquina, instalamos Apache y sobre todo **conectamos el directorio del Apache virtualizado con un directorio del anfitrión donde están los archivos web.** 
 
 Una vez hecho esto, podemos crear un fichero .BAT **que copie el HTML de la web al directorio auxiliar** . Si tenemos el ``Vagrantfile`` y este fichero .BAT podremos recuperar la web con toda comodidad
