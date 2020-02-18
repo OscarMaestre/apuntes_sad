@@ -237,6 +237,26 @@ También podemos reiniciar un servicio con ``sudo docker restart <id_container>`
 
 Si queremos tener el mismo servicio para distintos clientes está claro que no podremos u    sar el mismo nombre, podemos lanzar un servicio con distintos nombres usando algo como ``sudo docker run -d --name ApacheCliente1 httpd`` lo que **crea y ejecuta un contenedor llamado ApacheCliente1** . Hay que recordar que aunque lo paremos no podremos volver a ejecutarlo con ``sudo docker run -d --name ApacheCliente1 httpd`` ya que eso ``intentaría volver a crear el contenedor`` (cosa imposible porque ya existe). Un contenedor puede volver a ejecutarse con ``sudo docker restart ApacheCliente1`` 
 
+
+Un ejemplo simple de Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Docker también se puede automatizar con fichero ``Dockerfile`` 
+
+.. code-block:: bash
+
+    FROM httpd
+    COPY index.html /usr/local/apache2/htdocs/index.html
+    EXPOSE 80
+    ENTRYPOINT ["apachectl", "start"]
+
+* Construyamos una imagen con ``sudo docker build . -t ImagenPropia`` 
+* Creemos un contenedor de prueba con ``sudo docker run -dti --name Servidor1 ImagenPropia /bin/bash`` 
+* Este contenedor ahora ejecuta Apache usando como HTML el fichero que le hayamos pasado.
+* Cuando queramos, podemos detener el contenedor y borrar con ``sudo docker stop Servidor1; sudo docker rm Servidor1`` 
+
+Este ejemplo tan simple reconstruye un servidor Apache con el HTML que necesitemos.
+
 Conexiones de red en Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -281,3 +301,57 @@ Instalación y configuración de soluciones de alta disponibilidad.
 -----------------------------------------------------------------------------------------------
 
 
+Ejercicio: recuperando una web con Vagrant
+================================================================================
+
+Una empresa desea poder recuperar su sitio web con rapidez, por lo que ha decidido intentar automatizar la recuperación con Vagrant. Su web tiene un solo archivo, llamado ``index.html`` y su contenido es el siguiente:
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Empresa ACME</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1>Bienvenido</h1>
+            <p>
+                Esta es la web de la empresa ACME
+            </p>
+        </body>
+    </html>
+
+En concreto se ha pensado en tener una máquina virtualizada con una tarjeta en modo NAT. Se desea que cuando alguien se conecte a la IP del anfitrión y puerto 80 se redirija la conexión al interior de la máquina virtual (también a su puerto 80) pero por supuesto se desea que se vea la web de la empresa y no el archivo ``index.html`` que suele mostrar Apache sobre Ubuntu.
+
+Solución a la recuperación de la web
+--------------------------------------------------------------------------------
+
+* Sabemos que podemos instalar Apache en la máquina virtual recuperada usando los scripts de aprovisionamiento.
+* Sabemos que Apache tiene un directorio ``/var/www/html`` . En dicho directorio se deben poner los archivos de web.
+* Sabemos que el archivo de la empresa está en ``C:\Users\admin\Documents\index.html`` 
+
+Teniendo eso en mente podemos hacer lo siguiente:
+
+En primer lugar usamos ``vagrant init e:/maquinas/UbuntuServerBase.box`` . Esto nos creará un fichero ``Vagrantfile``. Si lo editamos podremos poner en él éstas líneas (se han omitido partes no relevantes):
+
+.. code-block:: ruby
+
+    Vagrant.configure("2") do |config|
+    config.vm.box = "e:/maquinas/UbuntuServerBase.box"
+    config.vm.network "forwarded_port", guest: 80, host: 80
+    config.vm.synced_folder "e:/directorio_auxiliar", "/var/www/html"
+    config.vm.provision "shell", inline: <<-SHELL
+        apt-get update
+        apt-get install -y apache2
+    SHELL
+    end
+    
+Con esto, recuperamos la máquina, instalamos Apache y sobre todo **conectamos el directorio del Apache virtualizado con un directorio del anfitrión donde están los archivos web.** 
+
+Una vez hecho esto, podemos crear un fichero .BAT **que copie el HTML de la web al directorio auxiliar** . Si tenemos el ``Vagrantfile`` y este fichero .BAT podremos recuperar la web con toda comodidad
+
+.. code-block:: BAT
+
+    vagrant up
+    copy C:\Users\admin\Documents\index.html e:/directorio_auxiliar

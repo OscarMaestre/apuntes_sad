@@ -301,3 +301,57 @@ Instalación y configuración de soluciones de alta disponibilidad.
 -----------------------------------------------------------------------------------------------
 
 
+Ejercicio: recuperando una web con Vagrant
+================================================================================
+
+Una empresa desea poder recuperar su sitio web con rapidez, por lo que ha decidido intentar automatizar la recuperación con Vagrant. Su web tiene un solo archivo, llamado ``index.html`` y su contenido es el siguiente:
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Empresa ACME</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1>Bienvenido</h1>
+            <p>
+                Esta es la web de la empresa ACME
+            </p>
+        </body>
+    </html>
+
+En concreto se ha pensado en tener una máquina virtualizada con una tarjeta en modo NAT. Se desea que cuando alguien se conecte a la IP del anfitrión y puerto 80 se redirija la conexión al interior de la máquina virtual (también a su puerto 80) pero por supuesto se desea que se vea la web de la empresa y no el archivo ``index.html`` que suele mostrar Apache sobre Ubuntu.
+
+Solución a la recuperación de la web
+--------------------------------------------------------------------------------
+
+* Sabemos que podemos instalar Apache en la máquina virtual recuperada usando los scripts de aprovisionamiento.
+* Sabemos que Apache tiene un directorio ``/var/www/html`` . En dicho directorio se deben poner los archivos de web.
+* Sabemos que el archivo de la empresa está en ``C:\Users\admin\Documents\index.html`` 
+
+Teniendo eso en mente podemos hacer lo siguiente:
+
+En primer lugar usamos ``vagrant init e:/maquinas/UbuntuServerBase.box`` . Esto nos creará un fichero ``Vagrantfile``. Si lo editamos podremos poner en él éstas líneas (se han omitido partes no relevantes):
+
+.. code-block:: ruby
+
+    Vagrant.configure("2") do |config|
+    config.vm.box = "e:/maquinas/UbuntuServerBase.box"
+    config.vm.network "forwarded_port", guest: 80, host: 80
+    config.vm.synced_folder "e:/directorio_auxiliar", "/var/www/html"
+    config.vm.provision "shell", inline: <<-SHELL
+        apt-get update
+        apt-get install -y apache2
+    SHELL
+    end
+    
+Con esto, recuperamos la máquina, instalamos Apache y sobre todo **conectamos el directorio del Apache virtualizado con un directorio del anfitrión donde están los archivos web.** 
+
+Una vez hecho esto, podemos crear un fichero .BAT **que copie el HTML de la web al directorio auxiliar** . Si tenemos el ``Vagrantfile`` y este fichero .BAT podremos recuperar la web con toda comodidad
+
+.. code-block:: BAT
+
+    vagrant up
+    copy C:\Users\admin\Documents\index.html e:/directorio_auxiliar

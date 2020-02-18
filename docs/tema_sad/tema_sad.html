@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Implantación de soluciones de alta disponibilidad &#8212; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -42,10 +40,10 @@
 <p>En el tema «Pautas de seguridad informática» definíamos disponibilidad  de la siguiente manera: <em>capacidad de respuesta a una peticiones con las mínimas pausas por causas involuntarias</em> .</p>
 <p>También decíamos que se mide la disponibilidad de un SI en «nueves».</p>
 <ul class="simple">
-<li>Se dice que un SI ofrece una disponibilidad de «2 nueves», si está disponible el 99% del tiempo.</li>
-<li>Se dice que un SI ofrece una disponibilidad de «3 nueves», si lo está al 99.9%.</li>
-<li>Se dice que un SI ofrece una disponibilidad de «4 nueves» si lo está al 99.99%.</li>
-<li>Se dice que un SI ofrece una disponibilidad de «5 nueves» si lo está al 99.999%</li>
+<li><p>Se dice que un SI ofrece una disponibilidad de «2 nueves», si está disponible el 99% del tiempo.</p></li>
+<li><p>Se dice que un SI ofrece una disponibilidad de «3 nueves», si lo está al 99.9%.</p></li>
+<li><p>Se dice que un SI ofrece una disponibilidad de «4 nueves» si lo está al 99.99%.</p></li>
+<li><p>Se dice que un SI ofrece una disponibilidad de «5 nueves» si lo está al 99.999%</p></li>
 </ul>
 <p>Evidentemente lograr una disponibilidad del 100% es imposible pero en este bloque analizaremos como lograr la máxima disponibilidad en un entorno informático.</p>
 </div>
@@ -54,50 +52,50 @@
 <p>Muchos sistemas operativos que tengan que trabajar como invitados pueden beneficiarse de ciertas posibilidades instalando un software que VirtualBox llama «Guest additions».</p>
 <p>Las «Guest additions» («añadidos para el sistema operativo invitado») son un conjunto de drivers y programas que mejoran la experiencia de uso y el rendimiento de los sistemas operativos invitados. En general, es buena idea instalarlas ya que ofrecen:</p>
 <ul class="simple">
-<li>Mejor soporte para el ratón, tarjeta de vídeo y comunicación entre el anfitrión  el invitado.</li>
-<li>Capacidad para compartir carpetas entre el anfitrión y el invitado.</li>
-<li>Mejor sincronización de la hora entre anfitrión e invitado.</li>
-<li>Posibilidad de compartir datos entre el portapapeles del anfitrión e invitado.</li>
-<li>Inicio de sesión automático.</li>
+<li><p>Mejor soporte para el ratón, tarjeta de vídeo y comunicación entre el anfitrión  el invitado.</p></li>
+<li><p>Capacidad para compartir carpetas entre el anfitrión y el invitado.</p></li>
+<li><p>Mejor sincronización de la hora entre anfitrión e invitado.</p></li>
+<li><p>Posibilidad de compartir datos entre el portapapeles del anfitrión e invitado.</p></li>
+<li><p>Inicio de sesión automático.</p></li>
 </ul>
 <div class="section" id="modos-de-red-en-virtualbox">
 <h3>Modos de red en VirtualBox<a class="headerlink" href="#modos-de-red-en-virtualbox" title="Enlazar permanentemente con este título">¶</a></h3>
 <p>A la hora de virtualizar un servicio es importante elegir correctamente el modo de funcionamiento del subsistema de red, ya que cada uno de ellos tiene sus ventajas e inconvenientes. En concreto VirtualBox ofrece los siguientes modos:</p>
 <ul class="simple">
-<li>No conectado.</li>
-<li>NAT: Network Address Translation es el proceso por el cual una máquina intercepta las peticiones de red de otra y las efectúa en su lugar (sustituyendo la IP). Cuando llega la respuesta, la máquina interceptora modifica esa respuesta para que la IP de destino sea la de la máquina interceptada. En el caso de VirtualBox el modo NAT hace que el programa VirtualBox “intercepte” las peticiones que salen desde el SO “invitado”. Si algún ordenador de fuera desea iniciar una conexión hacia el SO invitado, VirtualBox prohibirá dicha conexión. Será necesario abrir puertos.</li>
-<li>Red NAT: Facilita la creación de servidores protegidos detrás de un servicio NAT. Supongamos que queremos un servidor HTTP y uno FTP. Podríamos ponerlos en dos máquinas virtuales cada una con su NAT. Pero esto implicaría «tratar a las máquinas por separado». Creando una red NAT podemos simplificar un poco la apertura de puertos trabajando con una sola red NAT. De alguna manera esto implica poder fabricar grupos de máquinas virtuales gestionados por la misma red NAT,son máquinas que compartirán ese «router firewall NAT» virtual.</li>
-<li>Bridge/adaptador puente: el SO invitado no tendrá ninguna restricción y se portará como uno más de la red. El SO invitado necesitará su propia IP separada y distinta del anfitrión.</li>
-<li>Red interna: En este modo podemos crear «redes ficticias que no se ven desde fuera del anfitrión». Consiste en crear redes con un cierto nombre y los distintos invitados que estén asociados a esa «red ficticia» podrán verse entre sí  pero no podrán salir al exterior.</li>
-<li>Solo anfitrión: el invitado solo “ve” al anfitrión.</li>
-<li>Red genérica: solo se usará cuando virtualicemos sistemas operativos que no tengan drivers para alguna de las tarjetas</li>
+<li><p>No conectado.</p></li>
+<li><p>NAT: Network Address Translation es el proceso por el cual una máquina intercepta las peticiones de red de otra y las efectúa en su lugar (sustituyendo la IP). Cuando llega la respuesta, la máquina interceptora modifica esa respuesta para que la IP de destino sea la de la máquina interceptada. En el caso de VirtualBox el modo NAT hace que el programa VirtualBox “intercepte” las peticiones que salen desde el SO “invitado”. Si algún ordenador de fuera desea iniciar una conexión hacia el SO invitado, VirtualBox prohibirá dicha conexión. Será necesario abrir puertos.</p></li>
+<li><p>Red NAT: Facilita la creación de servidores protegidos detrás de un servicio NAT. Supongamos que queremos un servidor HTTP y uno FTP. Podríamos ponerlos en dos máquinas virtuales cada una con su NAT. Pero esto implicaría «tratar a las máquinas por separado». Creando una red NAT podemos simplificar un poco la apertura de puertos trabajando con una sola red NAT. De alguna manera esto implica poder fabricar grupos de máquinas virtuales gestionados por la misma red NAT,son máquinas que compartirán ese «router firewall NAT» virtual.</p></li>
+<li><p>Bridge/adaptador puente: el SO invitado no tendrá ninguna restricción y se portará como uno más de la red. El SO invitado necesitará su propia IP separada y distinta del anfitrión.</p></li>
+<li><p>Red interna: En este modo podemos crear «redes ficticias que no se ven desde fuera del anfitrión». Consiste en crear redes con un cierto nombre y los distintos invitados que estén asociados a esa «red ficticia» podrán verse entre sí  pero no podrán salir al exterior.</p></li>
+<li><p>Solo anfitrión: el invitado solo “ve” al anfitrión.</p></li>
+<li><p>Red genérica: solo se usará cuando virtualicemos sistemas operativos que no tengan drivers para alguna de las tarjetas</p></li>
 </ul>
 <p>En la figura siguiente, sacada de la web de VirtualBox se ilustra «quien puede ver a quien»</p>
-<div class="figure" id="id1">
+<div class="figure align-default" id="id1">
 <a class="reference internal image-reference" href="../_images/modos_virtual_box.png"><img alt="Hooks" src="../_images/modos_virtual_box.png" style="width: 802.4000000000001px; height: 200.0px;" /></a>
-<p class="caption"><span class="caption-text">Modos de red en VirtualBox</span></p>
+<p class="caption"><span class="caption-text">Modos de red en VirtualBox</span><a class="headerlink" href="#id1" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 </div>
 </div>
 <div class="section" id="posibilidades-de-la-virtualizacion-de-sistemas">
 <h2>Posibilidades de la virtualización de sistemas.<a class="headerlink" href="#posibilidades-de-la-virtualizacion-de-sistemas" title="Enlazar permanentemente con este título">¶</a></h2>
 <ul class="simple">
-<li>Posibilidad de mover entornos a distintos lugares (remotos o no)</li>
-<li>Facilidad de recuperación de un entorno corrupto.</li>
-<li>Fácil replicación de entornos.</li>
+<li><p>Posibilidad de mover entornos a distintos lugares (remotos o no)</p></li>
+<li><p>Facilidad de recuperación de un entorno corrupto.</p></li>
+<li><p>Fácil replicación de entornos.</p></li>
 </ul>
 </div>
 <div class="section" id="herramientas-para-la-virtualizacion">
 <h2>Herramientas para la virtualización.<a class="headerlink" href="#herramientas-para-la-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
 <ul class="simple">
-<li>VirtualBox</li>
-<li>VMWare</li>
+<li><p>VirtualBox</p></li>
+<li><p>VMWare</p></li>
 </ul>
 <p>Y para gestionar la virtualización tenemos:</p>
 <ul class="simple">
-<li>Vagrant</li>
-<li>Docker</li>
-<li>Kubernetes</li>
+<li><p>Vagrant</p></li>
+<li><p>Docker</p></li>
+<li><p>Kubernetes</p></li>
 </ul>
 </div>
 <div class="section" id="configuracion-y-utilizacion-de-maquinas-virtuales">
@@ -108,20 +106,20 @@
 <h2>Alta disponibilidad y virtualización.<a class="headerlink" href="#alta-disponibilidad-y-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>En pocas palabras podemos reconstruir un sistema virtualizado previamente usando solo estos comandos:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">maquina/usr</span></code> : Inicializa un directorio con la configuración de esa máquina (cuidado, en Windows hay que cambiar y en lugar de escribir cosas como <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">d:\directorio\maquina.box</span></code> usar <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">d:/directorio/maquina.box</span></code>, es decir cambiar la barra por la /).</li>
-<li><code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">up</span></code> : «Levanta» la máquina, instalándola, recuperando su estado tal y como se hubiera quedado y configurándola desde cero. Por defecto, las máquinas suelen tener el usuario «vagrant» con la clave «vagrant».</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">maquina/usr</span></code> : Inicializa un directorio con la configuración de esa máquina (cuidado, en Windows hay que cambiar y en lugar de escribir cosas como <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">d:\directorio\maquina.box</span></code> usar <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">d:/directorio/maquina.box</span></code>, es decir cambiar la barra por la /).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">up</span></code> : «Levanta» la máquina, instalándola, recuperando su estado tal y como se hubiera quedado y configurándola desde cero. Por defecto, las máquinas suelen tener el usuario «vagrant» con la clave «vagrant».</p></li>
 </ul>
 <p>Para «exportar» nuestra máquina y facilitar su gestión con Vagrant se debe:</p>
 <ul class="simple">
-<li>Instalar un sistema operativo invitado como Windows 7 o superior o alguna variante de Linux.</li>
-<li>Al principio como mínimo se debe tener una tarjeta en modo NAT y además se debe anotar la MAC de dicha tarjeta.</li>
-<li>Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">linux-headers-$(uname</span> <span class="pre">-r)</span> <span class="pre">build-essential</span> <span class="pre">dkms</span></code></li>
-<li>Se deben instalar las «Guest Additions» en el anfitrión.</li>
-<li>Se debe instalar OpenSSH con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">openssh-server</span></code>.</li>
-<li>Es recomendable crear el usuario «vagrant» y ponerle la clave Vagrant. También es importante permitir que ese usuario pueda ser administrador y que además no necesite indicar su clave de administrador cada vez. Esto puede hacerse editando los parámetros de administración con <code class="docutils literal notranslate"><span class="pre">visudo</span></code> y poniendo la línea <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></code></li>
-<li>Se debe iniciar sesión en la máquina virtual con el usuario «vagrant» y la clave «vagrant». Nos conectaremos a nuestra propia máquina con <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">localhost</span></code> y despues nos salimos (eso permite que se cree el directorio .ssh).  Se debe meter la clave pública de Vagrant dentro del directorio ssh con <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">vagrant.pub</span> <span class="pre">&gt;</span> <span class="pre">.ssh/authorized_keys</span></code></li>
-<li>Vamos a permitir que todo el mundo pueda leer ese fichero y ese directorio de claves usando <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">0700</span> <span class="pre">.ssh</span></code></li>
-<li>Una vez hecho todo esto podemos apagar la máquina virtual, cerrar VirtualBox y abrir la línea de comandos y crear un directorio vacío. Dentro de él inicializaremos el directorio para que sea un directorio inicializado por Vagrant con el comando <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span></code> y luego exportaremos la máquina con <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">package</span> <span class="pre">--base</span> <span class="pre">&lt;nombredemaquina&gt;</span> <span class="pre">--output</span> <span class="pre">Maquina.box</span></code> .</li>
+<li><p>Instalar un sistema operativo invitado como Windows 7 o superior o alguna variante de Linux.</p></li>
+<li><p>Al principio como mínimo se debe tener una tarjeta en modo NAT y además se debe anotar la MAC de dicha tarjeta.</p></li>
+<li><p>Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">linux-headers-$(uname</span> <span class="pre">-r)</span> <span class="pre">build-essential</span> <span class="pre">dkms</span></code></p></li>
+<li><p>Se deben instalar las «Guest Additions» en el anfitrión.</p></li>
+<li><p>Se debe instalar OpenSSH con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">openssh-server</span></code>.</p></li>
+<li><p>Es recomendable crear el usuario «vagrant» y ponerle la clave Vagrant. También es importante permitir que ese usuario pueda ser administrador y que además no necesite indicar su clave de administrador cada vez. Esto puede hacerse editando los parámetros de administración con <code class="docutils literal notranslate"><span class="pre">visudo</span></code> y poniendo la línea <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></code></p></li>
+<li><p>Se debe iniciar sesión en la máquina virtual con el usuario «vagrant» y la clave «vagrant». Nos conectaremos a nuestra propia máquina con <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">localhost</span></code> y despues nos salimos (eso permite que se cree el directorio .ssh).  Se debe meter la clave pública de Vagrant dentro del directorio ssh con <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">vagrant.pub</span> <span class="pre">&gt;</span> <span class="pre">.ssh/authorized_keys</span></code></p></li>
+<li><p>Vamos a permitir que todo el mundo pueda leer ese fichero y ese directorio de claves usando <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">0700</span> <span class="pre">.ssh</span></code></p></li>
+<li><p>Una vez hecho todo esto podemos apagar la máquina virtual, cerrar VirtualBox y abrir la línea de comandos y crear un directorio vacío. Dentro de él inicializaremos el directorio para que sea un directorio inicializado por Vagrant con el comando <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span></code> y luego exportaremos la máquina con <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">package</span> <span class="pre">--base</span> <span class="pre">&lt;nombredemaquina&gt;</span> <span class="pre">--output</span> <span class="pre">Maquina.box</span></code> .</p></li>
 </ul>
 <div class="section" id="el-fichero-vagrantfile">
 <h3>El fichero <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code><a class="headerlink" href="#el-fichero-vagrantfile" title="Enlazar permanentemente con este título">¶</a></h3>
@@ -158,25 +156,25 @@
 <h2>Simulación de servicios con virtualización.<a class="headerlink" href="#simulacion-de-servicios-con-virtualizacion" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>A continuación explicamos como virtualizar un servidor web «oculto» detrás del NAT de VirtualBox.</p>
 <ul class="simple">
-<li>Una vez instalado el sistema operativo dentro de VirtualBox deberemos configurar la red de dicho sistema operativo.</li>
-<li>Cuando estamos dentro de VirtualBox y con la tarjeta en modo NAT, VirtualBox se convierte en «router NAT» para sus invitados y les asigna una IP como 10.0.2.15/24 con gateway 10.0.2.2. Si nuestro invitado tiene la red en modo DHCP tomará esa IP aunque si queremos podemos modificarla.</li>
-<li>Un sistema operativo que esté dentro de una red con NAT <strong>no puede recibir conexiones iniciadas en el exterior</strong> por lo que habrá que abrir puertos dentro de VirtualBox.</li>
-<li>Para abrir puertos deberemos tener apagado el sistema operativo invitado.</li>
-<li>Una vez apagado, nos vamos a la configuración de la máquina virtual y en la categoría «Red» veremos que con la tarjeta en modo NAT podemos abrir un menú «Avanzado» que ofrece un botón «Reenvío de puertos».</li>
-<li>Si deseamos por ejemplo tener un servidor web seguro virtualizado podemos pedirle a VirtualBox que cuando alguien se conecte a la IP del anfitrión usando el puerto seguro redirija dicha conexión al sistema operativo invitado usando datos como los siguientes:</li>
+<li><p>Una vez instalado el sistema operativo dentro de VirtualBox deberemos configurar la red de dicho sistema operativo.</p></li>
+<li><p>Cuando estamos dentro de VirtualBox y con la tarjeta en modo NAT, VirtualBox se convierte en «router NAT» para sus invitados y les asigna una IP como 10.0.2.15/24 con gateway 10.0.2.2. Si nuestro invitado tiene la red en modo DHCP tomará esa IP aunque si queremos podemos modificarla.</p></li>
+<li><p>Un sistema operativo que esté dentro de una red con NAT <strong>no puede recibir conexiones iniciadas en el exterior</strong> por lo que habrá que abrir puertos dentro de VirtualBox.</p></li>
+<li><p>Para abrir puertos deberemos tener apagado el sistema operativo invitado.</p></li>
+<li><p>Una vez apagado, nos vamos a la configuración de la máquina virtual y en la categoría «Red» veremos que con la tarjeta en modo NAT podemos abrir un menú «Avanzado» que ofrece un botón «Reenvío de puertos».</p></li>
+<li><p>Si deseamos por ejemplo tener un servidor web seguro virtualizado podemos pedirle a VirtualBox que cuando alguien se conecte a la IP del anfitrión usando el puerto seguro redirija dicha conexión al sistema operativo invitado usando datos como los siguientes:</p></li>
 </ul>
 <div class="figure align-center" id="id2">
 <a class="reference internal image-reference" href="../_images/puertos_nat_vbox.png"><img alt="Apertura de puertos en VirtualBox en modo NAT" src="../_images/puertos_nat_vbox.png" style="width: 515.5px; height: 64.5px;" /></a>
-<p class="caption"><span class="caption-text">Apertura de puertos en VirtualBox en modo NAT</span></p>
+<p class="caption"><span class="caption-text">Apertura de puertos en VirtualBox en modo NAT</span><a class="headerlink" href="#id2" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 </div>
 <div class="section" id="analisis-de-configuraciones-de-alta-disponibilidad">
 <h2>Análisis de configuraciones de alta disponibilidad<a class="headerlink" href="#analisis-de-configuraciones-de-alta-disponibilidad" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>Para lograr la máxima disponibilidad podemos recurrir a distintas técnicas:</p>
 <ul class="simple">
-<li>Hardware duplicado.</li>
-<li>Virtualización.</li>
-<li>Tecnologías de contenedores.</li>
+<li><p>Hardware duplicado.</p></li>
+<li><p>Virtualización.</p></li>
+<li><p>Tecnologías de contenedores.</p></li>
 </ul>
 <div class="section" id="hardware-duplicado">
 <h3>Hardware duplicado<a class="headerlink" href="#hardware-duplicado" title="Enlazar permanentemente con este título">¶</a></h3>
@@ -195,7 +193,7 @@
 <p>Los contenedores son un software del sistema operativo capaz de «encerrar y aislar otros programas o ficheros», consiguiendo que la ejecución de los mismos sea muy segura pero sin necesitar otro sistema operativo. Además los contenedores son programables mediante scripts lo que nos facilita mucho la tarea de desplegar servicios sin necesidad de perder rendimiento. La comparación entre arquitecturas es la siguiente (imagen tomada de la web de Docker)</p>
 <div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/contenedores.png"><img alt="Comparación entre arquitecturas" src="../_images/contenedores.png" style="width: 495.59999999999997px; height: 220.5px;" /></a>
-<p class="caption"><span class="caption-text">Comparativa entre arquitectura de virtualización y contenedores</span></p>
+<p class="caption"><span class="caption-text">Comparativa entre arquitectura de virtualización y contenedores</span><a class="headerlink" href="#id3" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 </div>
 <div class="section" id="usando-docker">
@@ -217,15 +215,32 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 <p>También podemos reiniciar un servicio con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">restart</span> <span class="pre">&lt;id_container&gt;</span></code> e incluso ver los logs del servicio con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">logs</span> <span class="pre">&lt;id_container&gt;</span></code> .</p>
 <p>Si queremos tener el mismo servicio para distintos clientes está claro que no podremos u    sar el mismo nombre, podemos lanzar un servicio con distintos nombres usando algo como <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-d</span> <span class="pre">--name</span> <span class="pre">ApacheCliente1</span> <span class="pre">httpd</span></code> lo que <strong>crea y ejecuta un contenedor llamado ApacheCliente1</strong> . Hay que recordar que aunque lo paremos no podremos volver a ejecutarlo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-d</span> <span class="pre">--name</span> <span class="pre">ApacheCliente1</span> <span class="pre">httpd</span></code> ya que eso <code class="docutils literal notranslate"><span class="pre">intentaría</span> <span class="pre">volver</span> <span class="pre">a</span> <span class="pre">crear</span> <span class="pre">el</span> <span class="pre">contenedor</span></code> (cosa imposible porque ya existe). Un contenedor puede volver a ejecutarse con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">restart</span> <span class="pre">ApacheCliente1</span></code></p>
 </div>
+<div class="section" id="un-ejemplo-simple-de-docker">
+<h3>Un ejemplo simple de Docker<a class="headerlink" href="#un-ejemplo-simple-de-docker" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Docker también se puede automatizar con fichero <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>FROM httpd
+COPY index.html /usr/local/apache2/htdocs/index.html
+EXPOSE <span class="m">80</span>
+ENTRYPOINT <span class="o">[</span><span class="s2">&quot;apachectl&quot;</span>, <span class="s2">&quot;start&quot;</span><span class="o">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Construyamos una imagen con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">build</span> <span class="pre">.</span> <span class="pre">-t</span> <span class="pre">ImagenPropia</span></code></p></li>
+<li><p>Creemos un contenedor de prueba con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-dti</span> <span class="pre">--name</span> <span class="pre">Servidor1</span> <span class="pre">ImagenPropia</span> <span class="pre">/bin/bash</span></code></p></li>
+<li><p>Este contenedor ahora ejecuta Apache usando como HTML el fichero que le hayamos pasado.</p></li>
+<li><p>Cuando queramos, podemos detener el contenedor y borrar con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">stop</span> <span class="pre">Servidor1;</span> <span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">rm</span> <span class="pre">Servidor1</span></code></p></li>
+</ul>
+<p>Este ejemplo tan simple reconstruye un servidor Apache con el HTML que necesitemos.</p>
+</div>
 <div class="section" id="conexiones-de-red-en-docker">
 <h3>Conexiones de red en Docker<a class="headerlink" href="#conexiones-de-red-en-docker" title="Enlazar permanentemente con este título">¶</a></h3>
 <p>Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres «redes por defecto» con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">network</span> <span class="pre">ls</span></code> :</p>
 <ul class="simple">
-<li>Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16</li>
-<li>Host:</li>
-<li>Overlay:</li>
-<li>Macvlan:</li>
-<li>None:</li>
+<li><p>Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16</p></li>
+<li><p>Host:</p></li>
+<li><p>Overlay:</p></li>
+<li><p>Macvlan:</p></li>
+<li><p>None:</p></li>
 </ul>
 </div>
 <div class="section" id="creando-nuestra-propia-red-en-docker">
@@ -253,6 +268,53 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 </div>
 <div class="section" id="instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad">
 <h2>Instalación y configuración de soluciones de alta disponibilidad.<a class="headerlink" href="#instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+</div>
+<div class="section" id="ejercicio-recuperando-una-web-con-vagrant">
+<h1>Ejercicio: recuperando una web con Vagrant<a class="headerlink" href="#ejercicio-recuperando-una-web-con-vagrant" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Una empresa desea poder recuperar su sitio web con rapidez, por lo que ha decidido intentar automatizar la recuperación con Vagrant. Su web tiene un solo archivo, llamado <code class="docutils literal notranslate"><span class="pre">index.html</span></code> y su contenido es el siguiente:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Empresa ACME<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Bienvenido<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+            Esta es la web de la empresa ACME
+        <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>En concreto se ha pensado en tener una máquina virtualizada con una tarjeta en modo NAT. Se desea que cuando alguien se conecte a la IP del anfitrión y puerto 80 se redirija la conexión al interior de la máquina virtual (también a su puerto 80) pero por supuesto se desea que se vea la web de la empresa y no el archivo <code class="docutils literal notranslate"><span class="pre">index.html</span></code> que suele mostrar Apache sobre Ubuntu.</p>
+<div class="section" id="solucion-a-la-recuperacion-de-la-web">
+<h2>Solución a la recuperación de la web<a class="headerlink" href="#solucion-a-la-recuperacion-de-la-web" title="Enlazar permanentemente con este título">¶</a></h2>
+<ul class="simple">
+<li><p>Sabemos que podemos instalar Apache en la máquina virtual recuperada usando los scripts de aprovisionamiento.</p></li>
+<li><p>Sabemos que Apache tiene un directorio <code class="docutils literal notranslate"><span class="pre">/var/www/html</span></code> . En dicho directorio se deben poner los archivos de web.</p></li>
+<li><p>Sabemos que el archivo de la empresa está en <code class="docutils literal notranslate"><span class="pre">C:\Users\admin\Documents\index.html</span></code></p></li>
+</ul>
+<p>Teniendo eso en mente podemos hacer lo siguiente:</p>
+<p>En primer lugar usamos <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">e:/maquinas/UbuntuServerBase.box</span></code> . Esto nos creará un fichero <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code>. Si lo editamos podremos poner en él éstas líneas (se han omitido partes no relevantes):</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;e:/maquinas/UbuntuServerBase.box&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="ss">guest</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="ss">host</span><span class="p">:</span> <span class="mi">80</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span> <span class="s2">&quot;e:/directorio_auxiliar&quot;</span><span class="p">,</span> <span class="s2">&quot;/var/www/html&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="o">&lt;&lt;-</span><span class="dl">SHELL</span>
+<span class="sh">    apt-get update</span>
+<span class="sh">    apt-get install -y apache2</span>
+<span class="dl">SHELL</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Con esto, recuperamos la máquina, instalamos Apache y sobre todo <strong>conectamos el directorio del Apache virtualizado con un directorio del anfitrión donde están los archivos web.</strong></p>
+<p>Una vez hecho esto, podemos crear un fichero .BAT <strong>que copie el HTML de la web al directorio auxiliar</strong> . Si tenemos el <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> y este fichero .BAT podremos recuperar la web con toda comodidad</p>
+<div class="highlight-BAT notranslate"><div class="highlight"><pre><span></span>vagrant up
+<span class="k">copy</span> C:\Users\admin\Documents\index.html e:/directorio_auxiliar
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -296,6 +358,7 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 <li class="toctree-l3"><a class="reference internal" href="#virtualizacion">Virtualización</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#contenedores">Contenedores</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usando-docker">Usando Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#un-ejemplo-simple-de-docker">Un ejemplo simple de Docker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#conexiones-de-red-en-docker">Conexiones de red en Docker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creando-nuestra-propia-red-en-docker">Creando nuestra propia red en Docker</a></li>
 </ul>
@@ -307,6 +370,10 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 <li class="toctree-l2"><a class="reference internal" href="#san-nas-fiberchannel">SAN, NAS, FiberChannel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#balanceadores-de-carga">Balanceadores de carga.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instalacion-y-configuracion-de-soluciones-de-alta-disponibilidad">Instalación y configuración de soluciones de alta disponibilidad.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#ejercicio-recuperando-una-web-con-vagrant">Ejercicio: recuperando una web con Vagrant</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#solucion-a-la-recuperacion-de-la-web">Solución a la recuperación de la web</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
@@ -324,13 +391,11 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Búsqueda rápida</h3>
+  <h3 id="searchlabel">Búsqueda rápida</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Ir a" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -351,7 +416,7 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
       &copy;2019, Oscar GG.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
