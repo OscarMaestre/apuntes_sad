@@ -262,11 +262,11 @@ Conexiones de red en Docker
 
 Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "redes por defecto" con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con ``sudo docker network ls`` :
 
-* Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16
-* Host:
-* Overlay:
-* Macvlan:
-* None:
+* Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16. Es importante señalar que las redes "bridge" son *parecidas al modo red NAT de VirtualBox* , es decir, no permiten que el exterior inice una conexión con ell.as
+* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" **sí acepta conexiones iniciadas en el exterior** 
+* Overlay: Está pensado para crear lo que Docker llama "enjambres", no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.
+* Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
+* None: permite deshabilitar la red de un contenedor.
 
 Creando nuestra propia red en Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

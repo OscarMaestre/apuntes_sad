@@ -236,11 +236,11 @@ ENTRYPOINT <span class="o">[</span><span class="s2">&quot;apachectl&quot;</span>
 <h3>Conexiones de red en Docker<a class="headerlink" href="#conexiones-de-red-en-docker" title="Enlazar permanentemente con este título">¶</a></h3>
 <p>Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres «redes por defecto» con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">network</span> <span class="pre">ls</span></code> :</p>
 <ul class="simple">
-<li><p>Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16</p></li>
-<li><p>Host:</p></li>
-<li><p>Overlay:</p></li>
-<li><p>Macvlan:</p></li>
-<li><p>None:</p></li>
+<li><p>Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16. Es importante señalar que las redes «bridge» son <em>parecidas al modo red NAT de VirtualBox</em> , es decir, no permiten que el exterior inice una conexión con ell.as</p></li>
+<li><p>Host: Se parecen al modo «puente» de VirtualBox. Un contenedor en modo «red host» <strong>sí acepta conexiones iniciadas en el exterior</strong></p></li>
+<li><p>Overlay: Está pensado para crear lo que Docker llama «enjambres», no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.</p></li>
+<li><p>Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en «modo host» en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).</p></li>
+<li><p>None: permite deshabilitar la red de un contenedor.</p></li>
 </ul>
 </div>
 <div class="section" id="creando-nuestra-propia-red-en-docker">
@@ -303,6 +303,8 @@ ENTRYPOINT <span class="o">[</span><span class="s2">&quot;apachectl&quot;</span>
 <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="ss">guest</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="ss">host</span><span class="p">:</span> <span class="mi">80</span>
 <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span> <span class="s2">&quot;e:/directorio_auxiliar&quot;</span><span class="p">,</span> <span class="s2">&quot;/var/www/html&quot;</span>
 <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="o">&lt;&lt;-</span><span class="dl">SHELL</span>
+<span class="sh">    systemctl disable apt-daily.timer</span>
+<span class="sh">        systemctl disable apt-daily.service</span>
 <span class="sh">    apt-get update</span>
 <span class="sh">    apt-get install -y apache2</span>
 <span class="dl">SHELL</span>
