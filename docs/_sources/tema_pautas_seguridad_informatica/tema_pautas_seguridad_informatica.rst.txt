@@ -323,6 +323,13 @@ Cifrado de ficheros en línea de comandos
 
 Existe una utilidad de libre distribución llamada ``gpg`` que existe para muchos sistemas operativos distintos y que permite trabajar con criptografía asimétrica. Este programa asume que usaremos la clave pública para cifrar y la privada para descifrar.
 
+Cuando se trabaja con claves públicas todo se guarda en un "almacén de claves" al cual se debe acceder con otra clave distinta. Cuando listamos la clave pueden verse entre corchetes cosas como estas:
+
+* [SC] Esto significa que la clave puede "firmar" (S) y para "crear un certificado".
+* [SCEA] La clave puede firmar, generar un certificado, puede "encriptar" (E) y puede "autenticar" (A)
+
+* También veremos el nivel de confianza de una clave que puede ser algo como [ultimate] (confianza absoluta) [full] (confianza completa) y otros términos que indican hasta qué punto confiamos en la clave. Hay varios niveles: "undefined", "never", "marginally", "full" y "ultimate".
+
 * Se debe empezar por generar una pareja de claves usando el comando ``gpg --full-generate-keys`` (el proceso de generación de claves puede ser muy lento, se recomienda tener paciencia y a ser posible abrir otra consola y trabajar en ella).
 * Una vez generado tendremos un directorio llamado ``.gnupg`` en el que se almacenan las claves. Podemos listar las claves de nuestro almacén con ``gpg --list-keys`` 
 * Una vez se tenga generada la clave la costumbre es tener preparado un "certificado de revocación". Se utilizará si creemos que nos han robado alguna clave y distribuiremos el fichero para avisar de que no se debe confiar en nuestras claves. Esto se hace con el comando ``gpg --gen-revoke "usuario" --output ClaveRevocada.asc`` . Se pueden usar otros nombres de fichero pero la costumbre es usar la extensión ``.asc`` 
