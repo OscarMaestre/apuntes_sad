@@ -89,7 +89,18 @@ Para "exportar" nuestra máquina y facilitar su gestión con Vagrant se debe:
 * Si estamos en Linux se deben haber instalado los elementos que permiten añadir módulos al núcleo del sistema con ``sudo apt-get install linux-headers-$(uname -r) build-essential dkms`` 
 * Se deben instalar las "Guest Additions" en el anfitrión.
 * Se debe instalar OpenSSH con ``sudo apt-get install openssh-server``.
-* Es recomendable crear el usuario "vagrant" y ponerle la clave Vagrant. También es importante permitir que ese usuario pueda ser administrador y que además no necesite indicar su clave de administrador cada vez. Esto puede hacerse editando los parámetros de administración con ``visudo`` y poniendo la línea ``vagrant ALL=(ALL) NOPASSWD: ALL``
+* Es recomendable crear el usuario "vagrant" y ponerle la clave Vagrant. También es importante permitir que ese usuario pueda ser administrador y que además no necesite indicar su clave de administrador cada vez. Esto puede hacerse editando los parámetros de administración con ``visudo`` y poniendo la línea ``vagrant ALL=(ALL) NOPASSWD: ALL``. En concreto y leyendo palabra a palabra esto significa que:
+
+    * **vagrant** ALL=(ALL) NOPASSWD: ALL (La regla se aplica al usuario vagrant)
+
+    * vagrant **ALL** =(ALL) NOPASSWD: ALL (La regla se aplica a todos los host)
+
+    * vagrant ALL= **(ALL)** NOPASSWD: ALL (vagrant puede ejecutar algo como si fuese cualquier usuario)
+
+    * vagrant ALL=(ALL) **NOPASSWD**: ALL (no se necesita indicar contraseña
+
+    * vagrant ALL=(ALL) NOPASSWD: **ALL** (puede ejecutar cualquier comando)
+
 
 * Se debe iniciar sesión en la máquina virtual con el usuario "vagrant" y la clave "vagrant". Nos conectaremos a nuestra propia máquina con ``ssh localhost`` y despues nos salimos (eso permite que se cree el directorio .ssh).  Se debe meter la clave pública de Vagrant dentro del directorio ssh con ``cat vagrant.pub > .ssh/authorized_keys`` . Las claves públicas de *Vagrant*  pueden encontrarse en (https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub)[https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub]
 
