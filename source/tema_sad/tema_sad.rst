@@ -125,6 +125,11 @@ Por defecto, las máquinas virtuales tienen una sola tarjeta en modo "NAT". A me
     #Con esto conseguimos que cuando se conecte al 8000 del anfitrión
     #en realidad se redirija la conexión al 80 del invitado
     config.vm.network "forwarded_port", guest:80, host:8000
+    #Podemos también forzar a que el puerto se redija hacia un ip exacta
+    #de invitado o a una ip exacta de host
+    config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1", guest_ip:"10.0.2.15"
+
+    
 
 Pero podemos crear una máquina en modo puente poniendo en el ``Vagrantfile`` algo como esto que crea una tarjeta en modo puente asociada a la tarjeta ``enp0s25`` y luego obliga a que en cada arranque se configure la IP, la máscara y la puerta de enlace (obsérvese que ademas no usa ``netplan`` , aunque podría usarse si es necesario).
 
