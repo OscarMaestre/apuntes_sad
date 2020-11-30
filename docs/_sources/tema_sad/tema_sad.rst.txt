@@ -246,7 +246,7 @@ El programa "se ha ejecutado dentro de un contenedor". Despues ha terminado y ha
 
 En este último ejemplo no hemos puesto espacio de nombres, así que Docker asume que se debe buscar en los "repositorios oficiales de imágenes". Una vez ejecutado **Apache se queda en ejecución y se "apodera" de la consola** . Esto es normal, así que si queremos que el servidor Web se vaya a un segundo plano deberemos cerrar el programa (Ctrl-C) y ejecutar ``sudo docker run --detach httpd`` o ``sudo docker run -d httpd`` .
 
-Podemos ver que Apache se está ejecutando en un contenedor con ``sudo docker ps`` y "apagar" el contenedor con   ``sudo docker stop <identificador>`` o incluso "terminarlo" ``sudo docker kill <identificador>`` (no hace falta escribir todo el ID del container, basta con escribir las primeras letras).
+Podemos ver que Apache se está ejecutando en un contenedor con ``sudo docker ps`` y "apagar" el contenedor con   ``sudo docker stop <identificador>`` o incluso "terminarlo" ``sudo docker kill <identificador>`` (no hace falta escribir todo el ID del container, basta con escribir las primeras 31,902.19letras).
 
 También podemos reiniciar un servicio con ``sudo docker restart <id_container>`` e incluso ver los logs del servicio con ``sudo docker logs <id_container>`` .
 
@@ -276,10 +276,13 @@ Este ejemplo tan simple reconstruye un servidor Apache con el HTML que necesitem
 Conexiones de red en Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. WARNING::
+   En clase usaremos Docker dentro de un VirtualBox, lo que nos complicará la gestión de servicios al tener que interactuar tanto con el subsistema de red de VirtualBox como con el subsistema de red de Docker.
+
 Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "redes por defecto" con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con ``sudo docker network ls`` :
 
-* Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en esa red. Las direcciones por defecto son 172.16.0.0/16. Es importante señalar que las redes "bridge" son *parecidas al modo red NAT de VirtualBox* , es decir, no permiten que el exterior inice una conexión con ell.as
-* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" **sí acepta conexiones iniciadas en el exterior** 
+* Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama "bridge" se parece al modo NAT de VirtualBox. 
+* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Noviembre de 2020 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la red del anfitrión.
 * Overlay: Está pensado para crear lo que Docker llama "enjambres", no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.
 * Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
 * None: permite deshabilitar la red de un contenedor.
