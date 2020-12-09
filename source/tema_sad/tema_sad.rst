@@ -206,6 +206,8 @@ La mayor ventaja es que ahorramos mucho. Podemos tener un solo servidor de gama 
 
 El inconveniente es que en realidad estamos "ejecutando un sistema operativo dentro de otro sistema operativo" con la enorme pérdida de rendimiento que esto supone
 
+Docker
+-------------------
 
 Contenedores
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,6 +225,23 @@ Los contenedores son un software del sistema operativo capaz de "encerrar y aisl
    Comparativa entre arquitectura de virtualización y contenedores
 
 
+Imágenes y procesos Docker
+---------------------------------
+
+En primer lugar hay que distinguir entre imágenes y contenedores.
+
+* Una "imagen" contiene lo necesario para ejecutar un programa o servicio.
+* Un "proceso" es la ejecución de una o más imágenes.
+
+Así, si por ejemplo tenemos una imagen que contenga, por ejemplo, el servidor web Apache podríamos lanzar muchísimas ejecuciones de esa imagen. Una vez que descargamos una imagen, dicha imagen se queda en el catálogo de Docker. Como puede verse, el concepto de "imagen" es muy similar al de "boxes" de Vagrant.
+
+
+.. figure:: img/ImagenesDocker.png
+   :scale: 70%
+   :align: center
+   :alt: Imágenes y procesos Docker
+
+   Imágenes y procesos Docker
 
 Usando Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
