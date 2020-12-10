@@ -231,7 +231,7 @@ Imágenes y procesos Docker
 En primer lugar hay que distinguir entre imágenes y contenedores.
 
 * Una "imagen" contiene lo necesario para ejecutar un programa o servicio.
-* Un "proceso" es la ejecución de una o más imágenes.
+* Un contenedor es una "imagen en marcha", como un proceso, y es la ejecución de una o más imágenes.
 
 Así, si por ejemplo tenemos una imagen que contenga, por ejemplo, el servidor web Apache podríamos lanzar muchísimas ejecuciones de esa imagen. Una vez que descargamos una imagen, dicha imagen se queda en el catálogo de Docker. Como puede verse, el concepto de "imagen" es muy similar al de "boxes" de Vagrant.
 
@@ -242,6 +242,45 @@ Así, si por ejemplo tenemos una imagen que contenga, por ejemplo, el servidor w
    :alt: Imágenes y procesos Docker
 
    Imágenes y procesos Docker
+
+
+Gestión de contenedores
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* ``sudo docker ps`` : permite ver qué contenedores están activos.
+* ``sudo docker ps -a`` : permite ver qué contenedores existen, estén activos o inactivos.
+* ``sudo docker stop <identificador|nombre>`` : permite detener la ejecución de un programa en un contenedor. Se puede usar el identificador numérico asignado por Docker o el nombre que hayamos dado al contenedor.
+* ``sudo docker start <identificador|nombre>`` : inicia un contenedor.
+* ``sudo docker restart <identificador|nombre>`` : se asegura de detener primero el contenedor y despues arranca el contenedor.
+* ``sudo docker create <nombredeimagen>`` : hace varias cosas a la vez:
+
+    ** Descarga la imagen en caso de que no esté en el repositorio local.
+    ** Crea el contenedor
+    ** Arranca su ejecución.
+
+La consola y los contenedores
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Antes de examinar como funcionan las imágenes es importante comprender como funciona la E/S por consola. Nuestro sistema operativo tiene un *shell* (en Linux por defecto suele ser ``bash``) pero ese *shell* **no tiene absolutamente nada que ver con lo que hay dentro del contenedor** . Si por ejemplo alguien mete un proceso que escriba simplemente "hola mundo" dentro de un contenedor y ejecutamos ese contenedor veremos la cadena, pero una vez impresa **el contenedor se detiene**. 
+
+
+1. Probemos a ejecutar ``sudo docker run dockerinaction/hello_world`` . Veremos el mensaje "hello world".
+2. Si volvemos a iniciar el contenedor (``sudo docker start <id>`` ) veremos que **no aparece nada**. Nuestra salida (lo que vemos en pantalla) no está conectada con la salida del contenedor.
+3. Para que un contenedor conecte su salida con nuestra pantalla necesitamos la opción ``--attach`` o ``-a`` de esta manera ``sudo docker start -a <id>`` 
+4. De la misma manera, si queremos que el contenedor acepte entrada desde nuestro teclado deberemos usar ``--interactive`` o ``-i`` como por ejemplo ``sudo docker start -a -i <id>`` 
+
+La pregunta lógica es **¿por qué docker run sí muestra cosas en la consola pero docker start no lo hace** . La respuesta es que ``sudo docker run`` (que sabemos que equivale a ejecutar create+start) vincula por defecto la entrada y salida estándar del contenedor con nuestra consola y teclado. Sin embargo, ``docker start`` no hace nada de eso por defecto
+
+Gestión de imágenes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Algunas operaciones básicas son estas:
+
+* ``sudo docker images`` : permite ver las imágenes que tenemos en nuestro repositorio local.
+* ``sudo docker pull <nombreimagen>`` : permite descargar una imagen del registro de Docker, por ejemplo ``docker pull mysql`` 
+* ``sudo docker rmi <nombreimagen>`` : elimina una imagen de nuestro repositorio local.
+
+.. WARNING::
+   No se puede borrar una imagen de nuestro registro si algún contenedor la está usando. ``Ni siquiera aunque el contenedor esté detenido.`` 
 
 Usando Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -259,7 +298,7 @@ Docker puede instalarse en Linux añadiendo sus repositorios a la lista de repos
     sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 
 
-Docker incluye un repositorio con imágenes de muchos servicios listos para descargar y ejecutarse simplemente usando scripts. Por ejemplo, ejecutemos un programa simple que se limita a saludar en pantalla con ``sudo docker run dockerinaction/hello_world`` (Se dice que ``dockerinaction`` es un "espacio de nombres", en concreto es del autor de un libro llamado precisamente "Docker in action").
+Docker incluye un repositorio (que en Docker se llama registro) con imágenes de muchos servicios listos para descargar y ejecutarse simplemente usando scripts. Por ejemplo, ejecutemos un programa simple que se limita a saludar en pantalla con ``sudo docker run dockerinaction/hello_world`` (Se dice que ``dockerinaction`` es un "espacio de nombres", en concreto es del autor de un libro llamado precisamente "Docker in action").
 
 El programa "se ha ejecutado dentro de un contenedor". Despues ha terminado y ha salido. Como programa es bastante simple, sin embargo, podemos ejecutar un Apache dentro de un contenedor con algo como esto (cuidado, si ya se tiene instalado Apache en Ubuntu esta ejecución fallará, se debe desinstalar primero). Si ejecutamos ``docker run httpd`` veremos como Docker descarga e "instala una imagen de Apache".
 
