@@ -282,7 +282,7 @@ Algunas operaciones básicas son estas:
 .. WARNING::
    No se puede borrar una imagen de nuestro registro si algún contenedor la está usando. ``Ni siquiera aunque el contenedor esté detenido.`` 
 
-Usando Docker
+Instalando Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Docker puede instalarse en Linux añadiendo sus repositorios a la lista de repositorios de nuestro sistema, podemos usar estos comandos.
@@ -330,6 +330,49 @@ Docker también se puede automatizar con fichero ``Dockerfile``
 * Cuando queramos, podemos detener el contenedor y borrar con ``sudo docker stop Servidor1; sudo docker rm Servidor1`` 
 
 Este ejemplo tan simple reconstruye un servidor Apache con el HTML que necesitemos.
+
+Un ejemplo más avanzado de Docker usando MySQL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+En el ejemplo siguiente deseamos disponer de una pequeña base de datos almacenada dentro de un contenedor que ejecuta MySQL. En primer lugar, debemos saber que MySQL es una base de datos cliente/servidor y que dado que queremos ofrecer un conjunto de datos lo que haremos será usar una imagen Docker que ejecute el servidor MySQL con una base de datos como la siguiente:
+
+* Nombre de la base de datos: ventas.
+* Tabla:
+    ** Nombre: clientes.
+    ** Campo dni, de tipo varchar(10) y clave primaria.
+    ** Campo nombre, de tipo varchar(80).
+
+En la única tabla de esta base de datos almacenaremos estos dos clientes:
+
+* Cliente 1, dni '5111222C' y nombre 'Juan Ruiz'
+* Cliente 2, dni '5222333Z' y nombre 'Carmen Diaz'
+
+En primer lugar, necesitamos el SQL que meteremos dentro del servidor y que nos construye esta base de datos, llamaremos a este fichero, por ejemplo ``clientes.sql``:
+
+.. code-block:: sql
+
+    use ventas;
+    insert into clientes values ('5111222C', 'Juan Ruiz');
+    insert into clientes values ('5222333Z', 'Carmen Diaz');
+
+Como vemos estos datos se meten en una base de datos llamada "ventas". Sin embargo la base de datos, el usuario y la clave los indicaremos en el momento de la creación del contenedor.
+
+Ahora creamos un fichero ``Dockerfile`` donde indicamos que usaremos MySQL, indicaremos como se llamará esta base de datos e indicaremos que nuestro script SQL debe ejecutarse al comienzo.
+
+.. code-block:: ruby
+
+    FROM mysql
+    ENV MYSQL_DATABASE ventas
+    COPY clientes.sql /docker-entrypoint-initdb.d/
+
+Con esto ya podemos preparar nuestra propia imagen que sirva nuestros datos. Podemos construirla con ```sudo docker build -t bdempresaacme .``.
+
+Si ahora ejecutamos ``sudo docker images`` podremos ver nuestra imagen. Una vez hecho esto ya podemos lanzar nuestro propio servicio de datos con ``sudo docker run -e MYSQL_ROOT_PASSWORD=clave1234 -e MYSQL_USER=admin -e MYSQL_PASSWORD=1234``.
+
+El comando anterior lanza el servidor de base de datos accesible solo en nuestro equipo (no hemos expuesto puertos ni nada por el estilo) y si queremos podemos consultar estos datos averiguando la ip de nuestro contenedor y usando un cliente como ``mysql -u admin -h 172.17.0.2 -p``. Se nos preguntará la clave del usuario "admin" (hemos puesto arriba "1234") y podremos usarla.
+
+
+
+
 
 Conexiones de red en Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
