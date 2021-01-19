@@ -37,7 +37,7 @@
     
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
-    <link rel="next" title="Legislación y normas sobre seguridad" href="../tema_lopd/tema_lopd.html" />
+    <link rel="next" title="Instalación y configuración de servidores proxy" href="../tema_proxys/tema_proxys.html" />
     <link rel="prev" title="Instalación y configuración de cortafuegos" href="../tema_cortafuegos/tema_cortafuegos.html" /> 
 </head>
 
@@ -104,9 +104,19 @@
 <li class="toctree-l2"><a class="reference internal" href="#analisis-de-configuraciones-de-alta-disponibilidad">Análisis de configuraciones de alta disponibilidad</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hardware-duplicado">Hardware duplicado</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#virtualizacion">Virtualización</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#contenedores">Contenedores</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#usando-docker">Usando Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#imagenes-y-procesos-docker">Imágenes y procesos Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gestion-de-contenedores">Gestión de contenedores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#la-consola-y-los-contenedores">La consola y los contenedores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gestion-de-imagenes">Gestión de imágenes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instalando-docker">Instalando Docker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#un-ejemplo-simple-de-docker">Un ejemplo simple de Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#un-ejemplo-mas-avanzado-de-docker-usando-mysql">Un ejemplo más avanzado de Docker usando MySQL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#conexiones-de-red-en-docker">Conexiones de red en Docker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creando-nuestra-propia-red-en-docker">Creando nuestra propia red en Docker</a></li>
 </ul>
@@ -125,9 +135,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#solucion-al-ejercicio-de-alojar-una-base-de-datos-en-docker">Solución al ejercicio de alojar una base de datos en Docker</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
 </ul>
 
             
@@ -361,6 +371,9 @@
 <p>La mayor ventaja es que ahorramos mucho. Podemos tener un solo servidor de gama alta ejecutando dicha máquina virtual. Si este equipo falla, podemos mover la máquina virtual a otro ordenador (aunque sea un poco menos potente) que permita cubrir las necesidades hasta que reparemos/sustituyamos el otro equipo.</p>
 <p>El inconveniente es que en realidad estamos «ejecutando un sistema operativo dentro de otro sistema operativo» con la enorme pérdida de rendimiento que esto supone</p>
 </div>
+</div>
+<div class="section" id="docker">
+<h2>Docker<a class="headerlink" href="#docker" title="Enlazar permanentemente con este título">¶</a></h2>
 <div class="section" id="contenedores">
 <h3>Contenedores<a class="headerlink" href="#contenedores" title="Enlazar permanentemente con este título">¶</a></h3>
 <p>Los contenedores son un software del sistema operativo capaz de «encerrar y aislar otros programas o ficheros», consiguiendo que la ejecución de los mismos sea muy segura pero sin necesitar otro sistema operativo. Además los contenedores son programables mediante scripts lo que nos facilita mucho la tarea de desplegar servicios sin necesidad de perder rendimiento. La comparación entre arquitecturas es la siguiente (imagen tomada de la web de Docker)</p>
@@ -369,8 +382,62 @@
 <p class="caption"><span class="caption-text">Comparativa entre arquitectura de virtualización y contenedores</span><a class="headerlink" href="#id3" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 </div>
-<div class="section" id="usando-docker">
-<h3>Usando Docker<a class="headerlink" href="#usando-docker" title="Enlazar permanentemente con este título">¶</a></h3>
+</div>
+<div class="section" id="imagenes-y-procesos-docker">
+<h2>Imágenes y procesos Docker<a class="headerlink" href="#imagenes-y-procesos-docker" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En primer lugar hay que distinguir entre imágenes y contenedores.</p>
+<ul class="simple">
+<li><p>Una «imagen» contiene lo necesario para ejecutar un programa o servicio.</p></li>
+<li><p>Un contenedor es una «imagen en marcha», como un proceso, y es la ejecución de una o más imágenes.</p></li>
+</ul>
+<p>Así, si por ejemplo tenemos una imagen que contenga, por ejemplo, el servidor web Apache podríamos lanzar muchísimas ejecuciones de esa imagen. Una vez que descargamos una imagen, dicha imagen se queda en el catálogo de Docker. Como puede verse, el concepto de «imagen» es muy similar al de «boxes» de Vagrant.</p>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/ImagenesDocker.png"><img alt="Imágenes y procesos Docker" src="../_images/ImagenesDocker.png" style="width: 514.5px; height: 249.2px;" /></a>
+<p class="caption"><span class="caption-text">Imágenes y procesos Docker</span><a class="headerlink" href="#id4" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<div class="section" id="gestion-de-contenedores">
+<h3>Gestión de contenedores<a class="headerlink" href="#gestion-de-contenedores" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">ps</span></code> : permite ver qué contenedores están activos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">ps</span> <span class="pre">-a</span></code> : permite ver qué contenedores existen, estén activos o inactivos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">stop</span> <span class="pre">&lt;identificador|nombre&gt;</span></code> : permite detener la ejecución de un programa en un contenedor. Se puede usar el identificador numérico asignado por Docker o el nombre que hayamos dado al contenedor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">start</span> <span class="pre">&lt;identificador|nombre&gt;</span></code> : inicia un contenedor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">restart</span> <span class="pre">&lt;identificador|nombre&gt;</span></code> : se asegura de detener primero el contenedor y despues arranca el contenedor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">create</span> <span class="pre">&lt;nombredeimagen&gt;</span></code> : hace varias cosas a la vez:</p>
+<blockquote>
+<div><p>** Descarga la imagen en caso de que no esté en el repositorio local.
+** Crea el contenedor
+** Arranca su ejecución.</p>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="la-consola-y-los-contenedores">
+<h3>La consola y los contenedores<a class="headerlink" href="#la-consola-y-los-contenedores" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Antes de examinar como funcionan las imágenes es importante comprender como funciona la E/S por consola. Nuestro sistema operativo tiene un <em>shell</em> (en Linux por defecto suele ser <code class="docutils literal notranslate"><span class="pre">bash</span></code>) pero ese <em>shell</em> <strong>no tiene absolutamente nada que ver con lo que hay dentro del contenedor</strong> . Si por ejemplo alguien mete un proceso que escriba simplemente «hola mundo» dentro de un contenedor y ejecutamos ese contenedor veremos la cadena, pero una vez impresa <strong>el contenedor se detiene</strong>.</p>
+<ol class="arabic simple">
+<li><p>Probemos a ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">dockerinaction/hello_world</span></code> . Veremos el mensaje «hello world».</p></li>
+<li><p>Si volvemos a iniciar el contenedor (<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">start</span> <span class="pre">&lt;id&gt;</span></code> ) veremos que <strong>no aparece nada</strong>. Nuestra salida (lo que vemos en pantalla) no está conectada con la salida del contenedor.</p></li>
+<li><p>Para que un contenedor conecte su salida con nuestra pantalla necesitamos la opción <code class="docutils literal notranslate"><span class="pre">--attach</span></code> o <code class="docutils literal notranslate"><span class="pre">-a</span></code> de esta manera <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">start</span> <span class="pre">-a</span> <span class="pre">&lt;id&gt;</span></code></p></li>
+<li><p>De la misma manera, si queremos que el contenedor acepte entrada desde nuestro teclado deberemos usar <code class="docutils literal notranslate"><span class="pre">--interactive</span></code> o <code class="docutils literal notranslate"><span class="pre">-i</span></code> como por ejemplo <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">start</span> <span class="pre">-a</span> <span class="pre">-i</span> <span class="pre">&lt;id&gt;</span></code></p></li>
+</ol>
+<p>La pregunta lógica es <strong>¿por qué docker run sí muestra cosas en la consola pero docker start no lo hace</strong> . La respuesta es que <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span></code> (que sabemos que equivale a ejecutar create+start) vincula por defecto la entrada y salida estándar del contenedor con nuestra consola y teclado. Sin embargo, <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">start</span></code> no hace nada de eso por defecto</p>
+</div>
+<div class="section" id="gestion-de-imagenes">
+<h3>Gestión de imágenes<a class="headerlink" href="#gestion-de-imagenes" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Algunas operaciones básicas son estas:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">images</span></code> : permite ver las imágenes que tenemos en nuestro repositorio local.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">&lt;nombreimagen&gt;</span></code> : permite descargar una imagen del registro de Docker, por ejemplo <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">mysql</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">rmi</span> <span class="pre">&lt;nombreimagen&gt;</span></code> : elimina una imagen de nuestro repositorio local.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>No se puede borrar una imagen de nuestro registro si algún contenedor la está usando. <code class="docutils literal notranslate"><span class="pre">Ni</span> <span class="pre">siquiera</span> <span class="pre">aunque</span> <span class="pre">el</span> <span class="pre">contenedor</span> <span class="pre">esté</span> <span class="pre">detenido.</span></code></p>
+</div>
+</div>
+<div class="section" id="instalando-docker">
+<h3>Instalando Docker<a class="headerlink" href="#instalando-docker" title="Enlazar permanentemente con este título">¶</a></h3>
 <p>Docker puede instalarse en Linux añadiendo sus repositorios a la lista de repositorios de nuestro sistema, podemos usar estos comandos.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get remove docker docker-engine docker.io containerd runc
 sudo apt-get update
@@ -381,7 +448,7 @@ sudo apt-get update
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 </pre></div>
 </div>
-<p>Docker incluye un repositorio con imágenes de muchos servicios listos para descargar y ejecutarse simplemente usando scripts. Por ejemplo, ejecutemos un programa simple que se limita a saludar en pantalla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">dockerinaction/hello_world</span></code> (Se dice que <code class="docutils literal notranslate"><span class="pre">dockerinaction</span></code> es un «espacio de nombres», en concreto es del autor de un libro llamado precisamente «Docker in action»).</p>
+<p>Docker incluye un repositorio (que en Docker se llama registro) con imágenes de muchos servicios listos para descargar y ejecutarse simplemente usando scripts. Por ejemplo, ejecutemos un programa simple que se limita a saludar en pantalla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">dockerinaction/hello_world</span></code> (Se dice que <code class="docutils literal notranslate"><span class="pre">dockerinaction</span></code> es un «espacio de nombres», en concreto es del autor de un libro llamado precisamente «Docker in action»).</p>
 <p>El programa «se ha ejecutado dentro de un contenedor». Despues ha terminado y ha salido. Como programa es bastante simple, sin embargo, podemos ejecutar un Apache dentro de un contenedor con algo como esto (cuidado, si ya se tiene instalado Apache en Ubuntu esta ejecución fallará, se debe desinstalar primero). Si ejecutamos <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">httpd</span></code> veremos como Docker descarga e «instala una imagen de Apache».</p>
 <p>En este último ejemplo no hemos puesto espacio de nombres, así que Docker asume que se debe buscar en los «repositorios oficiales de imágenes». Una vez ejecutado <strong>Apache se queda en ejecución y se «apodera» de la consola</strong> . Esto es normal, así que si queremos que el servidor Web se vaya a un segundo plano deberemos cerrar el programa (Ctrl-C) y ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--detach</span> <span class="pre">httpd</span></code> o <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-d</span> <span class="pre">httpd</span></code> .</p>
 <p>Podemos ver que Apache se está ejecutando en un contenedor con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">ps</span></code> y «apagar» el contenedor con   <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">stop</span> <span class="pre">&lt;identificador&gt;</span></code> o incluso «terminarlo» <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">kill</span> <span class="pre">&lt;identificador&gt;</span></code> (no hace falta escribir todo el ID del container, basta con escribir las primeras 31,902.19letras).</p>
@@ -404,6 +471,41 @@ ENTRYPOINT <span class="o">[</span><span class="s2">&quot;apachectl&quot;</span>
 <li><p>Cuando queramos, podemos detener el contenedor y borrar con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">stop</span> <span class="pre">Servidor1;</span> <span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">rm</span> <span class="pre">Servidor1</span></code></p></li>
 </ul>
 <p>Este ejemplo tan simple reconstruye un servidor Apache con el HTML que necesitemos.</p>
+</div>
+<div class="section" id="un-ejemplo-mas-avanzado-de-docker-usando-mysql">
+<h3>Un ejemplo más avanzado de Docker usando MySQL<a class="headerlink" href="#un-ejemplo-mas-avanzado-de-docker-usando-mysql" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>En el ejemplo siguiente deseamos disponer de una pequeña base de datos almacenada dentro de un contenedor que ejecuta MySQL. En primer lugar, debemos saber que MySQL es una base de datos cliente/servidor y que dado que queremos ofrecer un conjunto de datos lo que haremos será usar una imagen Docker que ejecute el servidor MySQL con una base de datos como la siguiente:</p>
+<ul class="simple">
+<li><p>Nombre de la base de datos: ventas.</p></li>
+<li><dl class="simple">
+<dt>Tabla:</dt><dd><p>** Nombre: clientes.
+** Campo dni, de tipo varchar(10) y clave primaria.
+** Campo nombre, de tipo varchar(80).</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>En la única tabla de esta base de datos almacenaremos estos dos clientes:</p>
+<ul class="simple">
+<li><p>Cliente 1, dni “5111222C” y nombre “Juan Ruiz”</p></li>
+<li><p>Cliente 2, dni “5222333Z” y nombre “Carmen Diaz”</p></li>
+</ul>
+<p>En primer lugar, necesitamos el SQL que meteremos dentro del servidor y que nos construye esta base de datos, llamaremos a este fichero, por ejemplo <code class="docutils literal notranslate"><span class="pre">clientes.sql</span></code>:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">use</span> <span class="n">ventas</span><span class="p">;</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">clientes</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;5111222C&#39;</span><span class="p">,</span> <span class="s1">&#39;Juan Ruiz&#39;</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">clientes</span> <span class="k">values</span> <span class="p">(</span><span class="s1">&#39;5222333Z&#39;</span><span class="p">,</span> <span class="s1">&#39;Carmen Diaz&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Como vemos estos datos se meten en una base de datos llamada «ventas». Sin embargo la base de datos, el usuario y la clave los indicaremos en el momento de la creación del contenedor.</p>
+<p>Ahora creamos un fichero <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> donde indicamos que usaremos MySQL, indicaremos como se llamará esta base de datos e indicaremos que nuestro script SQL debe ejecutarse al comienzo.</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">FROM</span> <span class="n">mysql</span>
+<span class="no">ENV</span> <span class="no">MYSQL_DATABASE</span> <span class="n">ventas</span>
+<span class="no">COPY</span> <span class="n">clientes</span><span class="o">.</span><span class="n">sql</span> <span class="sr">/docker-entrypoint-initdb.d/</span>
+</pre></div>
+</div>
+<p>Con esto ya podemos preparar nuestra propia imagen que sirva nuestros datos. Podemos construirla con <code class="docutils literal notranslate"><span class="pre">`sudo</span> <span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">bdempresaacme</span> <span class="pre">.</span></code>.</p>
+<p>Si ahora ejecutamos <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">images</span></code> podremos ver nuestra imagen. Una vez hecho esto ya podemos lanzar nuestro propio servicio de datos con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-e</span> <span class="pre">MYSQL_ROOT_PASSWORD=clave1234</span> <span class="pre">-e</span> <span class="pre">MYSQL_USER=admin</span> <span class="pre">-e</span> <span class="pre">MYSQL_PASSWORD=1234</span></code>.</p>
+<p>El comando anterior lanza el servidor de base de datos accesible solo en nuestro equipo (no hemos expuesto puertos ni nada por el estilo) y si queremos podemos consultar estos datos averiguando la ip de nuestro contenedor y usando un cliente como <code class="docutils literal notranslate"><span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">admin</span> <span class="pre">-h</span> <span class="pre">172.17.0.2</span> <span class="pre">-p</span></code>. Se nos preguntará la clave del usuario «admin» (hemos puesto arriba «1234») y podremos usarla.</p>
 </div>
 <div class="section" id="conexiones-de-red-en-docker">
 <h3>Conexiones de red en Docker<a class="headerlink" href="#conexiones-de-red-en-docker" title="Enlazar permanentemente con este título">¶</a></h3>
@@ -595,7 +697,7 @@ ENTRYPOINT <span class="o">[</span><span class="s2">&quot;apachectl&quot;</span>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../tema_lopd/tema_lopd.html" class="btn btn-neutral float-right" title="Legislación y normas sobre seguridad" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../tema_proxys/tema_proxys.html" class="btn btn-neutral float-right" title="Instalación y configuración de servidores proxy" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../tema_cortafuegos/tema_cortafuegos.html" class="btn btn-neutral float-left" title="Instalación y configuración de cortafuegos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Anterior</a>

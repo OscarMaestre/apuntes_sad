@@ -37,7 +37,8 @@
     
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
-    <link rel="prev" title="Implantación de técnicas de acceso remoto. Seguridad perimetral" href="../tema_acceso_remoto/tema_acceso_remoto.html" /> 
+    <link rel="next" title="Legislación y normas sobre seguridad" href="../tema_lopd/tema_lopd.html" />
+    <link rel="prev" title="Implantación de soluciones de alta disponibilidad" href="../tema_sad/tema_sad.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,12 +89,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html">Implantación de soluciones de alta disponibilidad</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html#ejercicio-recuperando-una-web-con-vagrant">Ejercicio: recuperando una web con Vagrant</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Instalación y configuración de servidores  proxy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#tipos-de-proxy-caracteristicas-y-funciones">Tipos de  proxy . Características y funciones.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#instalacion-de-servidores-proxy">Instalación de servidores  proxy .</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#instalacion-y-configuracion-de-clientes-proxy">Instalación y configuración de clientes  proxy .</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#material-para-la-unidad">Material para la unidad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tipos-de-proxy-caracteristicas-y-funciones">Tipos de  proxy . Características y funciones.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tipos-de-proxy-en-funcion-de-la-arquitectura-de-red">Tipos de proxy en función de la arquitectura de red.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tipos-de-proxy-en-funcion-de-la-aplicacion">Tipos de proxy en función de la aplicación</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion-y-configuracion-de-clientes-proxy">Instalación y configuración de clientes proxy.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion-de-servidores-proxy">Instalación de servidores proxy.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ficheros-de-interes">Ficheros de interés</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iniciando-y-parando-el-servicio">Iniciando y parando el servicio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acls-en-squid-acls-de-origen">ACLs en Squid. ACLS de origen.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acls-en-squid-acls-de-destino">ACLs en Squid. ACLS de destino.</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#configuracion-del-almacenamiento-en-la-cache-de-un-proxy">Configuración del almacenamiento en la caché de un  proxy .</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuracion-de-filtros">Configuración de filtros.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#metodos-de-autenticacion-en-un-proxy">Métodos de autenticación en un  proxy .</a></li>
@@ -102,6 +112,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#pruebas-de-funcionamiento-herramientas-graficas">Pruebas de funcionamiento. Herramientas gráficas.</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
 </ul>
 
             
@@ -169,14 +181,162 @@
             
   <div class="section" id="instalacion-y-configuracion-de-servidores-proxy">
 <h1>Instalación y configuración de servidores  proxy<a class="headerlink" href="#instalacion-y-configuracion-de-servidores-proxy" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="material-para-la-unidad">
+<h2>Material para la unidad<a class="headerlink" href="#material-para-la-unidad" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Para esta unidad vas a necesitar dos máquinas virtuales.</p>
+<ul class="simple">
+<li><p>Una de las máquinas virtuales ejecutará Ubuntu 20 para escritorio y tendrá una tarjeta de red en modo puente. Si quieres puedes construir una con rapidez yendo a un directorio vacío y ejecutando los comandos <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">oscarmaestre/ubuntu20desktop</span></code> y despues <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">up</span></code>. No olvides añadir una segunda tarjeta en modo puente.</p></li>
+<li><p>La otra máquina virtual usará Ubuntu Server 20. Puedes construir una con <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">oscarmaestre/ubuntuserver20</span></code> y con <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">up</span></code>. No olvides añadir una segunda tarjeta en modo puente.</p></li>
+</ul>
+<p>Habrá que configurar la IP en ambos casos y recuerda que es <strong>imprescindible</strong> que ambas máquinas puedan hacerse ping.</p>
+</div>
 <div class="section" id="tipos-de-proxy-caracteristicas-y-funciones">
 <h2>Tipos de  proxy . Características y funciones.<a class="headerlink" href="#tipos-de-proxy-caracteristicas-y-funciones" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Antes de explicar los tipos de proxy es importante entender el concepto: básicamente, se puede decir que un proxy es un software que actúa como intermediario entre las peticiones de un cliente y un servidor. Si examinamos la figura siguiente veremos que ahora no hay solo una petición y una respuesta,sino que hay varios pasos más.</p>
+<div class="figure align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/comportamiento_proxy.png"><img alt="Ejemplos de permisos" src="../_images/comportamiento_proxy.png" style="width: 331.5px; height: 187.0px;" /></a>
+<p class="caption"><span class="caption-text">Comportamiento de un proxy</span><a class="headerlink" href="#id1" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
-<div class="section" id="instalacion-de-servidores-proxy">
-<h2>Instalación de servidores  proxy .<a class="headerlink" href="#instalacion-de-servidores-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Un cliente solicita, por ejemplo, una web como <a class="reference external" href="http://acme.com">http://acme.com</a></p></li>
+<li><p>La petición pasa primero por el proxy, que la intercepta, la analiza y puede tomar decisiones sobre si permitirla o no. Si está permitida <strong>es el proxy quien realiza la petición en el nombre del usuario</strong></p></li>
+<li><p>El servidor contesta a la petición y dicha respuesta llega al proxy, quien a menudo conservará la respuesta en caché por si en el futuro alguien necesita la misma página web.</p></li>
+<li><p>La respuesta finalmente llega al cliente.</p></li>
+</ol>
+<p>Una ventaja añadida de este caso del proxy es que si en el futuro otra máquina de la red necesita la misma web obtendrá la misma página pero a más velocidad, al no ser necesario hacer una conexión extra al exterior.</p>
+<p>Una vez analizado el concepto de proxy se pueden encontrar distintos tipos de proxy</p>
+<div class="section" id="tipos-de-proxy-en-funcion-de-la-arquitectura-de-red">
+<h3>Tipos de proxy en función de la arquitectura de red.<a class="headerlink" href="#tipos-de-proxy-en-funcion-de-la-arquitectura-de-red" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Podemos distinguir entre proxy directo (o simplemente proxy), proxy abierto y proxy inverso.</p>
+<p>El término proxy suele reservarse para esta arquitectura de red. En este caso, el proxy está dentro de nuestra red y nosotros como administradores tenemos el control y podemos tomar todas las decisiones que deseemos.</p>
+<div class="figure align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/proxy.png"><img alt="Ejemplos de permisos" src="../_images/proxy.png" style="width: 296.79999999999995px; height: 129.5px;" /></a>
+<p class="caption"><span class="caption-text">Proxy (en su configuración más típica)</span><a class="headerlink" href="#id2" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>En un proxy abierto el proxy no está bajo nuestro control, sino que está en alguna red intermedia y suele ofrecer servicios como ocultación de ip, privacidad y similares. No tenemos garantías de que realmente el proxy no registre nuestra actividad.</p>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/proxy_abierto.png"><img alt="Ejemplos de permisos" src="../_images/proxy_abierto.png" style="width: 324.79999999999995px; height: 110.6px;" /></a>
+<p class="caption"><span class="caption-text">Proxy abierto</span><a class="headerlink" href="#id3" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Un proxy inverso es aquel que se sitúa dentro de la red del servidor de manera que actúa como caché, distribuidor de carga o simplemente como respaldo.</p>
+<div class="figure align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de permisos" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" /></a>
+<p class="caption"><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id4" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+</div>
+<div class="section" id="tipos-de-proxy-en-funcion-de-la-aplicacion">
+<h3>Tipos de proxy en función de la aplicación<a class="headerlink" href="#tipos-de-proxy-en-funcion-de-la-aplicacion" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Aunque mucho menos conocidos que los proxies web existen proxys para otras aplicaciones como FTP e IRC. En este módulo no se tratan estos programas aunque su funcionamiento en esencia es muy similar a los proxies web.</p>
+<p>Un tipo de proxy muy habitual fuera de HTTP es el proxy SOCKS. Estos proxies <em>trabajan a nivel de TCP</em> y no en la capa de aplicación. La versión 5 de SOCKS (llamada SOCKS5) permite incluso autenticación a nivel de TCP.</p>
+<p>ICAP es otro protocolo para proxies que permite trabajar de varias maneras:</p>
+<ul class="simple">
+<li><p>Modo solicitud: el proxy redirige la petición y si los filtros lo permiten redirige la petición hacia el servidor. Esto lo hace útil para <strong>filtra conexiones</strong></p></li>
+<li><p>Modo de respuesta: en este modo la petición se redirige y cuando llega la respuesta podemos procesarla con filtros y decidir qué hacer con el contenido que llega. Esto permite <strong>filtrar contenidos</strong></p></li>
+</ul>
+<p>En el resto del tema veremos como configurar SQUID, un proxy muy sofisticado con capacidad de procesar tráfico HTTP y FTP y capaz de actuar tanto en modo solicitud como en modo respuesta.</p>
+</div>
 </div>
 <div class="section" id="instalacion-y-configuracion-de-clientes-proxy">
-<h2>Instalación y configuración de clientes  proxy .<a class="headerlink" href="#instalacion-y-configuracion-de-clientes-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
+<h2>Instalación y configuración de clientes proxy.<a class="headerlink" href="#instalacion-y-configuracion-de-clientes-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Configurar un cliente para que utilice un proxy es bastante sencillo. En la imagen siguiente se muestra una captura de Firefox en el que se indica que la conexión debe hacerse a través de un proxy. Como puede apreciarse basta con rellenar la IP del servidor proxy y el puerto en el que escucha (Squid suele hacerlo en el 3128).</p>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="../_images/Proxy_en_firefox.jpg"><img alt="Configuración de proxies en Firefox" src="../_images/Proxy_en_firefox.jpg" style="width: 453.5px; height: 290.0px;" /></a>
+<p class="caption"><span class="caption-text">Configuración de proxies en Firefox</span><a class="headerlink" href="#id5" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Sin embargo, aunque hayamos instalado Squid en la segunda máquina virtual veremos que el Firefox de la máquina cliente no funciona y muestra un mensaje como «El servidor proxy está rechazando las conexiones entrantes». Aún se tiene que configurar el servidor, cosa que haremos en los pasos siguientes.</p>
+</div>
+<div class="section" id="instalacion-de-servidores-proxy">
+<h2>Instalación de servidores proxy.<a class="headerlink" href="#instalacion-de-servidores-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Squid permite descargarse el código fuente y recompilarlo usando la secuencia típica de comandos en GNU/Linux:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">configure</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code></p></li>
+</ol>
+<p>Ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en clase usaremos el comando típico <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squid</span></code>, que instalará el programa y todas sus dependencias.</p>
+<div class="section" id="ficheros-de-interes">
+<h3>Ficheros de interés<a class="headerlink" href="#ficheros-de-interes" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li><p>El fichero <code class="docutils literal notranslate"><span class="pre">/etc/squid/squid.conf</span></code> contiene la configuración del proxy, se hablará detenidamente de él en seguida. Este fichero acepta procesar otros ficheros de configuración que estén en el directorio <code class="docutils literal notranslate"><span class="pre">/etc/squid/conf.d</span></code>. Por tanto, <strong>no es necesario meterlo todo siempre dentro del mismo fichero.</strong> Esto permite trabajar más organizadamente, ya que como podrá apreciarse pronto, el fichero <code class="docutils literal notranslate"><span class="pre">squid.conf</span></code> es muy grande y localizar ciertos parámetros puede ser difícil.</p></li>
+<li><p>El directorio <code class="docutils literal notranslate"><span class="pre">/var/spool/squid</span></code> contiene los directorios que actuarán como caché de Squid.</p></li>
+</ul>
+</div>
+<div class="section" id="iniciando-y-parando-el-servicio">
+<h3>Iniciando y parando el servicio<a class="headerlink" href="#iniciando-y-parando-el-servicio" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li><p>Se puede arrancar Squid usando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">start</span></code>, detenerlo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">stop</span></code> y hacer un reinicio del servicio con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">restart</span></code>. Sin embargo, antes de arrancar puede ser útil ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">parse</span></code>, que analizará el fichero de configuración y nos dirá si hay algún fallo en alguna línea.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>Squid siempre muestra mucha información durante el análisis, así que puede ser interesante ejecutar algo como <code class="docutils literal notranslate"><span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">parse</span> <span class="pre">2&gt;</span> <span class="pre">errores.txt</span></code> para poder leer los resultados tranquilamente con algo como <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">errores.txt</span></code>. Si se prueba a introducir un error veremos como el fichero muestra no solo el error, sino también todo lo que funciona (lo que complica el localizar el error)</p>
+</div>
+<ul class="simple">
+<li><p>Si hacemos un cambio en la configuración y deseamos que Squid tome la nueva configuración <em>sin reiniciar el servicio</em> se puede usar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">reconfigure</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="acls-en-squid-acls-de-origen">
+<h3>ACLs en Squid. ACLS de origen.<a class="headerlink" href="#acls-en-squid-acls-de-origen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Squid <em>no permite su uso a cualquier cliente.</em> Puede usar listas de control de acceso para determinar exactamente lo que se quiere hacer:</p>
+<ul class="simple">
+<li><p>Se puede restringir el uso a solo ciertas IPs origen.</p></li>
+<li><p>Se puede restrigir el acceso a determinados sitios web destino.</p></li>
+<li><p>Se pueden combinar ambos mecanismos para permitir el acceso solo a ciertas web y solo por parte de ciertos usuarios de la empresa.</p></li>
+</ul>
+<p>Por defecto <strong>Squid no permite a nadie la conexión.</strong> Así que es necesario crear una ACL donde indiquemos una lista de máquinas y despues tendremos que dar permiso a esa lista de máquinas.</p>
+<p>Como hemos dicho antes, no es necesario meter todo en el fichero <code class="docutils literal notranslate"><span class="pre">/etc/squid.conf</span></code>, así que vamos a definir nuestro propio acceso en un fichero como <code class="docutils literal notranslate"><span class="pre">/etc/squid/conf.d/accesopropio.acl</span></code>. Supongamos que la red de nuestra empresa tiene el prefijo 192.168.1.0/24…</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl red_empresa src <span class="m">192</span>.168.1.0/24
+http_access allow red_empresa
+</pre></div>
+</div>
+<p>Si ponemos esto en el fichero <code class="docutils literal notranslate"><span class="pre">/etc/squid/conf.d/accesopropio.acl</span></code> y ejecutamos <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">parse</span></code> podremos ver si hay algún error. Si lo hay lo corregiremos y si no podremos ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">restart</span></code> para que el proxy empiece a funcionar. Si nos vamos a la máquina cliente y probamos alguna URL veremos que ahora sí estamos navegando a través del proxy. Si se desea comprobar si realmente navegamos a través del proxy podemos detener el proxy en el servidor con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">stop</span></code> y ver que Firefox deja de funcionar. Por supuesto, si reiniciamos el proxy Firefox volverá a poder navegar con normalidad.</p>
+</div>
+<div class="section" id="acls-en-squid-acls-de-destino">
+<h3>ACLs en Squid. ACLS de destino.<a class="headerlink" href="#acls-en-squid-acls-de-destino" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Una vez que hemos visto como procesar las IPs de origen que pueden navegar nos interesan otros parámetros de Squid como las listas <code class="docutils literal notranslate"><span class="pre">dstdomain.</span></code> Estas listas permiten tomar decisiones sobre dominios de destino por los cuales quieren navegar los clientes (y normalmente querremos saberlo para denegarles el permiso). Supongamos que hay un dominio llamado <code class="docutils literal notranslate"><span class="pre">http://marca.com</span></code> al cual deseamos prohibir el acceso. Podemos poner un fichero como <code class="docutils literal notranslate"><span class="pre">/etc/squid/conf.d/accesopropio.acl</span></code> en el que escribamos</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl prohibidos dstdomain .marca.com
+http_access deny prohibidos
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>El orden de las ACLS es <strong>importantísimo</strong>. Si en el apartado anterior habíamos dado permiso a ciertos usuarios ese «permiso para salir» ya fue concedido así que intentar denegar no funcionará.</p>
+</div>
+<p>Este fichero <strong>no deniega el acceso al periódico</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl red_empresa src <span class="m">192</span>.168.1.0/24
+http_access allow red_empresa
+acl prohibidos dstdomain .marca.com
+http_access deny prohibidos
+</pre></div>
+</div>
+<p>Este fichero <strong>sí deniega el acceso al periódico</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl prohibidos dstdomain .marca.com
+http_access deny prohibidos
+acl red_empresa src <span class="m">192</span>.168.1.0/24
+http_access allow red_empresa
+</pre></div>
+</div>
+<p>En el caso de las restricciones a sitios web es frecuente que haya varios, así que un fichero podría ser algo así:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl prohibidos dstdomain .marca.com .sport.es
+http_access deny prohibidos
+acl red_empresa src <span class="m">192</span>.168.1.0/24
+http_access allow red_empresa
+</pre></div>
+</div>
+<p>Pero es habitual tener muchos nombres de dominio. Para simplificar esto, Squid permite cargar datos desde ficheros externos usando las comillas. Por ejemplo, supongamos que queremos tener todos los dominios prohibidos en un fichero llamado por ejemplo «/etc/squid/sitios_prohibidos.txt». Podemos usar este fichero:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl prohibidos dstdomain <span class="s2">&quot;/etc/squid/sitios_prohibidos.txt&quot;</span>
+http_access deny prohibidos
+acl red_empresa src <span class="m">192</span>.168.1.0/24
+http_access allow red_empresa
+</pre></div>
+</div>
+<p>Y por supuesto poner en el fichero <code class="docutils literal notranslate"><span class="pre">/etc/sitios_prohibidos.txt</span></code> una lista de dominios no permitidos, como:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.marca.com
+.sport.es
+.mundodeportivo.com
+...
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="configuracion-del-almacenamiento-en-la-cache-de-un-proxy">
 <h2>Configuración del almacenamiento en la caché de un  proxy .<a class="headerlink" href="#configuracion-del-almacenamiento-en-la-cache-de-un-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -206,8 +366,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../tema_lopd/tema_lopd.html" class="btn btn-neutral float-right" title="Legislación y normas sobre seguridad" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="../tema_acceso_remoto/tema_acceso_remoto.html" class="btn btn-neutral float-left" title="Implantación de técnicas de acceso remoto. Seguridad perimetral" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Anterior</a>
+      
+        <a href="../tema_sad/tema_sad.html" class="btn btn-neutral float-left" title="Implantación de soluciones de alta disponibilidad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Anterior</a>
       
     </div>
   
