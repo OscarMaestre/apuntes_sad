@@ -211,8 +211,65 @@ Y por supuesto poner en el fichero ``/etc/sitios_prohibidos.txt`` una lista de d
     .mundodeportivo.com
     ...
 
+En general, se pueden usar las comillas en todas las listas de acceso. Si Squid encuentra algo entre comillas, asumirá que es la ruta de un fichero y que debe tomar todas las líneas de dicho fichero.
 
-Configuración del almacenamiento en la caché de un  proxy .
+ACLs basadas en la URL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A veces no es suficiente con fabricar una lista de páginas web prohibidas porque simplemente puede haber demasiadas. En esos casos se pueden usar ACLs que examinan el nombre de dominio de la web y si dicho nombre se ajusta una regla entonces denegarlo.
+
+Por ejemplo, supongamos que hay una serie de páginas que se desea prohibir como ``http://violencia.com`` , ``http://violencia.net`` , ``http://masviolencia.com`` , ``http://todoviolencia.com`` , ``http://muchaviolencia.es`` , etc... Como vemos, la lista de páginas podría ser enorme. En ese caso, podemos usar una regla como esta:
+
+.. code-block:: bash
+
+    acl prohibicion_violencia url_regex violen
+    http_access deny prohibicion_violencia
+
+Así, todas página que tengan un nombre de dominio que incluya de alguna manera la cadena "violen" serán denegadas.
+
+ACLs basadas en la ruta
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si el sistema anterior no es suficiente se puede utilizar el análisis de las rutas. Por ejemplo, si examinamos una página como ``http://acme.com/violencia`` veremos que claramente contiene un término que deseamos prohibir. Para prohibir páginas Web en las que ocurra esto se pueden usar las ACLs basadas en ruta de esta manera:
+
+.. code-block:: bash
+
+    acl prohibicion_ruta_violencia urlpath_regex violen
+    http_access prohibicion_ruta_violencia deny
+
+.. WARNING::
+
+   Hoy en día cada vez más páginas, incluidos los buscadores usan cifrado en las conexiones. Eso significa que estos bloqueos podrían no funcionar ya que lo primero que hace el navegador es establecer una conexión cifrada (que Squid no puede descifrar) y despues solicitar la página concreta
+    
+ACLs basadas en el tipo de archivo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+En Internet hay una definición general de tipos de archivo llamada "tipos MIME" (Multimedia Internet Mail Extensions, se definieron para transportar archivos en el correo electrónico). Si lo que nos interesa en bloquear el acceso a ciertos tipos de contenido como vídeo o audio podemos bloquear usando el análisis del tipo de petición MIME al servidor de esta manera. En este caso bloqueamos los "webm" que es un tipo de vídeo muy utilizado, aunque no el único (de hecho YouTube ofrece diversos tipos):
+
+.. code-block:: bash
+
+    acl bloquear_video req_mime_type video/webm
+    http_access deny bloquear_video
+
+Métodos de autenticación en un  proxy .
+-----------------------------------------------------------------------------------------------
+Aparte de usar direcciones IP podemos hacer que un proxy exija a un usuario el proporcionar un usuario  y contraseña si desea navegar por Internet. Existen diversos como mecanismos como NTLM (que usar autenticación Windows) o LDAP (que usa un servidor LDAP). Dado que estamos usando Unix y que en este módulo no se menciona LDAP usaremos el mecanismo NCSA que usará un fichero de usuarios y claves externo gestionado por una herramienta externa, en concreto usaremos la herramienta ``httpasswd`` (si no la tenemos habrá que instalarla con ``sudo apt-get install -y apache2-utils`` 
+
+Una vez la tengamos instalada tenemos que decidir donde ubicar el fichero de credenciales, que por supuesto debe ser un lugar protegido de los usuarios normales. Elegiremos ``/etc/squid/credenciales`` y empezaremos insertando un usuario llamado "contabilidad" de esta manera: ``sudo htpasswd -c /etc/squid/credenciales contabilidad``. La herramienta nos pedirá que indiquemos la clave de este usuario.
+
+.. WARNING::
+   La opcion ``-c`` es para *crear el fichero, así que solo la usaremos una vez.
+
+A continuación crearemos por ejemplo otro usuario llamado "gerencia" con ``sudo htpasswd /etc/squid/credenciales gerencia`` . En este punto ya tenemos un fichero con dos usuarios. Puede mostrarse el contenido de este fichero con ``sudo cat /etc/squid/credenciales`` y veremos que aparecen los usuarios y su clave cifrada.
+
+Una vez hecho esto debemos configurar la autenticación de Squid usando estos parámetros:
+
+1. "program"
+2. "children"
+3. "realm"
+4. "credentialsttl"
+
+Configuración del almacenamiento en la caché de un proxy .
 -----------------------------------------------------------------------------------------------
 
 
@@ -220,8 +277,6 @@ Configuración de filtros.
 -----------------------------------------------------------------------------------------------
 
 
-Métodos de autenticación en un  proxy .
------------------------------------------------------------------------------------------------
 
 
 Proxys  inversos.
