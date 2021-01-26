@@ -150,6 +150,9 @@ Como hemos dicho antes, no es necesario meter todo en el fichero ``/etc/squid.co
 
 Si ponemos esto en el fichero ``/etc/squid/conf.d/accesopropio.acl`` y ejecutamos ``sudo squid -k parse`` podremos ver si hay algún error. Si lo hay lo corregiremos y si no podremos ejecutar ``sudo service squid restart`` para que el proxy empiece a funcionar. Si nos vamos a la máquina cliente y probamos alguna URL veremos que ahora sí estamos navegando a través del proxy. Si se desea comprobar si realmente navegamos a través del proxy podemos detener el proxy en el servidor con ``sudo service squid stop`` y ver que Firefox deja de funcionar. Por supuesto, si reiniciamos el proxy Firefox volverá a poder navegar con normalidad.
 
+Configuración de filtros.
+-----------------------------------------------------------------------------------------------
+
 ACLs en Squid. ACLS de destino.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -258,23 +261,69 @@ Aparte de usar direcciones IP podemos hacer que un proxy exija a un usuario el p
 Una vez la tengamos instalada tenemos que decidir donde ubicar el fichero de credenciales, que por supuesto debe ser un lugar protegido de los usuarios normales. Elegiremos ``/etc/squid/credenciales`` y empezaremos insertando un usuario llamado "contabilidad" de esta manera: ``sudo htpasswd -c /etc/squid/credenciales contabilidad``. La herramienta nos pedirá que indiquemos la clave de este usuario.
 
 .. WARNING::
-   La opcion ``-c`` es para *crear el fichero, así que solo la usaremos una vez.
+   La opcion ``-c`` es para *crear el fichero*, así que solo la usaremos una vez.
 
 A continuación crearemos por ejemplo otro usuario llamado "gerencia" con ``sudo htpasswd /etc/squid/credenciales gerencia`` . En este punto ya tenemos un fichero con dos usuarios. Puede mostrarse el contenido de este fichero con ``sudo cat /etc/squid/credenciales`` y veremos que aparecen los usuarios y su clave cifrada.
 
 Una vez hecho esto debemos configurar la autenticación de Squid usando estos parámetros:
 
-1. "program"
-2. "children"
-3. "realm"
-4. "credentialsttl"
+1. "program": se usa un módulo de Squid llamado ``ncsa_auth`` que debería estar dentro de ``/usr/lib/squid3`` probablemente con la ruta ``/usr/lib/squid3/basic_ncsa_auth`` . 
+2. "children": indica el número de módulos hijo que deben estar listos para atender peticiones de autenticación. Este valor dependerá de cuantas personas como máximo se vayan a conectar al proxy. Para nuestro ejemplo un valor de 10 será suficiente.
+3. "realm": un texto que aparecerá a los usuarios que inicien sesión.
+4. "credentialsttl": tiempo máximo que se almacena la sesión de alguien antes de volver a pedirle la clave.
+
+Así, si queremos crear una lista en la que estén los usuarios autenticados podríamos configurar y crear todo con algo como esto:
+
+.. code-block:: bash
+
+    #Esto indica que para un esquema de configuración de nivel básico
+    #usaremos el programa basic_ncsa_auth con el fichero de credenciales
+    #/etc/squid/credenciales
+    auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales
+
+    #Se deben poder autenticar hasta a 10 usuarios a la vez
+    auth_param basic children 10
+
+    #Texto que se envía a los usuarios que inicien sesión
+    auth_param basic realm Indique sus credenciales
+
+    auth_param basic credentialsttl 2 hours
+
+    #Esto fabrica una lista para indicar "usuarios que están autenticados".
+    acl autenticados proxy_auth REQUIRED
+
+    #Esto indica la lista de periodicos deportivos
+    acl deportes dstdomain .marca.com
+
+    #Y aqui está la clave, COMBINAR listas
+    #Se deniega el acceso al periodico a 
+    #aquellos usuarios que NO estén autenticados
+    http_access deny deportes !autenticados
 
 Configuración del almacenamiento en la caché de un proxy .
 -----------------------------------------------------------------------------------------------
+En general los valores por defecto de Squid suelen considerarse bastante apropiados, pero pueden modificarse algunos de ellos si se desea obtener más rendimiento.
+
+..code-block:: bash
+
+    cache_dir ufs /var/spool/squid 20000 64 1024
+
+Esta caché acepta hasta 20.000MB de datos organizándonos en 64 directorios de hasta 1024 subdirectorios cada uno
+
+.. code-block:: bash
+
+    cache_mem 16MB
+
+Indica que se deben tener preparados unos 16MB de RAM para los objetos populares en cache (páginas o archivos muy solicitados). 
+
+.. WARNING::
+
+   Hay que tener cuidado con cuanta memoria RAM consume Squid ya que si tenemos muy poca la caché empezará a desviar objetos a "swap" y el rendimiento bajará en picado. En general la ``cache_mem`` debe ser como un tercio de la RAM disponible y luego añadir unos 14MB por cada GB de caché en disco. Esto significa que si en nuestro ejemplo tenemos 20GB de caché en disco y una ``cache_mem`` de 16MB debemos asegurarnos de tener como minimo (16*3)+(20*14)=48+280=328MB como minimo de RAM.
+
+Squid rota los ficheros de caché automáticamente y borra los ficheros menos usados para dar cabida a los nuevos. Si de todas maneras se desea saber cuanto espacio está ocupando la cache puede usarse el comando ``du -h /var/spool/squid`` para ver cuanto espacio en disco ocupa la caché.
 
 
-Configuración de filtros.
------------------------------------------------------------------------------------------------
+
 
 
 
@@ -289,4 +338,4 @@ Proxys  encadenados.
 
 Pruebas de funcionamiento. Herramientas gráficas.
 -----------------------------------------------------------------------------------------------
-
+En Ubuntu es posible instalar un programa llamado ``squidclient`` que permite hacer consultas sencillas al servidor Squid y obtener muchas estadísticas sobre el uso de memoria, CPU y disco. Para instalarlo puede usarse ``sudo apt-get install squidclient`` y una vez instalado usar ``squidclient mgr:info`` para obtener los valores de uso.

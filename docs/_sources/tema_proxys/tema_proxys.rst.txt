@@ -150,6 +150,9 @@ Como hemos dicho antes, no es necesario meter todo en el fichero ``/etc/squid.co
 
 Si ponemos esto en el fichero ``/etc/squid/conf.d/accesopropio.acl`` y ejecutamos ``sudo squid -k parse`` podremos ver si hay algún error. Si lo hay lo corregiremos y si no podremos ejecutar ``sudo service squid restart`` para que el proxy empiece a funcionar. Si nos vamos a la máquina cliente y probamos alguna URL veremos que ahora sí estamos navegando a través del proxy. Si se desea comprobar si realmente navegamos a través del proxy podemos detener el proxy en el servidor con ``sudo service squid stop`` y ver que Firefox deja de funcionar. Por supuesto, si reiniciamos el proxy Firefox volverá a poder navegar con normalidad.
 
+Configuración de filtros.
+-----------------------------------------------------------------------------------------------
+
 ACLs en Squid. ACLS de destino.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -211,17 +214,118 @@ Y por supuesto poner en el fichero ``/etc/sitios_prohibidos.txt`` una lista de d
     .mundodeportivo.com
     ...
 
+En general, se pueden usar las comillas en todas las listas de acceso. Si Squid encuentra algo entre comillas, asumirá que es la ruta de un fichero y que debe tomar todas las líneas de dicho fichero.
 
-Configuración del almacenamiento en la caché de un  proxy .
------------------------------------------------------------------------------------------------
+ACLs basadas en la URL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+A veces no es suficiente con fabricar una lista de páginas web prohibidas porque simplemente puede haber demasiadas. En esos casos se pueden usar ACLs que examinan el nombre de dominio de la web y si dicho nombre se ajusta una regla entonces denegarlo.
 
-Configuración de filtros.
------------------------------------------------------------------------------------------------
+Por ejemplo, supongamos que hay una serie de páginas que se desea prohibir como ``http://violencia.com`` , ``http://violencia.net`` , ``http://masviolencia.com`` , ``http://todoviolencia.com`` , ``http://muchaviolencia.es`` , etc... Como vemos, la lista de páginas podría ser enorme. En ese caso, podemos usar una regla como esta:
 
+.. code-block:: bash
+
+    acl prohibicion_violencia url_regex violen
+    http_access deny prohibicion_violencia
+
+Así, todas página que tengan un nombre de dominio que incluya de alguna manera la cadena "violen" serán denegadas.
+
+ACLs basadas en la ruta
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si el sistema anterior no es suficiente se puede utilizar el análisis de las rutas. Por ejemplo, si examinamos una página como ``http://acme.com/violencia`` veremos que claramente contiene un término que deseamos prohibir. Para prohibir páginas Web en las que ocurra esto se pueden usar las ACLs basadas en ruta de esta manera:
+
+.. code-block:: bash
+
+    acl prohibicion_ruta_violencia urlpath_regex violen
+    http_access prohibicion_ruta_violencia deny
+
+.. WARNING::
+
+   Hoy en día cada vez más páginas, incluidos los buscadores usan cifrado en las conexiones. Eso significa que estos bloqueos podrían no funcionar ya que lo primero que hace el navegador es establecer una conexión cifrada (que Squid no puede descifrar) y despues solicitar la página concreta
+    
+ACLs basadas en el tipo de archivo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+En Internet hay una definición general de tipos de archivo llamada "tipos MIME" (Multimedia Internet Mail Extensions, se definieron para transportar archivos en el correo electrónico). Si lo que nos interesa en bloquear el acceso a ciertos tipos de contenido como vídeo o audio podemos bloquear usando el análisis del tipo de petición MIME al servidor de esta manera. En este caso bloqueamos los "webm" que es un tipo de vídeo muy utilizado, aunque no el único (de hecho YouTube ofrece diversos tipos):
+
+.. code-block:: bash
+
+    acl bloquear_video req_mime_type video/webm
+    http_access deny bloquear_video
 
 Métodos de autenticación en un  proxy .
 -----------------------------------------------------------------------------------------------
+Aparte de usar direcciones IP podemos hacer que un proxy exija a un usuario el proporcionar un usuario  y contraseña si desea navegar por Internet. Existen diversos como mecanismos como NTLM (que usar autenticación Windows) o LDAP (que usa un servidor LDAP). Dado que estamos usando Unix y que en este módulo no se menciona LDAP usaremos el mecanismo NCSA que usará un fichero de usuarios y claves externo gestionado por una herramienta externa, en concreto usaremos la herramienta ``httpasswd`` (si no la tenemos habrá que instalarla con ``sudo apt-get install -y apache2-utils`` 
+
+Una vez la tengamos instalada tenemos que decidir donde ubicar el fichero de credenciales, que por supuesto debe ser un lugar protegido de los usuarios normales. Elegiremos ``/etc/squid/credenciales`` y empezaremos insertando un usuario llamado "contabilidad" de esta manera: ``sudo htpasswd -c /etc/squid/credenciales contabilidad``. La herramienta nos pedirá que indiquemos la clave de este usuario.
+
+.. WARNING::
+   La opcion ``-c`` es para *crear el fichero*, así que solo la usaremos una vez.
+
+A continuación crearemos por ejemplo otro usuario llamado "gerencia" con ``sudo htpasswd /etc/squid/credenciales gerencia`` . En este punto ya tenemos un fichero con dos usuarios. Puede mostrarse el contenido de este fichero con ``sudo cat /etc/squid/credenciales`` y veremos que aparecen los usuarios y su clave cifrada.
+
+Una vez hecho esto debemos configurar la autenticación de Squid usando estos parámetros:
+
+1. "program": se usa un módulo de Squid llamado ``ncsa_auth`` que debería estar dentro de ``/usr/lib/squid3`` probablemente con la ruta ``/usr/lib/squid3/basic_ncsa_auth`` . 
+2. "children": indica el número de módulos hijo que deben estar listos para atender peticiones de autenticación. Este valor dependerá de cuantas personas como máximo se vayan a conectar al proxy. Para nuestro ejemplo un valor de 10 será suficiente.
+3. "realm": un texto que aparecerá a los usuarios que inicien sesión.
+4. "credentialsttl": tiempo máximo que se almacena la sesión de alguien antes de volver a pedirle la clave.
+
+Así, si queremos crear una lista en la que estén los usuarios autenticados podríamos configurar y crear todo con algo como esto:
+
+.. code-block:: bash
+
+    #Esto indica que para un esquema de configuración de nivel básico
+    #usaremos el programa basic_ncsa_auth con el fichero de credenciales
+    #/etc/squid/credenciales
+    auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales
+
+    #Se deben poder autenticar hasta a 10 usuarios a la vez
+    auth_param basic children 10
+
+    #Texto que se envía a los usuarios que inicien sesión
+    auth_param basic realm Indique sus credenciales
+
+    auth_param basic credentialsttl 2 hours
+
+    #Esto fabrica una lista para indicar "usuarios que están autenticados".
+    acl autenticados proxy_auth REQUIRED
+
+    #Esto indica la lista de periodicos deportivos
+    acl deportes dstdomain .marca.com
+
+    #Y aqui está la clave, COMBINAR listas
+    #Se deniega el acceso al periodico a 
+    #aquellos usuarios que NO estén autenticados
+    http_access deny deportes !autenticados
+
+Configuración del almacenamiento en la caché de un proxy .
+-----------------------------------------------------------------------------------------------
+En general los valores por defecto de Squid suelen considerarse bastante apropiados, pero pueden modificarse algunos de ellos si se desea obtener más rendimiento.
+
+..code-block:: bash
+
+    cache_dir ufs /var/spool/squid 20000 64 1024
+
+Esta caché acepta hasta 20.000MB de datos organizándonos en 64 directorios de hasta 1024 subdirectorios cada uno
+
+.. code-block:: bash
+
+    cache_mem 16MB
+
+Indica que se deben tener preparados unos 16MB de RAM para los objetos populares en cache (páginas o archivos muy solicitados). 
+
+.. WARNING::
+
+   Hay que tener cuidado con cuanta memoria RAM consume Squid ya que si tenemos muy poca la caché empezará a desviar objetos a "swap" y el rendimiento bajará en picado. En general la ``cache_mem`` debe ser como un tercio de la RAM disponible y luego añadir unos 14MB por cada GB de caché en disco. Esto significa que si en nuestro ejemplo tenemos 20GB de caché en disco y una ``cache_mem`` de 16MB debemos asegurarnos de tener como minimo (16*3)+(20*14)=48+280=328MB como minimo de RAM.
+
+Squid rota los ficheros de caché automáticamente y borra los ficheros menos usados para dar cabida a los nuevos. Si de todas maneras se desea saber cuanto espacio está ocupando la cache puede usarse el comando ``du -h /var/spool/squid`` para ver cuanto espacio en disco ocupa la caché.
+
+
+
+
+
 
 
 Proxys  inversos.
@@ -234,4 +338,4 @@ Proxys  encadenados.
 
 Pruebas de funcionamiento. Herramientas gráficas.
 -----------------------------------------------------------------------------------------------
-
+En Ubuntu es posible instalar un programa llamado ``squidclient`` que permite hacer consultas sencillas al servidor Squid y obtener muchas estadísticas sobre el uso de memoria, CPU y disco. Para instalarlo puede usarse ``sudo apt-get install squidclient`` y una vez instalado usar ``squidclient mgr:info`` para obtener los valores de uso.

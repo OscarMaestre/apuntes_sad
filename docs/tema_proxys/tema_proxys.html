@@ -101,12 +101,17 @@
 <li class="toctree-l3"><a class="reference internal" href="#ficheros-de-interes">Ficheros de interés</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#iniciando-y-parando-el-servicio">Iniciando y parando el servicio</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acls-en-squid-acls-de-origen">ACLs en Squid. ACLS de origen.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#acls-en-squid-acls-de-destino">ACLs en Squid. ACLS de destino.</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#configuracion-del-almacenamiento-en-la-cache-de-un-proxy">Configuración del almacenamiento en la caché de un  proxy .</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configuracion-de-filtros">Configuración de filtros.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuracion-de-filtros">Configuración de filtros.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acls-en-squid-acls-de-destino">ACLs en Squid. ACLS de destino.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acls-basadas-en-la-url">ACLs basadas en la URL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acls-basadas-en-la-ruta">ACLs basadas en la ruta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acls-basadas-en-el-tipo-de-archivo">ACLs basadas en el tipo de archivo</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#metodos-de-autenticacion-en-un-proxy">Métodos de autenticación en un  proxy .</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuracion-del-almacenamiento-en-la-cache-de-un-proxy">Configuración del almacenamiento en la caché de un proxy .</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#proxys-inversos">Proxys  inversos.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#proxys-encadenados">Proxys  encadenados.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pruebas-de-funcionamiento-herramientas-graficas">Pruebas de funcionamiento. Herramientas gráficas.</a></li>
@@ -290,6 +295,9 @@ http_access allow red_empresa
 </div>
 <p>Si ponemos esto en el fichero <code class="docutils literal notranslate"><span class="pre">/etc/squid/conf.d/accesopropio.acl</span></code> y ejecutamos <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">parse</span></code> podremos ver si hay algún error. Si lo hay lo corregiremos y si no podremos ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">restart</span></code> para que el proxy empiece a funcionar. Si nos vamos a la máquina cliente y probamos alguna URL veremos que ahora sí estamos navegando a través del proxy. Si se desea comprobar si realmente navegamos a través del proxy podemos detener el proxy en el servidor con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">stop</span></code> y ver que Firefox deja de funcionar. Por supuesto, si reiniciamos el proxy Firefox volverá a poder navegar con normalidad.</p>
 </div>
+</div>
+<div class="section" id="configuracion-de-filtros">
+<h2>Configuración de filtros.<a class="headerlink" href="#configuracion-de-filtros" title="Enlazar permanentemente con este título">¶</a></h2>
 <div class="section" id="acls-en-squid-acls-de-destino">
 <h3>ACLs en Squid. ACLS de destino.<a class="headerlink" href="#acls-en-squid-acls-de-destino" title="Enlazar permanentemente con este título">¶</a></h3>
 <p>Una vez que hemos visto como procesar las IPs de origen que pueden navegar nos interesan otros parámetros de Squid como las listas <code class="docutils literal notranslate"><span class="pre">dstdomain.</span></code> Estas listas permiten tomar decisiones sobre dominios de destino por los cuales quieren navegar los clientes (y normalmente querremos saberlo para denegarles el permiso). Supongamos que hay un dominio llamado <code class="docutils literal notranslate"><span class="pre">http://marca.com</span></code> al cual deseamos prohibir el acceso. Podemos poner un fichero como <code class="docutils literal notranslate"><span class="pre">/etc/squid/conf.d/accesopropio.acl</span></code> en el que escribamos</p>
@@ -336,16 +344,99 @@ http_access allow red_empresa
 ...
 </pre></div>
 </div>
+<p>En general, se pueden usar las comillas en todas las listas de acceso. Si Squid encuentra algo entre comillas, asumirá que es la ruta de un fichero y que debe tomar todas las líneas de dicho fichero.</p>
+</div>
+<div class="section" id="acls-basadas-en-la-url">
+<h3>ACLs basadas en la URL<a class="headerlink" href="#acls-basadas-en-la-url" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>A veces no es suficiente con fabricar una lista de páginas web prohibidas porque simplemente puede haber demasiadas. En esos casos se pueden usar ACLs que examinan el nombre de dominio de la web y si dicho nombre se ajusta una regla entonces denegarlo.</p>
+<p>Por ejemplo, supongamos que hay una serie de páginas que se desea prohibir como <code class="docutils literal notranslate"><span class="pre">http://violencia.com</span></code> , <code class="docutils literal notranslate"><span class="pre">http://violencia.net</span></code> , <code class="docutils literal notranslate"><span class="pre">http://masviolencia.com</span></code> , <code class="docutils literal notranslate"><span class="pre">http://todoviolencia.com</span></code> , <code class="docutils literal notranslate"><span class="pre">http://muchaviolencia.es</span></code> , etc… Como vemos, la lista de páginas podría ser enorme. En ese caso, podemos usar una regla como esta:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl prohibicion_violencia url_regex violen
+http_access deny prohibicion_violencia
+</pre></div>
+</div>
+<p>Así, todas página que tengan un nombre de dominio que incluya de alguna manera la cadena «violen» serán denegadas.</p>
+</div>
+<div class="section" id="acls-basadas-en-la-ruta">
+<h3>ACLs basadas en la ruta<a class="headerlink" href="#acls-basadas-en-la-ruta" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Si el sistema anterior no es suficiente se puede utilizar el análisis de las rutas. Por ejemplo, si examinamos una página como <code class="docutils literal notranslate"><span class="pre">http://acme.com/violencia</span></code> veremos que claramente contiene un término que deseamos prohibir. Para prohibir páginas Web en las que ocurra esto se pueden usar las ACLs basadas en ruta de esta manera:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl prohibicion_ruta_violencia urlpath_regex violen
+http_access prohibicion_ruta_violencia deny
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>Hoy en día cada vez más páginas, incluidos los buscadores usan cifrado en las conexiones. Eso significa que estos bloqueos podrían no funcionar ya que lo primero que hace el navegador es establecer una conexión cifrada (que Squid no puede descifrar) y despues solicitar la página concreta</p>
 </div>
 </div>
-<div class="section" id="configuracion-del-almacenamiento-en-la-cache-de-un-proxy">
-<h2>Configuración del almacenamiento en la caché de un  proxy .<a class="headerlink" href="#configuracion-del-almacenamiento-en-la-cache-de-un-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="acls-basadas-en-el-tipo-de-archivo">
+<h3>ACLs basadas en el tipo de archivo<a class="headerlink" href="#acls-basadas-en-el-tipo-de-archivo" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>En Internet hay una definición general de tipos de archivo llamada «tipos MIME» (Multimedia Internet Mail Extensions, se definieron para transportar archivos en el correo electrónico). Si lo que nos interesa en bloquear el acceso a ciertos tipos de contenido como vídeo o audio podemos bloquear usando el análisis del tipo de petición MIME al servidor de esta manera. En este caso bloqueamos los «webm» que es un tipo de vídeo muy utilizado, aunque no el único (de hecho YouTube ofrece diversos tipos):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl bloquear_video req_mime_type video/webm
+http_access deny bloquear_video
+</pre></div>
 </div>
-<div class="section" id="configuracion-de-filtros">
-<h2>Configuración de filtros.<a class="headerlink" href="#configuracion-de-filtros" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
 </div>
 <div class="section" id="metodos-de-autenticacion-en-un-proxy">
 <h2>Métodos de autenticación en un  proxy .<a class="headerlink" href="#metodos-de-autenticacion-en-un-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Aparte de usar direcciones IP podemos hacer que un proxy exija a un usuario el proporcionar un usuario  y contraseña si desea navegar por Internet. Existen diversos como mecanismos como NTLM (que usar autenticación Windows) o LDAP (que usa un servidor LDAP). Dado que estamos usando Unix y que en este módulo no se menciona LDAP usaremos el mecanismo NCSA que usará un fichero de usuarios y claves externo gestionado por una herramienta externa, en concreto usaremos la herramienta <code class="docutils literal notranslate"><span class="pre">httpasswd</span></code> (si no la tenemos habrá que instalarla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">apache2-utils</span></code></p>
+<p>Una vez la tengamos instalada tenemos que decidir donde ubicar el fichero de credenciales, que por supuesto debe ser un lugar protegido de los usuarios normales. Elegiremos <code class="docutils literal notranslate"><span class="pre">/etc/squid/credenciales</span></code> y empezaremos insertando un usuario llamado «contabilidad» de esta manera: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">htpasswd</span> <span class="pre">-c</span> <span class="pre">/etc/squid/credenciales</span> <span class="pre">contabilidad</span></code>. La herramienta nos pedirá que indiquemos la clave de este usuario.</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>La opcion <code class="docutils literal notranslate"><span class="pre">-c</span></code> es para <em>crear el fichero</em>, así que solo la usaremos una vez.</p>
+</div>
+<p>A continuación crearemos por ejemplo otro usuario llamado «gerencia» con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">htpasswd</span> <span class="pre">/etc/squid/credenciales</span> <span class="pre">gerencia</span></code> . En este punto ya tenemos un fichero con dos usuarios. Puede mostrarse el contenido de este fichero con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">cat</span> <span class="pre">/etc/squid/credenciales</span></code> y veremos que aparecen los usuarios y su clave cifrada.</p>
+<p>Una vez hecho esto debemos configurar la autenticación de Squid usando estos parámetros:</p>
+<ol class="arabic simple">
+<li><p>«program»: se usa un módulo de Squid llamado <code class="docutils literal notranslate"><span class="pre">ncsa_auth</span></code> que debería estar dentro de <code class="docutils literal notranslate"><span class="pre">/usr/lib/squid3</span></code> probablemente con la ruta <code class="docutils literal notranslate"><span class="pre">/usr/lib/squid3/basic_ncsa_auth</span></code> .</p></li>
+<li><p>«children»: indica el número de módulos hijo que deben estar listos para atender peticiones de autenticación. Este valor dependerá de cuantas personas como máximo se vayan a conectar al proxy. Para nuestro ejemplo un valor de 10 será suficiente.</p></li>
+<li><p>«realm»: un texto que aparecerá a los usuarios que inicien sesión.</p></li>
+<li><p>«credentialsttl»: tiempo máximo que se almacena la sesión de alguien antes de volver a pedirle la clave.</p></li>
+</ol>
+<p>Así, si queremos crear una lista en la que estén los usuarios autenticados podríamos configurar y crear todo con algo como esto:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Esto indica que para un esquema de configuración de nivel básico</span>
+<span class="c1">#usaremos el programa basic_ncsa_auth con el fichero de credenciales</span>
+<span class="c1">#/etc/squid/credenciales</span>
+auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales
+
+<span class="c1">#Se deben poder autenticar hasta a 10 usuarios a la vez</span>
+auth_param basic children <span class="m">10</span>
+
+<span class="c1">#Texto que se envía a los usuarios que inicien sesión</span>
+auth_param basic realm Indique sus credenciales
+
+auth_param basic credentialsttl <span class="m">2</span> hours
+
+<span class="c1">#Esto fabrica una lista para indicar &quot;usuarios que están autenticados&quot;.</span>
+acl autenticados proxy_auth REQUIRED
+
+<span class="c1">#Esto indica la lista de periodicos deportivos</span>
+acl deportes dstdomain .marca.com
+
+<span class="c1">#Y aqui está la clave, COMBINAR listas</span>
+<span class="c1">#Se deniega el acceso al periodico a</span>
+<span class="c1">#aquellos usuarios que NO estén autenticados</span>
+http_access deny deportes !autenticados
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuracion-del-almacenamiento-en-la-cache-de-un-proxy">
+<h2>Configuración del almacenamiento en la caché de un proxy .<a class="headerlink" href="#configuracion-del-almacenamiento-en-la-cache-de-un-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En general los valores por defecto de Squid suelen considerarse bastante apropiados, pero pueden modificarse algunos de ellos si se desea obtener más rendimiento.</p>
+<p>..code-block:: bash</p>
+<blockquote>
+<div><p>cache_dir ufs /var/spool/squid 20000 64 1024</p>
+</div></blockquote>
+<p>Esta caché acepta hasta 20.000MB de datos organizándonos en 64 directorios de hasta 1024 subdirectorios cada uno</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cache_mem 16MB
+</pre></div>
+</div>
+<p>Indica que se deben tener preparados unos 16MB de RAM para los objetos populares en cache (páginas o archivos muy solicitados).</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>Hay que tener cuidado con cuanta memoria RAM consume Squid ya que si tenemos muy poca la caché empezará a desviar objetos a «swap» y el rendimiento bajará en picado. En general la <code class="docutils literal notranslate"><span class="pre">cache_mem</span></code> debe ser como un tercio de la RAM disponible y luego añadir unos 14MB por cada GB de caché en disco. Esto significa que si en nuestro ejemplo tenemos 20GB de caché en disco y una <code class="docutils literal notranslate"><span class="pre">cache_mem</span></code> de 16MB debemos asegurarnos de tener como minimo (16*3)+(20*14)=48+280=328MB como minimo de RAM.</p>
+</div>
+<p>Squid rota los ficheros de caché automáticamente y borra los ficheros menos usados para dar cabida a los nuevos. Si de todas maneras se desea saber cuanto espacio está ocupando la cache puede usarse el comando <code class="docutils literal notranslate"><span class="pre">du</span> <span class="pre">-h</span> <span class="pre">/var/spool/squid</span></code> para ver cuanto espacio en disco ocupa la caché.</p>
 </div>
 <div class="section" id="proxys-inversos">
 <h2>Proxys  inversos.<a class="headerlink" href="#proxys-inversos" title="Enlazar permanentemente con este título">¶</a></h2>
@@ -355,6 +446,7 @@ http_access allow red_empresa
 </div>
 <div class="section" id="pruebas-de-funcionamiento-herramientas-graficas">
 <h2>Pruebas de funcionamiento. Herramientas gráficas.<a class="headerlink" href="#pruebas-de-funcionamiento-herramientas-graficas" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>En Ubuntu es posible instalar un programa llamado <code class="docutils literal notranslate"><span class="pre">squidclient</span></code> que permite hacer consultas sencillas al servidor Squid y obtener muchas estadísticas sobre el uso de memoria, CPU y disco. Para instalarlo puede usarse <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squidclient</span></code> y una vez instalado usar <code class="docutils literal notranslate"><span class="pre">squidclient</span> <span class="pre">mgr:info</span></code> para obtener los valores de uso.</p>
 </div>
 </div>
 
