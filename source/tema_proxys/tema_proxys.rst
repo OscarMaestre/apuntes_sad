@@ -43,7 +43,7 @@ El término proxy suele reservarse para esta arquitectura de red. En este caso, 
 
 .. figure:: img/proxy.png
    :scale: 70%
-   :alt: Ejemplos de permisos
+   :alt: Proxy directo
 
    Proxy (en su configuración más típica)
 
@@ -51,7 +51,7 @@ En un proxy abierto el proxy no está bajo nuestro control, sino que está en al
 
 .. figure:: img/proxy_abierto.png
    :scale: 70%
-   :alt: Ejemplos de permisos
+   :alt: Un proxy abierto
 
    Proxy abierto
 
@@ -59,7 +59,7 @@ Un proxy inverso es aquel que se sitúa dentro de la red del servidor de manera 
 
 .. figure:: img/proxy_inverso.png
    :scale: 70%
-   :alt: Ejemplos de permisos
+   :alt: Ejemplos de proxy inverso
 
    Proxy inverso
 
@@ -330,6 +330,52 @@ Squid rota los ficheros de caché automáticamente y borra los ficheros menos us
 
 Proxys  inversos.
 -----------------------------------------------------------------------------------------------
+Como ya hemos visto antes, un proxy inverso es aquel que se sitúa delante de un servidor Web con el objetivo de "descargarle de trabajo", como señala la figura siguiente:
+
+.. figure:: img/proxy_inverso.png
+   :scale: 70%
+   :alt: Ejemplos de proxy inverso
+
+   Proxy inverso
+
+Para experimentar con esta configuración necesitaremos esto:
+
+* Dos máquinas virtuales, ambas con Ubuntu Server.
+* En una de ellas (que llamaremos "Proxy") pondremos el proxy Squid (si no se tiene, se debe instalar con ``sudo apt-get install squid`` 
+* En la otra (que llamaremos "Servidor Web") pondremos el servidor Web Apache, PHP y Links (se puede instalar con ``sudo apt-get install apache2 php`` ). Asegúrate de que tenga una carpeta compartida con el anfitrión para que podamos pasar con comodidad ficheros entre ambas máquinas.
+* Las dos máquinas deben tener una tarjeta de red en modo puente, deben tener un IP de la misma red y deben poder hacerse ping entre ellas.
+
+Dentro del servidor Web pondremos una pequeña página PHP que simplemente muestre información de la fecha y hora, como esta. La llamaremos ``index.php`` y debe estar en el directorio ``/var/www/html`` (asegúrate también de que la página la puede leer todo el mundo con ``sudo chmod a+r /var/www/html/index.php`` :
+
+
+.. literalinclude:: pagina_proxy_inverso.php
+   :language: php
+
+Si está todo bien, en el Servidor Web podremos ejecutar ``links http://127.0.0.1`` y veremos la página generada en el servidor donde nos dirá la fecha y la hora.
+
+Una vez configurado el Servidor Web toca configurar Squid. En Squid un "proxy inverso" se denomina un "acelerador". En realidad, la configuración básica es muy sencilla y aun así ya ofrece mucha mejora en el rendimiento:
+
+
+.. code-block:: bash
+
+    http_port 80 accel defaultsite=192.168.1.130 no-vhost
+    cache_peer 192.168.1.30 parent 80 0 no-query originserver name=AceleradorWebLocal
+    refresh_pattern $php 2 50% 9
+
+¿Qué significa todo esto?
+
+* La primera línea indica que Squid va aceptar peticiones en el puerto 80 pero esto va a servir para acelerar un sitio web en el que no hay hosting virtual.
+* La segunda línea indica que vamos a cachear tales peticiones conectando con el sitio web principal ("parent) y que cuando se conecten a nuestro puerto 80 no nos conectaremos a ningún otro puerto ICP (sirve para proxies encadenados), y que como no haremos encadenamiento de proxies no hay que hacer consultas ("no-query") sino que esto es el servidor real de origen ("originserver"). A este servidor cacheado le hemos puesto un nombre que luego podríamos proteger con ACLs.
+* La tercera línea indica que cualquier petición que termine en PHP debe ser cacheada durante al menos 2 minutos y como máximo 9 minutos. Si alguna petición *no lleva indicado el tiempo máximo por parte del navegador* se asume que se conserva en caché hasta que llega a la mitad de su edad. Por ejemplo si alguien pidió un PHP hace 6 horas y han pasado 3 se considera que el objeto ya no debe estar en caché.
+
+Para comprobar que esto funciona abre varias pestañas en tu navegador (no vale pulsar F5 porque el navegador solicita entonces actualizar las cachés) y verás que todas llevan la misma hora de generación.
+
+
+.. WARNING::
+
+   Lo siguiente **es una violación del protocolo HTTP:** Si realmente queremos ignorar a los usuarios que pulsen F5 se puede añadir una opción al final de la línea y dejarla como ``refresh_pattern $php 2 50% 9 ignore-reload`` Con ello, Squid ignorará todas las peticiones de recarga incluso aunque se pulse F5
+
+Para aprender realmente todo lo que envía y recibe el navegador utiliza las herramientas del desarrollador (usa la tecla F12) y explora las distintas cabeceras que envía Firefox/Chrome/Edge.
 
 
 Proxys  encadenados.

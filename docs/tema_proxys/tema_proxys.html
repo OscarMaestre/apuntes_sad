@@ -215,17 +215,17 @@
 <p>Podemos distinguir entre proxy directo (o simplemente proxy), proxy abierto y proxy inverso.</p>
 <p>El término proxy suele reservarse para esta arquitectura de red. En este caso, el proxy está dentro de nuestra red y nosotros como administradores tenemos el control y podemos tomar todas las decisiones que deseemos.</p>
 <div class="figure align-default" id="id2">
-<a class="reference internal image-reference" href="../_images/proxy.png"><img alt="Ejemplos de permisos" src="../_images/proxy.png" style="width: 296.79999999999995px; height: 129.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/proxy.png"><img alt="Proxy directo" src="../_images/proxy.png" style="width: 296.79999999999995px; height: 129.5px;" /></a>
 <p class="caption"><span class="caption-text">Proxy (en su configuración más típica)</span><a class="headerlink" href="#id2" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 <p>En un proxy abierto el proxy no está bajo nuestro control, sino que está en alguna red intermedia y suele ofrecer servicios como ocultación de ip, privacidad y similares. No tenemos garantías de que realmente el proxy no registre nuestra actividad.</p>
 <div class="figure align-default" id="id3">
-<a class="reference internal image-reference" href="../_images/proxy_abierto.png"><img alt="Ejemplos de permisos" src="../_images/proxy_abierto.png" style="width: 324.79999999999995px; height: 110.6px;" /></a>
+<a class="reference internal image-reference" href="../_images/proxy_abierto.png"><img alt="Un proxy abierto" src="../_images/proxy_abierto.png" style="width: 324.79999999999995px; height: 110.6px;" /></a>
 <p class="caption"><span class="caption-text">Proxy abierto</span><a class="headerlink" href="#id3" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 <p>Un proxy inverso es aquel que se sitúa dentro de la red del servidor de manera que actúa como caché, distribuidor de carga o simplemente como respaldo.</p>
 <div class="figure align-default" id="id4">
-<a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de permisos" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" /></a>
+<a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de proxy inverso" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" /></a>
 <p class="caption"><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id4" title="Enlace permanente a esta imagen">¶</a></p>
 </div>
 </div>
@@ -440,6 +440,61 @@ http_access deny deportes !autenticados
 </div>
 <div class="section" id="proxys-inversos">
 <h2>Proxys  inversos.<a class="headerlink" href="#proxys-inversos" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Como ya hemos visto antes, un proxy inverso es aquel que se sitúa delante de un servidor Web con el objetivo de «descargarle de trabajo», como señala la figura siguiente:</p>
+<div class="figure align-default" id="id6">
+<a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de proxy inverso" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" /></a>
+<p class="caption"><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id6" title="Enlace permanente a esta imagen">¶</a></p>
+</div>
+<p>Para experimentar con esta configuración necesitaremos esto:</p>
+<ul class="simple">
+<li><p>Dos máquinas virtuales, ambas con Ubuntu Server.</p></li>
+<li><p>En una de ellas (que llamaremos «Proxy») pondremos el proxy Squid (si no se tiene, se debe instalar con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squid</span></code></p></li>
+<li><p>En la otra (que llamaremos «Servidor Web») pondremos el servidor Web Apache, PHP y Links (se puede instalar con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">apache2</span> <span class="pre">php</span></code> ). Asegúrate de que tenga una carpeta compartida con el anfitrión para que podamos pasar con comodidad ficheros entre ambas máquinas.</p></li>
+<li><p>Las dos máquinas deben tener una tarjeta de red en modo puente, deben tener un IP de la misma red y deben poder hacerse ping entre ellas.</p></li>
+</ul>
+<p>Dentro del servidor Web pondremos una pequeña página PHP que simplemente muestre información de la fecha y hora, como esta. La llamaremos <code class="docutils literal notranslate"><span class="pre">index.php</span></code> y debe estar en el directorio <code class="docutils literal notranslate"><span class="pre">/var/www/html</span></code> (asegúrate también de que la página la puede leer todo el mundo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chmod</span> <span class="pre">a+r</span> <span class="pre">/var/www/html/index.php</span></code> :</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">&lt;!DOCTYPE html&gt;</span>
+<span class="x">&lt;html&gt;</span>
+<span class="x">  </span>
+<span class="x">  &lt;head&gt;</span>
+<span class="x">    &lt;title&gt;Página HTML para Servidor web con proxy inverso&lt;/title&gt;</span>
+<span class="x">    &lt;meta charset=&quot;utf-8&quot;&gt;</span>
+<span class="x">  &lt;/head&gt;</span>
+<span class="x">  &lt;!--Cuerpo--&gt;</span>
+<span class="x">  &lt;body&gt;</span>
+<span class="x">  &lt;h1&gt;Bienvenido a nuestra página&lt;/h1&gt;</span>
+<span class="x">  &lt;p&gt;</span>
+<span class="x">    </span><span class="cp">&lt;?php</span>
+
+    <span class="nv">$fecha</span><span class="o">=</span><span class="nb">date</span><span class="p">(</span><span class="s2">&quot;d/m/Y&quot;</span><span class="p">);</span>
+    <span class="nv">$hora</span> <span class="o">=</span><span class="nb">date</span><span class="p">(</span><span class="s2">&quot;h:i:s&quot;</span><span class="p">);</span>
+
+    <span class="k">echo</span> <span class="s2">&quot;Esta página se generó en el servidor el </span><span class="si">$fecha</span><span class="s2"> a las </span><span class="si">$hora</span><span class="s2">.&quot;</span><span class="p">;</span>
+    <span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">  &lt;/p&gt;</span>
+<span class="x">  &lt;/body&gt;</span>
+<span class="x">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>Si está todo bien, en el Servidor Web podremos ejecutar <code class="docutils literal notranslate"><span class="pre">links</span> <span class="pre">http://127.0.0.1</span></code> y veremos la página generada en el servidor donde nos dirá la fecha y la hora.</p>
+<p>Una vez configurado el Servidor Web toca configurar Squid. En Squid un «proxy inverso» se denomina un «acelerador». En realidad, la configuración básica es muy sencilla y aun así ya ofrece mucha mejora en el rendimiento:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>http_port <span class="m">80</span> accel <span class="nv">defaultsite</span><span class="o">=</span><span class="m">192</span>.168.1.130 no-vhost
+cache_peer <span class="m">192</span>.168.1.30 parent <span class="m">80</span> <span class="m">0</span> no-query originserver <span class="nv">name</span><span class="o">=</span>AceleradorWebLocal
+refresh_pattern <span class="nv">$php</span> <span class="m">2</span> <span class="m">50</span>% <span class="m">9</span>
+</pre></div>
+</div>
+<p>¿Qué significa todo esto?</p>
+<ul class="simple">
+<li><p>La primera línea indica que Squid va aceptar peticiones en el puerto 80 pero esto va a servir para acelerar un sitio web en el que no hay hosting virtual.</p></li>
+<li><p>La segunda línea indica que vamos a cachear tales peticiones conectando con el sitio web principal («parent) y que cuando se conecten a nuestro puerto 80 no nos conectaremos a ningún otro puerto ICP (sirve para proxies encadenados), y que como no haremos encadenamiento de proxies no hay que hacer consultas («no-query») sino que esto es el servidor real de origen («originserver»). A este servidor cacheado le hemos puesto un nombre que luego podríamos proteger con ACLs.</p></li>
+<li><p>La tercera línea indica que cualquier petición que termine en PHP debe ser cacheada durante al menos 2 minutos y como máximo 9 minutos. Si alguna petición <em>no lleva indicado el tiempo máximo por parte del navegador</em> se asume que se conserva en caché hasta que llega a la mitad de su edad. Por ejemplo si alguien pidió un PHP hace 6 horas y han pasado 3 se considera que el objeto ya no debe estar en caché.</p></li>
+</ul>
+<p>Para comprobar que esto funciona abre varias pestañas en tu navegador (no vale pulsar F5 porque el navegador solicita entonces actualizar las cachés) y verás que todas llevan la misma hora de generación.</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>Lo siguiente <strong>es una violación del protocolo HTTP:</strong> Si realmente queremos ignorar a los usuarios que pulsen F5 se puede añadir una opción al final de la línea y dejarla como <code class="docutils literal notranslate"><span class="pre">refresh_pattern</span> <span class="pre">$php</span> <span class="pre">2</span> <span class="pre">50%</span> <span class="pre">9</span> <span class="pre">ignore-reload</span></code> Con ello, Squid ignorará todas las peticiones de recarga incluso aunque se pulse F5</p>
+</div>
+<p>Para aprender realmente todo lo que envía y recibe el navegador utiliza las herramientas del desarrollador (usa la tecla F12) y explora las distintas cabeceras que envía Firefox/Chrome/Edge.</p>
 </div>
 <div class="section" id="proxys-encadenados">
 <h2>Proxys  encadenados.<a class="headerlink" href="#proxys-encadenados" title="Enlazar permanentemente con este título">¶</a></h2>
