@@ -6,7 +6,13 @@ Implantación de técnicas de acceso remoto. Seguridad perimetral
 
 Elementos básicos de la seguridad perimetral.
 -----------------------------------------------------------------------------------------------
-
+* Cortafuegos
+* Routers frontera
+* Zonas desmilitarizadas.
+* VPNs
+* Host bastión.
+* Sistemas IDS.
+* VLAN.
 
 Perímetros de red. Zonas desmilitarizadas. Router frontera.
 -----------------------------------------------------------------------------------------------
@@ -22,10 +28,14 @@ Arquitectura fuerte de subred protegida.
 
 Políticas de defensa en profundidad.
 -----------------------------------------------------------------------------------------------
-
+* Permitir lo que no esté prohibido
+* Prohibir lo no permitido.
 
 Defensa perimetral.
 -----------------------------------------------------------------------------------------------
+* Administrar contenido
+* Filtrar tráfico.
+* Redirigir tráfico.
 
 
 Defensa interna.
