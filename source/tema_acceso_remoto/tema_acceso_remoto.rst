@@ -120,12 +120,15 @@ Usando ``./easyrsa build-cliente-full <nombre_de_fichero_cliente>`` se generará
 * Una clave privada para el cliente (estará en ``pki/private/<nombre_fichero_cliente>.key`` 
 * Un certificado para ese cliente que irá firmado por nuestra CA (estará en ``pki/issued/<cliente>.crt`` 
 
+.. WARNING::
+   Es importante no olvidar las claves de acceso a los ficheros, los necesitaremos despues para conectar los clientes la VPN.
+
 
 
 Paso 5: precalcular parámetros de claves
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Cuando se establezca una conexión se van a utilizar algunos números para cifrar los datos. Estos valores pueden tenerse precalculados en un fichero para acelerar el inicio de las conexiones. Esto puede hacerse con el comando ``openssl dhparam -dsaparam 2048 -out Parametros.pem`` 
+Cuando se establezca una conexión se van a utilizar algunos números para cifrar los datos. Estos valores pueden tenerse precalculados en un fichero para acelerar el inicio de las conexiones. Esto puede hacerse con el comando ``./easyrsa gen-dh``o también con``openssl dhparam -dsaparam 2048 -out Parametros.pem`` 
 
 Este comando genera números primos aceptables para el establecimiento de una conexión, usando 2048 bits como longitud de clave pero evitando (con el parámetro ``dsaparam``  una serie de números que no aportan más seguridad). 
 
@@ -136,17 +139,33 @@ En el servidor podemos crear un fichero como este:
 
 .. code-block:: bash
 
-    proto udp
-    port 1194
-    dev tun
+    proto udp #OpenVPN usará UDP para la comunicación
+    port 1194 #OpenVPN escuchará en este puerto
+    dev tun   #Se creará un dispositivo de red de tipo túnel
+    #Los usuarios que se conecten usarán direcciones de esta subred
     server 10.100.0.0 255.255.255.0
+    #OpenVPN podía usar otras topologías como 
+    #punto a punto, pero hoy en día no se recomiendan
     topology subnet
+    #Si la conexión VPN sufre un reinicio no
+    #hace falta volver a leer los ficheros de claves
     persist-key
+    #Si la conexión VPN sufre un reinicio no
+    #hay que re-crear el dispositivo de red
     persist-tun
+    #Enviar un paquete si el cliente no envía nada 
+    #en 10*2=20 segundos (el doble es por el tiempo
+    #de ida y vuelta) y reiniciar la conexión VPN
+    #si el servidor no recibe nada en 60 segundos.
     keepalive 10 60
+    #Fichero con los parámetros de intercambio de claves
     dh    /home/usuario/autoridad/ParametrosDH.pem
+    #Fichero con el certificado del servidor
     cert  /home/usuario/autoridad/pki/issued/ServidorOpenVPN.crt
+    #Fichero con la clave privada del servidor
     key   /home/usuario/autoridad/pki/private/ServidorOpenVPN.key
+    #Fichero con el certificado de la autoridad que firmó
+    #el certificado del servidor
     ca    /home/usuario/autoridad/pki/ca.crt
 
     log-append /var/log/openvpn.log
@@ -156,10 +175,33 @@ Y arrancar OpenVPN con ``sudo openvpn --config servidor.conf``
 Paso 7: configurar el cliente y arrancarlo.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Estando en el mismo directorio del servidor podemos usar el comando ``./easyrsa -build-cliente-full Cliente01`` y generar todo lo necesario para que se conecte un cliente. En concreto nos interesa esto:
+
+* El certificado del cliente (debe estar en ``pki/issued/Cliente01.crt``)
+* La clave privada del cliente (debe estar en ``pki/private/Cliente01.key``)
+* El certificado de la autoridad de certificación (en ``pki/ca.crt``)
+
+Si es necesario, usaremos una carpeta compartida para meter estos ficheros dentro de la máquina virtual y copiarlos a algún directorio donde tengamos permisos. Una vez los tengamos dentro, solo hay que abrir el menú de configuración de VPN del entorno de escritorio (si queremos usar Windows deberemos instalar OpenVPN).
+
+Dentro del entorno de escritorio podemos indicar la IP del servidor OpenVPN así como los tres ficheros que hemos indicado. En la figura siguiente se muestra una captura de pantalla de un cliente Linux. En dicha figura puede observarse que la traducción no es muy correcta y que quizá los términos correctos que deberían verse son:
+
+1. Certificado de la CA.
+2. Certificado de usuario.
+3. Fichero de clave privada de usuario.
+4. Clave de acceso al fichero de clave privada de usuario.
 
 
+.. figure:: img/ConfiguracionClienteVPN.png
+   :scale: 50%
+   :align: center
+   :alt: Un cliente Linux configurado con VPN
+   
+   Configuración de un cliente Linux con VPN
 
 
+Si hemos hecho todo correctamente podremos ver en el servidor que se recibe una conexión y en el cliente veremos que ha aparecido una nueva IP y que ahora podemos hacer ping a la IP de la VPN del servidor. Todo el tráfico que fluye entre cliente y servidor ahora circula cifrado.
+
+Pregunta: *¿por qué ahora el cliente no puede navegar por Internet?.* La respuesta probablemente sea porque en el servidor aún no se han hecho muchas cosas, como activar el enrutamiento, tal vez configurar el NAT o quizá incluso ni siquiera hayamos añadido una tarjeta de red a la máquina virtual del servidor.
 
 
 Beneficios y desventajas con respecto a las líneas dedicadas.
