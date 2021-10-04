@@ -421,6 +421,31 @@ Se necesita usar el comando setfacl que funciona de esta manera:
 Para consultar los permisos de un archivo usaremos ``getfacl conta01.txt``. Si nos equivocamos y deseamos borrar una entrada de la lista usaremos cosas como ``setfacl -x u:conta02  conta01.txt`` 
 
 
+Ejercicio resuelto con listas de acceso
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Hacer que el usuario "usuario" fabrique un fichero llamado "ficherodatosespeciales.txt" con un texto cualquiera y que ocurra esto:
+
+Datos especiales:
+  * El info01 sí puede leerlo, pero no escribir
+  * El info02 puede leerlo y escribirlo (modificarlo).
+  * El conta01 no puede hacer NADA.
+  * El conta02 puede leerlo pero no escribirlo.
+  
+  
+Iniciar sesión con todos los usuarios y verificar que efectivamente solo ocurre lo que nos han indicado.
+
+1. Iniciar sesión con "usuario".
+2. Creamos el fichero "fichero.txt".
+3. Una buena medida es quitar todos los permisos, ``chmod a-rwx fichero.txt``
+4. Para que el info01 sí pueda leer ejecutamos ``setfacl -m u:info01:r fichero.txt``.
+5. Para que el info02 pueda tanto leer como escribir, ejecutamos ``setfacl -m u:info02:rw fichero.txt``.
+6. Para que el conta01 no pueda hacer nada, no necesitamos nada especial, ya se quitaron todos los permisos como medida de seguridad.
+7. Para que el conta02 pueda leer y solo leer, solo necesitamos ``setfacl -m u:conta02:r fichero.txt``
+
+
+
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
 

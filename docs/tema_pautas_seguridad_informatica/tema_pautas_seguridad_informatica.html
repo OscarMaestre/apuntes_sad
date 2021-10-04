@@ -105,6 +105,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#cifrado-de-ficheros-en-linea-de-comandos">Cifrado de ficheros en línea de comandos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#listas-de-control-de-acceso">Listas de control de acceso.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ejercicio-con-permisos">Ejercicio con permisos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ejercicio-resuelto-con-listas-de-acceso">Ejercicio resuelto con listas de acceso</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#establecimiento-de-politicas-de-contrasenas">Establecimiento de políticas de contraseñas.</a></li>
@@ -124,9 +125,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html">Implantación de soluciones de alta disponibilidad</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html#ejercicio-recuperando-una-web-con-vagrant">Ejercicio: recuperando una web con Vagrant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
 </ul>
 
             
@@ -518,6 +519,29 @@ DH….</p>
 <li><p>Ejecutamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:info02:w</span> <span class="pre">conta01.txt</span></code></p></li>
 </ul>
 <p>Para consultar los permisos de un archivo usaremos <code class="docutils literal notranslate"><span class="pre">getfacl</span> <span class="pre">conta01.txt</span></code>. Si nos equivocamos y deseamos borrar una entrada de la lista usaremos cosas como <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-x</span> <span class="pre">u:conta02</span>&#160; <span class="pre">conta01.txt</span></code></p>
+</div>
+<div class="section" id="ejercicio-resuelto-con-listas-de-acceso">
+<h3>Ejercicio resuelto con listas de acceso<a class="headerlink" href="#ejercicio-resuelto-con-listas-de-acceso" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Hacer que el usuario «usuario» fabrique un fichero llamado «ficherodatosespeciales.txt» con un texto cualquiera y que ocurra esto:</p>
+<dl class="simple">
+<dt>Datos especiales:</dt><dd><ul class="simple">
+<li><p>El info01 sí puede leerlo, pero no escribir</p></li>
+<li><p>El info02 puede leerlo y escribirlo (modificarlo).</p></li>
+<li><p>El conta01 no puede hacer NADA.</p></li>
+<li><p>El conta02 puede leerlo pero no escribirlo.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Iniciar sesión con todos los usuarios y verificar que efectivamente solo ocurre lo que nos han indicado.</p>
+<ol class="arabic simple">
+<li><p>Iniciar sesión con «usuario».</p></li>
+<li><p>Creamos el fichero «fichero.txt».</p></li>
+<li><p>Una buena medida es quitar todos los permisos, <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">a-rwx</span> <span class="pre">fichero.txt</span></code></p></li>
+<li><p>Para que el info01 sí pueda leer ejecutamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:info01:r</span> <span class="pre">fichero.txt</span></code>.</p></li>
+<li><p>Para que el info02 pueda tanto leer como escribir, ejecutamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:info02:rw</span> <span class="pre">fichero.txt</span></code>.</p></li>
+<li><p>Para que el conta01 no pueda hacer nada, no necesitamos nada especial, ya se quitaron todos los permisos como medida de seguridad.</p></li>
+<li><p>Para que el conta02 pueda leer y solo leer, solo necesitamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:conta02:r</span> <span class="pre">fichero.txt</span></code></p></li>
+</ol>
 </div>
 </div>
 <div class="section" id="establecimiento-de-politicas-de-contrasenas">
