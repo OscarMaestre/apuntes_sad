@@ -122,6 +122,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#otra-solucion-mas-segura">Otra solución (más segura)</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-resuelto-con-ficheros">Ejercicio resuelto con ficheros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#resolucion">Resolución</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html">Implantación de soluciones de alta disponibilidad</a></li>
@@ -563,6 +567,18 @@
 </div></blockquote>
 </li>
 </ol>
+</div>
+</div>
+<div class="section" id="ejercicio-resuelto-con-ficheros">
+<h2>Ejercicio resuelto con ficheros<a class="headerlink" href="#ejercicio-resuelto-con-ficheros" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Supongamos que nos han asignado una red como 10.xxx.xxx.xx/8. Se han establecido los requisitos siguientes:</p>
+<ul class="simple">
+<li><p>Los ordenadores de la oficina (Windows 7 por ejemplo), tienen direcciones como 10.xxx.10.10 con máscara 255.0.0.0.</p></li>
+<li><p>Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s8 tendremos una dirección como 10.xxx.1.1/8. Por la tarjeta enp0s3 tendremos una dirección como 172.31.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 172.31.1.1.</p></li>
+<li><p>Teniendo esos datos, es evidente que el Windows 7 llevará como gateway al 10.xxx.1.1 y como DNS pondremos (por ejemplo 8.8.8.8 y 8.8.4.4)</p></li>
+</ul>
+<div class="section" id="resolucion">
+<h3>Resolución<a class="headerlink" href="#resolucion" title="Enlazar permanentemente con este título">¶</a></h3>
 </div>
 </div>
 </div>

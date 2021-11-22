@@ -38,7 +38,7 @@ A la hora de virtualizar un servicio es importante elegir correctamente el modo 
 * Red NAT: Facilita la creación de servidores protegidos detrás de un servicio NAT. Supongamos que queremos un servidor HTTP y uno FTP. Podríamos ponerlos en dos máquinas virtuales cada una con su NAT. Pero esto implicaría "tratar a las máquinas por separado". Creando una red NAT podemos simplificar un poco la apertura de puertos trabajando con una sola red NAT. De alguna manera esto implica poder fabricar grupos de máquinas virtuales gestionados por la misma red NAT,son máquinas que compartirán ese "router firewall NAT" virtual.
 * Bridge/adaptador puente: el SO invitado no tendrá ninguna restricción y se portará como uno más de la red. El SO invitado necesitará su propia IP separada y distinta del anfitrión.
 * Red interna: En este modo podemos crear "redes ficticias que no se ven desde fuera del anfitrión". Consiste en crear redes con un cierto nombre y los distintos invitados que estén asociados a esa "red ficticia" podrán verse entre sí  pero no podrán salir al exterior. 
-* Solo anfitrión: el invitado solo “ve” al anfitrión.
+* Solo anfitrión: el invitado solo “ve” a otras máquinas en modo "host-only" que estén en el mismo anfitrión. Para ir más lejos, y esto implica incluso contactar con el anfitrión, es necesario poner algún enrutamiento: por ejemplo, otra máquina más con dos tarjetas, una en modo "solo anfitrión" y por ejemplo con la otra en modo "puente" y activar el enrutamiento.
 * Red genérica: solo se usará cuando virtualicemos sistemas operativos que no tengan drivers para alguna de las tarjetas 
 
 

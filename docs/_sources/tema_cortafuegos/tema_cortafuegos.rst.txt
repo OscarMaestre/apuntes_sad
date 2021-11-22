@@ -413,3 +413,16 @@ Otra solución (más segura)
     * Podríamos dar permiso solo a una cierta IP con el comando ``sudo nft add rule ip filtradoWeb prohibicionEntrada ip saddr 192.168.100.10 tcp dport 80 accept`` 
     * Podríamos dar permiso a todo el tráfico que entre por una cierta tarjeta con ``sudo nft add rule ip filtradoWeb prohibicionEntrada iifname enp0s3 tcp dport 80 accept`` 
     * Se puede dar permiso a un rango de IPs usando una ip de red con su máscara con ``sudo nft add rule ip filtradoWeb prohibicionEntrada saddr 192.168.100.0/24 tcp dport 80 accept`` 
+
+
+Ejercicio resuelto con ficheros
+---------------------------------
+
+Supongamos que nos han asignado una red como 10.xxx.xxx.xx/8. Se han establecido los requisitos siguientes:
+
+* Los ordenadores de la oficina (Windows 7 por ejemplo), tienen direcciones como 10.xxx.10.10 con máscara 255.0.0.0.
+* Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s8 tendremos una dirección como 10.xxx.1.1/8. Por la tarjeta enp0s3 tendremos una dirección como 172.31.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 172.31.1.1.
+* Teniendo esos datos, es evidente que el Windows 7 llevará como gateway al 10.xxx.1.1 y como DNS pondremos (por ejemplo 8.8.8.8 y 8.8.4.4)
+
+Resolución
+~~~~~~~~~~~~~~~~~~
