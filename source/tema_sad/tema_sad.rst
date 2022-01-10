@@ -252,10 +252,18 @@ Gestión de contenedores
 * ``sudo docker start <identificador|nombre>`` : inicia un contenedor.
 * ``sudo docker restart <identificador|nombre>`` : se asegura de detener primero el contenedor y despues arranca el contenedor.
 * ``sudo docker create <nombredeimagen>`` : hace varias cosas a la vez:
+    * Descarga la imagen en caso de que no esté en el repositorio local.
+    * Crea el contenedor
+    * Arranca su ejecución.
 
-    ** Descarga la imagen en caso de que no esté en el repositorio local.
-    ** Crea el contenedor
-    ** Arranca su ejecución.
+Los elementos básicos de Docker
+--------------------------------
+
+Docker permite tener por separado distintos elementos y combinarlos como queramos en un contenedor, estos elementos son:
+
+* La consola de E/S: podemos conectar nuestra consola a la de un contenedor o no. Además podemos conectar solo la entrada, solo la salida o ambos.
+* La red: podremos crear redes virtuales y enganchar el contenedor que queramos a la red que queramos.
+* El almacenamiento: podemos crear discos virtuales y enganchar varios contenedores a un mismo disco o hacer que un contenedor tenga distintos discos. 
 
 La consola y los contenedores
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -284,8 +292,7 @@ Algunas operaciones básicas son estas:
 
 Instalando Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Docker puede instalarse en Linux añadiendo sus repositorios a la lista de repositorios de nuestro sistema, podemos usar estos comandos.
+Ubuntu tiene su propio paquete Docker que puede instalarse usando ``sudo apt-get install docker.io``, sin embargo podemos instalar la versión oficial en Linux añadiendo sus repositorios a la lista de repositorios de nuestro sistema. Para ello podemos usar estos comandos.
 
 .. code-block:: bash
 
@@ -304,12 +311,36 @@ El programa "se ha ejecutado dentro de un contenedor". Despues ha terminado y ha
 
 En este último ejemplo no hemos puesto espacio de nombres, así que Docker asume que se debe buscar en los "repositorios oficiales de imágenes". Una vez ejecutado **Apache se queda en ejecución y se "apodera" de la consola** . Esto es normal, así que si queremos que el servidor Web se vaya a un segundo plano deberemos cerrar el programa (Ctrl-C) y ejecutar ``sudo docker run --detach httpd`` o ``sudo docker run -d httpd`` .
 
-Podemos ver que Apache se está ejecutando en un contenedor con ``sudo docker ps`` y "apagar" el contenedor con   ``sudo docker stop <identificador>`` o incluso "terminarlo" ``sudo docker kill <identificador>`` (no hace falta escribir todo el ID del container, basta con escribir las primeras 31,902.19letras).
+Podemos ver que Apache se está ejecutando en un contenedor con ``sudo docker ps`` y "apagar" el contenedor con   ``sudo docker stop <identificador>`` o incluso "terminarlo" ``sudo docker kill <identificador>`` (no hace falta escribir todo el ID del container, basta con escribir las primeras letras).
 
 También podemos reiniciar un servicio con ``sudo docker restart <id_container>`` e incluso ver los logs del servicio con ``sudo docker logs <id_container>`` .
 
 
 Si queremos tener el mismo servicio para distintos clientes está claro que no podremos u    sar el mismo nombre, podemos lanzar un servicio con distintos nombres usando algo como ``sudo docker run -d --name ApacheCliente1 httpd`` lo que **crea y ejecuta un contenedor llamado ApacheCliente1** . Hay que recordar que aunque lo paremos no podremos volver a ejecutarlo con ``sudo docker run -d --name ApacheCliente1 httpd`` ya que eso ``intentaría volver a crear el contenedor`` (cosa imposible porque ya existe). Un contenedor puede volver a ejecutarse con ``sudo docker restart ApacheCliente1`` 
+
+
+
+
+Conexiones de red en Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. WARNING::
+   En clase usaremos Docker dentro de un VirtualBox, lo que nos complicará la gestión de servicios al tener que interactuar tanto con el subsistema de red de VirtualBox como con el subsistema de red de Docker.
+
+Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "redes por defecto" con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con ``sudo docker network ls`` :
+
+* Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama "bridge" se parece al modo NAT de VirtualBox. 
+* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Noviembre de 2020 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la red del anfitrión.
+* Overlay: Está pensado para crear lo que Docker llama "enjambres", no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.
+* Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
+* None: permite deshabilitar la red de un contenedor.
+
+Creando nuestra propia red en Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Podemos crear nuestra propia red para un grupo separado de servidores usando ``sudo docker network create --driver bridge <nombredered>`` . Docker creará una red separada con otro prefijo IP separado (172.18.0.0/16, 172.19.0.0/16)
+
+Si deseamos trabajar con la red "host" en ese caso los contenedor **no tienen su propia IP separada**, es como si estuvieran ejecutándose en el host y entonces **usaremos la ip del host** 
 
 
 Un ejemplo simple de Docker
@@ -374,26 +405,6 @@ El comando anterior lanza el servidor de base de datos accesible solo en nuestro
 
 
 
-Conexiones de red en Docker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. WARNING::
-   En clase usaremos Docker dentro de un VirtualBox, lo que nos complicará la gestión de servicios al tener que interactuar tanto con el subsistema de red de VirtualBox como con el subsistema de red de Docker.
-
-Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "redes por defecto" con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con ``sudo docker network ls`` :
-
-* Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama "bridge" se parece al modo NAT de VirtualBox. 
-* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Noviembre de 2020 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la red del anfitrión.
-* Overlay: Está pensado para crear lo que Docker llama "enjambres", no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.
-* Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
-* None: permite deshabilitar la red de un contenedor.
-
-Creando nuestra propia red en Docker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Podemos crear nuestra propia red para un grupo separado de servidores usando ``sudo docker network create --driver bridge <nombredered>`` . Docker creará una red separada con otro prefijo IP separado (172.18.0.0/16, 172.19.0.0/16)
-
-Si deseamos trabajar con la red "host" en ese caso los contenedor **no tienen su propia IP separada**, es como si estuvieran ejecutándose en el host y entonces **usaremos la ip del host** 
 
 Funcionamiento ininterrumpido.
 -----------------------------------------------------------------------------------------------
