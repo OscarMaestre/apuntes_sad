@@ -1,69 +1,33 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="es" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Infraestructura de clave pública o PKI &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/translations.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> Apuntes de Seguridad y alta disponibilidad
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Buscar documentos" />
@@ -71,19 +35,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contenidos:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html">Adopción de pautas de seguridad informática</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
@@ -94,73 +47,32 @@
 <li class="toctree-l1"><a class="reference internal" href="tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Apuntes de Seguridad y alta disponibilidad</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Infraestructura de clave pública o PKI</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/tema_acceso_remoto/pki.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="infraestructura-de-clave-publica-o-pki">
-<h1>Infraestructura de clave pública o PKI<a class="headerlink" href="#infraestructura-de-clave-publica-o-pki" title="Enlazar permanentemente con este título">¶</a></h1>
+             
+  <section id="infraestructura-de-clave-publica-o-pki">
+<h1>Infraestructura de clave pública o PKI<a class="headerlink" href="#infraestructura-de-clave-publica-o-pki" title="Enlazar permanentemente con este título"></a></h1>
 <p>En administración de sistemas suele ser necesario la configuración de mecanismos seguros que impliquen cifrado y confianza. Aunque el proceso que se va a mencionar ahora suele requerir que se pida la intervención de una autoridad de certificación externa en otros casos no va a ser necesario. A continuación se muestra como crear nuestra propia autoridad certificadora que pueda firmar certificados de otros. El objetivo de estos puntos es conseguir lo siguiente:</p>
 <ul class="simple">
 <li><p>Una clave raíz (que estará en un fichero llamado <code class="docutils literal notranslate"><span class="pre">ca.key</span></code>)</p></li>
@@ -171,12 +83,12 @@
 <li><p>Un certificado emitido para un cierto servicio o servidor (fichero <code class="docutils literal notranslate"><span class="pre">cliente.crt</span></code>)</p></li>
 <li><p>Un fichero con números primos precalculados (<code class="docutils literal notranslate"><span class="pre">Precalculados.pem</span></code> )</p></li>
 </ul>
-<div class="section" id="paso-0-instalar-easy-rsa">
-<h2>Paso 0: instalar Easy-RSA<a class="headerlink" href="#paso-0-instalar-easy-rsa" title="Enlazar permanentemente con este título">¶</a></h2>
+<section id="paso-0-instalar-easy-rsa">
+<h2>Paso 0: instalar Easy-RSA<a class="headerlink" href="#paso-0-instalar-easy-rsa" title="Enlazar permanentemente con este título"></a></h2>
 <p>Usando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">easy-rsa</span></code> podremos instalar un software que nos automatizará el proceso de crear una autoridad de certificación con su propio certificado y un certificado de servidor firmador por esa autoridad propia.</p>
-</div>
-<div class="section" id="paso-1-crear-una-autoridad">
-<h2>Paso 1: Crear una autoridad<a class="headerlink" href="#paso-1-crear-una-autoridad" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="paso-1-crear-una-autoridad">
+<h2>Paso 1: Crear una autoridad<a class="headerlink" href="#paso-1-crear-una-autoridad" title="Enlazar permanentemente con este título"></a></h2>
 <p>Usando <code class="docutils literal notranslate"><span class="pre">make-cadir</span> <span class="pre">&lt;directorio&gt;</span></code> podremos crear un directorio con los ficheros de configuración necesarios para crear nuestra propia autoridad de certificacion. Despues entramos en él y editamos el fichero <code class="docutils literal notranslate"><span class="pre">vars</span></code> para indicar los siguientes datos:</p>
 <ul class="simple">
 <li><p>País.</p></li>
@@ -186,38 +98,38 @@
 <li><p>Email.</p></li>
 <li><p>Unidad organizativa.</p></li>
 </ul>
-</div>
-<div class="section" id="paso-2-crear-la-infraestructura-de-claves">
-<h2>Paso 2: crear la infraestructura de claves<a class="headerlink" href="#paso-2-crear-la-infraestructura-de-claves" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="paso-2-crear-la-infraestructura-de-claves">
+<h2>Paso 2: crear la infraestructura de claves<a class="headerlink" href="#paso-2-crear-la-infraestructura-de-claves" title="Enlazar permanentemente con este título"></a></h2>
 <p>Toda autoridad de certificación tiene como mínimo una clave raíz que se necesitará en todos los procesos. Podemos usar el comando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">init-pki</span></code> para construir los ficheros necesarios (pero aún no se generarán las claves).</p>
-</div>
-<div class="section" id="paso-3-construir-los-ficheros-de-la-ca">
-<h2>Paso 3: construir los ficheros de la CA<a class="headerlink" href="#paso-3-construir-los-ficheros-de-la-ca" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="paso-3-construir-los-ficheros-de-la-ca">
+<h2>Paso 3: construir los ficheros de la CA<a class="headerlink" href="#paso-3-construir-los-ficheros-de-la-ca" title="Enlazar permanentemente con este título"></a></h2>
 <p>Con los datos rellenados en el paso 1 y la clave privada del paso 2 se puede crear el certificado raíz de nuestra CA usando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">build-ca</span></code> . Se nos pedirá una clave de acceso para custodiar la clave raíz que se va a generar y se nos pedirá un nombre de usuario o de servidor para incorporar al certificado raíz.</p>
-</div>
-<div class="section" id="paso-4-generar-un-certificado-para-un-servidor">
-<h2>Paso 4: generar un certificado para un servidor<a class="headerlink" href="#paso-4-generar-un-certificado-para-un-servidor" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="paso-4-generar-un-certificado-para-un-servidor">
+<h2>Paso 4: generar un certificado para un servidor<a class="headerlink" href="#paso-4-generar-un-certificado-para-un-servidor" title="Enlazar permanentemente con este título"></a></h2>
 <p>Usando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">build-server-full</span> <span class="pre">&lt;nombre_de_servidor_o_servicio&gt;</span></code> se generarán dos cosas:</p>
 <ul class="simple">
 <li><p>Una clave privada para el servicio (estará en <code class="docutils literal notranslate"><span class="pre">pki/private/&lt;nombre&gt;.key</span></code></p></li>
 <li><p>Un certificado para ese servidor que irá firmado por nuestra CA (estará en <code class="docutils literal notranslate"><span class="pre">pki/issued/&lt;nombre&gt;.crt</span></code></p></li>
 </ul>
-</div>
-<div class="section" id="paso-5-generar-un-certificado-para-un-cliente">
-<h2>Paso 5: generar un certificado para un cliente<a class="headerlink" href="#paso-5-generar-un-certificado-para-un-cliente" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="paso-5-generar-un-certificado-para-un-cliente">
+<h2>Paso 5: generar un certificado para un cliente<a class="headerlink" href="#paso-5-generar-un-certificado-para-un-cliente" title="Enlazar permanentemente con este título"></a></h2>
 <p>Usando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">build-cliente-full</span> <span class="pre">&lt;nombre_de_fichero_cliente&gt;</span></code> se generarán otra vez dos cosas:</p>
 <ul class="simple">
 <li><p>Una clave privada para el cliente (estará en <code class="docutils literal notranslate"><span class="pre">pki/private/&lt;nombre_fichero_cliente&gt;.key</span></code></p></li>
 <li><p>Un certificado para ese cliente que irá firmado por nuestra CA (estará en <code class="docutils literal notranslate"><span class="pre">pki/issued/&lt;cliente&gt;.crt</span></code></p></li>
 </ul>
-</div>
-<div class="section" id="paso-5-precalcular-parametros-de-claves">
-<h2>Paso 5: precalcular parámetros de claves<a class="headerlink" href="#paso-5-precalcular-parametros-de-claves" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="paso-5-precalcular-parametros-de-claves">
+<h2>Paso 5: precalcular parámetros de claves<a class="headerlink" href="#paso-5-precalcular-parametros-de-claves" title="Enlazar permanentemente con este título"></a></h2>
 <p>Cuando se establezca una conexión se van a utilizar algunos números para cifrar los datos. Estos valores pueden tenerse precalculados en un fichero para acelerar el inicio de las conexiones. Esto puede hacerse con el comando <code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">dhparam</span> <span class="pre">-dsaparam</span> <span class="pre">2048</span> <span class="pre">-out</span> <span class="pre">Parametros.pem</span></code></p>
 <p>Este comando genera números primos aceptables para el establecimiento de una conexión, usando 2048 bits como longitud de clave pero evitando (con el parámetro <code class="docutils literal notranslate"><span class="pre">dsaparam</span></code>  una serie de números que no aportan más seguridad).</p>
-</div>
-<div class="section" id="paso-6-configurar-el-servidor-y-arrancarlos">
-<h2>Paso 6: configurar el servidor y arrancarlos<a class="headerlink" href="#paso-6-configurar-el-servidor-y-arrancarlos" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="paso-6-configurar-el-servidor-y-arrancarlos">
+<h2>Paso 6: configurar el servidor y arrancarlos<a class="headerlink" href="#paso-6-configurar-el-servidor-y-arrancarlos" title="Enlazar permanentemente con este título"></a></h2>
 <p>En el servidor podemos crear un fichero como este:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>proto udp
 port <span class="m">1194</span>
@@ -236,54 +148,38 @@ log-append /var/log/openvpn.log
 </pre></div>
 </div>
 <p>Y arrancar OpenVPN con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">openvpn</span> <span class="pre">--config</span> <span class="pre">servidor.conf</span></code></p>
-</div>
-<div class="section" id="paso-7-configurar-el-cliente-y-arrancarlo">
-<h2>Paso 7: configurar el cliente y arrancarlo.<a class="headerlink" href="#paso-7-configurar-el-cliente-y-arrancarlo" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-</div>
+</section>
+<section id="paso-7-configurar-el-cliente-y-arrancarlo">
+<h2>Paso 7: configurar el cliente y arrancarlo.<a class="headerlink" href="#paso-7-configurar-el-cliente-y-arrancarlo" title="Enlazar permanentemente con este título"></a></h2>
+</section>
+</section>
 
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Derechos de autor 2019, Oscar GG.
-
-    </p>
+    <p>&#169; Derechos de autor 2019, Oscar GG.</p>
   </div>
-    
-    
-    
-    Construido con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
-    
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
-    
-    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>. 
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

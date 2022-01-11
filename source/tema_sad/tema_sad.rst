@@ -332,15 +332,88 @@ Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "
 * Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama "bridge" se parece al modo NAT de VirtualBox. 
 * Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Noviembre de 2020 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la red del anfitrión.
 * Overlay: Está pensado para crear lo que Docker llama "enjambres", no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.
-* Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
+* Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el 3modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
 * None: permite deshabilitar la red de un contenedor.
 
 Creando nuestra propia red en Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Podemos crear nuestra propia red para un grupo separado de servidores usando ``sudo docker network create --driver bridge <nombredered>`` . Docker creará una red separada con otro prefijo IP separado (172.18.0.0/16, 172.19.0.0/16)
+Podemos crear nuestra propia red para un grupo separado de servidores usando ``sudo docker network create --driver bridge <nombredered> --subnet <IP/Mascara> `` . Docker creará una red separada con el prefijo IP que hayamos indicado. Por ejemplo, tecleemos esto::
 
-Si deseamos trabajar con la red "host" en ese caso los contenedor **no tienen su propia IP separada**, es como si estuvieran ejecutándose en el host y entonces **usaremos la ip del host** 
+    sudo docker network create --driver bridge red_clientes --subnet 172.30.20.0/24
+
+Si deseamos trabajar con la red "host" en ese caso los contenedor **no tienen su propia IP separada**, es como si estuvieran ejecutándose en el host y entonces **usaremos la ip del host** En este tipo de redes no se crean redes de tipo ``--driver host``. Solo hay una red de tipo host y cuando creemos el contenedor podremos indicar que su red es de tipo host.
+
+Dicho esto, supongamos que queremos crear un contenedor que ejecute Apache y que vaya conectado a la nueva red llamada "red_clientes". El comando sería este::
+
+    sudo docker run --network red_clientes httpd
+
+Si ejecutamos este último comando veremos que Apache utiliza una IP de la red 172.30.20.0.
+
+Cuando hayamos terminado de usar una red podemos borrarla con::
+
+    sudo docker network rm <nombre o id>
+
+Un detalle importante es que no podemos crear dos o más redes en las que las IP se solapen.
+
+Ejercicios de redes Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1) Crea una red de tipo "bridge" que use la dirección 192.168.16.0/24.
+2) Crea una red de tipo "bridge" que use la dirección 10.0.20/24.
+3) Crea una red de tipo "bridge" que use la dirección 10.161.0.0/16.
+4) Crea una red de tipo "bridge" que use la dirección 172.84.128.0/18
+5) Crea una red de tipo "bridge" que use la dirección 10.192.0.0/28
+6) Crea una red de tipo "bridge" que use la dirección 192.168.65.128/26.
+
+
+Soluciones a los ejercicios 
+
+1) Crea una red de tipo "bridge" que use la dirección 192.168.16.0/24::
+
+    sudo docker network create --driver bridge red_1 --subnet 192.168.16.0/24
+    sudo docker network inspect red_1
+
+2) Crea una red de tipo "bridge" que use la dirección 10.0.20/24.:
+
+    sudo docker network create --driver bridge red_2 --subnet 10.0.20/24
+    sudo docker network inspect red_2
+
+3) Crea una red de tipo "bridge" que use la dirección 10.161.0.0/16::
+
+    sudo docker network create --driver bridge red_3 --subnet 10.161.0.0/16
+    sudo docker network inspect red_3
+
+4) Crea una red de tipo "bridge" que use la dirección 172.17.84.0/18::
+
+    sudo docker network create --driver bridge red_4 --subnet 172.84.128.0/18
+    sudo docker network inspect red_4
+
+5) Crea una red de tipo "bridge" que use la dirección 10.192.0.0/28::
+
+    sudo docker network create --driver bridge red_5 --subnet 10.192.0.0/28
+    sudo docker network inspect red_5
+
+6) Crea una red de tipo "bridge" que use la dirección 192.168.65.128/26::
+
+    sudo docker network create --driver bridge red_6 --subnet 192.168.65.128/26
+    sudo docker network inspect red_6
+
+
+Almacenamiento con Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+En Docker podemos crear almacenamiento para los contenedores usando tres posibles elementos:
+
+* Montaje de directorios (*bind mounts* en la terminología de Docker)
+* Almacenamiento en memoria.
+* Volúmenes.
+
+
+Montaje de directorios 
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Esto consiste simplemente en conectar un directorio del "anfitrión" con otro directorio del contenedor Docker.
 
 
 Un ejemplo simple de Docker
