@@ -410,10 +410,23 @@ En Docker podemos crear almacenamiento para los contenedores usando tres posible
 * Volúmenes.
 
 
+
+
 Montaje de directorios 
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Esto consiste simplemente en conectar un directorio del "anfitrión" con otro directorio del contenedor Docker.
+Esto consiste simplemente en conectar un directorio del "anfitrión" con otro directorio del contenedor Docker. 
+
+Por ejemplo, podríamos conectar un directorio del anfitrión llamado ``/home/usuario/web_cliente`` con uno del invitado llamado ``/usr/local/apache2/htdocs`` usando un comando como este (se muestra en varias líneas)::
+
+    sudo docker run --mount type=bind,
+      src=/home/usuario/web_cliente,
+      dst=/usr/local/apache2/htdocs/
+      httpd
+
+Al hacer esto, el servidor web tomará los ficheros del directorio del anfitrión, lo que nos permitirá modificar la web cómodamente.
+
+
 
 
 Un ejemplo simple de Docker
