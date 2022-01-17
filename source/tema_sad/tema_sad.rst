@@ -330,7 +330,7 @@ Conexiones de red en Docker
 Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "redes por defecto" con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con ``sudo docker network ls`` :
 
 * Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama "bridge" se parece al modo NAT de VirtualBox. 
-* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Noviembre de 2020 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la red del anfitrión.
+* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Enero de 2022 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la red del anfitrión.
 * Overlay: Está pensado para crear lo que Docker llama "enjambres", no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.
 * Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el 3modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
 * None: permite deshabilitar la red de un contenedor.
@@ -338,7 +338,7 @@ Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "
 Creando nuestra propia red en Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Podemos crear nuestra propia red para un grupo separado de servidores usando ``sudo docker network create --driver bridge <nombredered> --subnet <IP/Mascara> `` . Docker creará una red separada con el prefijo IP que hayamos indicado. Por ejemplo, tecleemos esto::
+Podemos crear nuestra propia red para un grupo separado de servidores usando ``sudo docker network create --driver bridge <nombredered> --subnet <IP/Mascara>`` . Docker creará una red separada con el prefijo IP que hayamos indicado. Por ejemplo, tecleemos esto::
 
     sudo docker network create --driver bridge red_clientes --subnet 172.30.20.0/24
 
