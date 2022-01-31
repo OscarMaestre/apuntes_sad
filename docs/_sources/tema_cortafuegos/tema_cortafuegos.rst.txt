@@ -426,3 +426,8 @@ Supongamos que nos han asignado una red como 10.xxx.xxx.xx/8. Se han establecido
 
 Resolución
 ~~~~~~~~~~~~~~~~~~
+
+Empezaremos por asignar los parámetros IP al cortafuegos. Una vez hecho eso deberíamos tener ping al interior de la oficina y al router asignado.
+
+
+

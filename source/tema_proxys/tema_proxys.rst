@@ -110,7 +110,18 @@ Squid permite descargarse el código fuente y recompilarlo usando la secuencia t
 2. ``make``
 3. ``make install``
 
-Ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en clase usaremos el comando típico ``sudo apt-get install squid``, que instalará el programa y todas sus dependencias.
+
+* Lo primero que debemos hacer es descargar el código fuente de squid con algo como ``wget http://www.squid-cache.org/Versions/v5/squid-5.3.tar.gz``. Si no tenemos wget lo instalamos con ``sudo apt-get install wget``.
+* Despues descomprimimos el archivo con ``tar -xzf squid-5.3.tar.gz``
+* El programa necesita el compilador ``g++`` y el intérprete ``perl``. Los instalamos con ``sudo apt-get install g++ perl``.
+* Nos metemos en el directorio de squid con ``cd squid-5.3``.
+* Ejecutamos ``./configure``. El programa analizará nuestro sistema y preparará todo para la recompilación de Squid. Si falta algo por instalar nos lo dirá.
+
+Ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en clase usaremos el comando típico ``sudo apt-get install squid``, que instalará el programa y todas sus dependencias. Si hay algún problema probablemente se resuelva despues de actualizar los repositorios e instalar actualizaciones pendientes::
+
+    sudo apt-get install update
+    sudo apt-get install upgrade -y
+    sudo apt-get install squid3
 
 Ficheros de interés
 ~~~~~~~~~~~~~~~~~~~~~
