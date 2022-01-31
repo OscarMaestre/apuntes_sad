@@ -116,8 +116,21 @@ Squid permite descargarse el código fuente y recompilarlo usando la secuencia t
 * El programa necesita el compilador ``g++`` y el intérprete ``perl``. Los instalamos con ``sudo apt-get install g++ perl``.
 * Nos metemos en el directorio de squid con ``cd squid-5.3``.
 * Ejecutamos ``./configure``. El programa analizará nuestro sistema y preparará todo para la recompilación de Squid. Si falta algo por instalar nos lo dirá.
+* Ejecutamos ``make``. Esto reconstruirá el programa desde 0 y lo optimizará para la ejecución en nuestra máquina. Este proceso puede necesitar bastante tiempo.
+* Lo instalamos con ``sudo make install``
+* Una vez hecho esto, Squid se habrá instalado en el directorio ``/usr/local/squid`` y allí tendremos todos los ficheros.
+* Squid se ejecuta con su propio usuario. Debemos crearlo con ``sudo adduser squid``.
+* Squid necesitará un directorio donde dejar los logs. Lo creamos con ``sudo mkdir -p /usr/local/squid/log``. La opción ``-p`` significa "crear con los mismos permisos del directorio padre".
+* Squid necesitará un directorio donde dejar datos durante la ejecución. Lo creamos con ``sudo mkdir -p /usr/local/squid/run``.
+* El usuario ``squid`` debe ser el propietario de los ficheros y directorios donde se instaló el programa. ejecutaremos esto:
 
-Ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en clase usaremos el comando típico ``sudo apt-get install squid``, que instalará el programa y todas sus dependencias. Si hay algún problema probablemente se resuelva despues de actualizar los repositorios e instalar actualizaciones pendientes::
+    * ``sudo chown -R squid:squid /usr/local/squid/log``
+    * ``sudo chown -R squid:squid /usr/local/squid/var``
+    * ``sudo chown -R squid:squid /usr/local/squid/run``
+
+* Para ejecutarlo podemos usar convertirnos en el usuario ``squid`` con ``su squid`` y luego ejecutar ``/usr/local/squid/sbin/squid``. Podremos ver el número de proceso de Squid con ``ps -e  | grep squid``.
+
+Todo este proceso ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en sistemas tipo Debian/Ubuntu también puede usarse ``sudo apt-get install squid``, que instalará el programa y todas sus dependencias. Si hay algún problema probablemente se resuelva despues de actualizar los repositorios e instalar actualizaciones pendientes::
 
     sudo apt-get install update
     sudo apt-get install upgrade -y
