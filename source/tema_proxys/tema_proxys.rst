@@ -328,7 +328,7 @@ Configuración del almacenamiento en la caché de un proxy .
 -----------------------------------------------------------------------------------------------
 En general los valores por defecto de Squid suelen considerarse bastante apropiados, pero pueden modificarse algunos de ellos si se desea obtener más rendimiento.
 
-..code-block:: bash
+.. code-block:: bash
 
     cache_dir ufs /var/spool/squid 20000 64 1024
 
