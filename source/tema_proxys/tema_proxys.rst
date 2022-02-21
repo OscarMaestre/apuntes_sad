@@ -300,9 +300,24 @@ Así, si queremos crear una lista en la que estén los usuarios autenticados pod
 
 .. code-block:: bash
 
+    #El orden en estos ficheros es fundamental
+    #Primero creamos permisos básicos para usuarios
+    #que no tengan que proporcionar una clave de acceso
+    acl marca_permitido src 10.8.0.250
+    acl resto_personas  src 10.8.0.0/24
+    acl periodicos      dstdomain .marca.com .as.com
+
+    #Esto permite a una IP (¿del jefe?) acceder
+    #a periódicos
+    http_access allow marca_permitido periodicos
+    #El jefe también entra en este grupo y también
+    #puede ver otras cosas que no sean periódicos
+    http_access allow resto_personas !periodicos
+
+    #A partir de aquí creamos una configuración de seguridad
+
     #Esto indica que para un esquema de configuración de nivel básico
-    #usaremos el programa basic_ncsa_auth con el fichero de credenciales
-    #/etc/squid/credenciales
+    #usaremos el programa basic_ncsa_auth con el fichero de credenciales /etc/squid/credenciales
     auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales
 
     #Se deben poder autenticar hasta a 10 usuarios a la vez
@@ -323,6 +338,21 @@ Así, si queremos crear una lista en la que estén los usuarios autenticados pod
     #Se deniega el acceso al periodico a 
     #aquellos usuarios que NO estén autenticados
     http_access deny deportes !autenticados
+
+
+
+auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales.txt
+auth_param basic realm   Indique su clave por favor
+auth_param basic children 10
+auth_param basic credentialsttl 4 hours 
+
+acl programadores proxy_auth REQUIRED 
+
+http_access allow programadores 
+http_access deny  resto_personas
+
+
+
 
 Configuración del almacenamiento en la caché de un proxy .
 -----------------------------------------------------------------------------------------------

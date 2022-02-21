@@ -426,9 +426,24 @@ http_access deny bloquear_video
 <li><p>«credentialsttl»: tiempo máximo que se almacena la sesión de alguien antes de volver a pedirle la clave.</p></li>
 </ol>
 <p>Así, si queremos crear una lista en la que estén los usuarios autenticados podríamos configurar y crear todo con algo como esto:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Esto indica que para un esquema de configuración de nivel básico</span>
-<span class="c1">#usaremos el programa basic_ncsa_auth con el fichero de credenciales</span>
-<span class="c1">#/etc/squid/credenciales</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#El orden en estos ficheros es fundamental</span>
+<span class="c1">#Primero creamos permisos básicos para usuarios</span>
+<span class="c1">#que no tengan que proporcionar una clave de acceso</span>
+acl marca_permitido src <span class="m">10</span>.8.0.250
+acl resto_personas  src <span class="m">10</span>.8.0.0/24
+acl periodicos      dstdomain .marca.com .as.com
+
+<span class="c1">#Esto permite a una IP (¿del jefe?) acceder</span>
+<span class="c1">#a periódicos</span>
+http_access allow marca_permitido periodicos
+<span class="c1">#El jefe también entra en este grupo y también</span>
+<span class="c1">#puede ver otras cosas que no sean periódicos</span>
+http_access allow resto_personas !periodicos
+
+<span class="c1">#A partir de aquí creamos una configuración de seguridad</span>
+
+<span class="c1">#Esto indica que para un esquema de configuración de nivel básico</span>
+<span class="c1">#usaremos el programa basic_ncsa_auth con el fichero de credenciales /etc/squid/credenciales</span>
 auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales
 
 <span class="c1">#Se deben poder autenticar hasta a 10 usuarios a la vez</span>
@@ -451,14 +466,20 @@ acl deportes dstdomain .marca.com
 http_access deny deportes !autenticados
 </pre></div>
 </div>
+<p>auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales.txt
+auth_param basic realm   Indique su clave por favor
+auth_param basic children 10
+auth_param basic credentialsttl 4 hours</p>
+<p>acl programadores proxy_auth REQUIRED</p>
+<p>http_access allow programadores
+http_access deny  resto_personas</p>
 </div>
 <div class="section" id="configuracion-del-almacenamiento-en-la-cache-de-un-proxy">
 <h2>Configuración del almacenamiento en la caché de un proxy .<a class="headerlink" href="#configuracion-del-almacenamiento-en-la-cache-de-un-proxy" title="Enlazar permanentemente con este título">¶</a></h2>
 <p>En general los valores por defecto de Squid suelen considerarse bastante apropiados, pero pueden modificarse algunos de ellos si se desea obtener más rendimiento.</p>
-<p>..code-block:: bash</p>
-<blockquote>
-<div><p>cache_dir ufs /var/spool/squid 20000 64 1024</p>
-</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cache_dir ufs /var/spool/squid <span class="m">20000</span> <span class="m">64</span> <span class="m">1024</span>
+</pre></div>
+</div>
 <p>Esta caché acepta hasta 20.000MB de datos organizándonos en 64 directorios de hasta 1024 subdirectorios cada uno</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cache_mem 16MB
 </pre></div>
