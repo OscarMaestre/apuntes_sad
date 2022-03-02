@@ -414,7 +414,7 @@ Una vez configurado el Servidor Web toca configurar Squid. En Squid un "proxy in
 
     http_port 80 accel defaultsite=192.168.1.130 no-vhost
     cache_peer 192.168.1.30 parent 80 0 no-query originserver name=AceleradorWebLocal
-    refresh_pattern $php 2 50% 9
+    refresh_pattern php$ 2 50% 9
 
 ¿Qué significa todo esto?
 
@@ -427,7 +427,7 @@ Para comprobar que esto funciona abre varias pestañas en tu navegador (no vale 
 
 .. WARNING::
 
-   Lo siguiente **es una violación del protocolo HTTP:** Si realmente queremos ignorar a los usuarios que pulsen F5 se puede añadir una opción al final de la línea y dejarla como ``refresh_pattern $php 2 50% 9 ignore-reload`` Con ello, Squid ignorará todas las peticiones de recarga incluso aunque se pulse F5
+   Lo siguiente **es una violación del protocolo HTTP:** Si realmente queremos ignorar a los usuarios que pulsen F5 se puede añadir una opción al final de la línea y dejarla como ``refresh_pattern php$ 2 50% 9 ignore-reload`` Con ello, Squid ignorará todas las peticiones de recarga incluso aunque se pulse F5
 
 Para aprender realmente todo lo que envía y recibe el navegador utiliza las herramientas del desarrollador (usa la tecla F12) y explora las distintas cabeceras que envía Firefox/Chrome/Edge.
 
