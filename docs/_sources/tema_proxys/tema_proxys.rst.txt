@@ -414,13 +414,16 @@ Una vez configurado el Servidor Web toca configurar Squid. En Squid un "proxy in
 
     http_port 80 accel defaultsite=192.168.1.130 no-vhost
     cache_peer 192.168.1.30 parent 80 0 no-query originserver name=AceleradorWebLocal
-    refresh_pattern $php 2 50% 9
+    refresh_pattern -i \.php 2 50% 9
 
 ¿Qué significa todo esto?
 
 * La primera línea indica que Squid va aceptar peticiones en el puerto 80 pero esto va a servir para acelerar un sitio web en el que no hay hosting virtual.
 * La segunda línea indica que vamos a cachear tales peticiones conectando con el sitio web principal ("parent) y que cuando se conecten a nuestro puerto 80 no nos conectaremos a ningún otro puerto ICP (sirve para proxies encadenados), y que como no haremos encadenamiento de proxies no hay que hacer consultas ("no-query") sino que esto es el servidor real de origen ("originserver"). A este servidor cacheado le hemos puesto un nombre que luego podríamos proteger con ACLs.
 * La tercera línea indica que cualquier petición que termine en PHP debe ser cacheada durante al menos 2 minutos y como máximo 9 minutos. Si alguna petición *no lleva indicado el tiempo máximo por parte del navegador* se asume que se conserva en caché hasta que llega a la mitad de su edad. Por ejemplo si alguien pidió un PHP hace 6 horas y han pasado 3 se considera que el objeto ya no debe estar en caché.
+
+.. WARNING::
+   En algunos Squid hay una línea como esta en el fichero ``/etc/squid.conf`` que hace que por defecto 
 
 Para comprobar que esto funciona abre varias pestañas en tu navegador (no vale pulsar F5 porque el navegador solicita entonces actualizar las cachés) y verás que todas llevan la misma hora de generación.
 

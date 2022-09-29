@@ -533,7 +533,7 @@ http_access deny  resto_personas</p>
 <p>Una vez configurado el Servidor Web toca configurar Squid. En Squid un «proxy inverso» se denomina un «acelerador». En realidad, la configuración básica es muy sencilla y aun así ya ofrece mucha mejora en el rendimiento:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>http_port <span class="m">80</span> accel <span class="nv">defaultsite</span><span class="o">=</span><span class="m">192</span>.168.1.130 no-vhost
 cache_peer <span class="m">192</span>.168.1.30 parent <span class="m">80</span> <span class="m">0</span> no-query originserver <span class="nv">name</span><span class="o">=</span>AceleradorWebLocal
-refresh_pattern <span class="nv">$php</span> <span class="m">2</span> <span class="m">50</span>% <span class="m">9</span>
+refresh_pattern -i <span class="se">\.</span>php <span class="m">2</span> <span class="m">50</span>% <span class="m">9</span>
 </pre></div>
 </div>
 <p>¿Qué significa todo esto?</p>
@@ -542,6 +542,10 @@ refresh_pattern <span class="nv">$php</span> <span class="m">2</span> <span clas
 <li><p>La segunda línea indica que vamos a cachear tales peticiones conectando con el sitio web principal («parent) y que cuando se conecten a nuestro puerto 80 no nos conectaremos a ningún otro puerto ICP (sirve para proxies encadenados), y que como no haremos encadenamiento de proxies no hay que hacer consultas («no-query») sino que esto es el servidor real de origen («originserver»). A este servidor cacheado le hemos puesto un nombre que luego podríamos proteger con ACLs.</p></li>
 <li><p>La tercera línea indica que cualquier petición que termine en PHP debe ser cacheada durante al menos 2 minutos y como máximo 9 minutos. Si alguna petición <em>no lleva indicado el tiempo máximo por parte del navegador</em> se asume que se conserva en caché hasta que llega a la mitad de su edad. Por ejemplo si alguien pidió un PHP hace 6 horas y han pasado 3 se considera que el objeto ya no debe estar en caché.</p></li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>En algunos Squid hay una línea como esta en el fichero <code class="docutils literal notranslate"><span class="pre">/etc/squid.conf</span></code> que hace que por defecto</p>
+</div>
 <p>Para comprobar que esto funciona abre varias pestañas en tu navegador (no vale pulsar F5 porque el navegador solicita entonces actualizar las cachés) y verás que todas llevan la misma hora de generación.</p>
 <div class="admonition warning">
 <p class="admonition-title">Advertencia</p>
