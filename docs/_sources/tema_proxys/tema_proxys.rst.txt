@@ -430,7 +430,7 @@ Para comprobar que esto funciona abre varias pestañas en tu navegador (no vale 
 
 .. WARNING::
 
-   Lo siguiente **es una violación del protocolo HTTP:** Si realmente queremos ignorar a los usuarios que pulsen F5 se puede añadir una opción al final de la línea y dejarla como ``refresh_pattern $php 2 50% 9 ignore-reload`` Con ello, Squid ignorará todas las peticiones de recarga incluso aunque se pulse F5
+   Lo siguiente **es una violación del protocolo HTTP:** Si realmente queremos ignorar a los usuarios que pulsen F5 se puede añadir una opción al final de la línea y dejarla como ``refresh_pattern php$ 2 50% 9 ignore-reload`` Con ello, Squid ignorará todas las peticiones de recarga incluso aunque se pulse F5
 
 Para aprender realmente todo lo que envía y recibe el navegador utiliza las herramientas del desarrollador (usa la tecla F12) y explora las distintas cabeceras que envía Firefox/Chrome/Edge.
 

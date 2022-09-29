@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="es" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Instalación y configuración de servidores proxy &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
   
@@ -16,10 +16,7 @@
 
   
   
-
   
-  
-
   
 
   
@@ -32,6 +29,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
         <script src="../_static/translations.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -54,7 +52,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Apuntes de Seguridad y alta disponibilidad
+            <a href="../index.html" class="icon icon-home" alt="Inicio de Documentación"> Apuntes de Seguridad y alta disponibilidad
           
 
           
@@ -161,8 +159,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -174,7 +170,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/tema_proxys/tema_proxys.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
           
         
@@ -533,7 +529,11 @@ http_access deny  resto_personas</p>
 <p>Una vez configurado el Servidor Web toca configurar Squid. En Squid un «proxy inverso» se denomina un «acelerador». En realidad, la configuración básica es muy sencilla y aun así ya ofrece mucha mejora en el rendimiento:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>http_port <span class="m">80</span> accel <span class="nv">defaultsite</span><span class="o">=</span><span class="m">192</span>.168.1.130 no-vhost
 cache_peer <span class="m">192</span>.168.1.30 parent <span class="m">80</span> <span class="m">0</span> no-query originserver <span class="nv">name</span><span class="o">=</span>AceleradorWebLocal
+<<<<<<< HEAD
 refresh_pattern -i <span class="se">\.</span>php <span class="m">2</span> <span class="m">50</span>% <span class="m">9</span>
+=======
+refresh_pattern php$ <span class="m">2</span> <span class="m">50</span>% <span class="m">9</span>
+>>>>>>> 20177507793d066165d6f39fed6fed4d2e62cb55
 </pre></div>
 </div>
 <p>¿Qué significa todo esto?</p>
@@ -549,7 +549,7 @@ refresh_pattern -i <span class="se">\.</span>php <span class="m">2</span> <span 
 <p>Para comprobar que esto funciona abre varias pestañas en tu navegador (no vale pulsar F5 porque el navegador solicita entonces actualizar las cachés) y verás que todas llevan la misma hora de generación.</p>
 <div class="admonition warning">
 <p class="admonition-title">Advertencia</p>
-<p>Lo siguiente <strong>es una violación del protocolo HTTP:</strong> Si realmente queremos ignorar a los usuarios que pulsen F5 se puede añadir una opción al final de la línea y dejarla como <code class="docutils literal notranslate"><span class="pre">refresh_pattern</span> <span class="pre">$php</span> <span class="pre">2</span> <span class="pre">50%</span> <span class="pre">9</span> <span class="pre">ignore-reload</span></code> Con ello, Squid ignorará todas las peticiones de recarga incluso aunque se pulse F5</p>
+<p>Lo siguiente <strong>es una violación del protocolo HTTP:</strong> Si realmente queremos ignorar a los usuarios que pulsen F5 se puede añadir una opción al final de la línea y dejarla como <code class="docutils literal notranslate"><span class="pre">refresh_pattern</span> <span class="pre">php$</span> <span class="pre">2</span> <span class="pre">50%</span> <span class="pre">9</span> <span class="pre">ignore-reload</span></code> Con ello, Squid ignorará todas las peticiones de recarga incluso aunque se pulse F5</p>
 </div>
 <p>Para aprender realmente todo lo que envía y recibe el navegador utiliza las herramientas del desarrollador (usa la tecla F12) y explora las distintas cabeceras que envía Firefox/Chrome/Edge.</p>
 </div>
@@ -567,29 +567,37 @@ refresh_pattern -i <span class="se">\.</span>php <span class="m">2</span> <span 
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../tema_lopd/tema_lopd.html" class="btn btn-neutral float-right" title="Legislación y normas sobre seguridad" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../tema_sad/tema_sad.html" class="btn btn-neutral float-left" title="Implantación de soluciones de alta disponibilidad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+      
+        <a href="../tema_lopd/tema_lopd.html" class="btn btn-neutral float-right" title="Legislación y normas sobre seguridad" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../tema_sad/tema_sad.html" class="btn btn-neutral float-left" title="Implantación de soluciones de alta disponibilidad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Anterior</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Derechos de autor 2019, Oscar GG.
+        
+        &copy; Copyright 2019, Oscar GG
 
     </p>
   </div>
     
     
     
-    Construido con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    Construido con <a href="http://sphinx-doc.org/">Sphinx</a> usando un
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">tema</a>
     
     proporcionado por <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 
