@@ -345,6 +345,7 @@ Cuando se trabaja con claves públicas todo se guarda en un "almacén de claves"
 
 Listas de control de acceso.
 -----------------------------------------------------------------------------------------------
+Antes de empezar instala las herramientas para ACLs (Access Control Lists) en el caso de que no las tuvieras. El comando necesario es ``sudo apt-get install acl``
 
 En los sistemas UNIX (como GNU/Linux) tradicionalmente se han usado permisos basados en usuarios y grupos. Así, cuando se crear un usuario (con ``sudo adduser nombreusuario``) tradicionamente se crea un grupo con el mismo nombre y en el que está solo ese usuario.
 
