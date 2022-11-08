@@ -213,6 +213,7 @@ En general, en todos los casos necesitamos un mecanismo para **determinar qué c
 
 * Podemos "abrir puertos" en el cortafuegos con NAT usando reglas como esta en la tabla que haga NAT: ``sudo nft add rule ip tablaNAT natEntrada tcp dport 80 dnat to 192.168.100.10:80`` que significa algo como "cuando llegue una conexión al puerto 80 de la ip de este cortafuegos redirigir la conexión hacie al puerto 80 de la IP 192.168.100.10"
 
+* Podemos poner límites o "cuotas". Para poner un límite y por ejemplo no aceptar más de 100MBytes descargados haremos algo como ``tcp sport {80,443} quota until 100 mbytes accept``. Es importante recordar que el orden de esta regla puede ser muy importante.
 
 Acciones sobre paquetes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

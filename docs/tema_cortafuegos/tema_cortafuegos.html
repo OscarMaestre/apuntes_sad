@@ -376,6 +376,7 @@
 </div></blockquote>
 </li>
 <li><p>Podemos «abrir puertos» en el cortafuegos con NAT usando reglas como esta en la tabla que haga NAT: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">tablaNAT</span> <span class="pre">natEntrada</span> <span class="pre">tcp</span> <span class="pre">dport</span> <span class="pre">80</span> <span class="pre">dnat</span> <span class="pre">to</span> <span class="pre">192.168.100.10:80</span></code> que significa algo como «cuando llegue una conexión al puerto 80 de la ip de este cortafuegos redirigir la conexión hacie al puerto 80 de la IP 192.168.100.10»</p></li>
+<li><p>Podemos poner límites o «cuotas». Para poner un límite y por ejemplo no aceptar más de 100MBytes descargados haremos algo como <code class="docutils literal notranslate"><span class="pre">tcp</span> <span class="pre">sport</span> <span class="pre">{80,443}</span> <span class="pre">quota</span> <span class="pre">until</span> <span class="pre">100</span> <span class="pre">mbytes</span> <span class="pre">accept</span></code>. Es importante recordar que el orden de esta regla puede ser muy importante.</p></li>
 </ul>
 </div>
 <div class="section" id="acciones-sobre-paquetes">
