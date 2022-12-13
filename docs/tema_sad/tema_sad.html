@@ -346,7 +346,7 @@
         <span class="l l-Scalar l-Scalar-Plain">addresses</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">10.8.100.110/24</span><span class="p p-Indicator">]</span>
             <span class="nt">gateway4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.8.0.254</span>
             <span class="nt">nameservers</span><span class="p">:</span>
-            <span class="nt">addresses</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">10.1.0.1</span><span class="p p-Indicator">,</span> <span class="nv">8.8.8.8</span><span class="p p-Indicator">]</span>
+              <span class="nt">addresses</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">10.1.0.1</span><span class="p p-Indicator">,</span> <span class="nv">8.8.8.8</span><span class="p p-Indicator">]</span>
 </pre></div>
 </div>
 <p>Podemos configurar el <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> de esta manera</p>
@@ -356,13 +356,13 @@
 <span class="c1">#nuestro fichero de configuración de netplan</span>
 <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span> <span class="s2">&quot;H:/oscar/maquinas/compartida_vagrant&quot;</span><span class="p">,</span> <span class="s2">&quot;/vagrant_data&quot;</span>
 <span class="c1">#Esto copiará el fichero (¡no se puede hacer directamente en el fichero /etc</span>
-<span class="c1">#ya que la copia la hace un usuario sin permisos)</span>
+<span class="c1">#ya que esta copia la hace un usuario sin permisos)</span>
 <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="ss">source</span><span class="p">:</span> <span class="s2">&quot;C:/midirectorio/minetplan.yaml&quot;</span><span class="p">,</span> <span class="ss">destination</span><span class="p">:</span> <span class="s2">&quot;/vagrant_data/00-installer-config.yaml&quot;</span>
 <span class="c1">#Y esto pone el fichero de la máquina en /etc (como esto sí lo ejecuta un</span>
 <span class="c1">#usuario con permisos sí es posible poner cosas en /etc)</span>
 <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="o">&lt;&lt;-</span><span class="dl">SHELL</span>
 <span class="sh">    #Borramos el fichero viejo de netplan</span>
-<span class="sh">    #y pone el que antes se inyectó en la máquina</span>
+<span class="sh">    #y ponemos el que antes se inyectó en la máquina</span>
 <span class="sh">    cp /vagrant_data/00-installer-config.yaml /etc/netplan/00-installer-config.yaml</span>
 <span class="sh">    #Y por supuesto aplicamos los cambios</span>
 <span class="sh">    netplan apply</span>

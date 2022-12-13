@@ -153,7 +153,7 @@ Supongamos que tenemos un fichero de ``netplan`` como este. Supongamos que :
             addresses: [10.8.100.110/24]
                 gateway4: 10.8.0.254
                 nameservers:
-                addresses: [10.1.0.1, 8.8.8.8]
+                  addresses: [10.1.0.1, 8.8.8.8]
 
 Podemos configurar el ``Vagrantfile`` de esta manera
 
@@ -166,13 +166,13 @@ Podemos configurar el ``Vagrantfile`` de esta manera
     #nuestro fichero de configuración de netplan
     config.vm.synced_folder "H:/oscar/maquinas/compartida_vagrant", "/vagrant_data"
     #Esto copiará el fichero (¡no se puede hacer directamente en el fichero /etc
-    #ya que la copia la hace un usuario sin permisos)
+    #ya que esta copia la hace un usuario sin permisos)
     config.vm.provision "file", source: "C:/midirectorio/minetplan.yaml", destination: "/vagrant_data/00-installer-config.yaml"
     #Y esto pone el fichero de la máquina en /etc (como esto sí lo ejecuta un
     #usuario con permisos sí es posible poner cosas en /etc)
     config.vm.provision "shell", inline: <<-SHELL
         #Borramos el fichero viejo de netplan
-        #y pone el que antes se inyectó en la máquina
+        #y ponemos el que antes se inyectó en la máquina
         cp /vagrant_data/00-installer-config.yaml /etc/netplan/00-installer-config.yaml
         #Y por supuesto aplicamos los cambios
         netplan apply
