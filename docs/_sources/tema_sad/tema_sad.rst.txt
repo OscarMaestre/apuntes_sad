@@ -130,17 +130,56 @@ Por defecto, las máquinas virtuales tienen una sola tarjeta en modo "NAT". A me
     config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1", guest_ip:"10.0.2.15"
 
     
+Operaciones con el interior de la máquina: cambiar la IP a una tarjeta pública
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pero podemos crear una máquina en modo puente poniendo en el ``Vagrantfile`` algo como esto que crea una tarjeta en modo puente asociada a la tarjeta ``enp0s25`` y luego obliga a que en cada arranque se configure la IP, la máscara y la puerta de enlace (obsérvese que ademas no usa ``netplan`` , aunque podría usarse si es necesario).
+Es posible copiar un fichero desde el anfitrión al interior de la máquina virtual usando esto
+
+.. code-block:: ruby
+
+    config.vm.provision "file", source: "C:/archivo_con_slashes.txt", destination: "/vagrant_compartida"
+
+Podemos aprovecharnos de esta técnica e insertar ficheros de configuración ``netplan`` dentro de la máquina virtual y así por ejemplo configurar tarjetas en modo puente con los datos IP que queramos.
+
+Supongamos que tenemos un fichero de ``netplan`` como este. Supongamos que :
+
+.. code-block:: yaml
+
+    network:
+    version: 2
+    ethernets:
+        #¡Cuidado! El nombre de la tarjeta IMPORTA
+        enp0s8:#Nombre de la tarjeta a configurar
+            addresses: [10.8.100.110/24]
+                gateway4: 10.8.0.254
+                nameservers:
+                addresses: [10.1.0.1, 8.8.8.8]
+
+Podemos configurar el ``Vagrantfile`` de esta manera
 
 .. code-block:: ruby
     
-    config.vm.network "public_network", bridge:"enp0s25"
-    config.vm.provision "shell",
-        run:"always",
-        inline:"ifconfig enp0s3 192.168.1.41 netmask 255.255.255.0; route add default gw 192.168.1.1"
 
-Si estamos en Windows deberemos poner en ``bridge`` el nombre de la tarjeta de red a la que queramos vincular la máquina virtual. Probablemente en Windows el nombre del "bridge" o tarjeta de red sea algo como *"Conexión de área local"*  o  *"Conexión de área local 1"* .
+    #Esto añade una segunda tarjeta de red, Ubuntu suele llamarla "enp0s8"
+    config.vm.network "public_network"
+    #Necesitaremos una carpeta compartida donde inyectar
+    #nuestro fichero de configuración de netplan
+    config.vm.synced_folder "H:/oscar/maquinas/compartida_vagrant", "/vagrant_data"
+    #Esto copiará el fichero (¡no se puede hacer directamente en el fichero /etc
+    #ya que la copia la hace un usuario sin permisos)
+    config.vm.provision "file", source: "C:/midirectorio/minetplan.yaml", destination: "/vagrant_data/00-installer-config.yaml"
+    #Y esto pone el fichero de la máquina en /etc (como esto sí lo ejecuta un
+    #usuario con permisos sí es posible poner cosas en /etc)
+    config.vm.provision "shell", inline: <<-SHELL
+        #Borramos el fichero viejo de netplan
+        #y pone el que antes se inyectó en la máquina
+        cp /vagrant_data/00-installer-config.yaml /etc/netplan/00-installer-config.yaml
+        #Y por supuesto aplicamos los cambios
+        netplan apply
+    SHELL
+    
+
+Cuidado: si estamos en Windows y queremos usar una opciónd de Vagrant llamada ``bridge`` deberemos poner en ``bridge`` el nombre de la tarjeta de red a la que queramos vincular la máquina virtual. Probablemente en Windows el nombre del "bridge" o tarjeta de red sea algo como *"Conexión de área local"*  o  *"Conexión de área local 1"* .
 
 También podemos hacer que una cierta máquina instale software en el momento de ser recuperada haciendo algo como esto
 

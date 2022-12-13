@@ -100,6 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#configuracion-y-utilizacion-de-maquinas-virtuales">Configuración y utilización de maquinas virtuales.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#alta-disponibilidad-y-virtualizacion">Alta disponibilidad y virtualización.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#el-fichero-vagrantfile">El fichero <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operaciones-con-el-interior-de-la-maquina-cambiar-la-ip-a-una-tarjeta-publica">Operaciones con el interior de la máquina: cambiar la IP a una tarjeta pública</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#simulacion-de-servicios-con-virtualizacion">Simulación de servicios con virtualización.</a></li>
@@ -328,14 +329,47 @@
 <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="ss">guest</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="ss">host</span><span class="p">:</span> <span class="mi">8080</span><span class="p">,</span> <span class="ss">host_ip</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="ss">guest_ip</span><span class="p">:</span><span class="s2">&quot;10.0.2.15&quot;</span>
 </pre></div>
 </div>
-<p>Pero podemos crear una máquina en modo puente poniendo en el <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> algo como esto que crea una tarjeta en modo puente asociada a la tarjeta <code class="docutils literal notranslate"><span class="pre">enp0s25</span></code> y luego obliga a que en cada arranque se configure la IP, la máscara y la puerta de enlace (obsérvese que ademas no usa <code class="docutils literal notranslate"><span class="pre">netplan</span></code> , aunque podría usarse si es necesario).</p>
-<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span><span class="p">,</span> <span class="ss">bridge</span><span class="p">:</span><span class="s2">&quot;enp0s25&quot;</span>
-<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-    <span class="ss">run</span><span class="p">:</span><span class="s2">&quot;always&quot;</span><span class="p">,</span>
-    <span class="ss">inline</span><span class="p">:</span><span class="s2">&quot;ifconfig enp0s3 192.168.1.41 netmask 255.255.255.0; route add default gw 192.168.1.1&quot;</span>
+</div>
+<div class="section" id="operaciones-con-el-interior-de-la-maquina-cambiar-la-ip-a-una-tarjeta-publica">
+<h3>Operaciones con el interior de la máquina: cambiar la IP a una tarjeta pública<a class="headerlink" href="#operaciones-con-el-interior-de-la-maquina-cambiar-la-ip-a-una-tarjeta-publica" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Es posible copiar un fichero desde el anfitrión al interior de la máquina virtual usando esto</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="ss">source</span><span class="p">:</span> <span class="s2">&quot;C:/archivo_con_slashes.txt&quot;</span><span class="p">,</span> <span class="ss">destination</span><span class="p">:</span> <span class="s2">&quot;/vagrant_compartida&quot;</span>
 </pre></div>
 </div>
-<p>Si estamos en Windows deberemos poner en <code class="docutils literal notranslate"><span class="pre">bridge</span></code> el nombre de la tarjeta de red a la que queramos vincular la máquina virtual. Probablemente en Windows el nombre del «bridge» o tarjeta de red sea algo como <em>«Conexión de área local»</em>  o  <em>«Conexión de área local 1»</em> .</p>
+<p>Podemos aprovecharnos de esta técnica e insertar ficheros de configuración <code class="docutils literal notranslate"><span class="pre">netplan</span></code> dentro de la máquina virtual y así por ejemplo configurar tarjetas en modo puente con los datos IP que queramos.</p>
+<p>Supongamos que tenemos un fichero de <code class="docutils literal notranslate"><span class="pre">netplan</span></code> como este. Supongamos que :</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">network</span><span class="p">:</span>
+<span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="nt">ethernets</span><span class="p">:</span>
+    <span class="c1">#¡Cuidado! El nombre de la tarjeta IMPORTA</span>
+    <span class="l l-Scalar l-Scalar-Plain">enp0s8:#Nombre de la tarjeta a configurar</span>
+        <span class="l l-Scalar l-Scalar-Plain">addresses</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">10.8.100.110/24</span><span class="p p-Indicator">]</span>
+            <span class="nt">gateway4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.8.0.254</span>
+            <span class="nt">nameservers</span><span class="p">:</span>
+            <span class="nt">addresses</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">10.1.0.1</span><span class="p p-Indicator">,</span> <span class="nv">8.8.8.8</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Podemos configurar el <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> de esta manera</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="c1">#Esto añade una segunda tarjeta de red, Ubuntu suele llamarla &quot;enp0s8&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span>
+<span class="c1">#Necesitaremos una carpeta compartida donde inyectar</span>
+<span class="c1">#nuestro fichero de configuración de netplan</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span> <span class="s2">&quot;H:/oscar/maquinas/compartida_vagrant&quot;</span><span class="p">,</span> <span class="s2">&quot;/vagrant_data&quot;</span>
+<span class="c1">#Esto copiará el fichero (¡no se puede hacer directamente en el fichero /etc</span>
+<span class="c1">#ya que la copia la hace un usuario sin permisos)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="ss">source</span><span class="p">:</span> <span class="s2">&quot;C:/midirectorio/minetplan.yaml&quot;</span><span class="p">,</span> <span class="ss">destination</span><span class="p">:</span> <span class="s2">&quot;/vagrant_data/00-installer-config.yaml&quot;</span>
+<span class="c1">#Y esto pone el fichero de la máquina en /etc (como esto sí lo ejecuta un</span>
+<span class="c1">#usuario con permisos sí es posible poner cosas en /etc)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="o">&lt;&lt;-</span><span class="dl">SHELL</span>
+<span class="sh">    #Borramos el fichero viejo de netplan</span>
+<span class="sh">    #y pone el que antes se inyectó en la máquina</span>
+<span class="sh">    cp /vagrant_data/00-installer-config.yaml /etc/netplan/00-installer-config.yaml</span>
+<span class="sh">    #Y por supuesto aplicamos los cambios</span>
+<span class="sh">    netplan apply</span>
+<span class="dl">SHELL</span>
+</pre></div>
+</div>
+<p>Cuidado: si estamos en Windows y queremos usar una opciónd de Vagrant llamada <code class="docutils literal notranslate"><span class="pre">bridge</span></code> deberemos poner en <code class="docutils literal notranslate"><span class="pre">bridge</span></code> el nombre de la tarjeta de red a la que queramos vincular la máquina virtual. Probablemente en Windows el nombre del «bridge» o tarjeta de red sea algo como <em>«Conexión de área local»</em>  o  <em>«Conexión de área local 1»</em> .</p>
 <p>También podemos hacer que una cierta máquina instale software en el momento de ser recuperada haciendo algo como esto</p>
 <div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="o">&lt;&lt;-</span><span class="dl">SHELL</span>
 <span class="sh">    apt-get update</span>
