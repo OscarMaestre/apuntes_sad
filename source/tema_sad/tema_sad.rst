@@ -600,7 +600,8 @@ En Docker podemos crear almacenamiento para los contenedores usando tres posible
 Montaje de directorios 
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Esto consiste simplemente en conectar un directorio del "anfitrión" con otro directorio del contenedor Docker. 
+Esto consiste simplemente en conectar un directorio del "anfitrión" con otro directorio del contenedor Docker. Los directorios que usemos son *parte de nuestro sistema operativo anfitrión* así que si algún proceso del sistema operativo los modifica sin querer, nuestro contenedor se verá afectado. Por otro lado, un proceso Docker maligno podría modificar los archivos del sistema operativo anfitrión, lo que también es un riesgo para la seguridad. Los directorios pueden crearse simplemente con ``mkdir`` y montarse en cualquier contenedor en ejecución.
+
 
 Por ejemplo, podríamos conectar un directorio del anfitrión llamado ``/home/usuario/web_cliente`` con uno del invitado llamado ``/usr/local/apache2/htdocs`` usando un comando como este (se muestra en varias líneas)::
 
@@ -609,11 +610,34 @@ Por ejemplo, podríamos conectar un directorio del anfitrión llamado ``/home/us
       dst=/usr/local/apache2/htdocs/
       httpd
 
-Al hacer esto, el servidor web tomará los ficheros del directorio del anfitrión, lo que nos permitirá modificar la web cómodamente.
+Al hacer esto, el servidor web tomará los ficheros del directorio del anfitrión, lo que nos permitirá modificar la web cómodamente. 
+
+
+Almacenamiento en memoria
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Docker puede usar un almacenamiento de tipo ``tmpfs`` que aloja los archivos en memoria. Esto es especialmente rápido y sobre todo útil para almacenar secretos solo para estos dos casos de uso. Si se necesita almacenamiento lo más seguro es que se desee usar directorios o volúmenes.
+
+Volúmenes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Al contrario que los directorios montados, son archivos *gestionados por Docker.* Esto los hace más seguros y más eficientes a la hora de trabajar con contenedores. Por ello, la documentación oficial de Docker recomienda trabajar con ellos. Para los volúmenes usaremos estos comandos:
+
+* ``sudo docker volume create <nombre_volumen>`` para crear un volumen.
+* ``sudo docker volume ls`` para ver los volúmenes creados.
+* ``sudo docker volume rm <nombre_volumen>`` para borrar un volumen.
+* ``sudo docker volume prune`` borra **todos los contenedores** que no estén conectados a un contenedor. Usar con cuidado.
+
+
+Usando volúmenes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
+Podemos arrancar un contenedor cualquiera y ofrecerle espacio de almacenamiento con la opción ``--volume <nombre_volumen>:/ruta`` . Esto hará que el contenedor pueda acceder a ``/ruta``, por ejemplo::
 
+    sudo docker create --volume -it mi_volumen01:/app ubuntu
+
+Con esto tendremos un contenedor Ubuntu que puede guardar cosas en el directorio /app
+ 
 Un ejemplo simple de Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -706,7 +730,7 @@ Instalación y configuración de soluciones de alta disponibilidad.
 
 
 Ejercicio: recuperando una web con Vagrant
-================================================================================
+-------------------------------------------------------------------
 
 Una empresa desea poder recuperar su sitio web con rapidez, por lo que ha decidido intentar automatizar la recuperación con Vagrant. Su web tiene un solo archivo, llamado ``index.html`` y su contenido es el siguiente:
 

@@ -1,5 +1,6 @@
 {
     "restructuredtext.confPath": "",
     "restructuredtext.linter.disabled": true,
-    "restructuredtext.preview.docutil.disabled": true
+    "restructuredtext.preview.docutil.disabled": true,
+    "esbonio.sphinx.confDir": ""
 }
