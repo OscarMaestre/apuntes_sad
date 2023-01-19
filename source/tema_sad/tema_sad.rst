@@ -663,9 +663,10 @@ En el ejemplo siguiente deseamos disponer de una pequeña base de datos almacena
 
 * Nombre de la base de datos: ventas.
 * Tabla:
-    ** Nombre: clientes.
-    ** Campo dni, de tipo varchar(10) y clave primaria.
-    ** Campo nombre, de tipo varchar(80).
+  
+    * Nombre: clientes.
+    * Campo dni, de tipo varchar(10) y clave primaria.
+    * Campo nombre, de tipo varchar(80).
 
 En la única tabla de esta base de datos almacenaremos estos dos clientes:
 
@@ -677,6 +678,7 @@ En primer lugar, necesitamos el SQL que meteremos dentro del servidor y que nos 
 .. code-block:: sql
 
     use ventas;
+    create table clientes (dni varchar(10), nombre varchar(40));
     insert into clientes values ('5111222C', 'Juan Ruiz');
     insert into clientes values ('5222333Z', 'Carmen Diaz');
 
@@ -697,7 +699,10 @@ Si ahora ejecutamos ``sudo docker images`` podremos ver nuestra imagen. Una vez 
 El comando anterior lanza el servidor de base de datos accesible solo en nuestro equipo (no hemos expuesto puertos ni nada por el estilo) y si queremos podemos consultar estos datos averiguando la ip de nuestro contenedor y usando un cliente como ``mysql -u admin -h 172.17.0.2 -p``. Se nos preguntará la clave del usuario "admin" (hemos puesto arriba "1234") y podremos usarla.
 
 
+Ejercicio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Pensar alguna manera de usar imágenes y contenedores para conseguir que los datos sean **persistentes** . El objetivo es que cuando se modifiquen los datos, dichos datos pueda estar disponibles para algún otro sistema MySQL.
 
 
 

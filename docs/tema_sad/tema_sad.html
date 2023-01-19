@@ -40,7 +40,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Índice:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html">Adopción de pautas de seguridad informática</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
@@ -87,6 +87,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#usando-volumenes">Usando volúmenes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#un-ejemplo-simple-de-docker">Un ejemplo simple de Docker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#un-ejemplo-mas-avanzado-de-docker-usando-mysql">Un ejemplo más avanzado de Docker usando MySQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ejercicio">Ejercicio</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#funcionamiento-ininterrumpido">Funcionamiento ininterrumpido.</a></li>
@@ -581,9 +582,9 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 <p>Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres «redes por defecto» con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">network</span> <span class="pre">ls</span></code> :</p>
 <ul class="simple">
 <li><p>Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama «bridge» se parece al modo NAT de VirtualBox.</p></li>
-<li><p>Host: Se parecen al modo «puente» de VirtualBox. Un contenedor en modo «red host» no tiene su propio sistema de red, sino que usa el del host. <strong>A fecha de Enero de 2022 este sistema no funciona en Docker para Windows.</strong> Este sistema de red permite a los contenedores compartir la red del anfitrión.</p></li>
+<li><p>Host: Se parecen al modo «puente» de VirtualBox. Un contenedor en modo «red host» no tiene su propio sistema de red, sino que usa el del host. <strong>A fecha de Enero de 2023 este sistema no funciona en Docker para Windows.</strong> Este sistema de red permite a los contenedores compartir la tarjeta de red del anfitrión. Esto significa que es necesario poner IP a los contenedores, en el caso de que la necesiten.</p></li>
 <li><p>Overlay: Está pensado para crear lo que Docker llama «enjambres», no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.</p></li>
-<li><p>Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en «modo host» en el 3modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).</p></li>
+<li><p>Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en «modo host» en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).</p></li>
 <li><p>None: permite deshabilitar la red de un contenedor.</p></li>
 </ul>
 </section>
@@ -718,14 +719,16 @@ ENTRYPOINT <span class="o">[</span><span class="s2">&quot;apachectl&quot;</span>
 <section id="un-ejemplo-mas-avanzado-de-docker-usando-mysql">
 <h3>Un ejemplo más avanzado de Docker usando MySQL<a class="headerlink" href="#un-ejemplo-mas-avanzado-de-docker-usando-mysql" title="Enlace permanente a este encabezado"></a></h3>
 <p>En el ejemplo siguiente deseamos disponer de una pequeña base de datos almacenada dentro de un contenedor que ejecuta MySQL. En primer lugar, debemos saber que MySQL es una base de datos cliente/servidor y que dado que queremos ofrecer un conjunto de datos lo que haremos será usar una imagen Docker que ejecute el servidor MySQL con una base de datos como la siguiente:</p>
-<ul class="simple">
+<ul>
 <li><p>Nombre de la base de datos: ventas.</p></li>
-<li><dl class="simple">
-<dt>Tabla:</dt><dd><p>** Nombre: clientes.
-** Campo dni, de tipo varchar(10) y clave primaria.
-** Campo nombre, de tipo varchar(80).</p>
-</dd>
-</dl>
+<li><p>Tabla:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Nombre: clientes.</p></li>
+<li><p>Campo dni, de tipo varchar(10) y clave primaria.</p></li>
+<li><p>Campo nombre, de tipo varchar(80).</p></li>
+</ul>
+</div></blockquote>
 </li>
 </ul>
 <p>En la única tabla de esta base de datos almacenaremos estos dos clientes:</p>
@@ -735,6 +738,7 @@ ENTRYPOINT <span class="o">[</span><span class="s2">&quot;apachectl&quot;</span>
 </ul>
 <p>En primer lugar, necesitamos el SQL que meteremos dentro del servidor y que nos construye esta base de datos, llamaremos a este fichero, por ejemplo <code class="docutils literal notranslate"><span class="pre">clientes.sql</span></code>:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">use</span><span class="w"> </span><span class="n">ventas</span><span class="p">;</span><span class="w"></span>
+<span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">clientes</span><span class="w"> </span><span class="p">(</span><span class="n">dni</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="n">nombre</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">40</span><span class="p">));</span><span class="w"></span>
 <span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">clientes</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;5111222C&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Juan Ruiz&#39;</span><span class="p">);</span><span class="w"></span>
 <span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">clientes</span><span class="w"> </span><span class="k">values</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;5222333Z&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Carmen Diaz&#39;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
@@ -749,6 +753,10 @@ ENTRYPOINT <span class="o">[</span><span class="s2">&quot;apachectl&quot;</span>
 <p>Con esto ya podemos preparar nuestra propia imagen que sirva nuestros datos. Podemos construirla con <code class="docutils literal notranslate"><span class="pre">`sudo</span> <span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">bdempresaacme</span> <span class="pre">.</span></code>.</p>
 <p>Si ahora ejecutamos <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">images</span></code> podremos ver nuestra imagen. Una vez hecho esto ya podemos lanzar nuestro propio servicio de datos con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-e</span> <span class="pre">MYSQL_ROOT_PASSWORD=clave1234</span> <span class="pre">-e</span> <span class="pre">MYSQL_USER=admin</span> <span class="pre">-e</span> <span class="pre">MYSQL_PASSWORD=1234</span></code>.</p>
 <p>El comando anterior lanza el servidor de base de datos accesible solo en nuestro equipo (no hemos expuesto puertos ni nada por el estilo) y si queremos podemos consultar estos datos averiguando la ip de nuestro contenedor y usando un cliente como <code class="docutils literal notranslate"><span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">admin</span> <span class="pre">-h</span> <span class="pre">172.17.0.2</span> <span class="pre">-p</span></code>. Se nos preguntará la clave del usuario «admin» (hemos puesto arriba «1234») y podremos usarla.</p>
+</section>
+<section id="ejercicio">
+<h3>Ejercicio<a class="headerlink" href="#ejercicio" title="Enlace permanente a este encabezado"></a></h3>
+<p>Pensar alguna manera de usar imágenes y contenedores para conseguir que los datos sean <strong>persistentes</strong> . El objetivo es que cuando se modifiquen los datos, dichos datos pueda estar disponibles para algún otro sistema MySQL.</p>
 </section>
 </section>
 <section id="funcionamiento-ininterrumpido">

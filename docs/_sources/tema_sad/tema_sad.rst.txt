@@ -515,9 +515,9 @@ Conexiones de red en Docker
 Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "redes por defecto" con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con ``sudo docker network ls`` :
 
 * Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama "bridge" se parece al modo NAT de VirtualBox. 
-* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Enero de 2022 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la red del anfitrión.
+* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Enero de 2023 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la tarjeta de red del anfitrión. Esto significa que es necesario poner IP a los contenedores, en el caso de que la necesiten.
 * Overlay: Está pensado para crear lo que Docker llama "enjambres", no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.
-* Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el 3modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
+* Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
 * None: permite deshabilitar la red de un contenedor.
 
 Creando nuestra propia red en Docker
@@ -663,9 +663,10 @@ En el ejemplo siguiente deseamos disponer de una pequeña base de datos almacena
 
 * Nombre de la base de datos: ventas.
 * Tabla:
-    ** Nombre: clientes.
-    ** Campo dni, de tipo varchar(10) y clave primaria.
-    ** Campo nombre, de tipo varchar(80).
+  
+    * Nombre: clientes.
+    * Campo dni, de tipo varchar(10) y clave primaria.
+    * Campo nombre, de tipo varchar(80).
 
 En la única tabla de esta base de datos almacenaremos estos dos clientes:
 
@@ -677,6 +678,7 @@ En primer lugar, necesitamos el SQL que meteremos dentro del servidor y que nos 
 .. code-block:: sql
 
     use ventas;
+    create table clientes (dni varchar(10), nombre varchar(40));
     insert into clientes values ('5111222C', 'Juan Ruiz');
     insert into clientes values ('5222333Z', 'Carmen Diaz');
 
@@ -697,7 +699,10 @@ Si ahora ejecutamos ``sudo docker images`` podremos ver nuestra imagen. Una vez 
 El comando anterior lanza el servidor de base de datos accesible solo en nuestro equipo (no hemos expuesto puertos ni nada por el estilo) y si queremos podemos consultar estos datos averiguando la ip de nuestro contenedor y usando un cliente como ``mysql -u admin -h 172.17.0.2 -p``. Se nos preguntará la clave del usuario "admin" (hemos puesto arriba "1234") y podremos usarla.
 
 
+Ejercicio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Pensar alguna manera de usar imágenes y contenedores para conseguir que los datos sean **persistentes** . El objetivo es que cuando se modifiquen los datos, dichos datos pueda estar disponibles para algún otro sistema MySQL.
 
 
 

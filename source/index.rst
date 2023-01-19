@@ -8,7 +8,7 @@ Apuntes de Seguridad y alta disponibilidad
 
 .. toctree::
    :maxdepth: 3
-   :caption: Contenidos:
+   :caption: Índice:
 
 
 
