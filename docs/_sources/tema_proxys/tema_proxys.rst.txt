@@ -97,12 +97,31 @@ Configurar un cliente para que utilice un proxy es bastante sencillo. En la imag
 
 Sin embargo, aunque hayamos instalado Squid en la segunda máquina virtual veremos que el Firefox de la máquina cliente no funciona y muestra un mensaje como "El servidor proxy está rechazando las conexiones entrantes". Aún se tiene que configurar el servidor, cosa que haremos en los pasos siguientes.
 
+Instalación de servidores proxy con ``apt source``
+--------------------------------------------------------------------------------
+
+Podemos partir del código fuente de los repositorios de Ubuntu y compilar Squid. Para ello podemos hacer esto::
+
+
+    #Descargar todo lo que sea necesario para
+    #compilar el paquete Squid
+    sudo apt-get build-dep squid
+    #Descargar el código fuente de Squid
+    sudo apt-get source squid
+    #Añadimos las opciones --enable-ssl-crtd y --with-openssl
+    nano squid/debian/rules 
+    #Y fabricamos los paquetes .deb
+    sudo apt-get source --compile squid
+    #Por último instalamos estos paquetes 
+    #No nos harán falta todos los que construye
+    #apt-get, solo ponemos estos y en este orden
+    sudo dpkg -i squid-common.deb
+
+    
 
 
 
-
-
-Instalación de servidores proxy.
+Instalación de servidores proxy desde cero.
 -----------------------------------------------------------------------------------------------
 Squid permite descargarse el código fuente y recompilarlo usando la secuencia típica de comandos en GNU/Linux:
 

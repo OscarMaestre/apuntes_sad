@@ -40,7 +40,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contenidos:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Índice:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html">Adopción de pautas de seguridad informática</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
@@ -53,7 +53,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#instalacion-y-configuracion-de-clientes-proxy">Instalación y configuración de clientes proxy.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#instalacion-de-servidores-proxy">Instalación de servidores proxy.</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion-de-servidores-proxy-con-apt-source">Instalación de servidores proxy con <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">source</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion-de-servidores-proxy-desde-cero">Instalación de servidores proxy desde cero.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ficheros-de-interes">Ficheros de interés</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#iniciando-y-parando-el-servicio">Iniciando y parando el servicio</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acls-en-squid-acls-de-origen">ACLs en Squid. ACLS de origen.</a></li>
@@ -177,8 +178,27 @@
 </figure>
 <p>Sin embargo, aunque hayamos instalado Squid en la segunda máquina virtual veremos que el Firefox de la máquina cliente no funciona y muestra un mensaje como «El servidor proxy está rechazando las conexiones entrantes». Aún se tiene que configurar el servidor, cosa que haremos en los pasos siguientes.</p>
 </section>
-<section id="instalacion-de-servidores-proxy">
-<h2>Instalación de servidores proxy.<a class="headerlink" href="#instalacion-de-servidores-proxy" title="Enlace permanente a este encabezado"></a></h2>
+<section id="instalacion-de-servidores-proxy-con-apt-source">
+<h2>Instalación de servidores proxy con <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">source</span></code><a class="headerlink" href="#instalacion-de-servidores-proxy-con-apt-source" title="Enlace permanente a este encabezado"></a></h2>
+<p>Podemos partir del código fuente de los repositorios de Ubuntu y compilar Squid. Para ello podemos hacer esto:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Descargar todo lo que sea necesario para</span>
+<span class="c1">#compilar el paquete Squid</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">build</span><span class="o">-</span><span class="n">dep</span> <span class="n">squid</span>
+<span class="c1">#Descargar el código fuente de Squid</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">source</span> <span class="n">squid</span>
+<span class="c1">#Añadimos las opciones --enable-ssl-crtd y --with-openssl</span>
+<span class="n">nano</span> <span class="n">squid</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">rules</span>
+<span class="c1">#Y fabricamos los paquetes .deb</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">source</span> <span class="o">--</span><span class="nb">compile</span> <span class="n">squid</span>
+<span class="c1">#Por último instalamos estos paquetes</span>
+<span class="c1">#No nos harán falta todos los que construye</span>
+<span class="c1">#apt-get, solo ponemos estos y en este orden</span>
+<span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">squid</span><span class="o">-</span><span class="n">common</span><span class="o">.</span><span class="n">deb</span>
+</pre></div>
+</div>
+</section>
+<section id="instalacion-de-servidores-proxy-desde-cero">
+<h2>Instalación de servidores proxy desde cero.<a class="headerlink" href="#instalacion-de-servidores-proxy-desde-cero" title="Enlace permanente a este encabezado"></a></h2>
 <p>Squid permite descargarse el código fuente y recompilarlo usando la secuencia típica de comandos en GNU/Linux:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">configure</span></code></p></li>
