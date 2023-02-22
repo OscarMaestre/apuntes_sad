@@ -7,8 +7,8 @@ Material para la unidad
 
 Para esta unidad vas a necesitar dos máquinas virtuales.
 
-* Una de las máquinas virtuales ejecutará Ubuntu 20 para escritorio y tendrá una tarjeta de red en modo puente. Si quieres puedes construir una con rapidez yendo a un directorio vacío y ejecutando los comandos ``vagrant init oscarmaestre/ubuntu20desktop`` y despues ``vagrant up``. No olvides añadir una segunda tarjeta en modo puente.
-* La otra máquina virtual usará Ubuntu Server 20. Puedes construir una con ``vagrant init oscarmaestre/ubuntuserver20`` y con ``vagrant up``. No olvides añadir una segunda tarjeta en modo puente.
+* Una de las máquinas virtuales ejecutará Ubuntu 20 para escritorio y tendrá una tarjeta de red en modo puente. Si quieres puedes construir una con rapidez yendo a un directorio vacío y ejecutando los comandos ``vagrant init oscarmaestre/ubuntu20desktop`` y despues ``vagrant up``. No olvides añadir una segunda tarjeta en modo puente y una carpeta compartida con el anfitrión.
+* La otra máquina virtual usará Ubuntu Server (versión 22 o superior). No olvides añadir una segunda tarjeta en modo puente y una carpeta compartida con el anfitrión.
 
 Habrá que configurar la IP en ambos casos y recuerda que es **imprescindible** que ambas máquinas puedan hacerse ping.
 
@@ -97,21 +97,51 @@ Configurar un cliente para que utilice un proxy es bastante sencillo. En la imag
 
 Sin embargo, aunque hayamos instalado Squid en la segunda máquina virtual veremos que el Firefox de la máquina cliente no funciona y muestra un mensaje como "El servidor proxy está rechazando las conexiones entrantes". Aún se tiene que configurar el servidor, cosa que haremos en los pasos siguientes.
 
+Instalación de servidores proxy
+--------------------------------------------------------------------------------
+
+La opción más sencilla es simplemente ejecutar ``sudo apt-get install squid-openssl``. Esto descarga, instala y arranca el servicio. Observa que es importante instalar ``squid-openssl`` y no ``squid`` ya que el primero permite trabajar también con conexiones HTTPS.
+
+En los dos puntos siguientes se ilustra, solo como curiosidad, como reconstruir Squid desde su código fuente. Si ``sudo apt-get install squid-openssl`` te ha funcionado no es necesario que recompiles el programa.
+
+
 Instalación de servidores proxy con ``apt source``
 --------------------------------------------------------------------------------
 
-Podemos partir del código fuente de los repositorios de Ubuntu y compilar Squid. Para ello podemos hacer esto::
+.. WARNING::
+   Este paso lo ilustramos solo para mostrar al menos una vez como recompilar un programa desde cero. Salvo problemas, por favor instala Squid en clase con ``sudo apt-get install squid-openssl``
+
+En general las distribuciones de Linux no solo permiten descargar programas listos para ejecutar sino también su *código fuente*. Para ello, las herramientas como ``apt`` utilizan listas de repositorios con un aspecto como este::
+
+    deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
+    # deb-src http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
+
+    deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
+    # deb-src http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
+
+    deb http://archive.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+    # deb-src http://archive.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+
+Como vemos, este fichero está configurado solamente para descargar programas, pero si queremos poder usar código fuente de programas podemos descomentar las líneas con ``deb-src`` o simplemente copiar líneas reemplazando ``deb`` por ``deb-src``. Una vez hecho podremos usar ``apt-get update`` y tener actualizados los repositorios de nuestras máquinas.
+
+Compilar Squid con soporte para hacer operaciones SSL requiere también instalar algunos paquetes extra::
+
+    sudo apt-get install openssl devscripts
+
+Una vez hecho esto podremos partir del código fuente de Squid que hay en los repositorios de Ubuntu y compilar Squid. Para ello podemos hacer esto::
 
 
     #Descargar todo lo que sea necesario para
     #compilar el paquete Squid
     sudo apt-get build-dep squid
-    #Descargar el código fuente de Squid
-    sudo apt-get source squid
+    #Descargar el código fuente de Squid. NO NECESITAS SER root
+    apt-get source squid
+    #Entramos en el directorio de squid
+    cd squid-5.2
     #Añadimos las opciones --enable-ssl-crtd y --with-openssl
-    nano squid/debian/rules 
+    nano debian/rules 
     #Y fabricamos los paquetes .deb
-    sudo apt-get source --compile squid
+    sudo debuild -b -uc -us
     #Por último instalamos estos paquetes 
     #No nos harán falta todos los que construye
     #apt-get, solo ponemos estos y en este orden
@@ -123,7 +153,12 @@ Podemos partir del código fuente de los repositorios de Ubuntu y compilar Squid
 
 Instalación de servidores proxy desde cero.
 -----------------------------------------------------------------------------------------------
-Squid permite descargarse el código fuente y recompilarlo usando la secuencia típica de comandos en GNU/Linux:
+
+
+.. WARNING::
+   Este paso es todavía más extremo que el anterior. Lo recomendable en clase es instalar Squid con ``sudo apt-get install squid-openssl``.  
+
+El paso anterior se puede llevar todavía más lejos y trabajar directamente con el código fuente del programa en lugar de con el código fuente que almacena Ubuntu. Squid permite descargarse el código fuente y recompilarlo usando la secuencia típica de comandos en GNU/Linux:
 
 1. ``configure``
 2. ``make``
@@ -149,11 +184,11 @@ Squid permite descargarse el código fuente y recompilarlo usando la secuencia t
 
 * Para ejecutarlo podemos usar convertirnos en el usuario ``squid`` con ``su squid`` y luego ejecutar ``/usr/local/squid/sbin/squid``. Podremos ver el número de proceso de Squid con ``ps -e  | grep squid``.
 
-Todo este proceso ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en sistemas tipo Debian/Ubuntu también puede usarse ``sudo apt-get install squid``, que instalará el programa y todas sus dependencias. Si hay algún problema probablemente se resuelva despues de actualizar los repositorios e instalar actualizaciones pendientes::
+Todo este proceso ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en sistemas tipo Debian/Ubuntu también puede usarse ``sudo apt-get install squid-openssl``, que instalará el programa y todas sus dependencias. Si hay algún problema probablemente se resuelva despues de actualizar los repositorios e instalar actualizaciones pendientes::
 
     sudo apt-get install update
     sudo apt-get install upgrade -y
-    sudo apt-get install squid3
+    sudo apt-get install squid-openssl
 
 Ficheros de interés
 ~~~~~~~~~~~~~~~~~~~~~
@@ -164,14 +199,62 @@ Ficheros de interés
 Iniciando y parando el servicio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Se puede arrancar Squid usando ``sudo service squid start``, detenerlo con ``sudo service squid stop`` y hacer un reinicio del servicio con ``sudo service squid restart``. Sin embargo, antes de arrancar puede ser útil ejecutar ``sudo squid -k parse``, que analizará el fichero de configuración y nos dirá si hay algún fallo en alguna línea.
+* Se puede arrancar Squid usando ``sudo service squid start``, detenerlo con ``sudo service squid stop`` y hacer un reinicio del servicio con ``sudo service squid restart``. Sin embargo, antes de arrancar puede ser útil ejecutar ``sudo squid -k parse``, que analizará el fichero de configuración y nos dirá si hay algún fallo en alguna línea. También está la posibilidad de usar ``sudo squid -k check`` que nos mostrará solo los errores.
 
 .. WARNING::
    Squid siempre muestra mucha información durante el análisis, así que puede ser interesante ejecutar algo como ``squid -k parse 2> errores.txt`` para poder leer los resultados tranquilamente con algo como ``nano errores.txt``. Si se prueba a introducir un error veremos como el fichero muestra no solo el error, sino también todo lo que funciona (lo que complica el localizar el error)
 
 * Si hacemos un cambio en la configuración y deseamos que Squid tome la nueva configuración *sin reiniciar el servicio* se puede usar ``sudo squid -k reconfigure``.
 
+Squid y SSL/TLS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Squid es básicamente un proxy HTTP, lo que significa que en principio no puede manejar HTTPS. Sin embargo, se puede recurrir a **certificados falsos** emitidos por una ``autoridad certificadora falsa`` los cuales al ser instalados en los navegadores de los usuarios darán por buena una conexión HTTPS aunque sea interceptada por Squid. Para ello hay que dar varios pasos.
 
+En primer lugar fabricaremos un directorio para poner los certificados y generaremos los datos necesarios para poder generar certificados con rapidez::
+
+    cd /etc/squid
+    sudo mkdir certificados_ssl
+    #Esto genera una tabla de números primos
+    #que pueden ser usados a la hora de generar los
+    #certificados falsos
+    sudo openssl dhparam -outform PEM -out /etc/squid/parametros_dh.pem 2048
+    #Esto genera un certificado autofirmado
+    sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout ClaveCertificado.key -out Certificado.crt
+
+En segundo lugar generamos una base de datos de certificados (en realidad será un directorio) con un programa llamado ``/usr/lib/squid/security_file_certgen`` que está incluido al instalar ``squid``(podría estar también en ``/usr/lib64`` )::
+    
+    #Esto crea (-c) una base de datos (o directorio) llamada (-s) base_de_datos_ssl
+    #y no permitirá que la base de datos ocupe más de (-M) 50MB
+    #Puede que necesites usar sudo
+    /usr/lib/squid/security_file_certgen  -c -s /etc/squid/certificados_ssl -M 50MB
+    #El propietario de los directorios también podría ser squid
+    sudo chown proxy:proxy /etc/squid/certificados_ssl
+
+En tercer lugar nos vamos al fichero de configuración que estemos usando e indicamos que está permitido traer certificados añadiendo estas líneas **al principio del fichero** (si no lo hacemos así es posible que nunca se autorice el inicio de la conexión segura) ::
+
+    acl traer_certificados transaction_initiator certificate-fetching
+    http_access allow traer_certificados
+
+En cuarto lugar nos vamos **al final del fichero de configuración** e indicamos qué programa va a gestionar los certificados y el directorio donde puede trabajar::
+
+    
+    sslcrtd_program /usr/lib/squid/security_file_certgen  -c -s /etc/squid/certificados_ssl -M 50MB
+    #Esto indica que Squid debe pasar por alto los errores de validación
+    #que es justo lo que queremos
+    sslproxy_cert_error allow all 
+    #Y esto hace que Squid observe todos los certificados
+    #Tanto de emisor como de cliente
+    ssl_bump stare all
+
+Y por último buscamos en ``squid.conf`` la línea "http_port 3128" y la reemplazamos por esto (los simbolos \ sirven para poder continuar en la línea siguiente)::
+
+     http_port 3128 tcpkeepalive=60,30,3 ssl-bump \
+         generate-host-certificates=on \
+         dynamic_cert_mem_cache_size=50MB \
+         tls-cert=/etc/squid/Certificado.crt \
+         tls-key=/etc/squid/ClaveCertificado.key
+
+Si cogemos el fichero ``Certificado.crt`` y lo importamos en el navegador podremos navegar por Internet con normalidad, pero permitiendo que Squid observe las conexiones SSL.
 
 ACLs en Squid. ACLS de origen.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -281,7 +364,7 @@ Si el sistema anterior no es suficiente se puede utilizar el análisis de las ru
 .. code-block:: bash
 
     acl prohibicion_ruta_violencia urlpath_regex violen
-    http_access prohibicion_ruta_violencia deny
+    http_access deny prohibicion_ruta_violencia
 
 .. WARNING::
 

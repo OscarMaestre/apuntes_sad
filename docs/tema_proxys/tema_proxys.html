@@ -53,10 +53,12 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#instalacion-y-configuracion-de-clientes-proxy">Instalación y configuración de clientes proxy.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion-de-servidores-proxy">Instalación de servidores proxy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instalacion-de-servidores-proxy-con-apt-source">Instalación de servidores proxy con <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">source</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instalacion-de-servidores-proxy-desde-cero">Instalación de servidores proxy desde cero.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ficheros-de-interes">Ficheros de interés</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#iniciando-y-parando-el-servicio">Iniciando y parando el servicio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#squid-y-ssl-tls">Squid y SSL/TLS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acls-en-squid-acls-de-origen">ACLs en Squid. ACLS de origen.</a></li>
 </ul>
 </li>
@@ -108,8 +110,8 @@
 <h2>Material para la unidad<a class="headerlink" href="#material-para-la-unidad" title="Enlace permanente a este encabezado"></a></h2>
 <p>Para esta unidad vas a necesitar dos máquinas virtuales.</p>
 <ul class="simple">
-<li><p>Una de las máquinas virtuales ejecutará Ubuntu 20 para escritorio y tendrá una tarjeta de red en modo puente. Si quieres puedes construir una con rapidez yendo a un directorio vacío y ejecutando los comandos <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">oscarmaestre/ubuntu20desktop</span></code> y despues <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">up</span></code>. No olvides añadir una segunda tarjeta en modo puente.</p></li>
-<li><p>La otra máquina virtual usará Ubuntu Server 20. Puedes construir una con <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">oscarmaestre/ubuntuserver20</span></code> y con <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">up</span></code>. No olvides añadir una segunda tarjeta en modo puente.</p></li>
+<li><p>Una de las máquinas virtuales ejecutará Ubuntu 20 para escritorio y tendrá una tarjeta de red en modo puente. Si quieres puedes construir una con rapidez yendo a un directorio vacío y ejecutando los comandos <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">oscarmaestre/ubuntu20desktop</span></code> y despues <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">up</span></code>. No olvides añadir una segunda tarjeta en modo puente y una carpeta compartida con el anfitrión.</p></li>
+<li><p>La otra máquina virtual usará Ubuntu Server (versión 22 o superior). No olvides añadir una segunda tarjeta en modo puente y una carpeta compartida con el anfitrión.</p></li>
 </ul>
 <p>Habrá que configurar la IP en ambos casos y recuerda que es <strong>imprescindible</strong> que ambas máquinas puedan hacerse ping.</p>
 </section>
@@ -178,18 +180,45 @@
 </figure>
 <p>Sin embargo, aunque hayamos instalado Squid en la segunda máquina virtual veremos que el Firefox de la máquina cliente no funciona y muestra un mensaje como «El servidor proxy está rechazando las conexiones entrantes». Aún se tiene que configurar el servidor, cosa que haremos en los pasos siguientes.</p>
 </section>
+<section id="instalacion-de-servidores-proxy">
+<h2>Instalación de servidores proxy<a class="headerlink" href="#instalacion-de-servidores-proxy" title="Enlace permanente a este encabezado"></a></h2>
+<p>La opción más sencilla es simplemente ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squid-openssl</span></code>. Esto descarga, instala y arranca el servicio. Observa que es importante instalar <code class="docutils literal notranslate"><span class="pre">squid-openssl</span></code> y no <code class="docutils literal notranslate"><span class="pre">squid</span></code> ya que el primero permite trabajar también con conexiones HTTPS.</p>
+<p>En los dos puntos siguientes se ilustra, solo como curiosidad, como reconstruir Squid desde su código fuente. Si <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squid-openssl</span></code> te ha funcionado no es necesario que recompiles el programa.</p>
+</section>
 <section id="instalacion-de-servidores-proxy-con-apt-source">
 <h2>Instalación de servidores proxy con <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">source</span></code><a class="headerlink" href="#instalacion-de-servidores-proxy-con-apt-source" title="Enlace permanente a este encabezado"></a></h2>
-<p>Podemos partir del código fuente de los repositorios de Ubuntu y compilar Squid. Para ello podemos hacer esto:</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>Este paso lo ilustramos solo para mostrar al menos una vez como recompilar un programa desde cero. Salvo problemas, por favor instala Squid en clase con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squid-openssl</span></code></p>
+</div>
+<p>En general las distribuciones de Linux no solo permiten descargar programas listos para ejecutar sino también su <em>código fuente</em>. Para ello, las herramientas como <code class="docutils literal notranslate"><span class="pre">apt</span></code> utilizan listas de repositorios con un aspecto como este:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">archive</span><span class="o">.</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span> <span class="n">jammy</span> <span class="n">main</span> <span class="n">restricted</span> <span class="n">universe</span> <span class="n">multiverse</span>
+<span class="c1"># deb-src http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse</span>
+
+<span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">archive</span><span class="o">.</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span> <span class="n">jammy</span><span class="o">-</span><span class="n">updates</span> <span class="n">main</span> <span class="n">restricted</span> <span class="n">universe</span> <span class="n">multiverse</span>
+<span class="c1"># deb-src http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse</span>
+
+<span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">archive</span><span class="o">.</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span> <span class="n">jammy</span><span class="o">-</span><span class="n">security</span> <span class="n">main</span> <span class="n">restricted</span> <span class="n">universe</span> <span class="n">multiverse</span>
+<span class="c1"># deb-src http://archive.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse</span>
+</pre></div>
+</div>
+<p>Como vemos, este fichero está configurado solamente para descargar programas, pero si queremos poder usar código fuente de programas podemos descomentar las líneas con <code class="docutils literal notranslate"><span class="pre">deb-src</span></code> o simplemente copiar líneas reemplazando <code class="docutils literal notranslate"><span class="pre">deb</span></code> por <code class="docutils literal notranslate"><span class="pre">deb-src</span></code>. Una vez hecho podremos usar <code class="docutils literal notranslate"><span class="pre">apt-get</span> <span class="pre">update</span></code> y tener actualizados los repositorios de nuestras máquinas.</p>
+<p>Compilar Squid con soporte para hacer operaciones SSL requiere también instalar algunos paquetes extra:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">openssl</span> <span class="n">devscripts</span>
+</pre></div>
+</div>
+<p>Una vez hecho esto podremos partir del código fuente de Squid que hay en los repositorios de Ubuntu y compilar Squid. Para ello podemos hacer esto:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Descargar todo lo que sea necesario para</span>
 <span class="c1">#compilar el paquete Squid</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">build</span><span class="o">-</span><span class="n">dep</span> <span class="n">squid</span>
-<span class="c1">#Descargar el código fuente de Squid</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">source</span> <span class="n">squid</span>
+<span class="c1">#Descargar el código fuente de Squid. NO NECESITAS SER root</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">source</span> <span class="n">squid</span>
+<span class="c1">#Entramos en el directorio de squid</span>
+<span class="n">cd</span> <span class="n">squid</span><span class="o">-</span><span class="mf">5.2</span>
 <span class="c1">#Añadimos las opciones --enable-ssl-crtd y --with-openssl</span>
-<span class="n">nano</span> <span class="n">squid</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">rules</span>
+<span class="n">nano</span> <span class="n">debian</span><span class="o">/</span><span class="n">rules</span>
 <span class="c1">#Y fabricamos los paquetes .deb</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">source</span> <span class="o">--</span><span class="nb">compile</span> <span class="n">squid</span>
+<span class="n">sudo</span> <span class="n">debuild</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">uc</span> <span class="o">-</span><span class="n">us</span>
 <span class="c1">#Por último instalamos estos paquetes</span>
 <span class="c1">#No nos harán falta todos los que construye</span>
 <span class="c1">#apt-get, solo ponemos estos y en este orden</span>
@@ -199,7 +228,11 @@
 </section>
 <section id="instalacion-de-servidores-proxy-desde-cero">
 <h2>Instalación de servidores proxy desde cero.<a class="headerlink" href="#instalacion-de-servidores-proxy-desde-cero" title="Enlace permanente a este encabezado"></a></h2>
-<p>Squid permite descargarse el código fuente y recompilarlo usando la secuencia típica de comandos en GNU/Linux:</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>Este paso es todavía más extremo que el anterior. Lo recomendable en clase es instalar Squid con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squid-openssl</span></code>.</p>
+</div>
+<p>El paso anterior se puede llevar todavía más lejos y trabajar directamente con el código fuente del programa en lugar de con el código fuente que almacena Ubuntu. Squid permite descargarse el código fuente y recompilarlo usando la secuencia típica de comandos en GNU/Linux:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">configure</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">make</span></code></p></li>
@@ -228,10 +261,10 @@
 </li>
 <li><p>Para ejecutarlo podemos usar convertirnos en el usuario <code class="docutils literal notranslate"><span class="pre">squid</span></code> con <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">squid</span></code> y luego ejecutar <code class="docutils literal notranslate"><span class="pre">/usr/local/squid/sbin/squid</span></code>. Podremos ver el número de proceso de Squid con <code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">-e</span>&#160; <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">squid</span></code>.</p></li>
 </ul>
-<p>Todo este proceso ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en sistemas tipo Debian/Ubuntu también puede usarse <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squid</span></code>, que instalará el programa y todas sus dependencias. Si hay algún problema probablemente se resuelva despues de actualizar los repositorios e instalar actualizaciones pendientes:</p>
+<p>Todo este proceso ofrece más eficiencia, al adaptar el programa a la máquina donde lo vamos a ejecutar. Sin embargo, dado que compilar es un proceso lento, en sistemas tipo Debian/Ubuntu también puede usarse <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">squid-openssl</span></code>, que instalará el programa y todas sus dependencias. Si hay algún problema probablemente se resuelva despues de actualizar los repositorios e instalar actualizaciones pendientes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">update</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">upgrade</span> <span class="o">-</span><span class="n">y</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">squid3</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">squid</span><span class="o">-</span><span class="n">openssl</span>
 </pre></div>
 </div>
 <section id="ficheros-de-interes">
@@ -244,7 +277,7 @@
 <section id="iniciando-y-parando-el-servicio">
 <h3>Iniciando y parando el servicio<a class="headerlink" href="#iniciando-y-parando-el-servicio" title="Enlace permanente a este encabezado"></a></h3>
 <ul class="simple">
-<li><p>Se puede arrancar Squid usando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">start</span></code>, detenerlo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">stop</span></code> y hacer un reinicio del servicio con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">restart</span></code>. Sin embargo, antes de arrancar puede ser útil ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">parse</span></code>, que analizará el fichero de configuración y nos dirá si hay algún fallo en alguna línea.</p></li>
+<li><p>Se puede arrancar Squid usando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">start</span></code>, detenerlo con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">stop</span></code> y hacer un reinicio del servicio con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">squid</span> <span class="pre">restart</span></code>. Sin embargo, antes de arrancar puede ser útil ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">parse</span></code>, que analizará el fichero de configuración y nos dirá si hay algún fallo en alguna línea. También está la posibilidad de usar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">check</span></code> que nos mostrará solo los errores.</p></li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Advertencia</p>
@@ -253,6 +286,54 @@
 <ul class="simple">
 <li><p>Si hacemos un cambio en la configuración y deseamos que Squid tome la nueva configuración <em>sin reiniciar el servicio</em> se puede usar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">squid</span> <span class="pre">-k</span> <span class="pre">reconfigure</span></code>.</p></li>
 </ul>
+</section>
+<section id="squid-y-ssl-tls">
+<h3>Squid y SSL/TLS<a class="headerlink" href="#squid-y-ssl-tls" title="Enlace permanente a este encabezado"></a></h3>
+<p>Squid es básicamente un proxy HTTP, lo que significa que en principio no puede manejar HTTPS. Sin embargo, se puede recurrir a <strong>certificados falsos</strong> emitidos por una <code class="docutils literal notranslate"><span class="pre">autoridad</span> <span class="pre">certificadora</span> <span class="pre">falsa</span></code> los cuales al ser instalados en los navegadores de los usuarios darán por buena una conexión HTTPS aunque sea interceptada por Squid. Para ello hay que dar varios pasos.</p>
+<p>En primer lugar fabricaremos un directorio para poner los certificados y generaremos los datos necesarios para poder generar certificados con rapidez:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span>
+<span class="n">sudo</span> <span class="n">mkdir</span> <span class="n">certificados_ssl</span>
+<span class="c1">#Esto genera una tabla de números primos</span>
+<span class="c1">#que pueden ser usados a la hora de generar los</span>
+<span class="c1">#certificados falsos</span>
+<span class="n">sudo</span> <span class="n">openssl</span> <span class="n">dhparam</span> <span class="o">-</span><span class="n">outform</span> <span class="n">PEM</span> <span class="o">-</span><span class="n">out</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span><span class="o">/</span><span class="n">parametros_dh</span><span class="o">.</span><span class="n">pem</span> <span class="mi">2048</span>
+<span class="c1">#Esto genera un certificado autofirmado</span>
+<span class="n">sudo</span> <span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">newkey</span> <span class="n">rsa</span><span class="p">:</span><span class="mi">2048</span> <span class="o">-</span><span class="n">days</span> <span class="mi">365</span> <span class="o">-</span><span class="n">nodes</span> <span class="o">-</span><span class="n">x509</span> <span class="o">-</span><span class="n">keyout</span> <span class="n">ClaveCertificado</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">Certificado</span><span class="o">.</span><span class="n">crt</span>
+</pre></div>
+</div>
+<p>En segundo lugar generamos una base de datos de certificados (en realidad será un directorio) con un programa llamado <code class="docutils literal notranslate"><span class="pre">/usr/lib/squid/security_file_certgen</span></code> que está incluido al instalar <code class="docutils literal notranslate"><span class="pre">squid``(podría</span> <span class="pre">estar</span> <span class="pre">también</span> <span class="pre">en</span> <span class="pre">``/usr/lib64</span></code> ):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Esto crea (-c) una base de datos (o directorio) llamada (-s) base_de_datos_ssl</span>
+<span class="c1">#y no permitirá que la base de datos ocupe más de (-M) 50MB</span>
+<span class="c1">#Puede que necesites usar sudo</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">squid</span><span class="o">/</span><span class="n">security_file_certgen</span>  <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span><span class="o">/</span><span class="n">certificados_ssl</span> <span class="o">-</span><span class="n">M</span> <span class="mi">50</span><span class="n">MB</span>
+<span class="c1">#El propietario de los directorios también podría ser squid</span>
+<span class="n">sudo</span> <span class="n">chown</span> <span class="n">proxy</span><span class="p">:</span><span class="n">proxy</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span><span class="o">/</span><span class="n">certificados_ssl</span>
+</pre></div>
+</div>
+<p>En tercer lugar nos vamos al fichero de configuración que estemos usando e indicamos que está permitido traer certificados añadiendo estas líneas <strong>al principio del fichero</strong> (si no lo hacemos así es posible que nunca se autorice el inicio de la conexión segura)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">acl</span> <span class="n">traer_certificados</span> <span class="n">transaction_initiator</span> <span class="n">certificate</span><span class="o">-</span><span class="n">fetching</span>
+<span class="n">http_access</span> <span class="n">allow</span> <span class="n">traer_certificados</span>
+</pre></div>
+</div>
+<p>En cuarto lugar nos vamos <strong>al final del fichero de configuración</strong> e indicamos qué programa va a gestionar los certificados y el directorio donde puede trabajar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sslcrtd_program</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">squid</span><span class="o">/</span><span class="n">security_file_certgen</span>  <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span><span class="o">/</span><span class="n">certificados_ssl</span> <span class="o">-</span><span class="n">M</span> <span class="mi">50</span><span class="n">MB</span>
+<span class="c1">#Esto indica que Squid debe pasar por alto los errores de validación</span>
+<span class="c1">#que es justo lo que queremos</span>
+<span class="n">sslproxy_cert_error</span> <span class="n">allow</span> <span class="nb">all</span>
+<span class="c1">#Y esto hace que Squid observe todos los certificados</span>
+<span class="c1">#Tanto de emisor como de cliente</span>
+<span class="n">ssl_bump</span> <span class="n">stare</span> <span class="nb">all</span>
+</pre></div>
+</div>
+<p>Y por último buscamos en <code class="docutils literal notranslate"><span class="pre">squid.conf</span></code> la línea «http_port 3128» y la reemplazamos por esto (los simbolos sirven para poder continuar en la línea siguiente):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http_port</span> <span class="mi">3128</span> <span class="n">tcpkeepalive</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">3</span> <span class="n">ssl</span><span class="o">-</span><span class="n">bump</span> \
+    <span class="n">generate</span><span class="o">-</span><span class="n">host</span><span class="o">-</span><span class="n">certificates</span><span class="o">=</span><span class="n">on</span> \
+    <span class="n">dynamic_cert_mem_cache_size</span><span class="o">=</span><span class="mi">50</span><span class="n">MB</span> \
+    <span class="n">tls</span><span class="o">-</span><span class="n">cert</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span><span class="o">/</span><span class="n">Certificado</span><span class="o">.</span><span class="n">crt</span> \
+    <span class="n">tls</span><span class="o">-</span><span class="n">key</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span><span class="o">/</span><span class="n">ClaveCertificado</span><span class="o">.</span><span class="n">key</span>
+</pre></div>
+</div>
+<p>Si cogemos el fichero <code class="docutils literal notranslate"><span class="pre">Certificado.crt</span></code> y lo importamos en el navegador podremos navegar por Internet con normalidad, pero permitiendo que Squid observe las conexiones SSL.</p>
 </section>
 <section id="acls-en-squid-acls-de-origen">
 <h3>ACLs en Squid. ACLS de origen.<a class="headerlink" href="#acls-en-squid-acls-de-origen" title="Enlace permanente a este encabezado"></a></h3>
@@ -335,7 +416,7 @@ http_access deny prohibicion_violencia
 <h3>ACLs basadas en la ruta<a class="headerlink" href="#acls-basadas-en-la-ruta" title="Enlace permanente a este encabezado"></a></h3>
 <p>Si el sistema anterior no es suficiente se puede utilizar el análisis de las rutas. Por ejemplo, si examinamos una página como <code class="docutils literal notranslate"><span class="pre">http://acme.com/violencia</span></code> veremos que claramente contiene un término que deseamos prohibir. Para prohibir páginas Web en las que ocurra esto se pueden usar las ACLs basadas en ruta de esta manera:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl prohibicion_ruta_violencia urlpath_regex violen
-http_access prohibicion_ruta_violencia deny
+http_access deny prohibicion_ruta_violencia
 </pre></div>
 </div>
 <div class="admonition warning">
