@@ -289,7 +289,7 @@
 </section>
 <section id="squid-y-ssl-tls">
 <h3>Squid y SSL/TLS<a class="headerlink" href="#squid-y-ssl-tls" title="Enlace permanente a este encabezado"></a></h3>
-<p>Squid es básicamente un proxy HTTP, lo que significa que en principio no puede manejar HTTPS. Sin embargo, se puede recurrir a <strong>certificados falsos</strong> emitidos por una <code class="docutils literal notranslate"><span class="pre">autoridad</span> <span class="pre">certificadora</span> <span class="pre">falsa</span></code> los cuales al ser instalados en los navegadores de los usuarios darán por buena una conexión HTTPS aunque sea interceptada por Squid. Para ello hay que dar varios pasos.</p>
+<p>Squid es básicamente un proxy HTTP, lo que significa que en principio no puede manejar HTTPS. Sin embargo, se puede recurrir a <strong>certificados falsos</strong> emitidos por una <strong>autoridad certificadora falsa</strong> los cuales al ser instalados en los navegadores de los usuarios darán por buena una conexión HTTPS aunque sea interceptada por Squid. Para ello hay que dar varios pasos.</p>
 <p>En primer lugar fabricaremos un directorio para poner los certificados y generaremos los datos necesarios para poder generar certificados con rapidez:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span>
 <span class="n">sudo</span> <span class="n">mkdir</span> <span class="n">certificados_ssl</span>
@@ -301,7 +301,7 @@
 <span class="n">sudo</span> <span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">newkey</span> <span class="n">rsa</span><span class="p">:</span><span class="mi">2048</span> <span class="o">-</span><span class="n">days</span> <span class="mi">365</span> <span class="o">-</span><span class="n">nodes</span> <span class="o">-</span><span class="n">x509</span> <span class="o">-</span><span class="n">keyout</span> <span class="n">ClaveCertificado</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">Certificado</span><span class="o">.</span><span class="n">crt</span>
 </pre></div>
 </div>
-<p>En segundo lugar generamos una base de datos de certificados (en realidad será un directorio) con un programa llamado <code class="docutils literal notranslate"><span class="pre">/usr/lib/squid/security_file_certgen</span></code> que está incluido al instalar <code class="docutils literal notranslate"><span class="pre">squid``(podría</span> <span class="pre">estar</span> <span class="pre">también</span> <span class="pre">en</span> <span class="pre">``/usr/lib64</span></code> ):</p>
+<p>En segundo lugar generamos una base de datos de certificados (en realidad será un directorio) con un programa llamado <code class="docutils literal notranslate"><span class="pre">/usr/lib/squid/security_file_certgen</span></code> que está incluido al instalar <code class="docutils literal notranslate"><span class="pre">squid</span></code> (podría estar también en <code class="docutils literal notranslate"><span class="pre">/usr/lib64</span></code> ):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#Esto crea (-c) una base de datos (o directorio) llamada (-s) base_de_datos_ssl</span>
 <span class="c1">#y no permitirá que la base de datos ocupe más de (-M) 50MB</span>
 <span class="c1">#Puede que necesites usar sudo</span>
@@ -321,11 +321,11 @@
 <span class="c1">#que es justo lo que queremos</span>
 <span class="n">sslproxy_cert_error</span> <span class="n">allow</span> <span class="nb">all</span>
 <span class="c1">#Y esto hace que Squid observe todos los certificados</span>
-<span class="c1">#Tanto de emisor como de cliente</span>
+<span class="c1">#tanto de emisor como de cliente</span>
 <span class="n">ssl_bump</span> <span class="n">stare</span> <span class="nb">all</span>
 </pre></div>
 </div>
-<p>Y por último buscamos en <code class="docutils literal notranslate"><span class="pre">squid.conf</span></code> la línea «http_port 3128» y la reemplazamos por esto (los simbolos sirven para poder continuar en la línea siguiente):</p>
+<p>Y por último buscamos en <code class="docutils literal notranslate"><span class="pre">squid.conf</span></code> la línea «http_port 3128» y la reemplazamos por esto (los simbolos <em>backslash</em>  sirven para poder continuar en la línea siguiente):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http_port</span> <span class="mi">3128</span> <span class="n">tcpkeepalive</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">3</span> <span class="n">ssl</span><span class="o">-</span><span class="n">bump</span> \
     <span class="n">generate</span><span class="o">-</span><span class="n">host</span><span class="o">-</span><span class="n">certificates</span><span class="o">=</span><span class="n">on</span> \
     <span class="n">dynamic_cert_mem_cache_size</span><span class="o">=</span><span class="mi">50</span><span class="n">MB</span> \

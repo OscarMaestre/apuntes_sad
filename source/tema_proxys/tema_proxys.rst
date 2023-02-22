@@ -208,7 +208,7 @@ Iniciando y parando el servicio
 
 Squid y SSL/TLS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Squid es básicamente un proxy HTTP, lo que significa que en principio no puede manejar HTTPS. Sin embargo, se puede recurrir a **certificados falsos** emitidos por una ``autoridad certificadora falsa`` los cuales al ser instalados en los navegadores de los usuarios darán por buena una conexión HTTPS aunque sea interceptada por Squid. Para ello hay que dar varios pasos.
+Squid es básicamente un proxy HTTP, lo que significa que en principio no puede manejar HTTPS. Sin embargo, se puede recurrir a **certificados falsos** emitidos por una **autoridad certificadora falsa** los cuales al ser instalados en los navegadores de los usuarios darán por buena una conexión HTTPS aunque sea interceptada por Squid. Para ello hay que dar varios pasos.
 
 En primer lugar fabricaremos un directorio para poner los certificados y generaremos los datos necesarios para poder generar certificados con rapidez::
 
@@ -221,7 +221,7 @@ En primer lugar fabricaremos un directorio para poner los certificados y generar
     #Esto genera un certificado autofirmado
     sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout ClaveCertificado.key -out Certificado.crt
 
-En segundo lugar generamos una base de datos de certificados (en realidad será un directorio) con un programa llamado ``/usr/lib/squid/security_file_certgen`` que está incluido al instalar ``squid``(podría estar también en ``/usr/lib64`` )::
+En segundo lugar generamos una base de datos de certificados (en realidad será un directorio) con un programa llamado ``/usr/lib/squid/security_file_certgen`` que está incluido al instalar ``squid`` (podría estar también en ``/usr/lib64`` )::
     
     #Esto crea (-c) una base de datos (o directorio) llamada (-s) base_de_datos_ssl
     #y no permitirá que la base de datos ocupe más de (-M) 50MB
@@ -243,10 +243,10 @@ En cuarto lugar nos vamos **al final del fichero de configuración** e indicamos
     #que es justo lo que queremos
     sslproxy_cert_error allow all 
     #Y esto hace que Squid observe todos los certificados
-    #Tanto de emisor como de cliente
+    #tanto de emisor como de cliente
     ssl_bump stare all
 
-Y por último buscamos en ``squid.conf`` la línea "http_port 3128" y la reemplazamos por esto (los simbolos \ sirven para poder continuar en la línea siguiente)::
+Y por último buscamos en ``squid.conf`` la línea "http_port 3128" y la reemplazamos por esto (los simbolos *backslash*  sirven para poder continuar en la línea siguiente)::
 
      http_port 3128 tcpkeepalive=60,30,3 ssl-bump \
          generate-host-certificates=on \
