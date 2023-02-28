@@ -213,7 +213,6 @@ Squid es básicamente un proxy HTTP, lo que significa que en principio no puede 
 En primer lugar fabricaremos un directorio para poner los certificados y generaremos los datos necesarios para poder generar certificados con rapidez::
 
     cd /etc/squid
-    sudo mkdir certificados_ssl
     #Esto genera una tabla de números primos
     #que pueden ser usados a la hora de generar los
     #certificados falsos

@@ -368,7 +368,6 @@
 <p>Squid es básicamente un proxy HTTP, lo que significa que en principio no puede manejar HTTPS. Sin embargo, se puede recurrir a <strong>certificados falsos</strong> emitidos por una <strong>autoridad certificadora falsa</strong> los cuales al ser instalados en los navegadores de los usuarios darán por buena una conexión HTTPS aunque sea interceptada por Squid. Para ello hay que dar varios pasos.</p>
 <p>En primer lugar fabricaremos un directorio para poner los certificados y generaremos los datos necesarios para poder generar certificados con rapidez:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">squid</span>
-<span class="n">sudo</span> <span class="n">mkdir</span> <span class="n">certificados_ssl</span>
 <span class="c1">#Esto genera una tabla de números primos</span>
 <span class="c1">#que pueden ser usados a la hora de generar los</span>
 <span class="c1">#certificados falsos</span>
