@@ -372,12 +372,18 @@ Si el sistema anterior no es suficiente se puede utilizar el análisis de las ru
 ACLs basadas en el tipo de archivo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-En Internet hay una definición general de tipos de archivo llamada "tipos MIME" (Multimedia Internet Mail Extensions, se definieron para transportar archivos en el correo electrónico). Si lo que nos interesa en bloquear el acceso a ciertos tipos de contenido como vídeo o audio podemos bloquear usando el análisis del tipo de petición MIME al servidor de esta manera. En este caso bloqueamos los "webm" que es un tipo de vídeo muy utilizado, aunque no el único (de hecho YouTube ofrece diversos tipos):
+En Internet hay una definición general de tipos de archivo llamada "tipos MIME" (Multimedia Internet Mail Extensions, se definieron para transportar archivos en el correo electrónico). Si lo que nos interesa en bloquear el acceso a ciertos tipos de contenido como vídeo o audio podemos bloquear usando el análisis del tipo de petición MIME al servidor de esta manera. En este caso bloqueamos los "webm" que es un tipo de vídeo muy utilizado, aunque no el único (de hecho YouTube ofrece diversos tipos). Obsérvese que usamos la "denegación de respuestas", ya que el tráfico que Squid "descifra" es el del servidor:
 
 .. code-block:: bash
 
-    acl bloquear_video req_mime_type video/webm
-    http_access deny bloquear_video
+    acl video_webm rep_mime_type video/webm
+    http_reply_access deny video_web
+    acl video_mp4 rep_mime_type video/mp4
+    http_reply_access deny video_mp4
+    acl video_flv rep_mime_type video/flv
+    http_reply_access deny video_flv
+
+
 
 Métodos de autenticación en un  proxy .
 -----------------------------------------------------------------------------------------------
