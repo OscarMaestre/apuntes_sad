@@ -238,7 +238,7 @@ En tercer lugar nos vamos al fichero de configuración que estemos usando e indi
 En cuarto lugar nos vamos **al final del fichero de configuración** e indicamos qué programa va a gestionar los certificados y el directorio donde puede trabajar::
 
     
-    sslcrtd_program /usr/lib/squid/security_file_certgen  -c -s /etc/squid/certificados_ssl -M 50MB
+    sslcrtd_program /usr/lib/squid/security_file_certgen   -s /etc/squid/certificados_ssl -M 50MB
     #Esto indica que Squid debe pasar por alto los errores de validación
     #que es justo lo que queremos
     sslproxy_cert_error allow all 
