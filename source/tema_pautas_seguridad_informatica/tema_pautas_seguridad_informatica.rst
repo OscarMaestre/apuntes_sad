@@ -336,7 +336,7 @@ Cuando se trabaja con claves públicas todo se guarda en un "almacén de claves"
 
 * A continuación se suele extraer nuestra clave pública del almacén de claves y ponerla en un fichero con el comando ``gpg --export <usuario> > ClavePublicaUsuario.gpg`` . Se generará un fichero binario en ``ClavePublicaUsuario.gpg`` . Si deseamos generar un fichero con ASCII normal podemos hacer esto ``gpg --armor --export <usuario> --output ClavePublicaUsuario.gpg`` 
 * Una vez que alguien nos haya pasado su clave pública deberemos incorporarla a nuestro almacén usando ``gpg --import <fichero.gpg>`` 
-* Para cifrar un fichero y que solo lo pueda descifrar la otra persona usaremos ``gpg --encrypt --recipient pepito@gmail.com <ficheroparacifrar``. El comando generará un fichero nuevo cifrado.
+* Para cifrar un fichero y que solo lo pueda descifrar la otra persona usaremos ``gpg --encrypt --recipient pepito@gmail.com ficheroparacifrar``. El comando generará un fichero nuevo cifrado.
 * Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que **solo esa persona podrá descifrar** . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con ``gpg --output ficherocifrado.doc.gpg --recipient persona@mail.com ficherooriginal.doc`` 
 * Finalmente podremos descifrar un fichero que nos hayan enviado usando ``gpg --decrypt <ficheroparanosotros>`` .
 
