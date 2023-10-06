@@ -518,7 +518,59 @@ Medios de almacenamiento.
 * Imprimir los datos. No es tan inútil como podría parecer, la duración de los datos impresos puede ser muy alta y además son muy difíciles de "robar".
 
 
+Copias de seguridad incrementales y diferenciales con ``tar``
+---------------------------------------------------------------
 
+En ambos casos ``tar`` va a necesitar guardar información en un archivo propio. Esto lo hace para poder saber qué archivos se guardaron en la copia completa y distinguirlos de los nuevos archivos que aparezcan y que deberá guardar en la diferencial o incremental.
+
+Copia de seguridad incremental
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fabriquemos un directorio ``datos_importantes``::
+
+  mkdir datos_importantes
+
+Entremos en él::
+  
+    cd datos_importantes
+
+Añadamos un par de archivos::
+  
+  nano Archivo01.txt
+  nano Archivo02.txt
+
+Salgamos del directorio::
+
+  cd ..
+
+Y fabriquemos nuestra copia completa::
+
+  tar -cf /home/usuario/copia_completa.tar -g /home/usuario/info_copia /home/usuario/datos_importantes
+
+Obsérvese que hay tres "campos":
+
+* El ``-cf /home/usuario/copia_completa.tar`` indica el nombre que va a tener el archivo de copia.
+* El ``-g /home/usuario/info_copia`` indica el nombre de archivo donde permitimos que ``tar`` guarde información sobre lo que contiene la copia (la siguiente copia incremental lo necesitará)
+* El ``/home/usuario/datos_importantes`` indica el directorio que contiene los datos de los cuales queremos hacer la copia de seguridad.
+
+Ahora añadamos un archivo a ``datos_importantes``::
+
+  cd datos_importantes
+  nano Archivo03.txt
+
+Ahora hay un archivo nuevo pero no queremos volver a hacer una copia completa. Nos salimos del directorio::
+
+  cd ..
+
+Y lanzamos *casi el mismo comando* ::
+
+  tar -cf /home/usuario/copia_incremental_lunes.tar -g /home/usuario/info_copia /home/usuario/datos_importantes
+
+De esta manera tendremos muchos archivos ``.tar`` pero cada uno de ellos **solo tendrá los archivos nuevos con respecto a la última copia.** Para restaurar la copia habrá que ir haciendo:
+
+* ``tar -xf copia_completa.tar``
+* ``tar -xf copia_incremental_lunes.tar``
+* ``tar -xf copia_incremental_martes.tar``, y así sucesivamente.
 
 
 
