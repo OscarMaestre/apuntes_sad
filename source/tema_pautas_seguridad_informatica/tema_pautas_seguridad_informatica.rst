@@ -573,6 +573,72 @@ De esta manera tendremos muchos archivos ``.tar`` pero cada uno de ellos **solo 
 * ``tar -xf copia_incremental_martes.tar``, y así sucesivamente.
 
 
+Copia de seguridad diferencial
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Haremos en gran parte lo mismo que antes. Empezaremos borrando nuestros directorios::
+
+  cd
+  rm -rf datos_importantes  
+  rm -rf restaurar  
+  
+Fabriquemos un directorio ``datos_importantes``::
+
+  mkdir datos_importantes
+
+Entremos en él::
+  
+    cd datos_importantes
+
+Añadamos un par de archivos::
+  
+  nano Archivo01.txt
+  nano Archivo02.txt
+
+Salgamos del directorio::
+
+  cd ..
+
+Y fabriquemos nuestra copia completa (esta vez no indicaremos rutas absolutas, por variar)::
+
+  tar -cf Copia_completa.tar datos_importantes/
+
+
+Ahora añadamos algún fichero con datos importantes.
+
+  nano datos_importantes/Archivo03.txt
+
+Y ahora hacemos una copia diferencial, indicando que queremos que en ella aparezcan solo los archivos que sean más nuevos que nuestra copia::
+
+  tar -cf Copia_diferencial_1.tar -N ./Copia_completa.tar datos_importantes/
+
+Añadimos algún fichero más::
+
+  nano datos_importantes/Archivo04.txt
+
+Y hacemos otra copia diferencial::
+
+  tar -cf Copia_diferencial_2.tar -N ./Copia_completa.tar datos_importantes/
+
+Ahora nos fabricamos un directorio para probar a restaurar::
+
+  mkdir restaurar
+
+Metemos en él **la copia completa y solo la última diferencial:**::
+
+  cp Copia_completa.tar Copia_diferencial_2.tar restaurar
+
+Entramos en el directorio::
+
+  cd restaurar
+
+Y probamos a extraer todos los archivos ``.tar``::
+
+  tar -xf Copia_completa.tar
+  tar -xf Copia_diferencial_2.tar
+
+Veremos que nos ha aparecido un directorio **con todos los archivos importantes**
+
 
 Sistemas biométricos. Funcionamiento. Estándares.
 -----------------------------------------------------------------------------------------------
