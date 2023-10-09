@@ -1,70 +1,36 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="es" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Implantación de técnicas de acceso remoto. Seguridad perimetral &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/translations.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
     <link rel="prev" title="Legislación y normas sobre seguridad" href="../tema_lopd/tema_lopd.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> Apuntes de Seguridad y alta disponibilidad
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Buscar documentos" />
@@ -72,24 +38,12 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contenidos:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Índice:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html">Adopción de pautas de seguridad informática</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html">Implantación de soluciones de alta disponibilidad</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html#ejercicio-recuperando-una-web-con-vagrant">Ejercicio: recuperando una web con Vagrant</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Implantación de técnicas de acceso remoto. Seguridad perimetral</a><ul>
@@ -131,75 +85,34 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Apuntes de Seguridad y alta disponibilidad</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Implantación de técnicas de acceso remoto. Seguridad perimetral</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/tema_acceso_remoto/tema_acceso_remoto.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="implantacion-de-tecnicas-de-acceso-remoto-seguridad-perimetral">
-<h1>Implantación de técnicas de acceso remoto. Seguridad perimetral<a class="headerlink" href="#implantacion-de-tecnicas-de-acceso-remoto-seguridad-perimetral" title="Enlazar permanentemente con este título">¶</a></h1>
-<div class="section" id="elementos-basicos-de-la-seguridad-perimetral">
-<h2>Elementos básicos de la seguridad perimetral.<a class="headerlink" href="#elementos-basicos-de-la-seguridad-perimetral" title="Enlazar permanentemente con este título">¶</a></h2>
+             
+  <section id="implantacion-de-tecnicas-de-acceso-remoto-seguridad-perimetral">
+<h1>Implantación de técnicas de acceso remoto. Seguridad perimetral<a class="headerlink" href="#implantacion-de-tecnicas-de-acceso-remoto-seguridad-perimetral" title="Enlace permanente a este encabezado"></a></h1>
+<section id="elementos-basicos-de-la-seguridad-perimetral">
+<h2>Elementos básicos de la seguridad perimetral.<a class="headerlink" href="#elementos-basicos-de-la-seguridad-perimetral" title="Enlace permanente a este encabezado"></a></h2>
 <ul class="simple">
 <li><p>Cortafuegos</p></li>
 <li><p>Routers frontera</p></li>
@@ -209,51 +122,51 @@
 <li><p>Sistemas IDS.</p></li>
 <li><p>VLAN.</p></li>
 </ul>
-</div>
-<div class="section" id="perimetros-de-red-zonas-desmilitarizadas-router-frontera">
-<h2>Perímetros de red. Zonas desmilitarizadas. Router frontera.<a class="headerlink" href="#perimetros-de-red-zonas-desmilitarizadas-router-frontera" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="arquitectura-debil-de-subred-protegida">
-<h2>Arquitectura débil de subred protegida.<a class="headerlink" href="#arquitectura-debil-de-subred-protegida" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="arquitectura-fuerte-de-subred-protegida">
-<h2>Arquitectura fuerte de subred protegida.<a class="headerlink" href="#arquitectura-fuerte-de-subred-protegida" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="politicas-de-defensa-en-profundidad">
-<h2>Políticas de defensa en profundidad.<a class="headerlink" href="#politicas-de-defensa-en-profundidad" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="perimetros-de-red-zonas-desmilitarizadas-router-frontera">
+<h2>Perímetros de red. Zonas desmilitarizadas. Router frontera.<a class="headerlink" href="#perimetros-de-red-zonas-desmilitarizadas-router-frontera" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="arquitectura-debil-de-subred-protegida">
+<h2>Arquitectura débil de subred protegida.<a class="headerlink" href="#arquitectura-debil-de-subred-protegida" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="arquitectura-fuerte-de-subred-protegida">
+<h2>Arquitectura fuerte de subred protegida.<a class="headerlink" href="#arquitectura-fuerte-de-subred-protegida" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="politicas-de-defensa-en-profundidad">
+<h2>Políticas de defensa en profundidad.<a class="headerlink" href="#politicas-de-defensa-en-profundidad" title="Enlace permanente a este encabezado"></a></h2>
 <ul class="simple">
 <li><p>Permitir lo que no esté prohibido</p></li>
 <li><p>Prohibir lo no permitido.</p></li>
 </ul>
-</div>
-<div class="section" id="defensa-perimetral">
-<h2>Defensa perimetral.<a class="headerlink" href="#defensa-perimetral" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="defensa-perimetral">
+<h2>Defensa perimetral.<a class="headerlink" href="#defensa-perimetral" title="Enlace permanente a este encabezado"></a></h2>
 <ul class="simple">
 <li><p>Administrar contenido</p></li>
 <li><p>Filtrar tráfico.</p></li>
 <li><p>Redirigir tráfico.</p></li>
 </ul>
-</div>
-<div class="section" id="defensa-interna">
-<h2>Defensa interna.<a class="headerlink" href="#defensa-interna" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="factor-humano">
-<h2>Factor Humano.<a class="headerlink" href="#factor-humano" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="redes-privadas-virtuales-vpn">
-<h2>Redes privadas virtuales. VPN.<a class="headerlink" href="#redes-privadas-virtuales-vpn" title="Enlazar permanentemente con este título">¶</a></h2>
-<div class="section" id="vpn-a-nivel-de-enlace">
-<h3>VPN a nivel de enlace.<a class="headerlink" href="#vpn-a-nivel-de-enlace" title="Enlazar permanentemente con este título">¶</a></h3>
-</div>
-<div class="section" id="vpn-a-nivel-de-red-ssl-ipsec">
-<h3>VPN a nivel de red. SSL, IPSec .<a class="headerlink" href="#vpn-a-nivel-de-red-ssl-ipsec" title="Enlazar permanentemente con este título">¶</a></h3>
-</div>
-<div class="section" id="vpn-a-nivel-de-aplicacion-ssh">
-<h3>VPN a nivel de aplicación. SSH.<a class="headerlink" href="#vpn-a-nivel-de-aplicacion-ssh" title="Enlazar permanentemente con este título">¶</a></h3>
-</div>
-</div>
-<div class="section" id="infraestructura-de-clave-publica-o-pki">
-<h2>Infraestructura de clave pública o PKI<a class="headerlink" href="#infraestructura-de-clave-publica-o-pki" title="Enlazar permanentemente con este título">¶</a></h2>
+</section>
+<section id="defensa-interna">
+<h2>Defensa interna.<a class="headerlink" href="#defensa-interna" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="factor-humano">
+<h2>Factor Humano.<a class="headerlink" href="#factor-humano" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="redes-privadas-virtuales-vpn">
+<h2>Redes privadas virtuales. VPN.<a class="headerlink" href="#redes-privadas-virtuales-vpn" title="Enlace permanente a este encabezado"></a></h2>
+<section id="vpn-a-nivel-de-enlace">
+<h3>VPN a nivel de enlace.<a class="headerlink" href="#vpn-a-nivel-de-enlace" title="Enlace permanente a este encabezado"></a></h3>
+</section>
+<section id="vpn-a-nivel-de-red-ssl-ipsec">
+<h3>VPN a nivel de red. SSL, IPSec .<a class="headerlink" href="#vpn-a-nivel-de-red-ssl-ipsec" title="Enlace permanente a este encabezado"></a></h3>
+</section>
+<section id="vpn-a-nivel-de-aplicacion-ssh">
+<h3>VPN a nivel de aplicación. SSH.<a class="headerlink" href="#vpn-a-nivel-de-aplicacion-ssh" title="Enlace permanente a este encabezado"></a></h3>
+</section>
+</section>
+<section id="infraestructura-de-clave-publica-o-pki">
+<h2>Infraestructura de clave pública o PKI<a class="headerlink" href="#infraestructura-de-clave-publica-o-pki" title="Enlace permanente a este encabezado"></a></h2>
 <p>En administración de sistemas suele ser necesario la configuración de mecanismos seguros que impliquen cifrado y confianza. Aunque el proceso que se va a mencionar ahora suele requerir que se pida la intervención de una autoridad de certificación externa en otros casos no va a ser necesario. A continuación se muestra como crear nuestra propia autoridad certificadora que pueda firmar certificados de otros. El objetivo de estos puntos es conseguir lo siguiente:</p>
 <ul class="simple">
 <li><p>Una clave raíz (que estará en un fichero llamado <code class="docutils literal notranslate"><span class="pre">ca.key</span></code>)</p></li>
@@ -264,12 +177,12 @@
 <li><p>Un certificado emitido para un cierto servicio o servidor (fichero <code class="docutils literal notranslate"><span class="pre">cliente.crt</span></code>)</p></li>
 <li><p>Un fichero con números primos precalculados (<code class="docutils literal notranslate"><span class="pre">Precalculados.pem</span></code> )</p></li>
 </ul>
-<div class="section" id="paso-0-instalar-easy-rsa">
-<h3>Paso 0: instalar Easy-RSA<a class="headerlink" href="#paso-0-instalar-easy-rsa" title="Enlazar permanentemente con este título">¶</a></h3>
+<section id="paso-0-instalar-easy-rsa">
+<h3>Paso 0: instalar Easy-RSA<a class="headerlink" href="#paso-0-instalar-easy-rsa" title="Enlace permanente a este encabezado"></a></h3>
 <p>Usando <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">easy-rsa</span></code> podremos instalar un software que nos automatizará el proceso de crear una autoridad de certificación con su propio certificado y un certificado de servidor firmador por esa autoridad propia.</p>
-</div>
-<div class="section" id="paso-1-crear-una-autoridad">
-<h3>Paso 1: Crear una autoridad<a class="headerlink" href="#paso-1-crear-una-autoridad" title="Enlazar permanentemente con este título">¶</a></h3>
+</section>
+<section id="paso-1-crear-una-autoridad">
+<h3>Paso 1: Crear una autoridad<a class="headerlink" href="#paso-1-crear-una-autoridad" title="Enlace permanente a este encabezado"></a></h3>
 <p>Usando <code class="docutils literal notranslate"><span class="pre">make-cadir</span> <span class="pre">&lt;directorio&gt;</span></code> podremos crear un directorio con los ficheros de configuración necesarios para crear nuestra propia autoridad de certificacion. Despues entramos en él y editamos el fichero <code class="docutils literal notranslate"><span class="pre">vars</span></code> para indicar los siguientes datos:</p>
 <ul class="simple">
 <li><p>País.</p></li>
@@ -279,25 +192,25 @@
 <li><p>Email.</p></li>
 <li><p>Unidad organizativa.</p></li>
 </ul>
-</div>
-<div class="section" id="paso-2-crear-la-infraestructura-de-claves">
-<h3>Paso 2: crear la infraestructura de claves<a class="headerlink" href="#paso-2-crear-la-infraestructura-de-claves" title="Enlazar permanentemente con este título">¶</a></h3>
+</section>
+<section id="paso-2-crear-la-infraestructura-de-claves">
+<h3>Paso 2: crear la infraestructura de claves<a class="headerlink" href="#paso-2-crear-la-infraestructura-de-claves" title="Enlace permanente a este encabezado"></a></h3>
 <p>Toda autoridad de certificación tiene como mínimo una clave raíz que se necesitará en todos los procesos. Podemos usar el comando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">init-pki</span></code> para construir los ficheros necesarios (pero aún no se generarán las claves).</p>
-</div>
-<div class="section" id="paso-3-construir-los-ficheros-de-la-ca">
-<h3>Paso 3: construir los ficheros de la CA<a class="headerlink" href="#paso-3-construir-los-ficheros-de-la-ca" title="Enlazar permanentemente con este título">¶</a></h3>
+</section>
+<section id="paso-3-construir-los-ficheros-de-la-ca">
+<h3>Paso 3: construir los ficheros de la CA<a class="headerlink" href="#paso-3-construir-los-ficheros-de-la-ca" title="Enlace permanente a este encabezado"></a></h3>
 <p>Con los datos rellenados en el paso 1 y la clave privada del paso 2 se puede crear el certificado raíz de nuestra CA usando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">build-ca</span></code> . Se nos pedirá una clave de acceso para custodiar la clave raíz que se va a generar y se nos pedirá un nombre de usuario o de servidor para incorporar al certificado raíz.</p>
-</div>
-<div class="section" id="paso-4-generar-un-certificado-para-un-servidor">
-<h3>Paso 4: generar un certificado para un servidor<a class="headerlink" href="#paso-4-generar-un-certificado-para-un-servidor" title="Enlazar permanentemente con este título">¶</a></h3>
+</section>
+<section id="paso-4-generar-un-certificado-para-un-servidor">
+<h3>Paso 4: generar un certificado para un servidor<a class="headerlink" href="#paso-4-generar-un-certificado-para-un-servidor" title="Enlace permanente a este encabezado"></a></h3>
 <p>Usando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">build-server-full</span> <span class="pre">&lt;nombre_de_servidor_o_servicio&gt;</span></code> se generarán dos cosas:</p>
 <ul class="simple">
 <li><p>Una clave privada para el servicio (estará en <code class="docutils literal notranslate"><span class="pre">pki/private/&lt;nombre&gt;.key</span></code></p></li>
 <li><p>Un certificado para ese servidor que irá firmado por nuestra CA (estará en <code class="docutils literal notranslate"><span class="pre">pki/issued/&lt;nombre&gt;.crt</span></code></p></li>
 </ul>
-</div>
-<div class="section" id="paso-5-generar-un-certificado-para-un-cliente">
-<h3>Paso 5: generar un certificado para un cliente<a class="headerlink" href="#paso-5-generar-un-certificado-para-un-cliente" title="Enlazar permanentemente con este título">¶</a></h3>
+</section>
+<section id="paso-5-generar-un-certificado-para-un-cliente">
+<h3>Paso 5: generar un certificado para un cliente<a class="headerlink" href="#paso-5-generar-un-certificado-para-un-cliente" title="Enlace permanente a este encabezado"></a></h3>
 <p>Usando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">build-cliente-full</span> <span class="pre">&lt;nombre_de_fichero_cliente&gt;</span></code> se generarán otra vez dos cosas:</p>
 <ul class="simple">
 <li><p>Una clave privada para el cliente (estará en <code class="docutils literal notranslate"><span class="pre">pki/private/&lt;nombre_fichero_cliente&gt;.key</span></code></p></li>
@@ -307,14 +220,14 @@
 <p class="admonition-title">Advertencia</p>
 <p>Es importante no olvidar las claves de acceso a los ficheros, los necesitaremos despues para conectar los clientes la VPN.</p>
 </div>
-</div>
-<div class="section" id="paso-5-precalcular-parametros-de-claves">
-<h3>Paso 5: precalcular parámetros de claves<a class="headerlink" href="#paso-5-precalcular-parametros-de-claves" title="Enlazar permanentemente con este título">¶</a></h3>
+</section>
+<section id="paso-5-precalcular-parametros-de-claves">
+<h3>Paso 5: precalcular parámetros de claves<a class="headerlink" href="#paso-5-precalcular-parametros-de-claves" title="Enlace permanente a este encabezado"></a></h3>
 <p>Cuando se establezca una conexión se van a utilizar algunos números para cifrar los datos. Estos valores pueden tenerse precalculados en un fichero para acelerar el inicio de las conexiones. Esto puede hacerse con el comando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">gen-dh``o</span> <span class="pre">también</span> <span class="pre">con``openssl</span> <span class="pre">dhparam</span> <span class="pre">-dsaparam</span> <span class="pre">2048</span> <span class="pre">-out</span> <span class="pre">Parametros.pem</span></code></p>
 <p>Este comando genera números primos aceptables para el establecimiento de una conexión, usando 2048 bits como longitud de clave pero evitando (con el parámetro <code class="docutils literal notranslate"><span class="pre">dsaparam</span></code>  una serie de números que no aportan más seguridad).</p>
-</div>
-<div class="section" id="paso-6-configurar-el-servidor-y-arrancarlos">
-<h3>Paso 6: configurar el servidor y arrancarlos<a class="headerlink" href="#paso-6-configurar-el-servidor-y-arrancarlos" title="Enlazar permanentemente con este título">¶</a></h3>
+</section>
+<section id="paso-6-configurar-el-servidor-y-arrancarlos">
+<h3>Paso 6: configurar el servidor y arrancarlos<a class="headerlink" href="#paso-6-configurar-el-servidor-y-arrancarlos" title="Enlace permanente a este encabezado"></a></h3>
 <p>En el servidor podemos crear un fichero como este:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>proto udp <span class="c1">#OpenVPN usará UDP para la comunicación</span>
 port <span class="m">1194</span> <span class="c1">#OpenVPN escuchará en este puerto</span>
@@ -349,9 +262,9 @@ log-append /var/log/openvpn.log
 </pre></div>
 </div>
 <p>Y arrancar OpenVPN con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">openvpn</span> <span class="pre">--config</span> <span class="pre">servidor.conf</span></code></p>
-</div>
-<div class="section" id="paso-7-configurar-el-cliente-y-arrancarlo">
-<h3>Paso 7: configurar el cliente y arrancarlo.<a class="headerlink" href="#paso-7-configurar-el-cliente-y-arrancarlo" title="Enlazar permanentemente con este título">¶</a></h3>
+</section>
+<section id="paso-7-configurar-el-cliente-y-arrancarlo">
+<h3>Paso 7: configurar el cliente y arrancarlo.<a class="headerlink" href="#paso-7-configurar-el-cliente-y-arrancarlo" title="Enlace permanente a este encabezado"></a></h3>
 <p>Estando en el mismo directorio del servidor podemos usar el comando <code class="docutils literal notranslate"><span class="pre">./easyrsa</span> <span class="pre">-build-cliente-full</span> <span class="pre">Cliente01</span></code> y generar todo lo necesario para que se conecte un cliente. En concreto nos interesa esto:</p>
 <ul class="simple">
 <li><p>El certificado del cliente (debe estar en <code class="docutils literal notranslate"><span class="pre">pki/issued/Cliente01.crt</span></code>)</p></li>
@@ -366,85 +279,70 @@ log-append /var/log/openvpn.log
 <li><p>Fichero de clave privada de usuario.</p></li>
 <li><p>Clave de acceso al fichero de clave privada de usuario.</p></li>
 </ol>
-<div class="figure align-center" id="id1">
+<figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/ConfiguracionClienteVPN.png"><img alt="Un cliente Linux configurado con VPN" src="../_images/ConfiguracionClienteVPN.png" style="width: 379.0px; height: 327.5px;" /></a>
-<p class="caption"><span class="caption-text">Configuración de un cliente Linux con VPN</span><a class="headerlink" href="#id1" title="Enlace permanente a esta imagen">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Configuración de un cliente Linux con VPN</span><a class="headerlink" href="#id1" title="Enlace permanente a esta imagen"></a></p>
+</figcaption>
+</figure>
 <p>Si hemos hecho todo correctamente podremos ver en el servidor que se recibe una conexión y en el cliente veremos que ha aparecido una nueva IP y que ahora podemos hacer ping a la IP de la VPN del servidor. Todo el tráfico que fluye entre cliente y servidor ahora circula cifrado.</p>
 <p>Pregunta: <em>¿por qué ahora el cliente no puede navegar por Internet?.</em> La respuesta probablemente sea porque en el servidor aún no se han hecho muchas cosas, como activar el enrutamiento, tal vez configurar el NAT o quizá incluso ni siquiera hayamos añadido una tarjeta de red a la máquina virtual del servidor.</p>
-</div>
-</div>
-<div class="section" id="beneficios-y-desventajas-con-respecto-a-las-lineas-dedicadas">
-<h2>Beneficios y desventajas con respecto a las líneas dedicadas.<a class="headerlink" href="#beneficios-y-desventajas-con-respecto-a-las-lineas-dedicadas" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="tecnicas-de-cifrado-clave-publica-y-clave-privada">
-<h2>Técnicas de cifrado. Clave pública y clave privada.<a class="headerlink" href="#tecnicas-de-cifrado-clave-publica-y-clave-privada" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="interprete-de-comandos-ssh">
-<h2>Intérprete de comandos SSH.<a class="headerlink" href="#interprete-de-comandos-ssh" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="gestion-de-archivos-ssh">
-<h2>Gestión de archivos SSH.<a class="headerlink" href="#gestion-de-archivos-ssh" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="servidores-de-acceso-remoto">
-<h2>Servidores de acceso remoto<a class="headerlink" href="#servidores-de-acceso-remoto" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="protocolos-de-autenticacion">
-<h2>Protocolos de autenticación.<a class="headerlink" href="#protocolos-de-autenticacion" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="configuracion-de-parametros-de-acceso">
-<h2>Configuración de parámetros de acceso.<a class="headerlink" href="#configuracion-de-parametros-de-acceso" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-<div class="section" id="servidores-de-autenticacion">
-<h2>Servidores de autenticación.<a class="headerlink" href="#servidores-de-autenticacion" title="Enlazar permanentemente con este título">¶</a></h2>
-</div>
-</div>
+</section>
+</section>
+<section id="beneficios-y-desventajas-con-respecto-a-las-lineas-dedicadas">
+<h2>Beneficios y desventajas con respecto a las líneas dedicadas.<a class="headerlink" href="#beneficios-y-desventajas-con-respecto-a-las-lineas-dedicadas" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="tecnicas-de-cifrado-clave-publica-y-clave-privada">
+<h2>Técnicas de cifrado. Clave pública y clave privada.<a class="headerlink" href="#tecnicas-de-cifrado-clave-publica-y-clave-privada" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="interprete-de-comandos-ssh">
+<h2>Intérprete de comandos SSH.<a class="headerlink" href="#interprete-de-comandos-ssh" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="gestion-de-archivos-ssh">
+<h2>Gestión de archivos SSH.<a class="headerlink" href="#gestion-de-archivos-ssh" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="servidores-de-acceso-remoto">
+<h2>Servidores de acceso remoto<a class="headerlink" href="#servidores-de-acceso-remoto" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="protocolos-de-autenticacion">
+<h2>Protocolos de autenticación.<a class="headerlink" href="#protocolos-de-autenticacion" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="configuracion-de-parametros-de-acceso">
+<h2>Configuración de parámetros de acceso.<a class="headerlink" href="#configuracion-de-parametros-de-acceso" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+<section id="servidores-de-autenticacion">
+<h2>Servidores de autenticación.<a class="headerlink" href="#servidores-de-autenticacion" title="Enlace permanente a este encabezado"></a></h2>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="../tema_lopd/tema_lopd.html" class="btn btn-neutral float-left" title="Legislación y normas sobre seguridad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Derechos de autor 2019, Oscar GG.
-
-    </p>
+    <p>&#169; Derechos de autor 2019, Oscar GG.</p>
   </div>
-    
-    
-    
-    Construido con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
-    
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
-    
-    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>. 
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

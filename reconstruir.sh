@@ -6,5 +6,5 @@ cp -r build/html/* docs
 cp .nojekyll docs/
 make latexpdf
 git add docs
-git commit -a -m""
+git commit -a -m ""
 git push
