@@ -604,7 +604,7 @@ Y fabriquemos nuestra copia completa (esta vez no indicaremos rutas absolutas, p
   tar -cf Copia_completa.tar datos_importantes/
 
 
-Ahora añadamos algún fichero con datos importantes.
+Ahora añadamos algún fichero con datos importantes::
 
   nano datos_importantes/Archivo03.txt
 
