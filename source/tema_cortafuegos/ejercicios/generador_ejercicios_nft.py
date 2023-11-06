@@ -5,6 +5,45 @@ from random import randint, choice,shuffle
 from utilidades.ip.nuevo_generador import Generator
 from utilidades.netplan.netplan import NetplanGenerator
 
+
+
+HACER_NAT="""
+table ip {nombretabla} {{
+    chain  {cadenanatentrada} {{
+        type nat hook prerouting priority 0; policy accept;
+    }}
+    chain {cadenanatsalida}  {{
+        type nat hook postrouting priority 100; policy accept;
+        oifname "{tarjetasalida}" masquerade
+    }}
+}}
+
+"""
+HACER_FILTRADO="""
+table ip {nombrefiltrado} {{
+    {cadenas}
+}}
+"""
+
+CADENA_FILTRADO_INPUT="""
+    chain {nombrecadena} {{
+        type filter hook input priority 0;policy accept;
+        {reglas}
+    }}
+"""
+
+tablas_nat=[
+    ("operacionesnat", "natentrada", "natsalida"),
+    ("op_nat", "traficonatentrada", "traficonatsalida"),
+]
+
+def append_tabs(cad, prefix_char="\t", num_of_prefix_chars=1):
+    lines=cad.split("\n")
+    tabs=prefix_char*num_of_prefix_chars
+    lines_with_tabs=[f"{tabs}{line}" for line in lines]
+    return "\n".join(lines_with_tabs)
+    
+
 class GeneradorEjerciciosNFT(object):
     def __init__(self):
         self.generador = Generator()
@@ -29,7 +68,7 @@ class GeneradorEjerciciosNFT(object):
         generador_netplan=NetplanGenerator()
         generador_netplan.add_wired_network_card_with_ip(self.tarjeta_interna,[direccion_ip_interna], [])
         generador_netplan.add_wired_network_card_with_ip(self.tarjeta_externa,[direccion_ip_externa], ["10.14.0.254"])
-        return str(generador_netplan)
+        return generador_netplan.get_str_with_tabs()
     
     def generar_ejercicio(self):
         #Prefijo de la 10.14
@@ -48,6 +87,19 @@ class GeneradorEjerciciosNFT(object):
         self.mascara_windows = self.red_interna.netmask
         self.gw_windows      = self.ip_interna_ubuntu
 
+
+    def _get_operaciones_nat(self):
+        nombres_nat=choice(tablas_nat)
+        return HACER_NAT.format(nombretabla=nombres_nat[0], 
+                                cadenanatentrada=nombres_nat[1], 
+                                cadenanatsalida=nombres_nat[2],
+                                tarjetasalida=self.tarjeta_externa)
+
+    def _get_nf_conf(self):
+        nat=self._get_operaciones_nat()
+        with_tabs=append_tabs(nat)
+        return with_tabs
+    
     def __str__(self) -> str:
         info=[
             f"Red interna        : {self.red_interna}",
@@ -61,14 +113,20 @@ class GeneradorEjerciciosNFT(object):
             "--------------------------",
             f"IP Windows         :{self.ip_windows}",
             f"Máscara Windows    :{self.mascara_windows}",
-            f"Puerta de enlace   :{self.gw_windows}"
+            f"Puerta de enlace   :{self.gw_windows}",
             "","","",
             "Configuración de Ubuntu",
             "-------------------------",
             "","","",
             "Fichero de netplan",
             "~~~~~~~~~~~~~~~~~~~~~~~~",
-            self.fichero_netplan
+            "","Fichero `/etc/netplan/00-installer.yaml` de Ubuntu::","",
+            self.fichero_netplan,
+            "","","",
+            "Fichero `/etc/nftables.conf`",
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+            "","","",
+            self._get_nf_conf()
             
             
         ]
