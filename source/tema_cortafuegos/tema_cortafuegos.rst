@@ -242,14 +242,28 @@ Los registros del cortafuegos van al fichero ``/etc/syslog``
 
 Cortafuegos integrados en los sistemas operativos.
 -----------------------------------------------------------------------------------------------
-Windows incluye un cortafuegos como parte integral de su
+Windows incluye un cortafuegos como parte integral de su sistema operativo pero debe recordarse que **el cortafuegos de Windows es solo y exclusivamente de host**. Recordemos que eso significa que puede regular el tráfico que sale de él y el tráfico que llega a él pero **no puede analizar el tráfico que pasa a través de él**. Y esto incluye el cortafuegos de Windows Server.
+
+El cortafuegos de Windows tiene tres "modos de funcionamiento"
+
+* Perfil dominio: es el conjunto de reglas a aplicar cuando Windows 7 está unido a un dominio.
+* Perfil público: es el conjunto de reglas a aplicar cuando Windows 7 está unido a una red que se ha marcado como "pública", es decir "no confiable". El perfil público trae por defecto reglas bastante restrictivas y lo más probable es que marquemos como públicas redes Wi-Fi de cafeterías, bibliotecas...
+* Perfil privado: es el conjunto de reglas a aplicar cuando Windows 7 está unido a una red que se ha marcado como "pública", es decir "confiable". Este perfil tiene reglas menos restrictivas.
+
+Este cortafuegos permite crear reglas a medida sobre el tipo de tráfico que entra, que sale, que use un cierto protocolo o direccion o direcciones IP y la posibilidad de aplicar la regla a uno o varios perfiles. Sin embargo,recordemos que no podrá tener reglas aplicadas al tráfico que pasa a través de él, así que si ponemos un Windows Server con dos tarjetas de red NO TENDREMOS NADA QUE HACER.
 
 Cortafuegos libres y propietarios.
 -----------------------------------------------------------------------------------------------
+Existen otros muchos sistemas de cortafuegos:
 
+* El sistema ``iptables`` para Linux: **sigue siendo muy utilizado**
+* Packet Filter para sistemas OpenBSD.
+* Cortafuegos de host integrados en antivirus... 
 
 Distribuciones libres para implementar cortafuegos en máquinas dedicadas.
 -----------------------------------------------------------------------------------------------
+
+Probablemente las más usadas sean Ubuntu y Debian, siendo la posibilidad mas potente el sistema ``nftables`` que hemos visto en este tema.
 
 
 Cortafuegos hardware.
