@@ -530,14 +530,14 @@
 <h3>Resolución<a class="headerlink" href="#resolucion" title="Link to this heading"></a></h3>
 <p>Empezaremos por asignar los parámetros IP al cortafuegos. Una vez hecho eso deberíamos tener ping al interior de la oficina y al router asignado. El fichero de <code class="docutils literal notranslate"><span class="pre">netplan</span></code> del Ubuntu Server es algo así:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="p">:</span>
-<span class="n">ethernets</span><span class="p">:</span>
-    <span class="n">enp0s3</span><span class="p">:</span>
-    <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">172.25.200.1</span><span class="o">/</span><span class="mi">16</span><span class="p">]</span>
-    <span class="n">enp0s8</span><span class="p">:</span>
-    <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">192.168.200.10</span><span class="o">/</span><span class="mi">16</span><span class="p">]</span>
-    <span class="n">gateway4</span><span class="p">:</span> <span class="mf">192.168.200.200</span>
-    <span class="n">nameservers</span><span class="p">:</span>
-        <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">8.8.8.8</span><span class="p">,</span> <span class="mf">8.8.4.4</span><span class="p">]</span>
+    <span class="n">ethernets</span><span class="p">:</span>
+        <span class="n">enp0s3</span><span class="p">:</span>
+        <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">172.25.200.1</span><span class="o">/</span><span class="mi">16</span><span class="p">]</span>
+        <span class="n">enp0s8</span><span class="p">:</span>
+        <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">192.168.200.10</span><span class="o">/</span><span class="mi">16</span><span class="p">]</span>
+        <span class="n">gateway4</span><span class="p">:</span> <span class="mf">192.168.200.200</span>
+        <span class="n">nameservers</span><span class="p">:</span>
+            <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">8.8.8.8</span><span class="p">,</span> <span class="mf">8.8.4.4</span><span class="p">]</span>
 <span class="n">version</span><span class="p">:</span> <span class="mi">2</span>
 </pre></div>
 </div>
