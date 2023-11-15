@@ -453,15 +453,15 @@ Resolución
 Empezaremos por asignar los parámetros IP al cortafuegos. Una vez hecho eso deberíamos tener ping al interior de la oficina y al router asignado. El fichero de ``netplan`` del Ubuntu Server es algo así::
 
     network:
-        ethernets:
-            enp0s3:
-            addresses: [172.25.200.1/16]
-            enp0s8:
-            addresses: [192.168.200.10/16]
-            gateway4: 192.168.200.200
-            nameservers: 
-                addresses: [8.8.8.8, 8.8.4.4]
-    version: 2
+      ethernets:
+        enp0s3:
+          addresses: [172.25.200.1/16]
+        enp0s8:
+          addresses: [192.168.200.10/16]
+          gateway4: 192.168.200.200
+          nameservers: 
+            addresses: [8.8.8.8, 8.8.4.4]
+      version: 2
 
 
 Y a continuación se muestra, con las soluciones relevantes comentadas, el fichero ``nftables.conf``::
