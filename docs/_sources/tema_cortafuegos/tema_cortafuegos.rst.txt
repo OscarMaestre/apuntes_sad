@@ -436,7 +436,7 @@ Ejercicio resuelto con ficheros
 Supongamos que nos han asignado una red como 172.25.xxx.xxx/16. Se han establecido los requisitos siguientes:
 
 * Los ordenadores de la oficina (Windows 7 por ejemplo), tienen direcciones como 172.25.xxx.10 (o 172.25.xx.11 o 172.25.xxx.12, así sucesivamente)
-* Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s3 tendremos una dirección como 172.25.xxx.1/16. Por la tarjeta enp0s8 tendremos una dirección como 192.168.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 192.168.xxx.1
+* Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s3 tendremos una dirección como 172.25.xxx.1/16. Por la tarjeta enp0s8 tendremos una dirección como 192.168.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 192.168.1.1
 * Teniendo esos datos, es evidente que el Windows 7 llevará como gateway al 172.25.xxx.1 y como DNS pondremos (por ejemplo 8.8.8.8 y 8.8.4.4)
 
 Resolución
