@@ -518,9 +518,85 @@
 <li><p>Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s3 tendremos una dirección como 172.25.xxx.1/16. Por la tarjeta enp0s8 tendremos una dirección como 192.168.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 192.168.200.1</p></li>
 <li><p>Teniendo esos datos, es evidente que el Windows 7 llevará como gateway al 172.25.xxx.1 y como DNS pondremos (por ejemplo 8.8.8.8 y 8.8.4.4)</p></li>
 </ul>
+<p>Dada esta configuración:</p>
+<ol class="arabic simple">
+<li><p>Prohibir al Windows 7 que navegue por la Web.</p></li>
+<li><p>Permitir al Windows 7 que navegue por la Web pero limitando la velocidad a 250KBytes/segundo</p></li>
+<li><p>Permitir al Windows 7 que navegue por la Web pero cuando llegue a los 10MBytes descargados, debe detenerse todo su tráfico.</p></li>
+<li><p>Permitir al Windows 7 que navegue por el servidor web instalado en el Ubuntu Server pero no que navegue por ningún otro sitio.</p></li>
+<li><p>Dentro de Windows 7 hay un servidor Web con XAMPP. Conseguir que dicho XAMPP sea accesible desde el exterior.</p></li>
+</ol>
 <section id="resolucion">
 <h3>Resolución<a class="headerlink" href="#resolucion" title="Link to this heading"></a></h3>
-<p>Empezaremos por asignar los parámetros IP al cortafuegos. Una vez hecho eso deberíamos tener ping al interior de la oficina y al router asignado.</p>
+<p>Empezaremos por asignar los parámetros IP al cortafuegos. Una vez hecho eso deberíamos tener ping al interior de la oficina y al router asignado. El fichero de <code class="docutils literal notranslate"><span class="pre">netplan</span></code> del Ubuntu Server es algo así:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network</span><span class="p">:</span>
+<span class="n">ethernets</span><span class="p">:</span>
+    <span class="n">enp0s3</span><span class="p">:</span>
+    <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">172.25.200.1</span><span class="o">/</span><span class="mi">16</span><span class="p">]</span>
+    <span class="n">enp0s8</span><span class="p">:</span>
+    <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">192.168.200.10</span><span class="o">/</span><span class="mi">16</span><span class="p">]</span>
+    <span class="n">gateway4</span><span class="p">:</span> <span class="mf">192.168.200.200</span>
+    <span class="n">nameservers</span><span class="p">:</span>
+        <span class="n">addresses</span><span class="p">:</span> <span class="p">[</span><span class="mf">8.8.8.8</span><span class="p">,</span> <span class="mf">8.8.4.4</span><span class="p">]</span>
+<span class="n">version</span><span class="p">:</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>Y a continuación se muestra, con las soluciones relevantes comentadas, el fichero <code class="docutils literal notranslate"><span class="pre">nftables.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/sbin/nft -f</span>
+<span class="n">flush</span> <span class="n">ruleset</span>
+<span class="n">table</span> <span class="n">inet</span> <span class="n">enrutadoNAT</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">procesado_paquetes</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="n">nat</span> <span class="n">hook</span> <span class="n">prerouting</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">#Punto 5: permitir el acceso web</span>
+        <span class="c1">#al XAMPP de Windows 7 desde el exterior</span>
+        <span class="c1">#ip daddr 192.168.200.10 tcp dport 80 \</span>
+        <span class="c1">#    dnat 172.25.200.10:80</span>
+        <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">chain</span> <span class="n">traduccion_nat</span><span class="p">{</span>
+        <span class="nb">type</span> <span class="n">nat</span> <span class="n">hook</span> <span class="n">postrouting</span> <span class="n">priority</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">oifname</span> <span class="s2">&quot;enp0s8&quot;</span> <span class="n">masquerade</span><span class="p">;</span>
+        <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">table</span> <span class="n">inet</span> <span class="n">filtradoEmpresaACME</span><span class="p">{</span>
+    <span class="n">chain</span> <span class="n">filtradoAbusoWeb</span><span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="n">prerouting</span> <span class="n">priority</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="c1">#Punto 1: prohibir la web</span>
+        <span class="c1">#ip saddr 172.25.200.10 tcp dport {80,443} drop;</span>
+        <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+
+        <span class="c1">#Punto 2: limitar la velocidad a 250KBytes/seg</span>
+        <span class="c1">#ip daddr 172.25.200.10 tcp sport {80,443} \</span>
+        <span class="c1">#         limit rate       250 kbytes/second accept;</span>
+        <span class="c1">#ip daddr 172.25.200.10 tcp sport {80,443}</span>
+        <span class="c1">#         limit rate  over 250 kbytes/second drop;</span>
+
+        <span class="c1">#Punto 3: limitar la cantidad de tráfico</span>
+        <span class="c1">#ip daddr 172.25.200.10 tcp sport {80,443} \</span>
+        <span class="c1">#         quota      10 mbytes  accept;</span>
+        <span class="c1">#ip daddr 172.25.200.10 tcp sport {80,443} \</span>
+        <span class="c1">#         quota over 10 mbytes drop;</span>
+
+        <span class="c1">#Punto 4: permitir a Windows 7 que navegue por</span>
+        <span class="c1">#         el servidor web de este Ubuntu pero</span>
+        <span class="c1">#         prohibirle que navegue por ningún</span>
+        <span class="c1">#         otro sitio</span>
+        <span class="c1"># Manera 1: ir a otra cadena con el hook &quot;input&quot;</span>
+        <span class="c1">#           y prohibir todo el tráfico de</span>
+        <span class="c1">#           172.25.200.10 en &quot;postrouting&quot;</span>
+
+        <span class="c1">#ip saddr 172.25.200.10 ip daddr 172.25.200.1 accept;</span>
+        <span class="c1">#ip saddr 172.25.200.10 tcp dport {80,443} drop;</span>
+
+        <span class="c1">#¡Cuidado!, si hubiéramos puesto</span>
+        <span class="c1">#esta regla en segundo lugar, lo habríamos</span>
+        <span class="c1">#hecho mal</span>
+        <span class="c1">#ip saddr 172.25.200.10 ip daddr 172.25.200.1 accept;</span>
+    <span class="p">}</span> <span class="c1">#Fin de la cadena</span>
+<span class="p">}</span> <span class="c1">#Fin de la tabla</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
