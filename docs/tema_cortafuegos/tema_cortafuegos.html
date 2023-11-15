@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="es" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Instalación y configuración de cortafuegos &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
@@ -11,13 +11,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/translations.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=4936afed"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=efdbd0b9"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
@@ -30,11 +29,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Apuntes de Seguridad y alta disponibilidad
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Apuntes de Seguridad y alta disponibilidad
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Buscar documentos" />
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -102,8 +105,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Instalación y configuración de cortafuegos</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Instalación y configuración de cortafuegos</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/tema_cortafuegos/tema_cortafuegos.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -114,14 +117,14 @@
            <div itemprop="articleBody">
              
   <section id="instalacion-y-configuracion-de-cortafuegos">
-<h1>Instalación y configuración de cortafuegos<a class="headerlink" href="#instalacion-y-configuracion-de-cortafuegos" title="Enlace permanente a este encabezado"></a></h1>
+<h1>Instalación y configuración de cortafuegos<a class="headerlink" href="#instalacion-y-configuracion-de-cortafuegos" title="Link to this heading"></a></h1>
 <section id="definicion-de-cortafuegos">
-<h2>Definición de cortafuegos<a class="headerlink" href="#definicion-de-cortafuegos" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Definición de cortafuegos<a class="headerlink" href="#definicion-de-cortafuegos" title="Link to this heading"></a></h2>
 <p>Un cortafuegos o «firewall» es un programa que examina los paquetes de red entrantes y salientes y decide autorizar o no el paso en función de las reglas que dictamine el administrador.</p>
 <p>A pesar de ser un software existen fabricantes de hardware que venden «dispositivos cortafuegos». Estos dispositivos suelen ser routers que incluyen de serie el software cortafuegos.</p>
 </section>
 <section id="recordatorio-de-los-conceptos-basicos-de-redes">
-<h2>Recordatorio de los conceptos básicos de redes<a class="headerlink" href="#recordatorio-de-los-conceptos-basicos-de-redes" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Recordatorio de los conceptos básicos de redes<a class="headerlink" href="#recordatorio-de-los-conceptos-basicos-de-redes" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Dirección IP: todo paquete de datos lleva una IP de origen y una de destino.</p></li>
 <li><p>Puerto: número asociado a un cierto programa o servicio. Todo paquete lleva un puerto de origen y un puerto de destino.</p></li>
@@ -142,7 +145,7 @@
 </ul>
 </section>
 <section id="utilizacion-de-cortafuegos">
-<h2>Utilización de cortafuegos.<a class="headerlink" href="#utilizacion-de-cortafuegos" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Utilización de cortafuegos.<a class="headerlink" href="#utilizacion-de-cortafuegos" title="Link to this heading"></a></h2>
 <p>Un cortafuegos es un programa que se ejecuta en los niveles más básicos del sistema operativo. Para utilizar esta capacidad es posible que tengamos dos grandes tipos de interfaz.</p>
 <ul class="simple">
 <li><p>Un interfaz gráfico (estilo Windows): en este curso analizaremos como usar el cortafuegos de Windows 2016.</p></li>
@@ -150,7 +153,7 @@
 </ul>
 </section>
 <section id="filtrado-de-paquetes-de-datos">
-<h2>Filtrado de paquetes de datos.<a class="headerlink" href="#filtrado-de-paquetes-de-datos" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Filtrado de paquetes de datos.<a class="headerlink" href="#filtrado-de-paquetes-de-datos" title="Link to this heading"></a></h2>
 <p>Una de las utilidades principales de un cortafuegos es denegar la entrada o salida de ciertos tipos de tráfico basándonos en distintos parámetros que ya se han mencionado antes:</p>
 <ul class="simple">
 <li><p>La IP de origen y/o destino.</p></li>
@@ -161,24 +164,24 @@
 <p>En los apartados posteriores veremos como usar un cortafuegos de red para permitir o denegar tráfico basándonos en estos datos.</p>
 </section>
 <section id="tipos-de-cortafuegos-caracteristicas-funciones-principales">
-<h2>Tipos de cortafuegos. Características. Funciones principales.<a class="headerlink" href="#tipos-de-cortafuegos-caracteristicas-funciones-principales" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Tipos de cortafuegos. Características. Funciones principales.<a class="headerlink" href="#tipos-de-cortafuegos-caracteristicas-funciones-principales" title="Link to this heading"></a></h2>
 <p>Hay muchas maneras de organizar la arquitectura del cortafuegos de una red. En este curso usaremos la más simple, reflejada en la figura siguiente. En ella, un dispositivo controla todo el tráfico de entrada y salida de una red. Por desgracia tiene el inconveniente de que si un intruso logra «saltarse» el cortafuegos tendrá acceso total a toda la red.</p>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="../_images/Cortafuegos.png"><img alt="Estructura de un cortafuegos (Fuente:Wikipedia)" src="../_images/Cortafuegos.png" style="width: 150.0px; height: 82.5px;" /></a>
 <figcaption>
-<p><span class="caption-text">Estructura de un cortafuegos (Fuente:Wikipedia)</span><a class="headerlink" href="#id2" title="Enlace permanente a esta imagen"></a></p>
+<p><span class="caption-text">Estructura de un cortafuegos (Fuente:Wikipedia)</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>El mecanismo más utilizado hoy en día es la creación de una «zona desmilitarizada» o DMZ y requiere varios dispositivos. También se conoce por el nombre de «screened host».</p>
 <figure class="align-center" id="id3">
 <a class="reference internal image-reference" href="../_images/dmz.png"><img alt="Arquitectura de una DMZ (Fuente: RedIris)." src="../_images/dmz.png" style="width: 250.0px; height: 150.0px;" /></a>
 <figcaption>
-<p><span class="caption-text">Arquitectura de una DMZ (Fuente: RedIris).</span><a class="headerlink" href="#id3" title="Enlace permanente a esta imagen"></a></p>
+<p><span class="caption-text">Arquitectura de una DMZ (Fuente: RedIris).</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="instalacion-de-cortafuegos-ubicacion">
-<h2>Instalación de cortafuegos. Ubicación.<a class="headerlink" href="#instalacion-de-cortafuegos-ubicacion" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Instalación de cortafuegos. Ubicación.<a class="headerlink" href="#instalacion-de-cortafuegos-ubicacion" title="Link to this heading"></a></h2>
 <p>En GNU/Linux podemos instalar <strong>NFTables</strong>, una arquitectura de filtrado de paquetes que se integra con el núcleo de Linux y reemplaza al anterior <strong>IPTables</strong> . Para instalarlo podemos hacer lo siguiente:</p>
 <ul class="simple">
 <li><p>Ejecutar <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">update</span></code> y <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">upgrade</span></code> para asegurarnos de recargar la información de interés sobre paquetes.</p></li>
@@ -193,7 +196,7 @@
 <p>En este tema usaremos unas de las configuraciones más habituales: situar el cortafuegos entre nuestra red y el resto de Internet, haciendo que nuestro equipo no solo haga NAT sino que también permita filtrar el tráfico entre ambas redes.</p>
 </section>
 <section id="reglas-de-filtrado-de-cortafuegos">
-<h2>Reglas de filtrado de cortafuegos.<a class="headerlink" href="#reglas-de-filtrado-de-cortafuegos" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Reglas de filtrado de cortafuegos.<a class="headerlink" href="#reglas-de-filtrado-de-cortafuegos" title="Link to this heading"></a></h2>
 <p>NFTables es la nueva arquitectura de filtrado y manipulación de paquetes de red en el núcleo de Linux.Como NFTables puede procesar muchos datos de red es importante saber que distingue entre varias «familias de protocolos de red». En concreto podemos usar estas familias:</p>
 <ul class="simple">
 <li><p>«ip»: se refiere a IPv4</p></li>
@@ -208,7 +211,7 @@
 <figure class="align-default" id="id4">
 <a class="reference internal image-reference" href="../_images/hooks.png"><img alt="Hooks" src="../_images/hooks.png" style="width: 656.8000000000001px; height: 124.0px;" /></a>
 <figcaption>
-<p><span class="caption-text">«Hooks» o etapas de un paquete de red. (Figura sacada de la web de NFTables)</span><a class="headerlink" href="#id4" title="Enlace permanente a esta imagen"></a></p>
+<p><span class="caption-text">«Hooks» o etapas de un paquete de red. (Figura sacada de la web de NFTables)</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -249,7 +252,7 @@
 <li><p>Si el fichero anterior lo ponemos «encima» del fichero <code class="docutils literal notranslate"><span class="pre">/etc/nftables.conf</span></code> el sistema operativo recargará esta configuración. El comando sería algo como <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">cp</span> <span class="pre">ficheronftables.conf</span> <span class="pre">/etc/nftables.conf</span></code></p></li>
 </ul>
 <section id="gestion-de-tablas">
-<h3>Gestión de tablas<a class="headerlink" href="#gestion-de-tablas" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Gestión de tablas<a class="headerlink" href="#gestion-de-tablas" title="Link to this heading"></a></h3>
 <p>En los puntos siguientes vemos algunas operaciones básicas con tablas:</p>
 <ul class="simple">
 <li><p>Crear una tabla que trabaje con el protocolo IPv4: <code class="docutils literal notranslate"><span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoBD</span></code></p></li>
@@ -263,14 +266,14 @@
 </div>
 </section>
 <section id="gestion-de-cadenas">
-<h3>Gestión de cadenas<a class="headerlink" href="#gestion-de-cadenas" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Gestión de cadenas<a class="headerlink" href="#gestion-de-cadenas" title="Link to this heading"></a></h3>
 <p>Supongamos una tabla cualquiera de tipo «ip» y llamada por ejemplo «filtradoUsuarios». Podemos trabajar con ella con comandos como los siguientes:</p>
 <ul class="simple">
 <li><p>Creamos una cadena para examinar por ejemplo el trafico de entrada, pero refiriéndonos <strong>«tráfico cuyo destino sera algún servidor que esté instalado en el mismo ordenador del cortafuegos</strong> . Dicha cadena se llamara «traficoEntrada»: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">chain</span> <span class="pre">ip</span> <span class="pre">filtradoUsuarios</span> <span class="pre">traficoEntrada</span> <span class="pre">{type</span> <span class="pre">filter</span> <span class="pre">hook</span> <span class="pre">input</span> <span class="pre">priority</span> <span class="pre">0\;</span> <span class="pre">}</span></code></p></li>
 </ul>
 </section>
 <section id="gestion-de-reglas">
-<h3>Gestión de reglas<a class="headerlink" href="#gestion-de-reglas" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Gestión de reglas<a class="headerlink" href="#gestion-de-reglas" title="Link to this heading"></a></h3>
 <p>Supongamos una tabla cualquiera de tipo «ip» y llamada por ejemplo «filtradoUsuarios» y supongamos que dentro hay una cadena llamada «traficoEntrada» y que dicha regla examina el tráfico de entrada.</p>
 <ul class="simple">
 <li><p>Podemos por ejemplo rechazar que alguien se conecte desde fuera poniendo una regla que prohiba el tráfico de entrada que intente conectarse a nuestro puerto 22 (el de SSH). Recordemos que dichas personas usarán como puerto de destino el 22.</p></li>
@@ -299,7 +302,7 @@
 </ul>
 </section>
 <section id="acciones-sobre-paquetes">
-<h3>Acciones sobre paquetes<a class="headerlink" href="#acciones-sobre-paquetes" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Acciones sobre paquetes<a class="headerlink" href="#acciones-sobre-paquetes" title="Link to this heading"></a></h3>
 <p>Hemos visto hasta ahora la acción <code class="docutils literal notranslate"><span class="pre">drop</span></code> (descartar), pero se pueden usar también:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">counter</span></code>: nos permite hacer un recuento de bytes/paquetes que cumplen una cierta regla (y por ejemplo «llevar la contabilidad de descargas».</p></li>
@@ -308,7 +311,7 @@
 </section>
 </section>
 <section id="pruebas-de-funcionamiento-sondeo">
-<h2>Pruebas de funcionamiento. Sondeo.<a class="headerlink" href="#pruebas-de-funcionamiento-sondeo" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Pruebas de funcionamiento. Sondeo.<a class="headerlink" href="#pruebas-de-funcionamiento-sondeo" title="Link to this heading"></a></h2>
 <p>Para comprobar el funcionamiento de un cortafuegos se pueden usar varias técnicas:</p>
 <ul class="simple">
 <li><p>Usar una herramienta genérica de gestión de redes, como <code class="docutils literal notranslate"><span class="pre">netcat</span></code>.</p></li>
@@ -317,7 +320,7 @@
 </ul>
 </section>
 <section id="registros-de-sucesos-de-un-cortafuegos">
-<h2>Registros de sucesos de un cortafuegos.<a class="headerlink" href="#registros-de-sucesos-de-un-cortafuegos" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Registros de sucesos de un cortafuegos.<a class="headerlink" href="#registros-de-sucesos-de-un-cortafuegos" title="Link to this heading"></a></h2>
 <p>Se puede registrar el tráfico que entra en un cortafuegos como <code class="docutils literal notranslate"><span class="pre">nft</span></code> . Para ello, se debe usar la acción <code class="docutils literal notranslate"><span class="pre">log</span></code> por ejemplo mediante reglas como las siguientes:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">rule</span> <span class="pre">ip</span> <span class="pre">tablaFiltrado</span> <span class="pre">cadenaEntrada</span> <span class="pre">log</span></code> . Esto registra <em>absolutamente todo el tráfico</em> que circule por esa cadena. Aunque puede ser de mucha utilidad, esto puede ser excesivo.</p></li>
@@ -326,42 +329,56 @@
 <p>Los registros del cortafuegos van al fichero <code class="docutils literal notranslate"><span class="pre">/etc/syslog</span></code></p>
 </section>
 <section id="cortafuegos-integrados-en-los-sistemas-operativos">
-<h2>Cortafuegos integrados en los sistemas operativos.<a class="headerlink" href="#cortafuegos-integrados-en-los-sistemas-operativos" title="Enlace permanente a este encabezado"></a></h2>
-<p>Windows incluye un cortafuegos como parte integral de su</p>
+<h2>Cortafuegos integrados en los sistemas operativos.<a class="headerlink" href="#cortafuegos-integrados-en-los-sistemas-operativos" title="Link to this heading"></a></h2>
+<p>Windows incluye un cortafuegos como parte integral de su sistema operativo pero debe recordarse que <strong>el cortafuegos de Windows es solo y exclusivamente de host</strong>. Recordemos que eso significa que puede regular el tráfico que sale de él y el tráfico que llega a él pero <strong>no puede analizar el tráfico que pasa a través de él</strong>. Y esto incluye el cortafuegos de Windows Server.</p>
+<p>El cortafuegos de Windows tiene tres «modos de funcionamiento»</p>
+<ul class="simple">
+<li><p>Perfil dominio: es el conjunto de reglas a aplicar cuando Windows 7 está unido a un dominio.</p></li>
+<li><p>Perfil público: es el conjunto de reglas a aplicar cuando Windows 7 está unido a una red que se ha marcado como «pública», es decir «no confiable». El perfil público trae por defecto reglas bastante restrictivas y lo más probable es que marquemos como públicas redes Wi-Fi de cafeterías, bibliotecas…</p></li>
+<li><p>Perfil privado: es el conjunto de reglas a aplicar cuando Windows 7 está unido a una red que se ha marcado como «pública», es decir «confiable». Este perfil tiene reglas menos restrictivas.</p></li>
+</ul>
+<p>Este cortafuegos permite crear reglas a medida sobre el tipo de tráfico que entra, que sale, que use un cierto protocolo o direccion o direcciones IP y la posibilidad de aplicar la regla a uno o varios perfiles. Sin embargo,recordemos que no podrá tener reglas aplicadas al tráfico que pasa a través de él, así que si ponemos un Windows Server con dos tarjetas de red NO TENDREMOS NADA QUE HACER.</p>
 </section>
 <section id="cortafuegos-libres-y-propietarios">
-<h2>Cortafuegos libres y propietarios.<a class="headerlink" href="#cortafuegos-libres-y-propietarios" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Cortafuegos libres y propietarios.<a class="headerlink" href="#cortafuegos-libres-y-propietarios" title="Link to this heading"></a></h2>
+<p>Existen otros muchos sistemas de cortafuegos:</p>
+<ul class="simple">
+<li><p>El sistema <code class="docutils literal notranslate"><span class="pre">iptables</span></code> para Linux: <strong>sigue siendo muy utilizado</strong></p></li>
+<li><p>Packet Filter para sistemas OpenBSD.</p></li>
+<li><p>Cortafuegos de host integrados en antivirus…</p></li>
+</ul>
 </section>
 <section id="distribuciones-libres-para-implementar-cortafuegos-en-maquinas-dedicadas">
-<h2>Distribuciones libres para implementar cortafuegos en máquinas dedicadas.<a class="headerlink" href="#distribuciones-libres-para-implementar-cortafuegos-en-maquinas-dedicadas" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Distribuciones libres para implementar cortafuegos en máquinas dedicadas.<a class="headerlink" href="#distribuciones-libres-para-implementar-cortafuegos-en-maquinas-dedicadas" title="Link to this heading"></a></h2>
+<p>Probablemente las más usadas sean Ubuntu y Debian, siendo la posibilidad mas potente el sistema <code class="docutils literal notranslate"><span class="pre">nftables</span></code> que hemos visto en este tema.</p>
 </section>
 <section id="cortafuegos-hardware">
-<h2>Cortafuegos hardware.<a class="headerlink" href="#cortafuegos-hardware" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Cortafuegos hardware.<a class="headerlink" href="#cortafuegos-hardware" title="Link to this heading"></a></h2>
 </section>
 <section id="anexo-configuracion-de-ip-en-linux-con-netplan">
-<h2>Anexo: configuración de IP en Linux con Netplan<a class="headerlink" href="#anexo-configuracion-de-ip-en-linux-con-netplan" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Anexo: configuración de IP en Linux con Netplan<a class="headerlink" href="#anexo-configuracion-de-ip-en-linux-con-netplan" title="Link to this heading"></a></h2>
 <p>La herramienta <code class="docutils literal notranslate"><span class="pre">netplan</span></code> utiliza ficheros YAML para configurar la IP en Linux. En distribuciones Linux orientadas a servidores es la herramienta que se usará en el futuro para configurar todos los parámetros de red. La estructura de estos ficheros permite indicar parámetros y subparámetros de configuración usando 4 espacios. Así, el fichero típico de <code class="docutils literal notranslate"><span class="pre">netplan</span></code> es como sigue:</p>
-<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">network</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"> </span><span class="c1">#Version de YAML que se usan</span><span class="w"></span>
-<span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span><span class="w"> </span><span class="c1">#Configuración de tarjetas Ethernet</span><span class="w"></span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">enp0s3:#Nombre de la tarjeta a configurar</span><span class="w"></span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">#Se pueden poner muchas direcciones</span><span class="w"></span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">#usando corchetes y separando por comas</span><span class="w"></span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">addresses</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">192.168.100/24</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">            </span><span class="c1">#Dirección del router que nos permitirá</span><span class="w"></span>
-<span class="w">            </span><span class="c1">#salir al exterior</span><span class="w"></span>
-<span class="w">            </span><span class="nt">gateway4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.100.1</span><span class="w"></span>
-<span class="w">            </span><span class="nt">nameservers</span><span class="p">:</span><span class="w"></span>
-<span class="w">                </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10.15.0.220</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8.8.8.8</span><span class="p p-Indicator">]</span><span class="w"></span>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">network</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"> </span><span class="c1">#Version de YAML que se usan</span>
+<span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span><span class="w"> </span><span class="c1">#Configuración de tarjetas Ethernet</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">enp0s3:#Nombre de la tarjeta a configurar</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">#Se pueden poner muchas direcciones</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">#usando corchetes y separando por comas</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">addresses</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">192.168.100/24</span><span class="p p-Indicator">]</span>
+<span class="w">            </span><span class="c1">#Dirección del router que nos permitirá</span>
+<span class="w">            </span><span class="c1">#salir al exterior</span>
+<span class="w">            </span><span class="nt">gateway4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.100.1</span>
+<span class="w">            </span><span class="nt">nameservers</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10.15.0.220</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8.8.8.8</span><span class="p p-Indicator">]</span>
 </pre></div>
 </div>
 </section>
 <section id="anexo-ejercicio-de-configuracion">
-<h2>Anexo: ejercicio de configuración<a class="headerlink" href="#anexo-ejercicio-de-configuracion" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Anexo: ejercicio de configuración<a class="headerlink" href="#anexo-ejercicio-de-configuracion" title="Link to this heading"></a></h2>
 <figure class="align-default" id="id5">
 <a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
 <figcaption>
-<p><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id5" title="Enlace permanente a esta imagen"></a></p>
+<p><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Se supone que tenemos dos máquinas</p>
@@ -387,7 +404,7 @@
 </pre></div>
 </div>
 <section id="ejemplo-denegacion-del-servidor-web-al-exterior">
-<h3>Ejemplo: denegación del servidor web al exterior<a class="headerlink" href="#ejemplo-denegacion-del-servidor-web-al-exterior" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Ejemplo: denegación del servidor web al exterior<a class="headerlink" href="#ejemplo-denegacion-del-servidor-web-al-exterior" title="Link to this heading"></a></h3>
 <p>Se nos pide lo siguiente: <em>«permitir que los clientes de dentro de la red SÍ puedan ver el servidor web instalado en el propio servidor donde está el cortafuegos»</em></p>
 <div class="admonition warning">
 <p class="admonition-title">Advertencia</p>
@@ -403,7 +420,7 @@
 </section>
 </section>
 <section id="anexo-resolucion-de-problemas">
-<h2>Anexo: resolución de problemas<a class="headerlink" href="#anexo-resolucion-de-problemas" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Anexo: resolución de problemas<a class="headerlink" href="#anexo-resolucion-de-problemas" title="Link to this heading"></a></h2>
 <p>Si algo va mal comprueba lo siguiente:</p>
 <ul class="simple">
 <li><p>Lanza el comando <code class="docutils literal notranslate"><span class="pre">nft</span></code>  como superusuario, es decir en realidad debes hacer <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span></code>.</p></li>
@@ -412,12 +429,12 @@
 </ul>
 </section>
 <section id="un-ejercicio-comentado">
-<h2>Un ejercicio comentado<a class="headerlink" href="#un-ejercicio-comentado" title="Enlace permanente a este encabezado"></a></h2>
+<h2>Un ejercicio comentado<a class="headerlink" href="#un-ejercicio-comentado" title="Link to this heading"></a></h2>
 <p>Supongamos que tenemos la misma configuración de siempre, que volvemos a mostrar en la figura siguiente:</p>
 <figure class="align-default" id="id6">
 <a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
 <figcaption>
-<p><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id6" title="Enlace permanente a esta imagen"></a></p>
+<p><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Y supongamos que nos piden lo siguiente:</p>
@@ -425,7 +442,7 @@
 <div><p><em>Asumiendo que los ordenadores de la izquierda son una «red interna» y que el resto son «el exterior» instalar un servidor web en el equipo del cortafuegos y conseguir que solo «el interior» pueda conectarse al servidor web</em></p>
 </div></blockquote>
 <section id="solucion-1-erronea">
-<h3>Solución 1 (errónea)<a class="headerlink" href="#solucion-1-erronea" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Solución 1 (errónea)<a class="headerlink" href="#solucion-1-erronea" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Ejecutamos <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code> para limpiar el cortafuegos.</p></li>
 <li><p>Construimos una tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code> y comprobamos su creación con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">list</span> <span class="pre">tables</span></code></p></li>
@@ -447,7 +464,7 @@
 </ul>
 </section>
 <section id="una-solucion-un-poco-mejor">
-<h3>Una solución un poco mejor<a class="headerlink" href="#una-solucion-un-poco-mejor" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Una solución un poco mejor<a class="headerlink" href="#una-solucion-un-poco-mejor" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Borramos las reglas con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code></p></li>
 <li><p>Reconstruimos la tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code></p></li>
@@ -457,7 +474,7 @@
 <p>Esto funciona un poco mejor, pero en realidad «fuera» podría haber muchos rangos distintos, por lo que quizá hubiera que poner muchos (y quizá demasiados) rangos de IPs.</p>
 </section>
 <section id="id1">
-<h3>Una solución (un poco mejor)<a class="headerlink" href="#id1" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Una solución (un poco mejor)<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Borramos las reglas con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code></p></li>
 <li><p>Reconstruimos la tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code></p></li>
@@ -467,7 +484,7 @@
 <p>Esta última regla es un poco mejor, porque ahora descartamos indicando que «prohibimos el tráfico que intente entrar al puerto 80 usando como interfaz de entrada (iifname o «input interface name») la tarjeta enp0s8» (o la que sea)</p>
 </section>
 <section id="otra-solucion">
-<h3>Otra solución<a class="headerlink" href="#otra-solucion" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Otra solución<a class="headerlink" href="#otra-solucion" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Borramos las reglas con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code></p></li>
 <li><p>Vamos a crear una tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code></p></li>
@@ -476,7 +493,7 @@
 </ol>
 </section>
 <section id="otra-solucion-mas-segura">
-<h3>Otra solución (más segura)<a class="headerlink" href="#otra-solucion-mas-segura" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Otra solución (más segura)<a class="headerlink" href="#otra-solucion-mas-segura" title="Link to this heading"></a></h3>
 <ol class="arabic">
 <li><p>Borramos las reglas con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">flush</span> <span class="pre">ruleset</span></code></p></li>
 <li><p>Vamos a crear una tabla con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">add</span> <span class="pre">table</span> <span class="pre">ip</span> <span class="pre">filtradoWeb</span></code></p></li>
@@ -494,15 +511,15 @@
 </section>
 </section>
 <section id="ejercicio-resuelto-con-ficheros">
-<h2>Ejercicio resuelto con ficheros<a class="headerlink" href="#ejercicio-resuelto-con-ficheros" title="Enlace permanente a este encabezado"></a></h2>
-<p>Supongamos que nos han asignado una red como 10.xxx.xxx.xx/8. Se han establecido los requisitos siguientes:</p>
+<h2>Ejercicio resuelto con ficheros<a class="headerlink" href="#ejercicio-resuelto-con-ficheros" title="Link to this heading"></a></h2>
+<p>Supongamos que nos han asignado una red como 172.25.xxx.xxx/16. Se han establecido los requisitos siguientes:</p>
 <ul class="simple">
-<li><p>Los ordenadores de la oficina (Windows 7 por ejemplo), tienen direcciones como 10.xxx.10.10 con máscara 255.0.0.0.</p></li>
-<li><p>Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s8 tendremos una dirección como 10.xxx.1.1/8. Por la tarjeta enp0s3 tendremos una dirección como 172.31.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 172.31.1.1.</p></li>
-<li><p>Teniendo esos datos, es evidente que el Windows 7 llevará como gateway al 10.xxx.1.1 y como DNS pondremos (por ejemplo 8.8.8.8 y 8.8.4.4)</p></li>
+<li><p>Los ordenadores de la oficina (Windows 7 por ejemplo), tienen direcciones como 172.25.xxx.10 (o 172.25.xx.11 o 172.25.xxx.12, así sucesivamente)</p></li>
+<li><p>Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s3 tendremos una dirección como 172.25.xxx.1/16. Por la tarjeta enp0s8 tendremos una dirección como 192.168.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 192.168.xxx.1</p></li>
+<li><p>Teniendo esos datos, es evidente que el Windows 7 llevará como gateway al 172.25.xxx.1 y como DNS pondremos (por ejemplo 8.8.8.8 y 8.8.4.4)</p></li>
 </ul>
 <section id="resolucion">
-<h3>Resolución<a class="headerlink" href="#resolucion" title="Enlace permanente a este encabezado"></a></h3>
+<h3>Resolución<a class="headerlink" href="#resolucion" title="Link to this heading"></a></h3>
 <p>Empezaremos por asignar los parámetros IP al cortafuegos. Una vez hecho eso deberíamos tener ping al interior de la oficina y al router asignado.</p>
 </section>
 </section>
