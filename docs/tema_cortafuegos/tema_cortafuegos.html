@@ -327,13 +327,27 @@
 </section>
 <section id="cortafuegos-integrados-en-los-sistemas-operativos">
 <h2>Cortafuegos integrados en los sistemas operativos.<a class="headerlink" href="#cortafuegos-integrados-en-los-sistemas-operativos" title="Enlace permanente a este encabezado"></a></h2>
-<p>Windows incluye un cortafuegos como parte integral de su</p>
+<p>Windows incluye un cortafuegos como parte integral de su sistema operativo pero debe recordarse que <strong>el cortafuegos de Windows es solo y exclusivamente de host</strong>. Recordemos que eso significa que puede regular el tráfico que sale de él y el tráfico que llega a él pero <strong>no puede analizar el tráfico que pasa a través de él</strong>. Y esto incluye el cortafuegos de Windows Server.</p>
+<p>El cortafuegos de Windows tiene tres «modos de funcionamiento»</p>
+<ul class="simple">
+<li><p>Perfil dominio: es el conjunto de reglas a aplicar cuando Windows 7 está unido a un dominio.</p></li>
+<li><p>Perfil público: es el conjunto de reglas a aplicar cuando Windows 7 está unido a una red que se ha marcado como «pública», es decir «no confiable». El perfil público trae por defecto reglas bastante restrictivas y lo más probable es que marquemos como públicas redes Wi-Fi de cafeterías, bibliotecas…</p></li>
+<li><p>Perfil privado: es el conjunto de reglas a aplicar cuando Windows 7 está unido a una red que se ha marcado como «pública», es decir «confiable». Este perfil tiene reglas menos restrictivas.</p></li>
+</ul>
+<p>Este cortafuegos permite crear reglas a medida sobre el tipo de tráfico que entra, que sale, que use un cierto protocolo o direccion o direcciones IP y la posibilidad de aplicar la regla a uno o varios perfiles. Sin embargo,recordemos que no podrá tener reglas aplicadas al tráfico que pasa a través de él, así que si ponemos un Windows Server con dos tarjetas de red NO TENDREMOS NADA QUE HACER.</p>
 </section>
 <section id="cortafuegos-libres-y-propietarios">
 <h2>Cortafuegos libres y propietarios.<a class="headerlink" href="#cortafuegos-libres-y-propietarios" title="Enlace permanente a este encabezado"></a></h2>
+<p>Existen otros muchos sistemas de cortafuegos:</p>
+<ul class="simple">
+<li><p>El sistema <code class="docutils literal notranslate"><span class="pre">iptables</span></code> para Linux: <strong>sigue siendo muy utilizado</strong></p></li>
+<li><p>Packet Filter para sistemas OpenBSD.</p></li>
+<li><p>Cortafuegos de host integrados en antivirus…</p></li>
+</ul>
 </section>
 <section id="distribuciones-libres-para-implementar-cortafuegos-en-maquinas-dedicadas">
 <h2>Distribuciones libres para implementar cortafuegos en máquinas dedicadas.<a class="headerlink" href="#distribuciones-libres-para-implementar-cortafuegos-en-maquinas-dedicadas" title="Enlace permanente a este encabezado"></a></h2>
+<p>Probablemente las más usadas sean Ubuntu y Debian, siendo la posibilidad mas potente el sistema <code class="docutils literal notranslate"><span class="pre">nftables</span></code> que hemos visto en este tema.</p>
 </section>
 <section id="cortafuegos-hardware">
 <h2>Cortafuegos hardware.<a class="headerlink" href="#cortafuegos-hardware" title="Enlace permanente a este encabezado"></a></h2>
