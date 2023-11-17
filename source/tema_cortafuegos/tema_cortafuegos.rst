@@ -433,16 +433,89 @@ Otra solución (más segura)
 Ejercicio resuelto con ficheros
 ---------------------------------
 
-Supongamos que nos han asignado una red como 10.xxx.xxx.xx/8. Se han establecido los requisitos siguientes:
+Supongamos que nos han asignado una red como 172.25.xxx.xxx/16. Se han establecido los requisitos siguientes:
 
-* Los ordenadores de la oficina (Windows 7 por ejemplo), tienen direcciones como 10.xxx.10.10 con máscara 255.0.0.0.
-* Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s8 tendremos una dirección como 10.xxx.1.1/8. Por la tarjeta enp0s3 tendremos una dirección como 172.31.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 172.31.1.1.
-* Teniendo esos datos, es evidente que el Windows 7 llevará como gateway al 10.xxx.1.1 y como DNS pondremos (por ejemplo 8.8.8.8 y 8.8.4.4)
+* Los ordenadores de la oficina (Windows 7 por ejemplo), tienen direcciones como 172.25.xxx.10 (o 172.25.xx.11 o 172.25.xxx.12, así sucesivamente)
+* Queremos tener un cortafuegos que interconecta dos redes. Por la tarjeta enp0s3 tendremos una dirección como 172.25.xxx.1/16. Por la tarjeta enp0s8 tendremos una dirección como 192.168.xxx.10/16. Esa tarjeta tiene conexión con un router que nos lleva al exterior y cuya IP es 192.168.200.1
+* Teniendo esos datos, es evidente que el Windows 7 llevará como gateway al 172.25.xxx.1 y como DNS pondremos (por ejemplo 8.8.8.8 y 8.8.4.4)
+
+Dada esta configuración:
+
+1. Prohibir al Windows 7 que navegue por la Web.
+2. Permitir al Windows 7 que navegue por la Web pero limitando la velocidad a 250KBytes/segundo
+3. Permitir al Windows 7 que navegue por la Web pero cuando llegue a los 10MBytes descargados, debe detenerse todo su tráfico.
+4. Permitir al Windows 7 que navegue por el servidor web instalado en el Ubuntu Server pero no que navegue por ningún otro sitio.
+5. Dentro de Windows 7 hay un servidor Web con XAMPP. Conseguir que dicho XAMPP sea accesible desde el exterior.
 
 Resolución
 ~~~~~~~~~~~~~~~~~~
 
-Empezaremos por asignar los parámetros IP al cortafuegos. Una vez hecho eso deberíamos tener ping al interior de la oficina y al router asignado.
+Empezaremos por asignar los parámetros IP al cortafuegos. Una vez hecho eso deberíamos tener ping al interior de la oficina y al router asignado. El fichero de ``netplan`` del Ubuntu Server es algo así::
+
+    network:
+      ethernets:
+        enp0s3:
+          addresses: [172.25.200.1/16]
+        enp0s8:
+          addresses: [192.168.200.10/16]
+          gateway4: 192.168.200.200
+          nameservers: 
+            addresses: [8.8.8.8, 8.8.4.4]
+      version: 2
 
 
+Y a continuación se muestra, con las soluciones relevantes comentadas, el fichero ``nftables.conf``::
 
+    #!/usr/sbin/nft -f
+    flush ruleset
+    table inet enrutadoNAT {
+        chain procesado_paquetes {
+            type nat hook prerouting priority 0;
+            #Punto 5: permitir el acceso web
+            #al XAMPP de Windows 7 desde el exterior
+            #ip daddr 192.168.200.10 tcp dport 80 \
+            #    dnat 172.25.200.10:80
+            policy accept;
+        }
+        chain traduccion_nat{
+            type nat hook postrouting priority 1;
+            oifname "enp0s8" masquerade;
+            policy accept;
+        }
+    }
+    table inet filtradoEmpresaACME{
+        chain filtradoAbusoWeb{
+            type filter hook prerouting priority 2;
+            #Punto 1: prohibir la web
+            #ip saddr 172.25.200.10 tcp dport {80,443} drop;
+            policy accept;
+            
+            #Punto 2: limitar la velocidad a 250KBytes/seg
+            #ip daddr 172.25.200.10 tcp sport {80,443} \
+            #         limit rate       250 kbytes/second accept;
+            #ip daddr 172.25.200.10 tcp sport {80,443}
+            #         limit rate  over 250 kbytes/second drop;
+            
+            #Punto 3: limitar la cantidad de tráfico
+            #ip daddr 172.25.200.10 tcp sport {80,443} \
+            #         quota      10 mbytes  accept;
+            #ip daddr 172.25.200.10 tcp sport {80,443} \
+            #         quota over 10 mbytes drop;
+            
+            #Punto 4: permitir a Windows 7 que navegue por
+            #         el servidor web de este Ubuntu pero
+            #         prohibirle que navegue por ningún 
+            #         otro sitio
+            # Manera 1: ir a otra cadena con el hook "input"
+            #           y prohibir todo el tráfico de
+            #           172.25.200.10 en "postrouting"
+            
+            #ip saddr 172.25.200.10 ip daddr 172.25.200.1 accept;
+            #ip saddr 172.25.200.10 tcp dport {80,443} drop;
+            
+            #¡Cuidado!, si hubiéramos puesto
+            #esta regla en segundo lugar, lo habríamos 
+            #hecho mal
+            #ip saddr 172.25.200.10 ip daddr 172.25.200.1 accept;
+        } #Fin de la cadena
+    } #Fin de la tabla
