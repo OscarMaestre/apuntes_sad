@@ -25,12 +25,53 @@ table ip {nombrefiltrado} {{
 }}
 """
 
-CADENA_FILTRADO_INPUT="""
+CADENA_FILTRADO="""
     chain {nombrecadena} {{
-        type filter hook input priority 0;policy accept;
+        type filter hook {hook} priority 0;policy accept;
         {reglas}
     }}
 """
+
+ACCION_ACEPTAR   = "accept"
+ACCION_DESCARTAR = "drop"
+ACCION_REGISTRAR = "log"
+ACCION_CONTAR    = "counter"
+
+DIC_COMENTARIOS={
+    ACCION_ACEPTAR:"Aceptar",
+    ACCION_DESCARTAR:"Descartar",
+    ACCION_REGISTRAR:"Registrar",
+    ACCION_CONTAR:"Contabilizar"
+}
+def get_ip_origen(ip):
+    return f"saddr {ip}"
+
+def get_ip_destino(ip):
+    return f"daddr {ip}"
+
+def get_protocolo(protocolo, lugar_puerto, lista_puertos):
+    if len(lista_puertos==1):
+        return f"{protocolo} {lugar_puerto} {lista_puertos[0]}"
+    else:
+        puertos=",".join(lista_puertos)
+        return f"{protocolo} {lugar_puerto}  {puertos}"
+
+def generar_comentario(ip_origen, ip_destino, accion, puerto_origen=None, puerto_destino=None):
+    accion=DIC_COMENTARIOS[accion]
+    if puerto_origen==None:
+        desde=f"tráfico desde la IP {ip_origen}"
+    else:
+        origenes=",".join(puerto_origen)
+        desde=f"tráfico desde la IP {ip_origen}"
+def de_ip_a_ip(ip_origen, ip_destino, accion, puerto_origen=None, puerto_destino=None):
+    lineas=[]
+    if accion==ACCION_ACEPTAR:
+        comentario=f"#Aceptar tráfico desde {ip_origen} a {ip_destino}"
+        elementos_regla=[
+            "ip",
+            get_ip_origen(ip_origen),
+            
+        ]
 
 tablas_nat=[
     ("operacionesnat", "natentrada", "natsalida"),
