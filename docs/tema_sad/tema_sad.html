@@ -209,7 +209,7 @@
 <h2>Alta disponibilidad y virtualización.<a class="headerlink" href="#alta-disponibilidad-y-virtualizacion" title="Link to this heading"></a></h2>
 <p>En pocas palabras podemos reconstruir un sistema virtualizado previamente usando solo estos comandos:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">maquina/usr</span></code> : Inicializa un directorio con la configuración de esa máquina (cuidado, en Windows hay que cambiar y en lugar de escribir cosas como <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">d:\directorio\maquina.box</span></code> usar <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">d:/directorio/maquina.box</span></code>, es decir cambiar la barra por la /).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">usuario/maquina</span> <span class="pre">``</span> <span class="pre">:</span> <span class="pre">Inicializa</span> <span class="pre">un</span> <span class="pre">directorio</span> <span class="pre">con</span> <span class="pre">la</span> <span class="pre">configuración</span> <span class="pre">de</span> <span class="pre">esa</span> <span class="pre">máquina</span> <span class="pre">(cuidado,</span> <span class="pre">en</span> <span class="pre">Windows</span> <span class="pre">hay</span> <span class="pre">que</span> <span class="pre">cambiar</span> <span class="pre">y</span> <span class="pre">en</span> <span class="pre">lugar</span> <span class="pre">de</span> <span class="pre">escribir</span> <span class="pre">cosas</span> <span class="pre">como</span> <span class="pre">``vagrant</span> <span class="pre">init</span> <span class="pre">d:\directorio\maquina.box</span></code> usar <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span> <span class="pre">d:/directorio/maquina.box</span></code>, es decir cambiar la barra por la /).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">up</span></code> : «Levanta» la máquina, instalándola, recuperando su estado tal y como se hubiera quedado y configurándola desde cero. Por defecto, las máquinas suelen tener el usuario «vagrant» con la clave «vagrant».</p></li>
 </ul>
 <p>Para «exportar» nuestra máquina y facilitar su gestión con Vagrant se debe:</p>
@@ -261,14 +261,14 @@
 <p>Podemos aprovecharnos de esta técnica e insertar ficheros de configuración <code class="docutils literal notranslate"><span class="pre">netplan</span></code> dentro de la máquina virtual y así por ejemplo configurar tarjetas en modo puente con los datos IP que queramos.</p>
 <p>Supongamos que tenemos un fichero de <code class="docutils literal notranslate"><span class="pre">netplan</span></code> como este. Supongamos que :</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">network</span><span class="p">:</span>
-<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="nt">ethernets</span><span class="p">:</span>
-<span class="w">    </span><span class="c1">#¡Cuidado! El nombre de la tarjeta IMPORTA</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">enp0s8:#Nombre de la tarjeta a configurar</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">addresses</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10.8.100.110/24</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
+<span class="w">        </span><span class="c1">#¡Cuidado! El nombre de la tarjeta IMPORTA</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">enp0s8:#Nombre de la tarjeta a configurar</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">addresses</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10.8.100.110/24</span><span class="p p-Indicator">]</span>
 <span class="w">            </span><span class="nt">gateway4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.8.0.254</span>
 <span class="w">            </span><span class="nt">nameservers</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10.1.0.1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8.8.8.8</span><span class="p p-Indicator">]</span>
+<span class="w">                </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">10.1.0.1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8.8.8.8</span><span class="p p-Indicator">]</span>
 </pre></div>
 </div>
 <p>Podemos configurar el <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> de esta manera</p>

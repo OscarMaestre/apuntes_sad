@@ -78,7 +78,7 @@ Alta disponibilidad y virtualización.
 
 En pocas palabras podemos reconstruir un sistema virtualizado previamente usando solo estos comandos:
 
-* ``vagrant init maquina/usr`` : Inicializa un directorio con la configuración de esa máquina (cuidado, en Windows hay que cambiar y en lugar de escribir cosas como ``vagrant init d:\directorio\maquina.box`` usar ``vagrant init d:/directorio/maquina.box``, es decir cambiar la barra \ por la /).
+* ``vagrant init usuario/maquina `` : Inicializa un directorio con la configuración de esa máquina (cuidado, en Windows hay que cambiar y en lugar de escribir cosas como ``vagrant init d:\directorio\maquina.box`` usar ``vagrant init d:/directorio/maquina.box``, es decir cambiar la barra \ por la /).
 * ``vagrant up`` : "Levanta" la máquina, instalándola, recuperando su estado tal y como se hubiera quedado y configurándola desde cero. Por defecto, las máquinas suelen tener el usuario "vagrant" con la clave "vagrant".
 
 
@@ -146,14 +146,14 @@ Supongamos que tenemos un fichero de ``netplan`` como este. Supongamos que :
 .. code-block:: yaml
 
     network:
-    version: 2
-    ethernets:
-        #¡Cuidado! El nombre de la tarjeta IMPORTA
-        enp0s8:#Nombre de la tarjeta a configurar
-            addresses: [10.8.100.110/24]
+        version: 2
+        ethernets:
+            #¡Cuidado! El nombre de la tarjeta IMPORTA
+            enp0s8:#Nombre de la tarjeta a configurar
+                addresses: [10.8.100.110/24]
                 gateway4: 10.8.0.254
                 nameservers:
-                  addresses: [10.1.0.1, 8.8.8.8]
+                    addresses: [10.1.0.1, 8.8.8.8]
 
 Podemos configurar el ``Vagrantfile`` de esta manera
 
