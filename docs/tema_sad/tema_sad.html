@@ -60,6 +60,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#el-fichero-vagrantfile">El fichero <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#operaciones-con-el-interior-de-la-maquina-cambiar-la-ip-a-una-tarjeta-publica">Operaciones con el interior de la máquina: cambiar la IP a una tarjeta pública</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#operaciones-con-el-interior-de-una-maquina-virtual-mysql">Operaciones con el interior de una máquina Virtual: MySQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#problemas-tipicos-con-vagrant">Problemas típicos con Vagrant</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#simulacion-de-servicios-con-virtualizacion">Simulación de servicios con virtualización.</a></li>
@@ -91,6 +92,18 @@
 <li class="toctree-l3"><a class="reference internal" href="#un-ejemplo-simple-de-docker">Un ejemplo simple de Docker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#un-ejemplo-mas-avanzado-de-docker-usando-mysql">Un ejemplo más avanzado de Docker usando MySQL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ejercicio">Ejercicio</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#otros-ejercicicios-con-docker">Otros ejercicicios con Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ejercicio-i">Ejercicio (I)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solucion-al-ejercicio-i-de-docker">Solución al ejercicio I de Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ejercicio-ii-de-docker">Ejercicio II de Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fichero-php">Fichero PHP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ejercicio-iii-de-docker">Ejercicio III de Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parte-1">Parte 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parte-2">Parte 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parte-3">Parte 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parte-4">Parte 4</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#funcionamiento-ininterrumpido">Funcionamiento ininterrumpido.</a></li>
@@ -254,7 +267,7 @@
 </section>
 <section id="operaciones-con-el-interior-de-la-maquina-cambiar-la-ip-a-una-tarjeta-publica">
 <h3>Operaciones con el interior de la máquina: cambiar la IP a una tarjeta pública<a class="headerlink" href="#operaciones-con-el-interior-de-la-maquina-cambiar-la-ip-a-una-tarjeta-publica" title="Link to this heading"></a></h3>
-<p>Es posible copiar un fichero desde el anfitrión al interior de la máquina virtual usando esto</p>
+<p>Es posible copiar un fichero o carpeta entera desde el anfitrión al interior de la máquina virtual usando esto</p>
 <div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span><span class="w"> </span><span class="s2">&quot;file&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">source</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;C:/archivo_con_slashes.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">destination</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/vagrant_compartida&quot;</span>
 </pre></div>
 </div>
@@ -438,6 +451,13 @@
 </pre></div>
 </div>
 </section>
+<section id="problemas-tipicos-con-vagrant">
+<h3>Problemas típicos con Vagrant<a class="headerlink" href="#problemas-tipicos-con-vagrant" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Cuando se cambia la memoria, se ejecutan comandos o se desea mostrar el GUI de la máquina se debe recordar activar el bloque correspondiente. Prestar atención a que unos bloques terminan con <code class="docutils literal notranslate"><span class="pre">end</span></code> pero el de comandos suele terminar con <code class="docutils literal notranslate"><span class="pre">SHELL</span></code></p></li>
+<li><p>Si usamos rutas Windows se debe cambiar el backslash () por un slash (/)</p></li>
+</ol>
+</section>
 </section>
 <section id="simulacion-de-servicios-con-virtualizacion">
 <h2>Simulación de servicios con virtualización.<a class="headerlink" href="#simulacion-de-servicios-con-virtualizacion" title="Link to this heading"></a></h2>
@@ -585,7 +605,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </
 <p>Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres «redes por defecto» con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">network</span> <span class="pre">ls</span></code> :</p>
 <ul class="simple">
 <li><p>Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama «bridge» se parece al modo NAT de VirtualBox.</p></li>
-<li><p>Host: Se parecen al modo «puente» de VirtualBox. Un contenedor en modo «red host» no tiene su propio sistema de red, sino que usa el del host. <strong>A fecha de Enero de 2023 este sistema no funciona en Docker para Windows.</strong> Este sistema de red permite a los contenedores compartir la tarjeta de red del anfitrión. Esto significa que es necesario poner IP a los contenedores, en el caso de que la necesiten.</p></li>
+<li><p>Host: Se parecen al modo «puente» de VirtualBox. Un contenedor en modo «red host» no tiene su propio sistema de red, sino que usa el del host. <strong>A fecha de Febrero este sistema no funciona en Docker para Windows.</strong> Este sistema de red permite a los contenedores compartir la tarjeta de red del anfitrión. Esto significa que es necesario poner IP a los contenedores, en el caso de que la necesiten.</p></li>
 <li><p>Overlay: Está pensado para crear lo que Docker llama «enjambres», no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.</p></li>
 <li><p>Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en «modo host» en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).</p></li>
 <li><p>None: permite deshabilitar la red de un contenedor.</p></li>
@@ -760,6 +780,182 @@ ENTRYPOINT<span class="w"> </span><span class="o">[</span><span class="s2">&quot
 <section id="ejercicio">
 <h3>Ejercicio<a class="headerlink" href="#ejercicio" title="Link to this heading"></a></h3>
 <p>Pensar alguna manera de usar imágenes y contenedores para conseguir que los datos sean <strong>persistentes</strong> . El objetivo es que cuando se modifiquen los datos, dichos datos pueda estar disponibles para algún otro sistema MySQL.</p>
+</section>
+</section>
+<section id="otros-ejercicicios-con-docker">
+<h2>Otros ejercicicios con Docker<a class="headerlink" href="#otros-ejercicicios-con-docker" title="Link to this heading"></a></h2>
+<section id="ejercicio-i">
+<h3>Ejercicio (I)<a class="headerlink" href="#ejercicio-i" title="Link to this heading"></a></h3>
+<ol class="loweralpha simple">
+<li><p>Fabricar un pequeño archivo HTML en Ubuntu Server.</p></li>
+<li><p>Insertar ese archivo dentro del contenedor «httpd» y ponerle un nombre de imagen como «webempresa»</p></li>
+<li><p>Al ejecutar «sudo docker run webempresa» debería arrancar un contenedor que muestre la web de nuestra empresa</p></li>
+</ol>
+</section>
+<section id="solucion-al-ejercicio-i-de-docker">
+<h3>Solución al ejercicio I de Docker<a class="headerlink" href="#solucion-al-ejercicio-i-de-docker" title="Link to this heading"></a></h3>
+<ol class="loweralpha simple">
+<li><p>Fabricamos un directorio vacío</p></li>
+<li><p>Dentro de ese directorio fabricamos un html</p></li>
+<li><p>Dentro de ese directorio vacío ponemos un Dockerfile como este</p></li>
+</ol>
+<p>Contenido:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">httpd</span>
+<span class="n">COPY</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">htdocs</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<ol class="loweralpha" start="4">
+<li><p>Construimos nuestra propia imagen con esto:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">webempresa</span> <span class="o">.</span>
+</pre></div>
+</div>
+</li>
+<li><p>Lanzamos la imagen con:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="n">webempresa</span>
+</pre></div>
+</div>
+</li>
+<li><p>Se habrá abierto un servidor web que muestra una IP a la que nos podemos conectar para ver que realmente ahora la imagen sirve la web de la empresa</p></li>
+</ol>
+</section>
+<section id="ejercicio-ii-de-docker">
+<h3>Ejercicio II de Docker<a class="headerlink" href="#ejercicio-ii-de-docker" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Crear un fichero PHP que escriba en un fichero.</p></li>
+<li><p>Ponerlo en una carpeta carpeta_compartida</p></li>
+<li><p>Conseguir que una imagen Docker de Ubuntu sirva ese fichero, que llamaremos «index.php» y que desde Windows 10 podamos acceder a él.</p></li>
+<li><p>Si todo va bien, deberíamos poder ver como el fichero de la carpeta compartida va incluyendo más y más texto.</p></li>
+</ol>
+</section>
+<section id="fichero-php">
+<h3>Fichero PHP<a class="headerlink" href="#fichero-php" title="Link to this heading"></a></h3>
+<p>Creamos este fichero que por ejemplo pondremos en un directorio vacío llamado «ejemplo»</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="nv">$fecha</span><span class="o">=</span><span class="nb">date</span><span class="p">(</span><span class="s2">&quot;l jS \of F Y h:i:s A&quot;</span><span class="p">);</span>
+<span class="nv">$fichero</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="s2">&quot;registros.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">or</span> <span class="k">die</span><span class="p">(</span><span class="s2">&quot;Unable to open file!&quot;</span><span class="p">);</span>
+<span class="nb">fwrite</span><span class="p">(</span><span class="nv">$fichero</span><span class="p">,</span> <span class="s2">&quot;Acceso registrado:&quot;</span><span class="o">.</span><span class="nv">$fecha</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">&quot;Hemos registrado su acceso en un fichero con fecha </span><span class="si">$fecha</span><span class="s2">&lt;br&gt;&quot;</span><span class="p">;</span>
+<span class="cp">?&gt;</span>
+</pre></div>
+</div>
+<p>La imagen httpd NO CONTIENE EL MÓDULO PHP. Necesitaremos alguna imagen que incluya PHP y Apache. Nos descargamos, por ejemplo, esta:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">php</span><span class="p">:</span><span class="n">apache</span>
+</pre></div>
+</div>
+<p>Ahora podremos usar esa imagen para servir ficheros PHP.</p>
+<p>¡Cuidado! Esta imagen espera que trabajemos en el contenedor usando el directorio <code class="docutils literal notranslate"><span class="pre">/var/www/html</span></code></p>
+<p>Si queremos que esta pequeña aplicacion web trabaje en una red separada le podemos asignar una:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">network</span> <span class="n">create</span> <span class="o">--</span><span class="n">driver</span> <span class="n">bridge</span> <span class="o">--</span><span class="n">subnet</span> <span class="mf">10.167.140.0</span><span class="o">/</span><span class="mi">24</span> <span class="n">red_empresa_con_php</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Ahora podemos arrancar todo:</dt><dd><p>-Necesitaremos <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">docker</span> <span class="pre">run</span></code>
+-Necesitaremos vincularlo a la red <code class="docutils literal notranslate"><span class="pre">red_empresa_con_php</span></code> y usaremos <code class="docutils literal notranslate"><span class="pre">--network</span> <span class="pre">red_empresa_con_php</span></code>
+-Si queremos abrir un puerto en el anfitrión lo haremos, por ejemplo con <code class="docutils literal notranslate"><span class="pre">-p3200:80</span></code>
+-Uniremos nuestra carpeta <code class="docutils literal notranslate"><span class="pre">./compartida</span></code> (es del anfitrión) con la <code class="docutils literal notranslate"><span class="pre">/var/www/html</span></code> (es del invitado). Necesitaremos escribir <code class="docutils literal notranslate"><span class="pre">--mount</span> <span class="pre">type=bind,src=./ejemplo,dst=/var/www/html</span></code>
+-Por último indicaremos que queremos lanzar la imagen <code class="docutils literal notranslate"><span class="pre">php:apache</span></code></p>
+</dd>
+</dl>
+<p>Así, el comando entero sería:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">network</span> <span class="n">red_empresa_con_php</span> <span class="o">-</span><span class="n">p3200</span><span class="p">:</span><span class="mi">80</span> <span class="o">--</span><span class="n">mount</span> <span class="nb">type</span><span class="o">=</span><span class="n">bind</span><span class="p">,</span><span class="n">src</span><span class="o">=./</span><span class="n">ejemplo</span><span class="p">,</span><span class="n">dst</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span> <span class="n">php</span><span class="p">:</span><span class="n">apache</span>
+</pre></div>
+</div>
+<p>Si no funciona: Docker tiene un usuario propio. Comprueba los permisos de tu directorio y si es necesario permite que otros usuarios escriban en tu directorio:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="n">o</span><span class="o">+</span><span class="n">w</span> <span class="n">ejemplo</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-iii-de-docker">
+<h3>Ejercicio III de Docker<a class="headerlink" href="#ejercicio-iii-de-docker" title="Link to this heading"></a></h3>
+<p>El siguiente enunciado intenta unir varios de los conceptos que hemos visto en un solo ejercicio.</p>
+</section>
+<section id="parte-1">
+<h3>Parte 1<a class="headerlink" href="#parte-1" title="Link to this heading"></a></h3>
+<p>Crear un volumen llamado «almacenamiento_redes».</p>
+<p>La solución sería el comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">volume</span> <span class="n">create</span> <span class="n">almacenamiento_redes</span>
+</pre></div>
+</div>
+</section>
+<section id="parte-2">
+<h3>Parte 2<a class="headerlink" href="#parte-2" title="Link to this heading"></a></h3>
+<p>Crear un contenedor que haga las pruebas siguientes y las guarde en el directorio /datos/resultados.txt. El contenedor debe tener asociado el directorio /datos con el volumen «almacenamiento_redes». Las pruebas son:</p>
+<ul class="simple">
+<li><p>Escribir en el fichero la fecha.</p></li>
+<li><p>Escribir en el fichero si 10.14.0.254 funciona (responde a ping).</p></li>
+<li><p>Escribir en el fichero si 192.168.1.1 funciona (responde a ping).</p></li>
+<li><p>Escribir en el fichero si 8.8.8.8 funciona (responde a ping)</p></li>
+</ul>
+<p>El comando sería este:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">--</span><span class="n">volume</span> <span class="n">almacenamiento_redes</span><span class="p">:</span><span class="o">/</span><span class="n">datos</span> <span class="n">ubuntu</span>
+</pre></div>
+</div>
+<p>Pero claro, no hay editor, no hay <code class="docutils literal notranslate"><span class="pre">ping</span></code>. Tenemos que instalarlos:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span><span class="p">;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">iputils</span><span class="o">-</span><span class="n">ping</span> <span class="n">nano</span>
+</pre></div>
+</div>
+<p>En este contenedor crearemos un script con:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nano</span> <span class="n">pruebas</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Y el script será:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Fecha: </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w">  </span>/datos/resultados.txt
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;---------------&quot;</span>&gt;&gt;<span class="w"> </span>/datos/resultados.txt
+ping<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">10</span>.14.0.254<span class="w"> </span>&gt;&gt;<span class="w"> </span>/datos/resultados.txt
+ping<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">192</span>.168.1.1<span class="w"> </span>&gt;&gt;<span class="w"> </span>/datos/resultados.txt
+ping<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">8</span>.8.8.8<span class="w">     </span>&gt;&gt;<span class="w"> </span>/datos/resultados.txt
+</pre></div>
+</div>
+</section>
+<section id="parte-3">
+<h3>Parte 3<a class="headerlink" href="#parte-3" title="Link to this heading"></a></h3>
+<p>Crear un contenedor que lea las pruebas y las muestre en pantalla. El contenedor debe leer del fichero /informes/resultados.txt. El contenedor debe tener asociado el directorio /informes con el volumen «almacenamiento_redes»</p>
+<p>Insertaremos este script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;===================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;= Resultados de las pruebas de red=&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;===================================&quot;</span>
+
+
+cat<span class="w"> </span>/informes/resultados.txt
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==================================&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;=   Fin de los informes          =&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==================================&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="parte-4">
+<h3>Parte 4<a class="headerlink" href="#parte-4" title="Link to this heading"></a></h3>
+<p>Automatizar todo el proceso de pruebas y muestra de informes con dos Dockerfile y un script que lance todo.</p>
+<p>Primero vamos a crear una IMAGEN que se llamará por ejemplo <code class="docutils literal notranslate"><span class="pre">pruebas_red</span></code>. Nuestra imagen usará Ubuntu. Tendrá que tener dentro el paquete <code class="docutils literal notranslate"><span class="pre">iputils-ping</span></code>. Copiaremos en ella el script de pruebas y fabricaremos la imagen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">pruebas_red</span>
+<span class="n">nano</span> <span class="n">Dockerfile</span>
+</pre></div>
+</div>
+<p>Dentro del Dockerfile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span>
+<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="p">;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">iputils</span><span class="o">-</span><span class="n">ping</span>
+<span class="n">COPY</span> <span class="n">pruebas</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">pruebas</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">CMD</span> <span class="n">bash</span> <span class="o">/</span><span class="n">pruebas</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Y construimos la imagen con:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">pruebas_red</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Ahora hay que construir la segunda imagen. En esa imagen pondremos nuestro script de «informes», pero ya no necesita <code class="docutils literal notranslate"><span class="pre">ping</span></code> ni <code class="docutils literal notranslate"><span class="pre">nano</span></code> ni nada más. Creamos un directorio vacio con el nombre <code class="docutils literal notranslate"><span class="pre">informes_red</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">informes_red</span>
+</pre></div>
+</div>
+<p>Ahora metemos dentro el script de pruebas y el Dockerfile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span>
+<span class="n">COPY</span> <span class="n">informes</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">informes</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">CMD</span> <span class="n">bash</span> <span class="o">/</span><span class="n">informes</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="funcionamiento-ininterrumpido">

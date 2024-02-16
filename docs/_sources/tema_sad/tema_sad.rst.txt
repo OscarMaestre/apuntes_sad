@@ -133,7 +133,7 @@ Por defecto, las máquinas virtuales tienen una sola tarjeta en modo "NAT". A me
 Operaciones con el interior de la máquina: cambiar la IP a una tarjeta pública
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Es posible copiar un fichero desde el anfitrión al interior de la máquina virtual usando esto
+Es posible copiar un fichero o carpeta entera desde el anfitrión al interior de la máquina virtual usando esto
 
 .. code-block:: ruby
 
@@ -335,6 +335,12 @@ Dado estos dos ficheros, podríamos crear un Vagrantfile como este:
     SHELL
     end
 
+Problemas típicos con Vagrant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Cuando se cambia la memoria, se ejecutan comandos o se desea mostrar el GUI de la máquina se debe recordar activar el bloque correspondiente. Prestar atención a que unos bloques terminan con ``end`` pero el de comandos suele terminar con ``SHELL`` 
+2. Si usamos rutas Windows se debe cambiar el backslash (\) por un slash (/)
+
 
 Simulación de servicios con virtualización.
 -----------------------------------------------------------------------------------------------
@@ -515,7 +521,7 @@ Conexiones de red en Docker
 Igual que VirtualBox , Docker tiene distintos modos de red, Docker ofrece tres "redes por defecto" con distintos comportamientos para los servicios alojados en él. En concreto existen estos tipos de redes (podemos ver los primeros con ``sudo docker network ls`` :
 
 * Bridge: Es el modo por defecto. Cualquier imagen que se ejecute en este modo puede ver a las otras imágenes que estén en ese host físico. Las direcciones por defecto son 172.16.0.0/16. Aunque se llama "bridge" se parece al modo NAT de VirtualBox. 
-* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Enero de 2023 este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la tarjeta de red del anfitrión. Esto significa que es necesario poner IP a los contenedores, en el caso de que la necesiten.
+* Host: Se parecen al modo "puente" de VirtualBox. Un contenedor en modo "red host" no tiene su propio sistema de red, sino que usa el del host. **A fecha de Febrero este sistema no funciona en Docker para Windows.** Este sistema de red permite a los contenedores compartir la tarjeta de red del anfitrión. Esto significa que es necesario poner IP a los contenedores, en el caso de que la necesiten.
 * Overlay: Está pensado para crear lo que Docker llama "enjambres", no los veremos en este tema, pero ofrecen mucha potencia al permitir crear redundancia y así tener servicios que tomen el trabajo de otros servidores caídos.
 * Macvlan: permiten asignar una MAC distinta a nuestro contenedores y obtener acceso total a la red. Aunque puede parecer que son iguales que las redes Docker en "modo host" en el modo host no podemos cambiar la MAC (cosa que sí podemos hacer siempre en VirtualBox).
 * None: permite deshabilitar la red de un contenedor.
@@ -703,6 +709,195 @@ Ejercicio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pensar alguna manera de usar imágenes y contenedores para conseguir que los datos sean **persistentes** . El objetivo es que cuando se modifiquen los datos, dichos datos pueda estar disponibles para algún otro sistema MySQL.
+
+Otros ejercicicios con Docker
+--------------------------------
+Ejercicio (I)
+~~~~~~~~~~~~~~~~~~~~~~
+
+a) Fabricar un pequeño archivo HTML en Ubuntu Server.
+b) Insertar ese archivo dentro del contenedor "httpd" y ponerle un nombre de imagen como "webempresa"
+c) Al ejecutar "sudo docker run webempresa" debería arrancar un contenedor que muestre la web de nuestra empresa
+
+Solución al ejercicio I de Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+a) Fabricamos un directorio vacío
+b) Dentro de ese directorio fabricamos un html
+c) Dentro de ese directorio vacío ponemos un Dockerfile como este
+
+Contenido::
+
+    FROM httpd
+    COPY index.html /usr/local/apache2/htdocs/index.html
+
+d) Construimos nuestra propia imagen con esto::
+    
+    sudo docker build -t webempresa .
+
+e) Lanzamos la imagen con::
+
+    sudo docker run webempresa
+
+f) Se habrá abierto un servidor web que muestra una IP a la que nos podemos conectar para ver que realmente ahora la imagen sirve la web de la empresa
+
+
+Ejercicio II de Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+1. Crear un fichero PHP que escriba en un fichero.
+2. Ponerlo en una carpeta carpeta_compartida
+3. Conseguir que una imagen Docker de Ubuntu sirva ese fichero, que llamaremos "index.php" y que desde Windows 10 podamos acceder a él.
+4. Si todo va bien, deberíamos poder ver como el fichero de la carpeta compartida va incluyendo más y más texto.
+
+
+
+Fichero PHP
+~~~~~~~~~~~~~~~~~
+
+Creamos este fichero que por ejemplo pondremos en un directorio vacío llamado "ejemplo"
+
+.. code-block:: php
+
+    <?php
+    $fecha=date("l jS \of F Y h:i:s A");
+    $fichero = fopen("registros.txt", "a") or die("Unable to open file!");
+    fwrite($fichero, "Acceso registrado:".$fecha);
+    echo "Hemos registrado su acceso en un fichero con fecha $fecha<br>";
+    ?>
+
+La imagen httpd NO CONTIENE EL MÓDULO PHP. Necesitaremos alguna imagen que incluya PHP y Apache. Nos descargamos, por ejemplo, esta::
+
+  sudo docker pull php:apache
+
+Ahora podremos usar esa imagen para servir ficheros PHP.
+
+¡Cuidado! Esta imagen espera que trabajemos en el contenedor usando el directorio ``/var/www/html``
+
+
+Si queremos que esta pequeña aplicacion web trabaje en una red separada le podemos asignar una::
+
+    sudo docker network create --driver bridge --subnet 10.167.140.0/24 red_empresa_con_php
+
+
+Ahora podemos arrancar todo:
+  -Necesitaremos ``sudo docker run``
+  -Necesitaremos vincularlo a la red ``red_empresa_con_php`` y usaremos ``--network red_empresa_con_php``
+  -Si queremos abrir un puerto en el anfitrión lo haremos, por ejemplo con ``-p3200:80``
+  -Uniremos nuestra carpeta ``./compartida`` (es del anfitrión) con la ``/var/www/html`` (es del invitado). Necesitaremos escribir ``--mount type=bind,src=./ejemplo,dst=/var/www/html``
+  -Por último indicaremos que queremos lanzar la imagen ``php:apache``
+
+Así, el comando entero sería::
+
+    sudo docker run --network red_empresa_con_php -p3200:80 --mount type=bind,src=./ejemplo,dst=/var/www/html php:apache
+
+Si no funciona: Docker tiene un usuario propio. Comprueba los permisos de tu directorio y si es necesario permite que otros usuarios escriban en tu directorio::
+
+  chmod o+w ejemplo
+
+Ejercicio III de Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+El siguiente enunciado intenta unir varios de los conceptos que hemos visto en un solo ejercicio.
+
+Parte 1
+~~~~~~~~~~~
+
+Crear un volumen llamado "almacenamiento_redes".
+
+La solución sería el comando::
+
+  sudo docker volume create almacenamiento_redes
+
+Parte 2
+~~~~~~~~~~
+Crear un contenedor que haga las pruebas siguientes y las guarde en el directorio /datos/resultados.txt. El contenedor debe tener asociado el directorio /datos con el volumen "almacenamiento_redes". Las pruebas son:
+
+* Escribir en el fichero la fecha.
+* Escribir en el fichero si 10.14.0.254 funciona (responde a ping).
+* Escribir en el fichero si 192.168.1.1 funciona (responde a ping).
+* Escribir en el fichero si 8.8.8.8 funciona (responde a ping)
+
+El comando sería este::
+
+  sudo docker run -it --volume almacenamiento_redes:/datos ubuntu
+
+Pero claro, no hay editor, no hay ``ping``. Tenemos que instalarlos::
+
+  apt-get update; apt-get install -y iputils-ping nano
+
+En este contenedor crearemos un script con::
+
+  nano pruebas.sh
+
+Y el script será:
+
+.. code-block:: bash
+
+    #!/bin/bash
+    echo "Fecha: $(date)" >  /datos/resultados.txt
+    echo "---------------">> /datos/resultados.txt
+    ping -c 3 10.14.0.254 >> /datos/resultados.txt
+    ping -c 3 192.168.1.1 >> /datos/resultados.txt
+    ping -c 3 8.8.8.8     >> /datos/resultados.txt
+
+
+Parte 3
+~~~~~~~~~~~~~~
+Crear un contenedor que lea las pruebas y las muestre en pantalla. El contenedor debe leer del fichero /informes/resultados.txt. El contenedor debe tener asociado el directorio /informes con el volumen "almacenamiento_redes"
+
+Insertaremos este script:
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    echo "==================================="
+    echo "= Resultados de las pruebas de red="
+    echo "==================================="
+
+
+    cat /informes/resultados.txt
+
+    echo "=================================="
+    echo "=   Fin de los informes          ="
+    echo "=================================="
+
+
+Parte 4
+~~~~~~~~~~~~
+Automatizar todo el proceso de pruebas y muestra de informes con dos Dockerfile y un script que lance todo.
+
+Primero vamos a crear una IMAGEN que se llamará por ejemplo ``pruebas_red``. Nuestra imagen usará Ubuntu. Tendrá que tener dentro el paquete ``iputils-ping``. Copiaremos en ella el script de pruebas y fabricaremos la imagen::
+
+  mkdir pruebas_red
+  nano Dockerfile
+
+Dentro del Dockerfile::
+
+
+    FROM ubuntu
+    RUN apt-get update ; apt-get install -y iputils-ping
+    COPY pruebas.sh /pruebas.sh
+    CMD bash /pruebas.sh
+
+
+
+Y construimos la imagen con::
+
+  sudo docker build -t pruebas_red .
+
+
+Ahora hay que construir la segunda imagen. En esa imagen pondremos nuestro script de "informes", pero ya no necesita ``ping`` ni ``nano`` ni nada más. Creamos un directorio vacio con el nombre ``informes_red``::
+
+  mkdir informes_red
+
+Ahora metemos dentro el script de pruebas y el Dockerfile::
+
+
+    FROM ubuntu
+    COPY informes.sh /informes.sh
+    CMD bash /informes.sh
 
 
 
