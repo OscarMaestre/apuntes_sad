@@ -104,6 +104,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#parte-2">Parte 2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#parte-3">Parte 3</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#parte-4">Parte 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ejercicio-con-docker-iv">Ejercicio con Docker (IV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enunciado">Enunciado</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pista">Pista</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solucion">Solución</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#funcionamiento-ininterrumpido">Funcionamiento ininterrumpido.</a></li>
@@ -954,6 +958,80 @@ cat<span class="w"> </span>/informes/resultados.txt
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">ubuntu</span>
 <span class="n">COPY</span> <span class="n">informes</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">informes</span><span class="o">.</span><span class="n">sh</span>
 <span class="n">CMD</span> <span class="n">bash</span> <span class="o">/</span><span class="n">informes</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-con-docker-iv">
+<h3>Ejercicio con Docker (IV)<a class="headerlink" href="#ejercicio-con-docker-iv" title="Link to this heading"></a></h3>
+</section>
+<section id="enunciado">
+<h3>Enunciado<a class="headerlink" href="#enunciado" title="Link to this heading"></a></h3>
+<p>Crear una infraestructura de contenedores que permita hacer pruebas desde distintas redes.</p>
+<ol class="loweralpha simple">
+<li><p>Se necesita una red 192.168.230.0/24 con el nombre «red_c» (sin comillas) y una red 10.165.0.0/16 con el nombre «red_a» (sin comillas)</p></li>
+<li><p>Se necesita crear una imagen propia, basada en Ubuntu, que al ser puesta en marcha indique si está encendido el enrutamiento. Deberá guardar esta información en /routers/informacion.txt. Esta imagen debe llamarse «enrutador» (sin comillas)</p></li>
+<li><p>Se necesita crear una imagen propia, basada en Ubuntu, que al ser puesta en marcha recoja la información que hayan dejado las máquinas. Este contenedor espera encontrarlo todo en /datos/informacion.txt. Esta imagen debe llamarse «info_red»,</p></li>
+<li><p>Lanzar dos contenedores «enrutador» uno asociado a «red_c» y otro con «red_a»</p></li>
+<li><p>Lanzar un contenedor «info_red»</p></li>
+</ol>
+<p>El resultado final es que el contenedor lanzado en e) debería decirnos el estado de enrutamiento de los routers.</p>
+</section>
+<section id="pista">
+<h3>Pista<a class="headerlink" href="#pista" title="Link to this heading"></a></h3>
+<p>Para saber si el enrutamiento está encendido podemos lanzar esto:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysctl</span><span class="o">.</span><span class="n">conf</span> <span class="o">|</span> <span class="n">grep</span> <span class="s2">&quot;ip_forward&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="solucion">
+<h3>Solución<a class="headerlink" href="#solucion" title="Link to this heading"></a></h3>
+<p>Primero creamos las redes con:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">network</span> <span class="n">create</span> <span class="o">--</span><span class="n">driver</span> <span class="n">bridge</span> <span class="o">--</span><span class="n">subnet</span> <span class="mf">192.168.230.0</span><span class="o">/</span><span class="mi">24</span> <span class="n">red_c</span>
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">network</span> <span class="n">create</span> <span class="o">--</span><span class="n">driver</span> <span class="n">bridge</span> <span class="o">--</span><span class="n">subnet</span> <span class="mf">10.165.0.0</span><span class="o">/</span><span class="mi">16</span>    <span class="n">red_a</span>
+</pre></div>
+</div>
+<p>Para crear la imagen «enrutador» tendremos que hacer dos cosas, crear el script que lanzará la imagen al ser ejecutada y crear el Dockerfile asociado. Empezamos por el script que llamaremos, por ejemplo, <code class="docutils literal notranslate"><span class="pre">info_routers.sh</span></code> :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+cat<span class="w"> </span>/etc/sysctl.conf<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;ip_forward&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/routers/informacion.txt
+</pre></div>
+</div>
+<p>Y ahora creamos el Dockerfile:</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">FROM</span><span class="w"> </span><span class="n">ubuntu</span>
+<span class="no">COPY</span><span class="w"> </span><span class="n">info_routers</span><span class="o">.</span><span class="n">sh</span><span class="w"> </span><span class="sr">/info_routers.sh</span>
+<span class="sr">CMD bash /in</span><span class="n">fo_routers</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Ahora construimos nuestra imagen con:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">enrutador</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Para la segunda imagen «info_red» crearemos primero un script que imprima la información en pantalla. El script podría ser algo así y llamarse, por ejemplo, <code class="docutils literal notranslate"><span class="pre">info.sh</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Información sobre el estado de los routers&quot;</span>
+cat<span class="w"> </span>/datos/informacion.txt
+</pre></div>
+</div>
+<p>Ahora creamos el Dockerfile:</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">FROM</span><span class="w"> </span><span class="n">ubuntu</span>
+<span class="no">COPY</span><span class="w"> </span><span class="n">info</span><span class="o">.</span><span class="n">sh</span><span class="w"> </span><span class="sr">/info.sh</span>
+<span class="sr">CMD bash /in</span><span class="n">fo</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Y construimos la imagen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">info_red</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>El ejercicio no lo dice, pero se necesitará espacio en disco para intercomunicar las máquinas. Podemos usar un directorio compartido o un volumen. Crearemos un volumen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">volume</span> <span class="n">create</span> <span class="n">disco_enrutadores</span>
+</pre></div>
+</div>
+<p>Ahora podemos lanzar nuestra imagen «enrutador» asociando a la red_c y luego a red_a haciendo que escriba en el volumen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volume</span> <span class="n">disco_enrutadores</span><span class="p">:</span><span class="o">/</span><span class="n">routers</span> <span class="o">--</span><span class="n">network</span> <span class="n">red_a</span> <span class="n">enrutador</span>
+<span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volume</span> <span class="n">disco_enrutadores</span><span class="p">:</span><span class="o">/</span><span class="n">routers</span> <span class="o">--</span><span class="n">network</span> <span class="n">red_c</span> <span class="n">enrutador</span>
+</pre></div>
+</div>
+<p>Y lanzar nuestra imagen «info_red» haciendo que «lea» del volumen apropiado y el directorio apropiado:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volume</span> <span class="n">disco_enrutadores</span><span class="p">:</span><span class="o">/</span><span class="n">datos</span> <span class="n">info_red</span>
 </pre></div>
 </div>
 </section>

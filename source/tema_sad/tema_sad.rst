@@ -899,7 +899,87 @@ Ahora metemos dentro el script de pruebas y el Dockerfile::
     COPY informes.sh /informes.sh
     CMD bash /informes.sh
 
+Ejercicio con Docker (IV)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enunciado
+~~~~~~~~~~~~~~~~~~
 
+Crear una infraestructura de contenedores que permita hacer pruebas desde distintas redes.
+
+a) Se necesita una red 192.168.230.0/24 con el nombre "red_c" (sin comillas) y una red 10.165.0.0/16 con el nombre "red_a" (sin comillas)
+b) Se necesita crear una imagen propia, basada en Ubuntu, que al ser puesta en marcha indique si está encendido el enrutamiento. Deberá guardar esta información en /routers/informacion.txt. Esta imagen debe llamarse "enrutador" (sin comillas)
+c) Se necesita crear una imagen propia, basada en Ubuntu, que al ser puesta en marcha recoja la información que hayan dejado las máquinas. Este contenedor espera encontrarlo todo en /datos/informacion.txt. Esta imagen debe llamarse "info_red",
+d) Lanzar dos contenedores "enrutador" uno asociado a "red_c" y otro con "red_a"
+e) Lanzar un contenedor "info_red"
+
+El resultado final es que el contenedor lanzado en e) debería decirnos el estado de enrutamiento de los routers.
+
+Pista
+~~~~~~~~~~~~~~
+Para saber si el enrutamiento está encendido podemos lanzar esto::
+
+   cat /etc/sysctl.conf | grep "ip_forward"
+
+
+Solución
+~~~~~~~~~~~~~
+Primero creamos las redes con::
+
+    sudo docker network create --driver bridge --subnet 192.168.230.0/24 red_c
+    sudo docker network create --driver bridge --subnet 10.165.0.0/16    red_a
+
+Para crear la imagen "enrutador" tendremos que hacer dos cosas, crear el script que lanzará la imagen al ser ejecutada y crear el Dockerfile asociado. Empezamos por el script que llamaremos, por ejemplo, ``info_routers.sh`` :
+
+.. code-block:: bash
+    
+    #!/bin/bash
+    cat /etc/sysctl.conf | grep "ip_forward" >> /routers/informacion.txt
+
+Y ahora creamos el Dockerfile:
+
+.. code-block:: ruby
+
+    FROM ubuntu
+    COPY info_routers.sh /info_routers.sh
+    CMD bash /info_routers.sh
+
+Ahora construimos nuestra imagen con::
+
+    sudo docker build -t enrutador .
+
+
+Para la segunda imagen "info_red" crearemos primero un script que imprima la información en pantalla. El script podría ser algo así y llamarse, por ejemplo, ``info.sh``:
+
+.. code-block:: bash
+
+    #!/bin/bash
+    echo "Información sobre el estado de los routers"
+    cat /datos/informacion.txt
+
+Ahora creamos el Dockerfile:
+
+.. code-block:: ruby
+
+    FROM ubuntu
+    COPY info.sh /info.sh
+    CMD bash /info.sh
+
+Y construimos la imagen::
+
+    sudo docker build -t info_red .
+
+El ejercicio no lo dice, pero se necesitará espacio en disco para intercomunicar las máquinas. Podemos usar un directorio compartido o un volumen. Crearemos un volumen::
+
+    sudo docker volume create disco_enrutadores
+
+Ahora podemos lanzar nuestra imagen "enrutador" asociando a la red_c y luego a red_a haciendo que escriba en el volumen::
+
+    sudo docker run --volume disco_enrutadores:/routers --network red_a enrutador
+    sudo docker run --volume disco_enrutadores:/routers --network red_c enrutador
+
+Y lanzar nuestra imagen "info_red" haciendo que "lea" del volumen apropiado y el directorio apropiado::
+    
+    sudo docker run --volume disco_enrutadores:/datos info_red
 
 Funcionamiento ininterrumpido.
 -----------------------------------------------------------------------------------------------
