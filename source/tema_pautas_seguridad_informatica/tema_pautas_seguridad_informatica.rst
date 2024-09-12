@@ -11,7 +11,7 @@ A continuación definimos los siguientes términos
 
 * Fiabilidad: la capacidad de conseguir que un SI ofrezca la información sin pausas entre peticiones.
 
-* confidencialidad: capacidad de conseguir que la información se muestre solo a las personas que estén autorizadas para ello.
+* Confidencialidad: capacidad de conseguir que la información se muestre solo a las personas que estén autorizadas para ello.
 
 * Integridad: capacidad de conseguir que la información no se altere por causas involuntarias.
 
