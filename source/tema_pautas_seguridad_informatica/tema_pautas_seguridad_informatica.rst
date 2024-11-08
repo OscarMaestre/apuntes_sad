@@ -489,14 +489,14 @@ En cuanto a las copias de seguridad podemos hablar de:
 * Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado **con respecto a la última copia completa** . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.
 
 
-
-+-----------+-------+----------------+-------------------+--------------------------------+--+--+--+--+--+
-|   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
 +===========+=======+================+===================+================================+==+==+==+==+==+
-|  Martes   | 100MB | Completa 100MB | Incremental 100MB |       Diferencial 100MB        |  |  |  |  |  |
-| Miércoles | 200MB | Completa 200MB | Incremental 200MB |     Diferencial 100+200MB      |  |  |  |  |  |
-|  Jueves   | 100MB | Completa 100MB | Incremental 100MB |   Diferencial 100+200+100MB    |  |  |  |  |  |
-|  Viernes  |  1GB  |  Completa 1GB  |  Incremental 1GB  | Diferencial 100+200+100+1000MB |  |  |  |  |  |
+|   Día     |       |                |                   |                                |
++===========+=======+================+===================+================================+==+==+==+==+==+
+|   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
+|  Martes   | 100MB | Completa 2,1GB | Incremental 100MB |       Diferencial 100MB        |  |  |  |  |  |
+| Miércoles | 200MB | Completa 2,3GB | Incremental 200MB |     Diferencial 100+200MB      |  |  |  |  |  |
+|  Jueves   | 100MB | Completa 2,4GB | Incremental 100MB |   Diferencial 100+200+100MB    |  |  |  |  |  |
+|  Viernes  |  1GB  | Completa 3,4GB |  Incremental 1GB  | Diferencial 100+200+100+1000MB |  |  |  |  |  |
 |           |       | Total:12,2 GB  |   Total:3,4 GB    |           Total: 4,2           |  |  |  |  |  |
 |           |       |                |                   |                                |  |  |  |  |  |
 |           |       |                |                   |                                |  |  |  |  |  |

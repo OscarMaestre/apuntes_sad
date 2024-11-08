@@ -108,7 +108,12 @@ En este tema usaremos unas de las configuraciones más habituales: situar el cor
 Reglas de filtrado de cortafuegos.
 -----------------------------------------------------------------------------------------------
 
+Comandos y fichero de configuración
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+El cortafuegos NFTables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NFTables es la nueva arquitectura de filtrado y manipulación de paquetes de red en el núcleo de Linux.Como NFTables puede procesar muchos datos de red es importante saber que distingue entre varias "familias de protocolos de red". En concreto podemos usar estas familias:
 
