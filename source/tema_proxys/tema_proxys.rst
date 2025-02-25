@@ -446,17 +446,15 @@ Así, si queremos crear una lista en la que estén los usuarios autenticados pod
     #aquellos usuarios que NO estén autenticados
     http_access deny deportes !autenticados
 
+    auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales.txt
+    auth_param basic realm   Indique su clave por favor
+    auth_param basic children 10
+    auth_param basic credentialsttl 4 hours 
 
+    acl programadores proxy_auth REQUIRED 
 
-auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales.txt
-auth_param basic realm   Indique su clave por favor
-auth_param basic children 10
-auth_param basic credentialsttl 4 hours 
-
-acl programadores proxy_auth REQUIRED 
-
-http_access allow programadores 
-http_access deny  resto_personas
+    http_access allow programadores 
+    http_access deny  resto_personas
 
 
 
