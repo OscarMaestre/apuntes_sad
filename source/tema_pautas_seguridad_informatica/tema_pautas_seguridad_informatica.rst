@@ -11,7 +11,7 @@ A continuación definimos los siguientes términos
 
 * Fiabilidad: la capacidad de conseguir que un SI ofrezca la información sin pausas entre peticiones.
 
-* confidencialidad: capacidad de conseguir que la información se muestre solo a las personas que estén autorizadas para ello.
+* Confidencialidad: capacidad de conseguir que la información se muestre solo a las personas que estén autorizadas para ello.
 
 * Integridad: capacidad de conseguir que la información no se altere por causas involuntarias.
 
@@ -422,7 +422,8 @@ Se necesita usar el comando setfacl que funciona de esta manera:
 Para consultar los permisos de un archivo usaremos ``getfacl conta01.txt``. Si nos equivocamos y deseamos borrar una entrada de la lista usaremos cosas como ``setfacl -x u:conta02  conta01.txt`` 
 
 
-Ejercicio resuelto con listas de acceso
+
+Ejercicio resuelto con listas de acceso (II)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -486,6 +487,22 @@ En cuanto a las copias de seguridad podemos hablar de:
 * Copias completas. Son muy fáciles de aplicar y muy fáciles de recuperar pero pueden consumir muchísimo espacio.
 * Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa **más todas las incrementales** lo cual puede ser muy lento.
 * Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado **con respecto a la última copia completa** . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.
+
+
+
++-----------+-------+----------------+-------------------+--------------------------------+--+--+--+--+--+
+|   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
++===========+=======+================+===================+================================+==+==+==+==+==+
+|  Martes   | 100MB | Completa 100MB | Incremental 100MB |       Diferencial 100MB        |  |  |  |  |  |
+| Miércoles | 200MB | Completa 200MB | Incremental 200MB |     Diferencial 100+200MB      |  |  |  |  |  |
+|  Jueves   | 100MB | Completa 100MB | Incremental 100MB |   Diferencial 100+200+100MB    |  |  |  |  |  |
+|  Viernes  |  1GB  |  Completa 1GB  |  Incremental 1GB  | Diferencial 100+200+100+1000MB |  |  |  |  |  |
+|           |       | Total:12,2 GB  |   Total:3,4 GB    |           Total: 4,2           |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
++-----------+-------+----------------+-------------------+--------------------------------+--+--+--+--+--+
 
 
 En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa "Configuración de copia de seguridad" y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.
