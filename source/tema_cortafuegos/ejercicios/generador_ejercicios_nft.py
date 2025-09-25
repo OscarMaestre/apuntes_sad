@@ -14,7 +14,8 @@ table ip {nombretabla} {{
     }}
     chain {cadenanatsalida}  {{
         type nat hook postrouting priority 100; policy accept;
-        oifname "{tarjetasalida}" masquerade
+        oifname "{tarjetasalida}" masquerade;
+        {otrasreglas}
     }}
 }}
 
@@ -63,6 +64,7 @@ def generar_comentario(ip_origen, ip_destino, accion, puerto_origen=None, puerto
     else:
         origenes=",".join(puerto_origen)
         desde=f"tráfico desde la IP {ip_origen}"
+
 def de_ip_a_ip(ip_origen, ip_destino, accion, puerto_origen=None, puerto_destino=None):
     lineas=[]
     if accion==ACCION_ACEPTAR:
@@ -89,6 +91,12 @@ class GeneradorEjerciciosNFT(object):
     def __init__(self):
         self.generador = Generator()
         self.tarjetas  = ["enp0s3", "enp0s8"]
+        self.otras_reglas_nat=""
+        self.enunciados=[]
+        self.hook_input=[]
+        self.hook_output=[]
+        self.hook_prerouting=[]
+        self.hook_postrouting=[]
     
     def _generar_red_interna(self):
         #Se ejecuta al azar un método que genera una dirección
@@ -111,20 +119,20 @@ class GeneradorEjerciciosNFT(object):
         generador_netplan.add_wired_network_card_with_ip(self.tarjeta_externa,[direccion_ip_externa], ["10.14.0.254"])
         return generador_netplan.get_str_with_tabs()
     
-    def generar_ejercicio(self):
-        #Prefijo de la 10.14
-        prefijo_red_14="0000101000001110"
+    #Prefijo de la 10.14
+    def generar_ejercicio(self, prefijo="0000101000001110"):
+        
         shuffle(self.tarjetas)
 
         self.tarjeta_interna   = self.tarjetas[0]
         self.tarjeta_externa   = self.tarjetas[1]
         self.red_interna       = self._generar_red_interna()
-        self.red_externa       = Generator.generar_direccion_de_red_a_partir_de_prefijo_binario(prefijo_red_14)
+        self.red_externa       = Generator.generar_direccion_de_red_a_partir_de_prefijo_binario(prefijo)
         self.ip_interna_ubuntu = list(self.red_interna.hosts())[0]
         self.ip_externa_ubuntu = list(self.red_externa.hosts())[0]
         self.fichero_netplan   = self.generar_netplan_ubuntu()
 
-        self.ip_windows      = list(self.red_interna.hosts())[8]
+        self.ip_windows      = list(self.red_interna.hosts())[-3]
         self.mascara_windows = self.red_interna.netmask
         self.gw_windows      = self.ip_interna_ubuntu
 
@@ -134,13 +142,20 @@ class GeneradorEjerciciosNFT(object):
         return HACER_NAT.format(nombretabla=nombres_nat[0], 
                                 cadenanatentrada=nombres_nat[1], 
                                 cadenanatsalida=nombres_nat[2],
-                                tarjetasalida=self.tarjeta_externa)
+                                tarjetasalida=self.tarjeta_externa,
+                                otrasreglas=self.otras_reglas_nat)
 
     def _get_nf_conf(self):
         nat=self._get_operaciones_nat()
         with_tabs=append_tabs(nat)
         return with_tabs
     
+    def abrir_puerto_en_fw(self, puerto_destino, nuevo_puerto):
+        enunciado=f"Hacer que Ubuntu Server acepte conexiones al puerto {puerto_destino} de {self.ip_windows}"
+        self.enunciados.append(enunciado)
+        plantilla=f"ip daddr {self.ip_externa_ubuntu} tcp dport {puerto_destino} dnat {self.ip_windows}:{nuevo_puerto}"
+        self.otras_reglas_nat=plantilla
+
     def __str__(self) -> str:
         info=[
             f"Red interna        : {self.red_interna}",
@@ -181,6 +196,7 @@ class GeneradorEjerciciosNFT(object):
 def test1():
     g1=GeneradorEjerciciosNFT()
     g1.generar_ejercicio()
+    g1.abrir_puerto_en_fw(4000, 80)
     print(g1)
     
 if __name__=="__main__":

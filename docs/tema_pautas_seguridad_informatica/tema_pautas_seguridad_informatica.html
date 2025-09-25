@@ -571,7 +571,8 @@ DH….</p>
 <li><p>Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa <strong>más todas las incrementales</strong> lo cual puede ser muy lento.</p></li>
 <li><p>Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado <strong>con respecto a la última copia completa</strong> . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.</p></li>
 </ul>
-<p>+===========+=======+================+===================+================================+==+==+==+==+==+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
++===========+=======+================+===================+================================+==+==+==+==+==+
 |   Día     |       |                |                   |                                |
 +===========+=======+================+===================+================================+==+==+==+==+==+
 |   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
@@ -584,7 +585,24 @@ DH….</p>
 |           |       |                |                   |                                |  |  |  |  |  |
 |           |       |                |                   |                                |  |  |  |  |  |
 |           |       |                |                   |                                |  |  |  |  |  |
-+———–+——-+—————-+——————-+——————————–+–+–+–+–+–+</p>
++———–+——-+—————-+——————-+——————————–+–+–+–+–+–+
+=======
++————-+———+——————+———————+———————————-+
+|     Dia     |  Datos  |     Completa     |       Increm        |               Dif                |
++=============+=========+==================+=====================+==================================+
+|    Lunes    |   2GB   |   Completa 2GB   |    Completa 2GB     |           Completa 2GB           |
++————-+———+——————+———————+———————————-+
+|   Martes    |  100MB  |  Completa 100MB  |  Incremental 100MB  |        Diferencial 100MB         |
++————-+———+——————+———————+———————————-+
+|  Miércoles  |  200MB  |  Completa 200MB  |  Incremental 200MB  |      Diferencial 100 y 200MB     |
++————-+———+——————+———————+———————————-+
+|   Jueves    |  100MB  |  Completa 100MB  |  Incremental 100MB  |    Diferencial 100+200+100MB     |
++————-+———+——————+———————+———————————-+
+|   Viernes   |   1GB   |   Completa 1GB   |   Incremental 1GB   |  Diferencial 100+200+100+1000MB  |
++————-+———+——————+———————+———————————-+
+|    Totales  |   Tot.  |  Total:12.2 GB   |    Total:3.4 GB     |            Total: 4.2            |
++————-+———+——————+———————+———————————-+</p>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 43d7c3a0057b4bff25768af8251d44de2085064c</p>
 <p>En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa «Configuración de copia de seguridad» y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.</p>
 <p>En UNIX las copias se hacen de otra manera.</p>
 <ul class="simple">

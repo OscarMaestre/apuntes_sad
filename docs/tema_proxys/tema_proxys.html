@@ -69,6 +69,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#acls-en-squid-acls-de-destino">ACLs en Squid. ACLS de destino.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acls-basadas-en-la-url">ACLs basadas en la URL</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acls-basadas-en-la-ruta">ACLs basadas en la ruta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acls-basadas-en-el-horario">ACLs basadas en el horario</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acls-basadas-en-el-tipo-de-archivo">ACLs basadas en el tipo de archivo</a></li>
 </ul>
 </li>
@@ -121,10 +122,10 @@
 <section id="tipos-de-proxy-caracteristicas-y-funciones">
 <h2>Tipos de  proxy . Características y funciones.<a class="headerlink" href="#tipos-de-proxy-caracteristicas-y-funciones" title="Link to this heading"></a></h2>
 <p>Antes de explicar los tipos de proxy es importante entender el concepto: básicamente, se puede decir que un proxy es un software que actúa como intermediario entre las peticiones de un cliente y un servidor. Si examinamos la figura siguiente veremos que ahora no hay solo una petición y una respuesta,sino que hay varios pasos más.</p>
-<figure class="align-default" id="id1">
+<figure class="align-default" id="id11">
 <a class="reference internal image-reference" href="../_images/comportamiento_proxy.png"><img alt="Ejemplos de permisos" src="../_images/comportamiento_proxy.png" style="width: 331.5px; height: 187.0px;" /></a>
 <figcaption>
-<p><span class="caption-text">Comportamiento de un proxy</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+<p><span class="caption-text">Comportamiento de un proxy</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <ol class="arabic simple">
@@ -139,24 +140,24 @@
 <h3>Tipos de proxy en función de la arquitectura de red.<a class="headerlink" href="#tipos-de-proxy-en-funcion-de-la-arquitectura-de-red" title="Link to this heading"></a></h3>
 <p>Podemos distinguir entre proxy directo (o simplemente proxy), proxy abierto y proxy inverso.</p>
 <p>El término proxy suele reservarse para esta arquitectura de red. En este caso, el proxy está dentro de nuestra red y nosotros como administradores tenemos el control y podemos tomar todas las decisiones que deseemos.</p>
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id12">
 <a class="reference internal image-reference" href="../_images/proxy.png"><img alt="Proxy directo" src="../_images/proxy.png" style="width: 296.79999999999995px; height: 129.5px;" /></a>
 <figcaption>
-<p><span class="caption-text">Proxy (en su configuración más típica)</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+<p><span class="caption-text">Proxy (en su configuración más típica)</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>En un proxy abierto el proxy no está bajo nuestro control, sino que está en alguna red intermedia y suele ofrecer servicios como ocultación de ip, privacidad y similares. No tenemos garantías de que realmente el proxy no registre nuestra actividad.</p>
-<figure class="align-default" id="id3">
+<figure class="align-default" id="id13">
 <a class="reference internal image-reference" href="../_images/proxy_abierto.png"><img alt="Un proxy abierto" src="../_images/proxy_abierto.png" style="width: 324.79999999999995px; height: 110.6px;" /></a>
 <figcaption>
-<p><span class="caption-text">Proxy abierto</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+<p><span class="caption-text">Proxy abierto</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Un proxy inverso es aquel que se sitúa dentro de la red del servidor de manera que actúa como caché, distribuidor de carga o simplemente como respaldo.</p>
-<figure class="align-default" id="id4">
+<figure class="align-default" id="id14">
 <a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de proxy inverso" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" /></a>
 <figcaption>
-<p><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+<p><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -175,10 +176,10 @@
 <section id="instalacion-y-configuracion-de-clientes-proxy">
 <h2>Instalación y configuración de clientes proxy.<a class="headerlink" href="#instalacion-y-configuracion-de-clientes-proxy" title="Link to this heading"></a></h2>
 <p>Configurar un cliente para que utilice un proxy es bastante sencillo. En la imagen siguiente se muestra una captura de Firefox en el que se indica que la conexión debe hacerse a través de un proxy. Como puede apreciarse basta con rellenar la IP del servidor proxy y el puerto en el que escucha (Squid suele hacerlo en el 3128).</p>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id15">
 <a class="reference internal image-reference" href="../_images/Proxy_en_firefox.jpg"><img alt="Configuración de proxies en Firefox" src="../_images/Proxy_en_firefox.jpg" style="width: 453.5px; height: 290.0px;" /></a>
 <figcaption>
-<p><span class="caption-text">Configuración de proxies en Firefox</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+<p><span class="caption-text">Configuración de proxies en Firefox</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Sin embargo, aunque hayamos instalado Squid en la segunda máquina virtual veremos que el Firefox de la máquina cliente no funciona y muestra un mensaje como «El servidor proxy está rechazando las conexiones entrantes». Aún se tiene que configurar el servidor, cosa que haremos en los pasos siguientes.</p>
@@ -426,6 +427,20 @@ http_access<span class="w"> </span>deny<span class="w"> </span>prohibicion_ruta_
 <p>Hoy en día cada vez más páginas, incluidos los buscadores usan cifrado en las conexiones. Eso significa que estos bloqueos podrían no funcionar ya que lo primero que hace el navegador es establecer una conexión cifrada (que Squid no puede descifrar) y despues solicitar la página concreta</p>
 </div>
 </section>
+<section id="acls-basadas-en-el-horario">
+<h3>ACLs basadas en el horario<a class="headerlink" href="#acls-basadas-en-el-horario" title="Link to this heading"></a></h3>
+<p>Se puede crear una lista basada en el parámetro <code class="docutils literal notranslate"><span class="pre">time</span></code> que permite indicar horas y días de acceso:</p>
+<ul class="simple">
+<li><p>La sintaxis se basa en los días de la semana en inglés: <code class="docutils literal notranslate"><span class="pre">MTWHFAS</span></code> (de <a href="#id1"><span class="problematic" id="id2">**</span></a>M**onday, <a href="#id3"><span class="problematic" id="id4">**</span></a>T**uesday, <a href="#id5"><span class="problematic" id="id6">**</span></a>W**ednesday, T**H**ursday, <a href="#id7"><span class="problematic" id="id8">**</span></a>F**riday, S**A**turday y <a href="#id9"><span class="problematic" id="id10">**</span></a>S**unday )</p></li>
+<li><p>Despues se puede indicar un rango horario en formato <code class="docutils literal notranslate"><span class="pre">hh:mm-hh:mm</span></code> y usando el sistema de 24 horas (las 11 de la noche son las 23:00)</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>acl<span class="w"> </span>horario_aceptable_matinal<span class="w"> </span>MTHWF<span class="w"> </span><span class="m">9</span>:00-15:00
+acl<span class="w"> </span>horario_aceptable_tarde<span class="w">   </span>MTHWF<span class="w"> </span><span class="m">17</span>:00-20:00
+http_access<span class="w"> </span>allow<span class="w"> </span>horario_aceptable_matinal
+http_access<span class="w"> </span>allow<span class="w"> </span>horario_aceptable_tarde
+</pre></div>
+</div>
+</section>
 <section id="acls-basadas-en-el-tipo-de-archivo">
 <h3>ACLs basadas en el tipo de archivo<a class="headerlink" href="#acls-basadas-en-el-tipo-de-archivo" title="Link to this heading"></a></h3>
 <p>En Internet hay una definición general de tipos de archivo llamada «tipos MIME» (Multimedia Internet Mail Extensions, se definieron para transportar archivos en el correo electrónico). Si lo que nos interesa en bloquear el acceso a ciertos tipos de contenido como vídeo o audio podemos bloquear usando el análisis del tipo de petición MIME al servidor de esta manera. En este caso bloqueamos los «webm» que es un tipo de vídeo muy utilizado, aunque no el único (de hecho YouTube ofrece diversos tipos). Obsérvese que usamos la «denegación de respuestas», ya que el tráfico que Squid «descifra» es el del servidor:</p>
@@ -494,15 +509,18 @@ acl<span class="w"> </span>deportes<span class="w"> </span>dstdomain<span class=
 <span class="c1">#Se deniega el acceso al periodico a</span>
 <span class="c1">#aquellos usuarios que NO estén autenticados</span>
 http_access<span class="w"> </span>deny<span class="w"> </span>deportes<span class="w"> </span>!autenticados
+
+auth_param<span class="w"> </span>basic<span class="w"> </span>program<span class="w"> </span>/usr/lib/squid3/basic_ncsa_auth<span class="w"> </span>/etc/squid/credenciales.txt
+auth_param<span class="w"> </span>basic<span class="w"> </span>realm<span class="w">   </span>Indique<span class="w"> </span>su<span class="w"> </span>clave<span class="w"> </span>por<span class="w"> </span>favor
+auth_param<span class="w"> </span>basic<span class="w"> </span>children<span class="w"> </span><span class="m">10</span>
+auth_param<span class="w"> </span>basic<span class="w"> </span>credentialsttl<span class="w"> </span><span class="m">4</span><span class="w"> </span>hours
+
+acl<span class="w"> </span>programadores<span class="w"> </span>proxy_auth<span class="w"> </span>REQUIRED
+
+http_access<span class="w"> </span>allow<span class="w"> </span>programadores
+http_access<span class="w"> </span>deny<span class="w">  </span>resto_personas
 </pre></div>
 </div>
-<p>auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales.txt
-auth_param basic realm   Indique su clave por favor
-auth_param basic children 10
-auth_param basic credentialsttl 4 hours</p>
-<p>acl programadores proxy_auth REQUIRED</p>
-<p>http_access allow programadores
-http_access deny  resto_personas</p>
 </section>
 <section id="configuracion-del-almacenamiento-en-la-cache-de-un-proxy">
 <h2>Configuración del almacenamiento en la caché de un proxy .<a class="headerlink" href="#configuracion-del-almacenamiento-en-la-cache-de-un-proxy" title="Link to this heading"></a></h2>
@@ -524,10 +542,10 @@ http_access deny  resto_personas</p>
 <section id="proxys-inversos">
 <h2>Proxys  inversos.<a class="headerlink" href="#proxys-inversos" title="Link to this heading"></a></h2>
 <p>Como ya hemos visto antes, un proxy inverso es aquel que se sitúa delante de un servidor Web con el objetivo de «descargarle de trabajo», como señala la figura siguiente:</p>
-<figure class="align-default" id="id6">
+<figure class="align-default" id="id16">
 <a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de proxy inverso" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" /></a>
 <figcaption>
-<p><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+<p><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Para experimentar con esta configuración necesitaremos esto:</p>

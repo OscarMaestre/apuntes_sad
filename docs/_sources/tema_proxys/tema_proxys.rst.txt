@@ -368,7 +368,23 @@ Si el sistema anterior no es suficiente se puede utilizar el análisis de las ru
 .. WARNING::
 
    Hoy en día cada vez más páginas, incluidos los buscadores usan cifrado en las conexiones. Eso significa que estos bloqueos podrían no funcionar ya que lo primero que hace el navegador es establecer una conexión cifrada (que Squid no puede descifrar) y despues solicitar la página concreta
-    
+
+ACLs basadas en el horario
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Se puede crear una lista basada en el parámetro ``time`` que permite indicar horas y días de acceso:
+
+* La sintaxis se basa en los días de la semana en inglés: ``MTWHFAS`` (de **M**onday, **T**uesday, **W**ednesday, T**H**ursday, **F**riday, S**A**turday y **S**unday )
+* Despues se puede indicar un rango horario en formato ``hh:mm-hh:mm`` y usando el sistema de 24 horas (las 11 de la noche son las 23:00)
+
+.. code-block:: bash
+
+    acl horario_aceptable_matinal MTHWF 9:00-15:00
+    acl horario_aceptable_tarde   MTHWF 17:00-20:00
+    http_access allow horario_aceptable_matinal
+    http_access allow horario_aceptable_tarde
+
+
 ACLs basadas en el tipo de archivo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -446,17 +462,15 @@ Así, si queremos crear una lista en la que estén los usuarios autenticados pod
     #aquellos usuarios que NO estén autenticados
     http_access deny deportes !autenticados
 
+    auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales.txt
+    auth_param basic realm   Indique su clave por favor
+    auth_param basic children 10
+    auth_param basic credentialsttl 4 hours 
 
+    acl programadores proxy_auth REQUIRED 
 
-auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid/credenciales.txt
-auth_param basic realm   Indique su clave por favor
-auth_param basic children 10
-auth_param basic credentialsttl 4 hours 
-
-acl programadores proxy_auth REQUIRED 
-
-http_access allow programadores 
-http_access deny  resto_personas
+    http_access allow programadores 
+    http_access deny  resto_personas
 
 
 

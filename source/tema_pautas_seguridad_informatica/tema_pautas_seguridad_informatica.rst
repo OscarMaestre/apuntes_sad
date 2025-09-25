@@ -552,6 +552,7 @@ En cuanto a las copias de seguridad podemos hablar de:
 * Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado **con respecto a la última copia completa** . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.
 
 
+<<<<<<< HEAD
 +===========+=======+================+===================+================================+==+==+==+==+==+
 |   Día     |       |                |                   |                                |
 +===========+=======+================+===================+================================+==+==+==+==+==+
@@ -566,6 +567,24 @@ En cuanto a las copias de seguridad podemos hablar de:
 |           |       |                |                   |                                |  |  |  |  |  |
 |           |       |                |                   |                                |  |  |  |  |  |
 +-----------+-------+----------------+-------------------+--------------------------------+--+--+--+--+--+
+=======
++-------------+---------+------------------+---------------------+----------------------------------+
+|     Dia     |  Datos  |     Completa     |       Increm        |               Dif                |
++=============+=========+==================+=====================+==================================+
+|    Lunes    |   2GB   |   Completa 2GB   |    Completa 2GB     |           Completa 2GB           |
++-------------+---------+------------------+---------------------+----------------------------------+
+|   Martes    |  100MB  |  Completa 100MB  |  Incremental 100MB  |        Diferencial 100MB         |
++-------------+---------+------------------+---------------------+----------------------------------+
+|  Miércoles  |  200MB  |  Completa 200MB  |  Incremental 200MB  |      Diferencial 100 y 200MB     |
++-------------+---------+------------------+---------------------+----------------------------------+
+|   Jueves    |  100MB  |  Completa 100MB  |  Incremental 100MB  |    Diferencial 100+200+100MB     |
++-------------+---------+------------------+---------------------+----------------------------------+
+|   Viernes   |   1GB   |   Completa 1GB   |   Incremental 1GB   |  Diferencial 100+200+100+1000MB  |
++-------------+---------+------------------+---------------------+----------------------------------+
+|    Totales  |   Tot.  |  Total:12.2 GB   |    Total:3.4 GB     |            Total: 4.2            |
++-------------+---------+------------------+---------------------+----------------------------------+
+
+>>>>>>> 43d7c3a0057b4bff25768af8251d44de2085064c
 
 
 En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa "Configuración de copia de seguridad" y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.
