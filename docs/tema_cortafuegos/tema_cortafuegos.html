@@ -54,6 +54,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#tipos-de-cortafuegos-caracteristicas-funciones-principales">Tipos de cortafuegos. Características. Funciones principales.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instalacion-de-cortafuegos-ubicacion">Instalación de cortafuegos. Ubicación.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reglas-de-filtrado-de-cortafuegos">Reglas de filtrado de cortafuegos.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#comandos-y-fichero-de-configuracion">Comandos y fichero de configuración</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#el-cortafuegos-nftables">El cortafuegos NFTables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gestion-de-tablas">Gestión de tablas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gestion-de-cadenas">Gestión de cadenas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gestion-de-reglas">Gestión de reglas</a></li>
@@ -197,6 +199,12 @@
 </section>
 <section id="reglas-de-filtrado-de-cortafuegos">
 <h2>Reglas de filtrado de cortafuegos.<a class="headerlink" href="#reglas-de-filtrado-de-cortafuegos" title="Link to this heading"></a></h2>
+<section id="comandos-y-fichero-de-configuracion">
+<h3>Comandos y fichero de configuración<a class="headerlink" href="#comandos-y-fichero-de-configuracion" title="Link to this heading"></a></h3>
+<p>La opción más cómoda para configurar el cortafuegos suele ser la edición del fichero <code class="docutils literal notranslate"><span class="pre">/etc/nftables.conf.</span></code> Sin embargo, se puede configurar cualquier cosa tanto desde dicho fichero como desde la línea de comandos.</p>
+</section>
+<section id="el-cortafuegos-nftables">
+<h3>El cortafuegos NFTables<a class="headerlink" href="#el-cortafuegos-nftables" title="Link to this heading"></a></h3>
 <p>NFTables es la nueva arquitectura de filtrado y manipulación de paquetes de red en el núcleo de Linux.Como NFTables puede procesar muchos datos de red es importante saber que distingue entre varias «familias de protocolos de red». En concreto podemos usar estas familias:</p>
 <ul class="simple">
 <li><p>«ip»: se refiere a IPv4</p></li>
@@ -251,6 +259,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">list</span> <span class="pre">ruleset</span> <span class="pre">&gt;</span> <span class="pre">ficheronftables.conf</span></code></p></li>
 <li><p>Si el fichero anterior lo ponemos «encima» del fichero <code class="docutils literal notranslate"><span class="pre">/etc/nftables.conf</span></code> el sistema operativo recargará esta configuración. El comando sería algo como <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">cp</span> <span class="pre">ficheronftables.conf</span> <span class="pre">/etc/nftables.conf</span></code></p></li>
 </ul>
+</section>
 <section id="gestion-de-tablas">
 <h3>Gestión de tablas<a class="headerlink" href="#gestion-de-tablas" title="Link to this heading"></a></h3>
 <p>En los puntos siguientes vemos algunas operaciones básicas con tablas:</p>

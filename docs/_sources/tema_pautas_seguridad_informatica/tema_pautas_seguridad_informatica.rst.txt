@@ -340,7 +340,70 @@ Cuando se trabaja con claves públicas todo se guarda en un "almacén de claves"
 * Cuando tengamos la clave de alguien podemos enviarle un fichero cifrado con su clave pública que **solo esa persona podrá descifrar** . Para ello indicaremos el fichero y la persona que va a recibir dicho fichero cifrado con ``gpg --output ficherocifrado.doc.gpg --recipient persona@mail.com ficherooriginal.doc`` 
 * Finalmente podremos descifrar un fichero que nos hayan enviado usando ``gpg --decrypt <ficheroparanosotros>`` .
 
+Conceptos generales sobre permisos
+-------------------------------------
 
+1)Comprobamos nuestro usuario con el comando ``whoami``
+2)Sabemos que podemos crear usuarios con el comando ``adduser``. Por ejemplo, creemos el usuario ``usu01`` con el comando ``adduser usu01``
+3) Podemos iniciar sesión en otra consola usando la teclas Alt+F2, Alt+F3. Iniciemos sesión con ese usuario ``usu01``. Si ejecutamos ``ls -la`` podremos ver los ficheros y permisos asociados.
+4) Detalle importante: existe el concepto de "grupo". Un grupo puede contener muchos usuarios. Para evitar problemas de seguridad, cuando creamos un usuario, Linux crea automáticamente un grupo con el mismo nombre y en ese grupo solo está ese usuario. Es decir, que al crear el usuario ``usu01`` se ha creado automáticamente un grupo llamado ``usu01`` en el que hay un solo usuario, el usuario ``usu01``
+5) Volvemos al tema de los ficheros. Todo fichero tiene un permisos asociados y la estructura de permisos,sigue un patrón muy conocido:
+* Primero podemos ver uno de estos símbolos: "-", "d", "l","s"
+* Despues podemos ver tres símbolos, cada uno de los cuales puede ser "-","r","w" o "x". Por ejemplo podríamos ver "--x","rw-", "-w-". Esta primera columna de 3 símbolos son los *permisos que se le aplican al usuario*
+
+Así por ejemplo, en esta entrada:
+
+  -rw-r--r-- 1 usu01 usu01 3771 sep 25 07:59 .bashrc
+
+El usuario "usu01" tiene asignados los permisos "rw-". Es decir, que el usuario "usu01" puede LEER el contenido (r) del fichero y además puede ESCRIBIR en el fichero (w). Sin embargo, el usuario no puede EJECUTAR el fichero (no hay x)
+
+La siguiente columna de 3 símbolos de esa entrada son la cadena "r--": eso significa que "los usuarios que estén metidos en el grupo llamado usu01" podrán LEER el contenido del fichero, pero no pueden ESCRIBIR en él ni pueden EJECUTARLO.
+
+Por último hay una tercera columna de 3 permisos, que también pueden ser "r", "w", "x" o "-". El significado de los permisos es el mismo. Esta tercera columna indica qué permisos se deben aplicar a usuarios que ni son el propietario ni están en el grupo del fichero.
+
+Propiedad de archivos
+--------------------------
+El primer texto que vemos en una secuencia de permisos es el propietario del archivo ("owner"). Sin embargo, el dueño puede "transferir" la propiedad usando el comando ``chown``. Sin embargo esta puede estar limitado por los permisos de los directorios padre.
+
+También puede cambiarse el grupo de un archivo usando ``chown``
+
+
+Regulando los permisos en ficheros
+-----------------------------------
+Si creamos un usuario ``usu02`` y ese usuario intenta ver un fichero del usuario ``usu01`` nos vamos a topar con una sorpresa: ¡no podrá verlo!. ¿Por qué? porque no sirve de nada que el fichero del usuario ``usu01`` tenga el permiso "r" para "otros". Si el fichero está dentro de un directorio protegido, el fichero del usuario ``usu01`` no será visible.
+
+Permitiendo el acceso a otros usuarios
+-----------------------------------------
+Para que el usuario ``usu01`` dé permisos para que el usuario ``usu02`` pueda ver sus ficheros se pueden hacer tres cosas:
+
+a) El usuario ``usu01`` da permisos a otros usuarios para que puedan "explorar" su directorio. Este paso es fácil y funciona, pero puede que sin querer "demos permisos de más"
+
+b) La otra posibilidad es usar un directorio específico vacío en el que solo esté el fichero a compartir.
+
+c) Usar listas de control de acceso o ACLs.
+
+Permisos en directorios
+-------------------------
+Los símbolos "r", "w" y "x" significan cosas distintas cuando hablamos de directorios:
+
+* El "r" significa que ese usuario o grupo podrá ver los nombres de fichero que hay en ese directorio.
+* El permiso "w" significa que se podrán escribir o no "nombres de fichero nuevos"
+* El permiso "x" permite hacer ``cd`` para entrar en ese directorio.
+* El permiso "t" es bastante especial y cambia las reglas de borrado. Si tenemos permisos "w" y "x" en un directorio podremos borrar archivos aunque no seamos los propietarios. Si alguien activa el permiso "t" solo el dueño del archivo, del directorio (o el administrador) podrán borrar el fichero.
+
+
+Cambiando permisos
+--------------------
+Se puede usar el comando chmod para cambiar los permisos de un fichero o directorio. La sintaxis es más o menos así:
+
+  chmod [augo][+-][rwx] <nombrefichero>
+
+Así, por ejemplo, el usuario ``usu01`` puede QUITAR el permiso para ver nombres de fichero a otros usuario en su directorio con chmod o-r /tmp/compartida
+
+
+Curiosidades
+---------------
+Cambiando permisos en directorios se pueden dar situaciones tan curiosas como que alguien puede "entrar" en un directorio pero no puede hacer ``ls`` y no puede ver los ficheros que hay (lo cual no sirve de mucho)
 
 
 Listas de control de acceso.
@@ -487,6 +550,22 @@ En cuanto a las copias de seguridad podemos hablar de:
 * Copias completas. Son muy fáciles de aplicar y muy fáciles de recuperar pero pueden consumir muchísimo espacio.
 * Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa **más todas las incrementales** lo cual puede ser muy lento.
 * Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado **con respecto a la última copia completa** . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.
+
+
++===========+=======+================+===================+================================+==+==+==+==+==+
+|   Día     |       |                |                   |                                |
++===========+=======+================+===================+================================+==+==+==+==+==+
+|   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
+|  Martes   | 100MB | Completa 2,1GB | Incremental 100MB |       Diferencial 100MB        |  |  |  |  |  |
+| Miércoles | 200MB | Completa 2,3GB | Incremental 200MB |     Diferencial 100+200MB      |  |  |  |  |  |
+|  Jueves   | 100MB | Completa 2,4GB | Incremental 100MB |   Diferencial 100+200+100MB    |  |  |  |  |  |
+|  Viernes  |  1GB  | Completa 3,4GB |  Incremental 1GB  | Diferencial 100+200+100+1000MB |  |  |  |  |  |
+|           |       | Total:12,2 GB  |   Total:3,4 GB    |           Total: 4,2           |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
++-----------+-------+----------------+-------------------+--------------------------------+--+--+--+--+--+
 
 
 En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa "Configuración de copia de seguridad" y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.

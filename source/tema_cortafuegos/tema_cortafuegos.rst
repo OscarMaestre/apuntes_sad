@@ -111,6 +111,9 @@ Reglas de filtrado de cortafuegos.
 Comandos y fichero de configuración
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+La opción más cómoda para configurar el cortafuegos suele ser la edición del fichero ``/etc/nftables.conf.`` Sin embargo, se puede configurar cualquier cosa tanto desde dicho fichero como desde la línea de comandos.
+
+
 
 El cortafuegos NFTables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

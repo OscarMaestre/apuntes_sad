@@ -61,6 +61,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#cifrado-de-ficheros-en-linea-de-comandos">Cifrado de ficheros en línea de comandos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conceptos-generales-sobre-permisos">Conceptos generales sobre permisos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#propiedad-de-archivos">Propiedad de archivos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#regulando-los-permisos-en-ficheros">Regulando los permisos en ficheros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#permitiendo-el-acceso-a-otros-usuarios">Permitiendo el acceso a otros usuarios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#permisos-en-directorios">Permisos en directorios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cambiando-permisos">Cambiando permisos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#curiosidades">Curiosidades</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#listas-de-control-de-acceso">Listas de control de acceso.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ejercicio-con-permisos">Ejercicio con permisos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ejercicio-resuelto-con-listas-de-acceso-ii">Ejercicio resuelto con listas de acceso (II)</a></li>
@@ -380,6 +387,63 @@ DH….</p>
 <li><p>Finalmente podremos descifrar un fichero que nos hayan enviado usando <code class="docutils literal notranslate"><span class="pre">gpg</span> <span class="pre">--decrypt</span> <span class="pre">&lt;ficheroparanosotros&gt;</span></code> .</p></li>
 </ul>
 </section>
+<section id="conceptos-generales-sobre-permisos">
+<h2>Conceptos generales sobre permisos<a class="headerlink" href="#conceptos-generales-sobre-permisos" title="Link to this heading"></a></h2>
+<p>1)Comprobamos nuestro usuario con el comando <code class="docutils literal notranslate"><span class="pre">whoami</span></code>
+2)Sabemos que podemos crear usuarios con el comando <code class="docutils literal notranslate"><span class="pre">adduser</span></code>. Por ejemplo, creemos el usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code> con el comando <code class="docutils literal notranslate"><span class="pre">adduser</span> <span class="pre">usu01</span></code>
+3) Podemos iniciar sesión en otra consola usando la teclas Alt+F2, Alt+F3. Iniciemos sesión con ese usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code>. Si ejecutamos <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-la</span></code> podremos ver los ficheros y permisos asociados.
+4) Detalle importante: existe el concepto de «grupo». Un grupo puede contener muchos usuarios. Para evitar problemas de seguridad, cuando creamos un usuario, Linux crea automáticamente un grupo con el mismo nombre y en ese grupo solo está ese usuario. Es decir, que al crear el usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code> se ha creado automáticamente un grupo llamado <code class="docutils literal notranslate"><span class="pre">usu01</span></code> en el que hay un solo usuario, el usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code>
+5) Volvemos al tema de los ficheros. Todo fichero tiene un permisos asociados y la estructura de permisos,sigue un patrón muy conocido:
+* Primero podemos ver uno de estos símbolos: «-», «d», «l»,»s»
+* Despues podemos ver tres símbolos, cada uno de los cuales puede ser «-«,»r»,»w» o «x». Por ejemplo podríamos ver «–x»,»rw-», «-w-». Esta primera columna de 3 símbolos son los <em>permisos que se le aplican al usuario</em></p>
+<p>Así por ejemplo, en esta entrada:</p>
+<blockquote>
+<div><p>-rw-r–r– 1 usu01 usu01 3771 sep 25 07:59 .bashrc</p>
+</div></blockquote>
+<p>El usuario «usu01» tiene asignados los permisos «rw-». Es decir, que el usuario «usu01» puede LEER el contenido (r) del fichero y además puede ESCRIBIR en el fichero (w). Sin embargo, el usuario no puede EJECUTAR el fichero (no hay x)</p>
+<p>La siguiente columna de 3 símbolos de esa entrada son la cadena «r–»: eso significa que «los usuarios que estén metidos en el grupo llamado usu01» podrán LEER el contenido del fichero, pero no pueden ESCRIBIR en él ni pueden EJECUTARLO.</p>
+<p>Por último hay una tercera columna de 3 permisos, que también pueden ser «r», «w», «x» o «-». El significado de los permisos es el mismo. Esta tercera columna indica qué permisos se deben aplicar a usuarios que ni son el propietario ni están en el grupo del fichero.</p>
+</section>
+<section id="propiedad-de-archivos">
+<h2>Propiedad de archivos<a class="headerlink" href="#propiedad-de-archivos" title="Link to this heading"></a></h2>
+<p>El primer texto que vemos en una secuencia de permisos es el propietario del archivo («owner»). Sin embargo, el dueño puede «transferir» la propiedad usando el comando <code class="docutils literal notranslate"><span class="pre">chown</span></code>. Sin embargo esta puede estar limitado por los permisos de los directorios padre.</p>
+<p>También puede cambiarse el grupo de un archivo usando <code class="docutils literal notranslate"><span class="pre">chown</span></code></p>
+</section>
+<section id="regulando-los-permisos-en-ficheros">
+<h2>Regulando los permisos en ficheros<a class="headerlink" href="#regulando-los-permisos-en-ficheros" title="Link to this heading"></a></h2>
+<p>Si creamos un usuario <code class="docutils literal notranslate"><span class="pre">usu02</span></code> y ese usuario intenta ver un fichero del usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code> nos vamos a topar con una sorpresa: ¡no podrá verlo!. ¿Por qué? porque no sirve de nada que el fichero del usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code> tenga el permiso «r» para «otros». Si el fichero está dentro de un directorio protegido, el fichero del usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code> no será visible.</p>
+</section>
+<section id="permitiendo-el-acceso-a-otros-usuarios">
+<h2>Permitiendo el acceso a otros usuarios<a class="headerlink" href="#permitiendo-el-acceso-a-otros-usuarios" title="Link to this heading"></a></h2>
+<p>Para que el usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code> dé permisos para que el usuario <code class="docutils literal notranslate"><span class="pre">usu02</span></code> pueda ver sus ficheros se pueden hacer tres cosas:</p>
+<ol class="loweralpha simple">
+<li><p>El usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code> da permisos a otros usuarios para que puedan «explorar» su directorio. Este paso es fácil y funciona, pero puede que sin querer «demos permisos de más»</p></li>
+<li><p>La otra posibilidad es usar un directorio específico vacío en el que solo esté el fichero a compartir.</p></li>
+<li><p>Usar listas de control de acceso o ACLs.</p></li>
+</ol>
+</section>
+<section id="permisos-en-directorios">
+<h2>Permisos en directorios<a class="headerlink" href="#permisos-en-directorios" title="Link to this heading"></a></h2>
+<p>Los símbolos «r», «w» y «x» significan cosas distintas cuando hablamos de directorios:</p>
+<ul class="simple">
+<li><p>El «r» significa que ese usuario o grupo podrá ver los nombres de fichero que hay en ese directorio.</p></li>
+<li><p>El permiso «w» significa que se podrán escribir o no «nombres de fichero nuevos»</p></li>
+<li><p>El permiso «x» permite hacer <code class="docutils literal notranslate"><span class="pre">cd</span></code> para entrar en ese directorio.</p></li>
+<li><p>El permiso «t» es bastante especial y cambia las reglas de borrado. Si tenemos permisos «w» y «x» en un directorio podremos borrar archivos aunque no seamos los propietarios. Si alguien activa el permiso «t» solo el dueño del archivo, del directorio (o el administrador) podrán borrar el fichero.</p></li>
+</ul>
+</section>
+<section id="cambiando-permisos">
+<h2>Cambiando permisos<a class="headerlink" href="#cambiando-permisos" title="Link to this heading"></a></h2>
+<p>Se puede usar el comando chmod para cambiar los permisos de un fichero o directorio. La sintaxis es más o menos así:</p>
+<blockquote>
+<div><p>chmod [augo][+-][rwx] &lt;nombrefichero&gt;</p>
+</div></blockquote>
+<p>Así, por ejemplo, el usuario <code class="docutils literal notranslate"><span class="pre">usu01</span></code> puede QUITAR el permiso para ver nombres de fichero a otros usuario en su directorio con chmod o-r /tmp/compartida</p>
+</section>
+<section id="curiosidades">
+<h2>Curiosidades<a class="headerlink" href="#curiosidades" title="Link to this heading"></a></h2>
+<p>Cambiando permisos en directorios se pueden dar situaciones tan curiosas como que alguien puede «entrar» en un directorio pero no puede hacer <code class="docutils literal notranslate"><span class="pre">ls</span></code> y no puede ver los ficheros que hay (lo cual no sirve de mucho)</p>
+</section>
 <section id="listas-de-control-de-acceso">
 <h2>Listas de control de acceso.<a class="headerlink" href="#listas-de-control-de-acceso" title="Link to this heading"></a></h2>
 <p>Antes de empezar instala las herramientas para ACLs (Access Control Lists) en el caso de que no las tuvieras. El comando necesario es <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">acl</span></code></p>
@@ -507,6 +571,20 @@ DH….</p>
 <li><p>Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa <strong>más todas las incrementales</strong> lo cual puede ser muy lento.</p></li>
 <li><p>Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado <strong>con respecto a la última copia completa</strong> . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.</p></li>
 </ul>
+<p>+===========+=======+================+===================+================================+==+==+==+==+==+
+|   Día     |       |                |                   |                                |
++===========+=======+================+===================+================================+==+==+==+==+==+
+|   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
+|  Martes   | 100MB | Completa 2,1GB | Incremental 100MB |       Diferencial 100MB        |  |  |  |  |  |
+| Miércoles | 200MB | Completa 2,3GB | Incremental 200MB |     Diferencial 100+200MB      |  |  |  |  |  |
+|  Jueves   | 100MB | Completa 2,4GB | Incremental 100MB |   Diferencial 100+200+100MB    |  |  |  |  |  |
+|  Viernes  |  1GB  | Completa 3,4GB |  Incremental 1GB  | Diferencial 100+200+100+1000MB |  |  |  |  |  |
+|           |       | Total:12,2 GB  |   Total:3,4 GB    |           Total: 4,2           |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
+|           |       |                |                   |                                |  |  |  |  |  |
++———–+——-+—————-+——————-+——————————–+–+–+–+–+–+</p>
 <p>En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa «Configuración de copia de seguridad» y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.</p>
 <p>En UNIX las copias se hacen de otra manera.</p>
 <ul class="simple">
