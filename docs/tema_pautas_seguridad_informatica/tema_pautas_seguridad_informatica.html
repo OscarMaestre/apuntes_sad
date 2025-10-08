@@ -73,6 +73,18 @@
 <li class="toctree-l3"><a class="reference internal" href="#ejercicio-resuelto-con-listas-de-acceso-ii">Ejercicio resuelto con listas de acceso (II)</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#otro-ejercicio-sobre-acls">Otro ejercicio sobre ACLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solucion-comentada">Solución comentada</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usuarios">Usuarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comprobaciones-previas">Comprobaciones previas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creacion-del-archivo-del-gerente01">Creación del archivo del <code class="docutils literal notranslate"><span class="pre">gerente01</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Comprobaciones previas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#asignacion-de-permisos">Asignación de permisos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plus">Plus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#establecimiento-de-politicas-de-contrasenas">Establecimiento de políticas de contraseñas.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#politicas-de-almacenamiento">Políticas de almacenamiento.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#copias-de-seguridad-e-imagenes-de-respaldo">Copias de seguridad e imágenes de respaldo.</a></li>
@@ -455,10 +467,10 @@ DH….</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> si se puede ejecutar.</p></li>
 </ul>
 <p>Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usuarios en general. Así, un fichero cualquiera puede mostrar unos permisos como estos (necesitaremos el comando <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code> para ver los permisos).</p>
-<figure class="align-default" id="id1">
+<figure class="align-default" id="id2">
 <a class="reference internal image-reference" href="../_images/permisos_grupos.png"><img alt="Ejemplos de permisos" src="../_images/permisos_grupos.png" style="width: 329.5px; height: 34.0px;" /></a>
 <figcaption>
-<p><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+<p><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Si examinamos el fichero <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> veremos que tiene unos permisos como estos <code class="docutils literal notranslate"><span class="pre">-rw-rw-r--</span></code> y veremos también que pone <code class="docutils literal notranslate"><span class="pre">profesor</span> <span class="pre">profesor</span></code> . Por este orden, esto significa</p>
@@ -470,10 +482,10 @@ DH….</p>
 <li><p>Por último vemos <code class="docutils literal notranslate"><span class="pre">r--</span></code> . Esto significa que cualquier otro usuario que ni sea <code class="docutils literal notranslate"><span class="pre">profesor</span></code> ni pertenezca al grupo <code class="docutils literal notranslate"><span class="pre">profesor</span></code> podrá hacer nada que no sea leer en el fichero.</p></li>
 </ul>
 <p>Este sistema de permisos ha funcionado muy bien durante mucho tiempo, sin embargo con el tiempo ha mostrado algunas flaquezas.</p>
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id3">
 <a class="reference internal image-reference" href="../_images/ficherorestringido.png"><img alt="Problema con los permisos" src="../_images/ficherorestringido.png" style="width: 293.5px; height: 137.0px;" /></a>
 <figcaption>
-<p><span class="caption-text">Un ejemplo de problema con los permisos</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+<p><span class="caption-text">Un ejemplo de problema con los permisos</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <section id="ejercicio-con-permisos">
@@ -533,6 +545,95 @@ DH….</p>
 <li><p>Para que el conta02 pueda leer y solo leer, solo necesitamos <code class="docutils literal notranslate"><span class="pre">setfacl</span> <span class="pre">-m</span> <span class="pre">u:conta02:r</span> <span class="pre">fichero.txt</span></code></p></li>
 </ol>
 </section>
+</section>
+<section id="otro-ejercicio-sobre-acls">
+<h2>Otro ejercicio sobre ACLs<a class="headerlink" href="#otro-ejercicio-sobre-acls" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Fabrica dos usuarios con <code class="docutils literal notranslate"><span class="pre">adduser</span></code> llamados <code class="docutils literal notranslate"><span class="pre">gerente01</span></code> y <code class="docutils literal notranslate"><span class="pre">gerente02</span></code>. Para evitar problemas pon a todos la clave <code class="docutils literal notranslate"><span class="pre">1234</span></code>.</p></li>
+<li><p>Inicia sesión con <code class="docutils literal notranslate"><span class="pre">gerente01</span></code> y fabrica un archivo llamado <code class="docutils literal notranslate"><span class="pre">Contabilidad.txt</span></code>. Rellénalo con texto.</p></li>
+<li><p>Con el mismo usuario <code class="docutils literal notranslate"><span class="pre">gerente01</span></code>  (es decir, no cierres sesión) fabrica un segundo archivo llamado <code class="docutils literal notranslate"><span class="pre">CuentasDeCasa.txt</span></code> y rellénalo con texto.</p></li>
+<li><p>Con ese mismo usuario <code class="docutils literal notranslate"><span class="pre">gerente01</span></code> asigna los permisos necesarios para que <code class="docutils literal notranslate"><span class="pre">gerente02</span></code> sí puede leer y cambiar (es decir, escribir «w») el fichero <code class="docutils literal notranslate"><span class="pre">Contabilidad.txt</span></code>.</p></li>
+</ul>
+</section>
+<section id="solucion-comentada">
+<h2>Solución comentada<a class="headerlink" href="#solucion-comentada" title="Link to this heading"></a></h2>
+<section id="usuarios">
+<h3>Usuarios<a class="headerlink" href="#usuarios" title="Link to this heading"></a></h3>
+<p>Se pide esto:</p>
+<blockquote>
+<div><p>Fabrica dos usuarios con <code class="docutils literal notranslate"><span class="pre">adduser</span></code> llamados <code class="docutils literal notranslate"><span class="pre">gerente01</span></code> y <code class="docutils literal notranslate"><span class="pre">gerente02</span></code>. Para evitar problemas pon a todos la clave <code class="docutils literal notranslate"><span class="pre">1234</span></code>.</p>
+</div></blockquote>
+<p>Los comandos serían estos:</p>
+<blockquote>
+<div><p>sudo adduser gerente01
+sudo adduser gerente02</p>
+</div></blockquote>
+</section>
+<section id="comprobaciones-previas">
+<h3>Comprobaciones previas<a class="headerlink" href="#comprobaciones-previas" title="Link to this heading"></a></h3>
+<p>Siendo el usuario administrador, vemos los permisos de los directorios con el comando <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-la</span> <span class="pre">/home</span></code>. Veremos esto:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drwxr</span><span class="o">-</span><span class="n">x</span><span class="o">---</span>   <span class="mi">2</span> <span class="n">gerente01</span>     <span class="n">gerente01</span>     <span class="mi">4096</span> <span class="nb">oct</span>  <span class="mi">8</span> <span class="mi">10</span><span class="p">:</span><span class="mi">30</span> <span class="n">gerente01</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">x</span><span class="o">---</span>   <span class="mi">2</span> <span class="n">gerente02</span>     <span class="n">gerente02</span>     <span class="mi">4096</span> <span class="nb">oct</span>  <span class="mi">8</span> <span class="mi">10</span><span class="p">:</span><span class="mi">30</span> <span class="n">gerente02</span>
+</pre></div>
+</div>
+<p>¿Qué significa, por ejemplo, la primera línea?</p>
+<p>1.- La primera «d» indica que es un directorio.
+2.- Despues aparece «rwx» que son los permisos que se aplican <strong>al usuario gerente01</strong> (que es el primer gerente01 que vemos en la línea). Estos permisos indican que a)el usuario gerente01 puede ver los nombres de archivo que haya dentro de ese directorio. b) el usuario gerente01 puede crear nuevos nombres de archivo y c) el usuario gerente01 puede «entrar» en ese directorio.
+3.- Despues aparece «r-x», que son los permisos que se aplican <strong>a los usuarios que estén dentro del grupo gerente01</strong> Estos permisos indican que a) los usuarios dentro del grupo gerente01 pueden ver los nombres de archivos. b) los usuarios dentro del grupo gerente01 <strong>no pueden crear nuevos nombres de archivo</strong> c) los usuarios dentro del grupo gerente01 sí pueden entrar en ese directorio.
+4.- Despues vemos los permisos «—». Eso significa que otras personas a) no pueden ver los nombres de archivo b)no pueden crear nuevos nombres de archivo y c) no pueden entrar al directorio.</p>
+</section>
+</section>
+<section id="creacion-del-archivo-del-gerente01">
+<h2>Creación del archivo del <code class="docutils literal notranslate"><span class="pre">gerente01</span></code><a class="headerlink" href="#creacion-del-archivo-del-gerente01" title="Link to this heading"></a></h2>
+<p>Iniciamos sesión con ese usuario y tecleamos esto:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nano</span> <span class="n">Contabilidad</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>Repetimos el proceso y creamos el otro fichero:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nano</span> <span class="n">CuentasDeCasa</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<section id="id1">
+<h3>Comprobaciones previas<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>Si iniciamos sesión con el usuario <code class="docutils literal notranslate"><span class="pre">gerente02</span></code> veremos que ni podemos entrar en el directorio <code class="docutils literal notranslate"><span class="pre">/home/gerente01</span></code> ni podemos hacer un comando <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">/home/gerente01</span></code> ni mucho menos podremos ver ningún fichero del gerente01</p>
+</section>
+</section>
+<section id="asignacion-de-permisos">
+<h2>Asignación de permisos<a class="headerlink" href="#asignacion-de-permisos" title="Link to this heading"></a></h2>
+<p>Se pide lo siguiente:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Con ese mismo usuario ``gerente01`` asigna los permisos necesarios para que ``gerente02`` sí puede leer y cambiar (es decir, escribir &quot;w&quot;) el fichero ``Contabilidad.txt``.
+</pre></div>
+</div>
+<p>Podemos lanzar esto:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">m</span> <span class="n">u</span><span class="p">:</span><span class="n">gerente02</span><span class="p">:</span><span class="n">rw</span> <span class="n">Contabilidad</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>Pero no va a a ser suficiente. ¿Por qué? Bien, si iniciamos con el <code class="docutils literal notranslate"><span class="pre">gerente02</span></code> e intentamos hacer esto <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">/home/gerente01/Contabilidad.txt</span></code> el sistema no nos va a dejar entrar.</p>
+<p>Pero insistimos ¿por qué? Por que hay una cadena de permisos donde algún otro permiso se nos ha denegado. Un poco más arriba hemos escrito esto:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Despues</span> <span class="n">vemos</span> <span class="n">los</span> <span class="n">permisos</span> <span class="s2">&quot;---&quot;</span><span class="o">.</span> <span class="n">Eso</span> <span class="n">significa</span> <span class="n">que</span> <span class="n">otras</span> <span class="n">personas</span> <span class="n">a</span><span class="p">)</span> <span class="n">no</span> <span class="n">pueden</span> <span class="n">ver</span> <span class="n">los</span> <span class="n">nombres</span> <span class="n">de</span> <span class="n">archivo</span> <span class="n">b</span><span class="p">)</span><span class="n">no</span> <span class="n">pueden</span> <span class="n">crear</span> <span class="n">nuevos</span> <span class="n">nombres</span> <span class="n">de</span> <span class="n">archivo</span> <span class="n">y</span> <span class="n">c</span><span class="p">)</span> <span class="n">no</span> <span class="n">pueden</span> <span class="n">entrar</span> <span class="n">al</span> <span class="n">directorio</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Como el archivo <code class="docutils literal notranslate"><span class="pre">Contabilidad.txt</span></code> está dentro de un directorio donde los usuarios «otros» no pueden ver los nombres ni entrar en él, es imposible para el <code class="docutils literal notranslate"><span class="pre">gerente02</span></code> editar el archivo.</p>
+<p>Es necesario, que el gerente01, dé algún permiso más. El gerente01 ejecuta esto:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">m</span> <span class="n">u</span><span class="p">:</span><span class="n">gerente02</span><span class="p">:</span><span class="n">r</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gerente01</span>
+</pre></div>
+</div>
+<p>¿Qué pasa ahora con el gerente02? Pasa que no puede editar el fichero <strong>porque no consigue entrar en el directorio.</strong> Es necesario que el <code class="docutils literal notranslate"><span class="pre">gerente01</span></code> dé el permiso de ejecución:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">m</span> <span class="n">u</span><span class="p">:</span><span class="n">gerente02</span><span class="p">:</span><span class="n">x</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gerente01</span>
+</pre></div>
+</div>
+<p>En realidad este último comando también <strong>quita el permiso de ver los nombres de fichero</strong> pero es que no hacía falta. En resumen, ha bastado con que el gerente01 ejecute estos dos comandos:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">m</span> <span class="n">u</span><span class="p">:</span><span class="n">gerente02</span><span class="p">:</span><span class="n">x</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">gerente01</span>
+<span class="n">setfacl</span> <span class="o">-</span><span class="n">m</span> <span class="n">u</span><span class="p">:</span><span class="n">gerente02</span><span class="p">:</span><span class="n">rw</span> <span class="n">Contabilidad</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</section>
+<section id="plus">
+<h2>Plus<a class="headerlink" href="#plus" title="Link to this heading"></a></h2>
+<p>Si deseamos olvidarnos por completo de las ACL y dejar todo como estaba se puede usar el comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">nombre_de_fichero</span><span class="o">&gt;</span>
+</pre></div>
+</div>
 </section>
 <section id="establecimiento-de-politicas-de-contrasenas">
 <h2>Establecimiento de políticas de contraseñas.<a class="headerlink" href="#establecimiento-de-politicas-de-contrasenas" title="Link to this heading"></a></h2>
@@ -749,10 +850,10 @@ DH….</p>
 <section id="sistemas-biometricos-funcionamiento-estandares">
 <h2>Sistemas biométricos. Funcionamiento. Estándares.<a class="headerlink" href="#sistemas-biometricos-funcionamiento-estandares" title="Link to this heading"></a></h2>
 <p>Por desgracia la siguiente figura ilustra muy bien el problema actual con los estándares biométricos:</p>
-<figure class="align-center" id="id3">
+<figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="../_images/standards.png"><img alt="Un estándar debería ser único." src="../_images/standards.png" style="width: 250.0px; height: 141.5px;" /></a>
 <figcaption>
-<p><span class="caption-text">El problema actual con los estándares.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+<p><span class="caption-text">El problema actual con los estándares.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>De hecho podemos nombrar los siguientes estándares:</p>
