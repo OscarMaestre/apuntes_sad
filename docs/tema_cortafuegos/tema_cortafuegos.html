@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="es" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Instalación y configuración de cortafuegos &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
@@ -11,12 +11,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=4936afed"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/doctools.js?v=9bcbadda"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../_static/translations.js?v=efdbd0b9"></script>
+        <script src="../_static/translations.js?v=f85f4cfb"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
@@ -29,15 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            Apuntes de Seguridad y alta disponibilidad
+            <a href="../index.html" class="icon icon-home"> Apuntes de Seguridad y alta disponibilidad
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="text" name="q" placeholder="Buscar documentos" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -54,8 +48,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#tipos-de-cortafuegos-caracteristicas-funciones-principales">Tipos de cortafuegos. Características. Funciones principales.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instalacion-de-cortafuegos-ubicacion">Instalación de cortafuegos. Ubicación.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reglas-de-filtrado-de-cortafuegos">Reglas de filtrado de cortafuegos.</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#comandos-y-fichero-de-configuracion">Comandos y fichero de configuración</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#el-cortafuegos-nftables">El cortafuegos NFTables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gestion-de-tablas">Gestión de tablas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gestion-de-cadenas">Gestión de cadenas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gestion-de-reglas">Gestión de reglas</a></li>
@@ -107,8 +99,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Instalación y configuración de cortafuegos</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Instalación y configuración de cortafuegos</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/tema_cortafuegos/tema_cortafuegos.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -169,14 +161,16 @@
 <h2>Tipos de cortafuegos. Características. Funciones principales.<a class="headerlink" href="#tipos-de-cortafuegos-caracteristicas-funciones-principales" title="Link to this heading"></a></h2>
 <p>Hay muchas maneras de organizar la arquitectura del cortafuegos de una red. En este curso usaremos la más simple, reflejada en la figura siguiente. En ella, un dispositivo controla todo el tráfico de entrada y salida de una red. Por desgracia tiene el inconveniente de que si un intruso logra «saltarse» el cortafuegos tendrá acceso total a toda la red.</p>
 <figure class="align-center" id="id2">
-<a class="reference internal image-reference" href="../_images/Cortafuegos.png"><img alt="Estructura de un cortafuegos (Fuente:Wikipedia)" src="../_images/Cortafuegos.png" style="width: 150.0px; height: 82.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/Cortafuegos.png"><img alt="Estructura de un cortafuegos (Fuente:Wikipedia)" src="../_images/Cortafuegos.png" style="width: 150.0px; height: 82.5px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Estructura de un cortafuegos (Fuente:Wikipedia)</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>El mecanismo más utilizado hoy en día es la creación de una «zona desmilitarizada» o DMZ y requiere varios dispositivos. También se conoce por el nombre de «screened host».</p>
 <figure class="align-center" id="id3">
-<a class="reference internal image-reference" href="../_images/dmz.png"><img alt="Arquitectura de una DMZ (Fuente: RedIris)." src="../_images/dmz.png" style="width: 250.0px; height: 150.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/dmz.png"><img alt="Arquitectura de una DMZ (Fuente: RedIris)." src="../_images/dmz.png" style="width: 250.0px; height: 150.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Arquitectura de una DMZ (Fuente: RedIris).</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
@@ -199,12 +193,6 @@
 </section>
 <section id="reglas-de-filtrado-de-cortafuegos">
 <h2>Reglas de filtrado de cortafuegos.<a class="headerlink" href="#reglas-de-filtrado-de-cortafuegos" title="Link to this heading"></a></h2>
-<section id="comandos-y-fichero-de-configuracion">
-<h3>Comandos y fichero de configuración<a class="headerlink" href="#comandos-y-fichero-de-configuracion" title="Link to this heading"></a></h3>
-<p>La opción más cómoda para configurar el cortafuegos suele ser la edición del fichero <code class="docutils literal notranslate"><span class="pre">/etc/nftables.conf.</span></code> Sin embargo, se puede configurar cualquier cosa tanto desde dicho fichero como desde la línea de comandos.</p>
-</section>
-<section id="el-cortafuegos-nftables">
-<h3>El cortafuegos NFTables<a class="headerlink" href="#el-cortafuegos-nftables" title="Link to this heading"></a></h3>
 <p>NFTables es la nueva arquitectura de filtrado y manipulación de paquetes de red en el núcleo de Linux.Como NFTables puede procesar muchos datos de red es importante saber que distingue entre varias «familias de protocolos de red». En concreto podemos usar estas familias:</p>
 <ul class="simple">
 <li><p>«ip»: se refiere a IPv4</p></li>
@@ -217,7 +205,8 @@
 <p>El comando básico de acceso a todas las operaciones es <code class="docutils literal notranslate"><span class="pre">nft</span></code>. En líneas generales <code class="docutils literal notranslate"><span class="pre">nft</span></code> examina los paquetes y analiza las reglas que se le dan para decidir que hacer con un paquete de red. Para ello es importante tener claro que <code class="docutils literal notranslate"><span class="pre">nft</span></code> usa «hooks», «tablas», «cadenas» y «reglas».</p>
 <p>Un «hook» es una etapa en la que está un paquete. En el dibujo siguiente se puede ver las etapas en las que está un paquete IP</p>
 <figure class="align-default" id="id4">
-<a class="reference internal image-reference" href="../_images/hooks.png"><img alt="Hooks" src="../_images/hooks.png" style="width: 656.8000000000001px; height: 124.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/hooks.png"><img alt="Hooks" src="../_images/hooks.png" style="width: 656.8000000000001px; height: 124.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">«Hooks» o etapas de un paquete de red. (Figura sacada de la web de NFTables)</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
@@ -259,7 +248,6 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nft</span> <span class="pre">list</span> <span class="pre">ruleset</span> <span class="pre">&gt;</span> <span class="pre">ficheronftables.conf</span></code></p></li>
 <li><p>Si el fichero anterior lo ponemos «encima» del fichero <code class="docutils literal notranslate"><span class="pre">/etc/nftables.conf</span></code> el sistema operativo recargará esta configuración. El comando sería algo como <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">cp</span> <span class="pre">ficheronftables.conf</span> <span class="pre">/etc/nftables.conf</span></code></p></li>
 </ul>
-</section>
 <section id="gestion-de-tablas">
 <h3>Gestión de tablas<a class="headerlink" href="#gestion-de-tablas" title="Link to this heading"></a></h3>
 <p>En los puntos siguientes vemos algunas operaciones básicas con tablas:</p>
@@ -385,7 +373,8 @@
 <section id="anexo-ejercicio-de-configuracion">
 <h2>Anexo: ejercicio de configuración<a class="headerlink" href="#anexo-ejercicio-de-configuracion" title="Link to this heading"></a></h2>
 <figure class="align-default" id="id5">
-<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
 </figcaption>
@@ -441,7 +430,8 @@
 <h2>Un ejercicio comentado<a class="headerlink" href="#un-ejercicio-comentado" title="Link to this heading"></a></h2>
 <p>Supongamos que tenemos la misma configuración de siempre, que volvemos a mostrar en la figura siguiente:</p>
 <figure class="align-default" id="id6">
-<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="es" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Instalación y configuración de servidores proxy &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
@@ -11,12 +11,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=4936afed"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/doctools.js?v=9bcbadda"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../_static/translations.js?v=efdbd0b9"></script>
+        <script src="../_static/translations.js?v=f85f4cfb"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
@@ -29,15 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            Apuntes de Seguridad y alta disponibilidad
+            <a href="../index.html" class="icon icon-home"> Apuntes de Seguridad y alta disponibilidad
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="text" name="q" placeholder="Buscar documentos" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -97,8 +91,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Instalación y configuración de servidores  proxy</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Instalación y configuración de servidores  proxy</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/tema_proxys/tema_proxys.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -123,7 +117,8 @@
 <h2>Tipos de  proxy . Características y funciones.<a class="headerlink" href="#tipos-de-proxy-caracteristicas-y-funciones" title="Link to this heading"></a></h2>
 <p>Antes de explicar los tipos de proxy es importante entender el concepto: básicamente, se puede decir que un proxy es un software que actúa como intermediario entre las peticiones de un cliente y un servidor. Si examinamos la figura siguiente veremos que ahora no hay solo una petición y una respuesta,sino que hay varios pasos más.</p>
 <figure class="align-default" id="id11">
-<a class="reference internal image-reference" href="../_images/comportamiento_proxy.png"><img alt="Ejemplos de permisos" src="../_images/comportamiento_proxy.png" style="width: 331.5px; height: 187.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/comportamiento_proxy.png"><img alt="Ejemplos de permisos" src="../_images/comportamiento_proxy.png" style="width: 331.5px; height: 187.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Comportamiento de un proxy</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
 </figcaption>
@@ -141,21 +136,24 @@
 <p>Podemos distinguir entre proxy directo (o simplemente proxy), proxy abierto y proxy inverso.</p>
 <p>El término proxy suele reservarse para esta arquitectura de red. En este caso, el proxy está dentro de nuestra red y nosotros como administradores tenemos el control y podemos tomar todas las decisiones que deseemos.</p>
 <figure class="align-default" id="id12">
-<a class="reference internal image-reference" href="../_images/proxy.png"><img alt="Proxy directo" src="../_images/proxy.png" style="width: 296.79999999999995px; height: 129.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/proxy.png"><img alt="Proxy directo" src="../_images/proxy.png" style="width: 296.79999999999995px; height: 129.5px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Proxy (en su configuración más típica)</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>En un proxy abierto el proxy no está bajo nuestro control, sino que está en alguna red intermedia y suele ofrecer servicios como ocultación de ip, privacidad y similares. No tenemos garantías de que realmente el proxy no registre nuestra actividad.</p>
 <figure class="align-default" id="id13">
-<a class="reference internal image-reference" href="../_images/proxy_abierto.png"><img alt="Un proxy abierto" src="../_images/proxy_abierto.png" style="width: 324.79999999999995px; height: 110.6px;" /></a>
+<a class="reference internal image-reference" href="../_images/proxy_abierto.png"><img alt="Un proxy abierto" src="../_images/proxy_abierto.png" style="width: 324.79999999999995px; height: 110.6px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Proxy abierto</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Un proxy inverso es aquel que se sitúa dentro de la red del servidor de manera que actúa como caché, distribuidor de carga o simplemente como respaldo.</p>
 <figure class="align-default" id="id14">
-<a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de proxy inverso" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" /></a>
+<a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de proxy inverso" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
 </figcaption>
@@ -177,7 +175,8 @@
 <h2>Instalación y configuración de clientes proxy.<a class="headerlink" href="#instalacion-y-configuracion-de-clientes-proxy" title="Link to this heading"></a></h2>
 <p>Configurar un cliente para que utilice un proxy es bastante sencillo. En la imagen siguiente se muestra una captura de Firefox en el que se indica que la conexión debe hacerse a través de un proxy. Como puede apreciarse basta con rellenar la IP del servidor proxy y el puerto en el que escucha (Squid suele hacerlo en el 3128).</p>
 <figure class="align-center" id="id15">
-<a class="reference internal image-reference" href="../_images/Proxy_en_firefox.jpg"><img alt="Configuración de proxies en Firefox" src="../_images/Proxy_en_firefox.jpg" style="width: 453.5px; height: 290.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/Proxy_en_firefox.jpg"><img alt="Configuración de proxies en Firefox" src="../_images/Proxy_en_firefox.jpg" style="width: 453.5px; height: 290.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Configuración de proxies en Firefox</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
 </figcaption>
@@ -543,7 +542,8 @@ http_access<span class="w"> </span>deny<span class="w">  </span>resto_personas
 <h2>Proxys  inversos.<a class="headerlink" href="#proxys-inversos" title="Link to this heading"></a></h2>
 <p>Como ya hemos visto antes, un proxy inverso es aquel que se sitúa delante de un servidor Web con el objetivo de «descargarle de trabajo», como señala la figura siguiente:</p>
 <figure class="align-default" id="id16">
-<a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de proxy inverso" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" /></a>
+<a class="reference internal image-reference" href="../_images/proxy_inverso.png"><img alt="Ejemplos de proxy inverso" src="../_images/proxy_inverso.png" style="width: 308.0px; height: 110.6px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Proxy inverso</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
 </figcaption>
