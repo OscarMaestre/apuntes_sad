@@ -509,7 +509,100 @@ Iniciar sesión con todos los usuarios y verificar que efectivamente solo ocurre
 6. Para que el conta01 no pueda hacer nada, no necesitamos nada especial, ya se quitaron todos los permisos como medida de seguridad.
 7. Para que el conta02 pueda leer y solo leer, solo necesitamos ``setfacl -m u:conta02:r fichero.txt``
 
+Otro ejercicio sobre ACLs
+-----------------------
+* Fabrica dos usuarios con ``adduser`` llamados ``gerente01`` y ``gerente02``. Para evitar problemas pon a todos la clave ``1234``.
+* Inicia sesión con ``gerente01`` y fabrica un archivo llamado ``Contabilidad.txt``. Rellénalo con texto.
+* Con el mismo usuario ``gerente01``  (es decir, no cierres sesión) fabrica un segundo archivo llamado ``CuentasDeCasa.txt`` y rellénalo con texto.
+* Con ese mismo usuario ``gerente01`` asigna los permisos necesarios para que ``gerente02`` sí puede leer y cambiar (es decir, escribir "w") el fichero ``Contabilidad.txt``.
 
+
+Solución comentada
+------------------------
+
+Usuarios
+~~~~~~~~~~~~~~
+Se pide esto:
+
+  Fabrica dos usuarios con ``adduser`` llamados ``gerente01`` y ``gerente02``. Para evitar problemas pon a todos la clave ``1234``.
+
+Los comandos serían estos:
+
+  sudo adduser gerente01
+  sudo adduser gerente02
+
+
+Comprobaciones previas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Siendo el usuario administrador, vemos los permisos de los directorios con el comando ``ls -la /home``. Veremos esto::
+
+  
+  drwxr-x---   2 gerente01     gerente01     4096 oct  8 10:30 gerente01
+  drwxr-x---   2 gerente02     gerente02     4096 oct  8 10:30 gerente02
+
+
+¿Qué significa, por ejemplo, la primera línea?
+
+1.- La primera "d" indica que es un directorio.
+2.- Despues aparece "rwx" que son los permisos que se aplican **al usuario gerente01** (que es el primer gerente01 que vemos en la línea). Estos permisos indican que a)el usuario gerente01 puede ver los nombres de archivo que haya dentro de ese directorio. b) el usuario gerente01 puede crear nuevos nombres de archivo y c) el usuario gerente01 puede "entrar" en ese directorio.
+3.- Despues aparece "r-x", que son los permisos que se aplican **a los usuarios que estén dentro del grupo gerente01** Estos permisos indican que a) los usuarios dentro del grupo gerente01 pueden ver los nombres de archivos. b) los usuarios dentro del grupo gerente01 **no pueden crear nuevos nombres de archivo** c) los usuarios dentro del grupo gerente01 sí pueden entrar en ese directorio.
+4.- Despues vemos los permisos "---". Eso significa que otras personas a) no pueden ver los nombres de archivo b)no pueden crear nuevos nombres de archivo y c) no pueden entrar al directorio.
+
+Creación del archivo del ``gerente01``
+-------------------------------------------
+Iniciamos sesión con ese usuario y tecleamos esto::
+
+  nano Contabilidad.txt
+
+
+Repetimos el proceso y creamos el otro fichero::
+
+  nano CuentasDeCasa.txt
+
+Comprobaciones previas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Si iniciamos sesión con el usuario ``gerente02`` veremos que ni podemos entrar en el directorio ``/home/gerente01`` ni podemos hacer un comando ``ls /home/gerente01`` ni mucho menos podremos ver ningún fichero del gerente01
+
+
+Asignación de permisos
+-------------------------
+Se pide lo siguiente::
+
+  Con ese mismo usuario ``gerente01`` asigna los permisos necesarios para que ``gerente02`` sí puede leer y cambiar (es decir, escribir "w") el fichero ``Contabilidad.txt``.
+
+
+Podemos lanzar esto::
+
+  setfacl -m u:gerente02:rw Contabilidad.txt
+
+Pero no va a a ser suficiente. ¿Por qué? Bien, si iniciamos con el ``gerente02`` e intentamos hacer esto ``nano /home/gerente01/Contabilidad.txt`` el sistema no nos va a dejar entrar.
+
+Pero insistimos ¿por qué? Por que hay una cadena de permisos donde algún otro permiso se nos ha denegado. Un poco más arriba hemos escrito esto::
+
+  
+  Despues vemos los permisos "---". Eso significa que otras personas a) no pueden ver los nombres de archivo b)no pueden crear nuevos nombres de archivo y c) no pueden entrar al directorio.
+
+Como el archivo ``Contabilidad.txt`` está dentro de un directorio donde los usuarios "otros" no pueden ver los nombres ni entrar en él, es imposible para el ``gerente02`` editar el archivo. 
+
+Es necesario, que el gerente01, dé algún permiso más. El gerente01 ejecuta esto::
+
+  setfacl -m u:gerente02:r /home/gerente01
+
+¿Qué pasa ahora con el gerente02? Pasa que no puede editar el fichero **porque no consigue entrar en el directorio.** Es necesario que el ``gerente01`` dé el permiso de ejecución::
+
+  setfacl -m u:gerente02:x /home/gerente01
+
+En realidad este último comando también **quita el permiso de ver los nombres de fichero** pero es que no hacía falta. En resumen, ha bastado con que el gerente01 ejecute estos dos comandos::
+
+  setfacl -m u:gerente02:x /home/gerente01
+  setfacl -m u:gerente02:rw Contabilidad.txt
+
+Plus
+-----------------
+Si deseamos olvidarnos por completo de las ACL y dejar todo como estaba se puede usar el comando::
+
+  setfacl -b <nombre_de_fichero>
 
 Establecimiento de políticas de contraseñas.
 -----------------------------------------------------------------------------------------------
