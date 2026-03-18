@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anexo: ejercicios sobre nftables &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=4936afed"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="prev" title="Implantación de técnicas de acceso remoto. Seguridad perimetral" href="../tema_acceso_remoto/tema_acceso_remoto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Apuntes de Seguridad y alta disponibilidad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Índice:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tema_pautas_seguridad_informatica/tema_pautas_seguridad_informatica.html">Adopción de pautas de seguridad informática</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_cortafuegos/tema_cortafuegos.html">Instalación y configuración de cortafuegos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_sad/tema_sad.html">Implantación de soluciones de alta disponibilidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Anexo: ejercicios sobre <code class="docutils literal notranslate"><span class="pre">nftables</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduccion">Introducción</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-1">Ejercicio 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-2">Ejercicio 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-3">Ejercicio 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-4">Ejercicio 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-5">Ejercicio 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-6">Ejercicio 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-7">Ejercicio 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-8">Ejercicio 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-9">Ejercicio 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-10">Ejercicio 10</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Apuntes de Seguridad y alta disponibilidad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Anexo: ejercicios sobre <code class="docutils literal notranslate"><span class="pre">nftables</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/anexo_cortafuegos/ejercicios_nft.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="anexo-ejercicios-sobre-nftables">
+<h1>Anexo: ejercicios sobre <code class="docutils literal notranslate"><span class="pre">nftables</span></code><a class="headerlink" href="#anexo-ejercicios-sobre-nftables" title="Link to this heading"></a></h1>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading"></a></h2>
+<p>En estos ejercicios se indican los hooks necesarios pero <strong>en el examen no se hará así.</strong> Por ello, se recomienda prestar atención al tipo de problema propuesto y pensar en el por qué el ejercicio sugiere el hook indicado. En los ejercicios también se usa a veces la política drop. Eso explica por qué en algunos ejercicios de quota o de limit rate indicamos solo una regla.</p>
+</section>
+<section id="ejercicio-1">
+<h2>Ejercicio 1<a class="headerlink" href="#ejercicio-1" title="Link to this heading"></a></h2>
+<p>Crear un fichero de configuración para nftables que contenga una tabla ip llamada filtrado_ssh. Dentro de ella, definir una cadena de tipo filter con hook input llamada SSH_ENTRADA y política drop. La única regla debe ser aceptar (permitir) el tráfico TCP entrante al puerto 22 (SSH) que provenga exclusivamente de la dirección IP de origen 192.168.1.50:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">filtrado_ssh</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">SSH_ENTRADA</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="nb">input</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">drop</span><span class="p">;</span>
+        <span class="n">ip</span> <span class="n">saddr</span> <span class="mf">192.168.1.50</span> <span class="n">tcp</span> <span class="n">dport</span> <span class="mi">22</span> <span class="n">accept</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-2">
+<h2>Ejercicio 2<a class="headerlink" href="#ejercicio-2" title="Link to this heading"></a></h2>
+<p>Crear un fichero de configuración que defina una tabla ip llamada filtro_ping con una cadena de tipo filter, hook input y política drop llamada ICMP_ENTRADA. Añadir una regla para aceptar todas las peticiones de eco ICMP entrantes (echo-request) dirigidas a la máquina:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">filtro_ping</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">ICMP_ENTRADA</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="nb">input</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">drop</span><span class="p">;</span>
+        <span class="n">icmp</span> <span class="nb">type</span> <span class="n">echo</span><span class="o">-</span><span class="n">request</span> <span class="n">accept</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-3">
+<h2>Ejercicio 3<a class="headerlink" href="#ejercicio-3" title="Link to this heading"></a></h2>
+<p>Cree un fichero de configuración con una tabla ip y una cadena HTTP_LIMIT (tipo filter, hook input, política accept). La única regla debe descartar (drop) las conexiones TCP al puerto 80 (HTTP) cuando la tasa de llegada exceda los 100 kiloytes por segundo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">filter_limit</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">HTTP_LIMIT</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="nb">input</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+        <span class="n">tcp</span> <span class="n">dport</span> <span class="mi">80</span> <span class="n">limit</span> <span class="n">rate</span> <span class="n">over</span> <span class="mi">10</span> <span class="n">kbytes</span><span class="o">/</span><span class="n">second</span> <span class="n">drop</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-4">
+<h2>Ejercicio 4<a class="headerlink" href="#ejercicio-4" title="Link to this heading"></a></h2>
+<p>Configurar una tabla ip y una cadena FORWARD_FTP de tipo filter con hook forward y política drop. Añadir una regla para aceptar todo el tráfico que pase a través del firewall (tráfico forward) hacia el servidor FTP 172.16.0.10 solo hasta que se hayan transferido 50 Megabytes (MiB) de datos. Una vez superado el límite, el tráfico debe ser denegado automáticamente:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">filter_quota</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">FORWARD_FTP</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="n">forward</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">drop</span><span class="p">;</span>
+        <span class="n">ip</span> <span class="n">daddr</span> <span class="mf">172.16.0.10</span> <span class="n">quota</span> <span class="n">until</span> <span class="mi">50</span> <span class="n">mbytes</span> <span class="n">accept</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-5">
+<h2>Ejercicio 5<a class="headerlink" href="#ejercicio-5" title="Link to this heading"></a></h2>
+<p>Crear un fichero que defina una tabla ip llamada «nat_web» y una cadena de tipo nat con hook prerouting y prioridad 0 llamada DNAT_WEB. Añadir una regla para interceptar el tráfico TCP entrante dirigido al puerto 443 (HTTPS) del firewall y redirigirlo internamente al servidor 10.0.0.25 en el puerto 8443:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">nat_web</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">DNAT_WEB</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="n">nat</span> <span class="n">hook</span> <span class="n">prerouting</span> <span class="n">priority</span> <span class="n">dstnat</span><span class="p">;</span>
+        <span class="n">tcp</span> <span class="n">dport</span> <span class="mi">443</span> <span class="n">dnat</span> <span class="n">to</span> <span class="mf">10.0.0.25</span><span class="p">:</span><span class="mi">8443</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-6">
+<h2>Ejercicio 6<a class="headerlink" href="#ejercicio-6" title="Link to this heading"></a></h2>
+<p>Crear un fichero de configuración con una tabla ip llamada CONTADOR_PING. Dentro de esta tabla, definir una cadena SALIDA_ICMP (tipo filter, hook output, política accept). Añadir una regla que acepte todo el tráfico ICMP saliente (echo-reply y echo-request) y que, además, cuente (utilizando counter) el número de paquetes y bytes que coinciden con este criterio:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">CONTADOR_PING</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">SALIDA_ICMP</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="n">output</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+        <span class="n">icmp</span> <span class="nb">type</span> <span class="n">echo</span><span class="o">-</span><span class="n">request</span> <span class="n">counter</span> <span class="n">accept</span>
+        <span class="n">icmp</span> <span class="nb">type</span> <span class="n">echo</span><span class="o">-</span><span class="n">reply</span> <span class="n">counter</span> <span class="n">accept</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-7">
+<h2>Ejercicio 7<a class="headerlink" href="#ejercicio-7" title="Link to this heading"></a></h2>
+<p>Crear una tabla ip llamada SEGURIDAD_WEB y una cadena ENTRADA_WEB (tipo filter, hook input, política accept). Añadir una regla para registrar (utilizando log) todos los paquetes TCP dirigidos al puerto de destino 80 (HTTP) provenientes de la dirección IP de origen 203.0.113.1. Tras registrarlos, los paquetes deben ser descartados (drop). El prefijo del registro debe ser «POSIBLE_ESCANEADOR»:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">SEGURIDAD_WEB</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">ENTRADA_WEB</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="nb">input</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+        <span class="n">ip</span> <span class="n">saddr</span> <span class="mf">203.0.113.1</span> <span class="n">tcp</span> <span class="n">dport</span> <span class="mi">80</span> <span class="n">log</span> <span class="n">prefix</span> <span class="s2">&quot;POSIBLE_ESCANEADOR &quot;</span> <span class="n">drop</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-8">
+<h2>Ejercicio 8<a class="headerlink" href="#ejercicio-8" title="Link to this heading"></a></h2>
+<p>Crear una tabla ip llamada CONTROL_FTP y una cadena REGLAS_AVANZADAS (tipo filter, hook forward, política drop). Añadir una regla que acepte el tráfico reenviado (forward) cuyo puerto de origen sea el 20 (FTP-Data), pero solo si la tasa no excede los 1000 bytes por segundo. Si excede el límite, el paquete debe ser descartado:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">CONTROL_FTP</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">REGLAS_AVANZADAS</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="n">forward</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">drop</span><span class="p">;</span>
+        <span class="n">tcp</span> <span class="n">sport</span> <span class="mi">20</span> <span class="n">limit</span> <span class="n">rate</span> <span class="n">over</span> <span class="mi">1000</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">second</span> <span class="n">drop</span>
+        <span class="n">tcp</span> <span class="n">sport</span> <span class="mi">20</span> <span class="n">accept</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-9">
+<h2>Ejercicio 9<a class="headerlink" href="#ejercicio-9" title="Link to this heading"></a></h2>
+<p>Nota: Este ejercicio incluye DOS criterios a la vez, cosa que no hemos hecho en clase. Sin embargo es útil para ver las capacidades de nftables.</p>
+<p>Crear una tabla ip llamada DATOS_TEMPORALES y una cadena PROCESAMIENTO (tipo filter, hook forward, política drop). Configurar una regla para aceptar el tráfico reenviado hacia la IP de destino 172.30.0.5 solo si la cuota de 1 Gigabyte (GiB) aún no ha sido alcanzada y solo si la tasa de paquetes no excede los 20000 bytes por segundo. Si cualquiera de las dos condiciones falla, el paquete debe ser descartado (por la política o la falta de accept tras la cuota):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">DATOS_TEMPORALES</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">PROCESAMIENTO</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="n">forward</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">drop</span><span class="p">;</span>
+        <span class="n">ip</span> <span class="n">daddr</span> <span class="mf">172.30.0.5</span> <span class="n">quota</span> <span class="n">until</span> <span class="mi">1</span> <span class="n">gbytes</span> <span class="n">limit</span> <span class="n">rate</span> <span class="mi">20000</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">second</span> <span class="n">accept</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicio-10">
+<h2>Ejercicio 10<a class="headerlink" href="#ejercicio-10" title="Link to this heading"></a></h2>
+<p>Crear una tabla ip llamada RED_INTERNA y una cadena PRE_TRADUCCION (tipo nat, hook prerouting, prioridad dstnat). Añadir una regla para traducir (DNAT) el tráfico TCP entrante al puerto 8080 del firewall solo si proviene de la red 192.168.0.0/24. El destino traducido debe ser el servidor 10.1.1.5 en el puerto 80:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">ip</span> <span class="n">RED_INTERNA</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">PRE_TRADUCCION</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="n">nat</span> <span class="n">hook</span> <span class="n">prerouting</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">ip</span> <span class="n">saddr</span> <span class="mf">192.168.0.0</span><span class="o">/</span><span class="mi">24</span> <span class="n">tcp</span> <span class="n">dport</span> <span class="mi">8080</span> <span class="n">dnat</span> <span class="n">to</span> <span class="mf">10.1.1.5</span><span class="p">:</span><span class="mi">80</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="../tema_acceso_remoto/tema_acceso_remoto.html" class="btn btn-neutral float-left" title="Implantación de técnicas de acceso remoto. Seguridad perimetral" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2019, Oscar GG.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
