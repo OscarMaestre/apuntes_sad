@@ -1,22 +1,22 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="es" data-content_root="../">
+<html class="writer-html5" lang="es" >
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adopción de pautas de seguridad informática &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=4936afed"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../_static/translations.js?v=f85f4cfb"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=4936afed"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=efdbd0b9"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
@@ -469,8 +469,7 @@ DH….</p>
 </ul>
 <p>Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usuarios en general. Así, un fichero cualquiera puede mostrar unos permisos como estos (necesitaremos el comando <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code> para ver los permisos).</p>
 <figure class="align-default" id="id2">
-<a class="reference internal image-reference" href="../_images/permisos_grupos.png"><img alt="Ejemplos de permisos" src="../_images/permisos_grupos.png" style="width: 329.5px; height: 34.0px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/permisos_grupos.png"><img alt="Ejemplos de permisos" src="../_images/permisos_grupos.png" style="width: 329.5px; height: 34.0px;" /></a>
 <figcaption>
 <p><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
@@ -485,8 +484,7 @@ DH….</p>
 </ul>
 <p>Este sistema de permisos ha funcionado muy bien durante mucho tiempo, sin embargo con el tiempo ha mostrado algunas flaquezas.</p>
 <figure class="align-default" id="id3">
-<a class="reference internal image-reference" href="../_images/ficherorestringido.png"><img alt="Problema con los permisos" src="../_images/ficherorestringido.png" style="width: 293.5px; height: 137.0px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/ficherorestringido.png"><img alt="Problema con los permisos" src="../_images/ficherorestringido.png" style="width: 293.5px; height: 137.0px;" /></a>
 <figcaption>
 <p><span class="caption-text">Un ejemplo de problema con los permisos</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
@@ -675,38 +673,54 @@ sudo adduser gerente02</p>
 <li><p>Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa <strong>más todas las incrementales</strong> lo cual puede ser muy lento.</p></li>
 <li><p>Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado <strong>con respecto a la última copia completa</strong> . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.</p></li>
 </ul>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-+===========+=======+================+===================+================================+==+==+==+==+==+
-|   Día     |       |                |                   |                                |
-+===========+=======+================+===================+================================+==+==+==+==+==+
-|   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
-|  Martes   | 100MB | Completa 2,1GB | Incremental 100MB |       Diferencial 100MB        |  |  |  |  |  |
-| Miércoles | 200MB | Completa 2,3GB | Incremental 200MB |     Diferencial 100+200MB      |  |  |  |  |  |
-|  Jueves   | 100MB | Completa 2,4GB | Incremental 100MB |   Diferencial 100+200+100MB    |  |  |  |  |  |
-|  Viernes  |  1GB  | Completa 3,4GB |  Incremental 1GB  | Diferencial 100+200+100+1000MB |  |  |  |  |  |
-|           |       | Total:12,2 GB  |   Total:3,4 GB    |           Total: 4,2           |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-+———–+——-+—————-+——————-+——————————–+–+–+–+–+–+
-=======
-+————-+———+——————+———————+———————————-+
-|     Dia     |  Datos  |     Completa     |       Increm        |               Dif                |
-+=============+=========+==================+=====================+==================================+
-|    Lunes    |   2GB   |   Completa 2GB   |    Completa 2GB     |           Completa 2GB           |
-+————-+———+——————+———————+———————————-+
-|   Martes    |  100MB  |  Completa 100MB  |  Incremental 100MB  |        Diferencial 100MB         |
-+————-+———+——————+———————+———————————-+
-|  Miércoles  |  200MB  |  Completa 200MB  |  Incremental 200MB  |      Diferencial 100 y 200MB     |
-+————-+———+——————+———————+———————————-+
-|   Jueves    |  100MB  |  Completa 100MB  |  Incremental 100MB  |    Diferencial 100+200+100MB     |
-+————-+———+——————+———————+———————————-+
-|   Viernes   |   1GB   |   Completa 1GB   |   Incremental 1GB   |  Diferencial 100+200+100+1000MB  |
-+————-+———+——————+———————+———————————-+
-|    Totales  |   Tot.  |  Total:12.2 GB   |    Total:3.4 GB     |            Total: 4.2            |
-+————-+———+——————+———————+———————————-+</p>
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 43d7c3a0057b4bff25768af8251d44de2085064c</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dia</p></th>
+<th class="head"><p>Datos</p></th>
+<th class="head"><p>Completa</p></th>
+<th class="head"><p>Increm</p></th>
+<th class="head"><p>Dif</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Lunes</p></td>
+<td><p>2GB</p></td>
+<td><p>Completa 2GB</p></td>
+<td><p>Completa 2GB</p></td>
+<td><p>Completa 2GB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Martes</p></td>
+<td><p>100MB</p></td>
+<td><p>Completa 100MB</p></td>
+<td><p>Incremental 100MB</p></td>
+<td><p>Diferencial 100MB</p></td>
+</tr>
+<tr class="row-even"><td><p>Miércoles</p></td>
+<td><p>200MB</p></td>
+<td><p>Completa 200MB</p></td>
+<td><p>Incremental 200MB</p></td>
+<td><p>Diferencial 100 y 200MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Jueves</p></td>
+<td><p>100MB</p></td>
+<td><p>Completa 100MB</p></td>
+<td><p>Incremental 100MB</p></td>
+<td><p>Diferencial 100+200+100MB</p></td>
+</tr>
+<tr class="row-even"><td><p>Viernes</p></td>
+<td><p>1GB</p></td>
+<td><p>Completa 1GB</p></td>
+<td><p>Incremental 1GB</p></td>
+<td><p>Diferencial 100+200+100+1000MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Totales</p></td>
+<td><p>Tot.</p></td>
+<td><p>Total:12.2 GB</p></td>
+<td><p>Total:3.4 GB</p></td>
+<td><p>Total: 4.2</p></td>
+</tr>
+</tbody>
+</table>
 <p>En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa «Configuración de copia de seguridad» y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.</p>
 <p>En UNIX las copias se hacen de otra manera.</p>
 <ul class="simple">
@@ -854,8 +868,7 @@ sudo adduser gerente02</p>
 <h2>Sistemas biométricos. Funcionamiento. Estándares.<a class="headerlink" href="#sistemas-biometricos-funcionamiento-estandares" title="Link to this heading"></a></h2>
 <p>Por desgracia la siguiente figura ilustra muy bien el problema actual con los estándares biométricos:</p>
 <figure class="align-center" id="id4">
-<a class="reference internal image-reference" href="../_images/standards.png"><img alt="Un estándar debería ser único." src="../_images/standards.png" style="width: 250.0px; height: 141.5px;" />
-</a>
+<a class="reference internal image-reference" href="../_images/standards.png"><img alt="Un estándar debería ser único." src="../_images/standards.png" style="width: 250.0px; height: 141.5px;" /></a>
 <figcaption>
 <p><span class="caption-text">El problema actual con los estándares.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
