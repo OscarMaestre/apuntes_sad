@@ -1,22 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="es" >
+<html class="writer-html5" lang="es" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Instalación y configuración de cortafuegos &mdash; documentación de Apuntes de Seguridad y alta disponibilidad - 1.0</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
   
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=4936afed"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../_static/translations.js?v=efdbd0b9"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=4936afed"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../genindex.html" />
     <link rel="search" title="Búsqueda" href="../search.html" />
@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tema_proxys/tema_proxys.html">Instalación y configuración de servidores  proxy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_lopd/tema_lopd.html">Legislación y normas sobre seguridad</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tema_acceso_remoto/tema_acceso_remoto.html">Implantación de técnicas de acceso remoto. Seguridad perimetral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../anexo_cortafuegos/ejercicios_nft.html">Anexo: ejercicios sobre <code class="docutils literal notranslate"><span class="pre">nftables</span></code></a></li>
 </ul>
 
         </div>
@@ -169,14 +170,16 @@
 <h2>Tipos de cortafuegos. Características. Funciones principales.<a class="headerlink" href="#tipos-de-cortafuegos-caracteristicas-funciones-principales" title="Link to this heading"></a></h2>
 <p>Hay muchas maneras de organizar la arquitectura del cortafuegos de una red. En este curso usaremos la más simple, reflejada en la figura siguiente. En ella, un dispositivo controla todo el tráfico de entrada y salida de una red. Por desgracia tiene el inconveniente de que si un intruso logra «saltarse» el cortafuegos tendrá acceso total a toda la red.</p>
 <figure class="align-center" id="id2">
-<a class="reference internal image-reference" href="../_images/Cortafuegos.png"><img alt="Estructura de un cortafuegos (Fuente:Wikipedia)" src="../_images/Cortafuegos.png" style="width: 150.0px; height: 82.5px;" /></a>
+<a class="reference internal image-reference" href="../_images/Cortafuegos.png"><img alt="Estructura de un cortafuegos (Fuente:Wikipedia)" src="../_images/Cortafuegos.png" style="width: 150.0px; height: 82.5px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Estructura de un cortafuegos (Fuente:Wikipedia)</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>El mecanismo más utilizado hoy en día es la creación de una «zona desmilitarizada» o DMZ y requiere varios dispositivos. También se conoce por el nombre de «screened host».</p>
 <figure class="align-center" id="id3">
-<a class="reference internal image-reference" href="../_images/dmz.png"><img alt="Arquitectura de una DMZ (Fuente: RedIris)." src="../_images/dmz.png" style="width: 250.0px; height: 150.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/dmz.png"><img alt="Arquitectura de una DMZ (Fuente: RedIris)." src="../_images/dmz.png" style="width: 250.0px; height: 150.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Arquitectura de una DMZ (Fuente: RedIris).</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
@@ -217,7 +220,8 @@
 <p>El comando básico de acceso a todas las operaciones es <code class="docutils literal notranslate"><span class="pre">nft</span></code>. En líneas generales <code class="docutils literal notranslate"><span class="pre">nft</span></code> examina los paquetes y analiza las reglas que se le dan para decidir que hacer con un paquete de red. Para ello es importante tener claro que <code class="docutils literal notranslate"><span class="pre">nft</span></code> usa «hooks», «tablas», «cadenas» y «reglas».</p>
 <p>Un «hook» es una etapa en la que está un paquete. En el dibujo siguiente se puede ver las etapas en las que está un paquete IP</p>
 <figure class="align-default" id="id4">
-<a class="reference internal image-reference" href="../_images/hooks.png"><img alt="Hooks" src="../_images/hooks.png" style="width: 656.8000000000001px; height: 124.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/hooks.png"><img alt="Hooks" src="../_images/hooks.png" style="width: 656.8000000000001px; height: 124.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">«Hooks» o etapas de un paquete de red. (Figura sacada de la web de NFTables)</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
@@ -385,7 +389,8 @@
 <section id="anexo-ejercicio-de-configuracion">
 <h2>Anexo: ejercicio de configuración<a class="headerlink" href="#anexo-ejercicio-de-configuracion" title="Link to this heading"></a></h2>
 <figure class="align-default" id="id5">
-<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
 </figcaption>
@@ -441,7 +446,8 @@
 <h2>Un ejercicio comentado<a class="headerlink" href="#un-ejercicio-comentado" title="Link to this heading"></a></h2>
 <p>Supongamos que tenemos la misma configuración de siempre, que volvemos a mostrar en la figura siguiente:</p>
 <figure class="align-default" id="id6">
-<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/Esquema-de-red.png"><img alt="Ejemplos de permisos" src="../_images/Esquema-de-red.png" style="width: 337.0px; height: 79.0px;" />
+</a>
 <figcaption>
 <p><span class="caption-text">Ejemplos de configuración de una red.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>

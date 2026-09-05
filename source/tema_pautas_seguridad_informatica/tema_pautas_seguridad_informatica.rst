@@ -56,6 +56,8 @@ Análisis de las principales vulnerabilidades de un sistema informático.
 -----------------------------------------------------------------------------------------------
 
 
+Una posible definición de vulnerabilidad es: *Una vulnerabilidad es una debilidad de un sistema que puede ser aprovechada para comprometer su seguridad.* 
+
 Cuando se habla de vulnerabilidad, se asocia este término con problemas software. Una vulnerabilidad puede conllevar una serie de problemas muy graves:
 
 
@@ -64,17 +66,7 @@ Cuando se habla de vulnerabilidad, se asocia este término con problemas softwar
 * Que un software o individuo consiga borrar/alterar/cifrar datos de la empresa.
 
 
-En Internet todas las vulnerabilidades detectadas se publican como un informe CVE (Common Vulnerability Exposure)
-
-Recientemente se han descubierto **vulnerabilidades a nivel de microprocesador**.
-En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.
-
-
-Algunas aplicaciones basadas en bases de datos son susceptibles de sufrir "ataques SQL" o "inyecciones SQL" o "SQL injects".
-
-Otro tipo de ataque común son los HTML/JS injects. 
-
-En líneas generales, ningún programa web debe confiar en lo que escriben sus usuarios.
+En Internet todas las vulnerabilidades detectadas se publican como un informe CVE (Common Vulnerability Exposure) y existe una base de datos oficial donde se publican todas las vulnerabilidades conocidas en `https://www.tenable.com/cve/newest <https://www.tenable.com/cve/newest>`
 
 
 
@@ -82,78 +74,129 @@ En líneas generales, ningún programa web debe confiar en lo que escriben sus u
 Amenazas. Tipos.
 -----------------------------------------------------------------------------------------------
 
-Clasificando por lugar
-
-* Interna: los problemas originados dentro de la propia empresa son **los más frecuentes y los de impacto más grave**
-* Externa: son las originadas fuera de la propia empresa.
-
-Clasificando por mecanismo
-
-* Físicas
-* Lógicas
+Podemos definir amenaza como "circunstancia, agente o acontecimiento que puede provocar un daño a un sistema."
 
 
 Amenazas físicas.
------------------------------------------------------------------------------------------------
-Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-* Rotura intencionada.
-* Desastre natural: terremotos, inundaciones, incendios, etc...
+Son aquellas que pueden afectar a los sistemas informáticos mediante acciones o acontecimientos que afectan físicamente a los equipos, las instalaciones o el entorno en el que se encuentran.
 
-    * Se debe disponer de la protección antiincendios adecuada.
-    * No todos los extintores son apropiados para todo.
-    * Los seguros no suelen cubrir eventos de este tipo.
-    * Se desaconseja la instalación de centros de datos en bajos o sótanos.
-
-En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.
-
-
-* Barreras físicas.
-
-    * Los servidores deberían estar cerrados con llaves y con acceso restringido.
-    * Controles de acceso con tarjeta y/o guardia de seguridad.
-    * En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
-    * Puertas con apertura programada.
-    
-* Protección eléctrica.
-
+* Robo de un ordenador o servidor.
+* Incendio o inundación.
+* Corte eléctrico.
+* Daño intencionado de un equipo.
+* Acceso físico no autorizado.
+* Sobrecalentamiento.
+* Avería de un disco duro.
 
 
 Amenazas lógicas.
 -----------------------------------------------------------------------------------------------
 
+Son aquellas que afectan a un sistema informático mediante acciones o acontecimientos relacionados con el software, los datos, las comunicaciones o el acceso lógico al sistema.
 
-¿Qué problemas podrían causarse por motivos de un uso inapropiado de software?
-
-* Ataques a nivel de red IP. P.ej ataques de tipo "spoofing". Phishing. MITM
-* A nivel de SO. Buffer overflow. Errores humanos.
-* A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.
-* Malware: spyware, ransomware, virus, DOS (Denial of service).
-
+* Malware.
+* Phishing.
+* Robo de credenciales.
+* Explotación de vulnerabilidades.
+* Acceso no autorizado.
+* Ataques DoS/DDoS.
+* Borrado o modificación maliciosa de datos.
+* Errores de configuración.
 
 
 Seguridad física y ambiental
 -----------------------------------------------------------------------------------------------
+La seguridad física y ambiental comprende las medidas destinadas a proteger los equipos, instalaciones, personas y soportes de información frente a amenazas físicas y ambientales. Su objetivo es garantizar principalmente:
 
-La seguridad física y ambiental implica controlar tres grandes tipos de posibles acciones:
+* Disponibilidad de los sistemas.
+* Integridad de los equipos y datos.
+* Confidencialidad de la información.
 
-* Engaños/fraudes.
-* Robos/pérdidas.
-* Sabotajes.
+La seguridad informática no consiste únicamente en proteger los ordenadores mediante contraseñas y antivirus. **Si alguien puede robar físicamente el servidor, destruirlo o cortar su alimentación eléctrica, también puede comprometer la seguridad del sistema.**
 
-Para evitarlos se suele recurrir a una o varias medidas de las siguientes:
+Controles físicos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Sistemas biométricos.
+Se debe impedir que personas no autorizadas puedan acceder a los equipos o instalaciones.
+
+
+* Cerraduras y puertas de seguridad.
+* Control mediante tarjetas, códigos o biometría.
+* Sistemas de videovigilancia.
 * Personal de seguridad.
-* Protección electrónica como sensores de presencia, infrarrojos, de movimiento.
+* Registro de visitantes.
+* Restricción de acceso a salas de servidores.
+* Armarios y racks cerrados.
 
 
+Protección frente al robo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* Anclajes físicos para ordenadores.
+* Racks y armarios cerrados.
+* Control de acceso.
+* Inventario de equipos.
+* Cifrado de discos.
+* Protección de copias de seguridad.
+* Destrucción segura de soportes que ya no se utilizan.
+
+En realidad  **el cifrado no evita el robo, pero puede impedir que el ladrón pueda acceder a los datos.**
+
+
+Protección contra incendios
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Un incendio puede destruir equipos y provocar la pérdida de información.
+
+Medidas:
+
+* Detectores de humo.
+* Sistemas automáticos de extinción.
+* Extintores adecuados para instalaciones eléctricas.
+* Materiales ignífugos.
+* Separación de zonas de riesgo.
+* Planes de evacuación.
+
+En centros de datos pueden utilizarse sistemas de extinción mediante agentes gaseosos, evitando en determinadas circunstancias el uso de agua sobre los equipos electrónicos.
+
+
+Alimentación eléctrica
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Los equipos informáticos son sensibles a problemas eléctricos.
+
+Amenazas:
+
+* Cortes de suministro.
+* Sobretensiones.
+* Bajadas de tensión.
+* Picos de tensión.
+* Microcortes.
+* Variaciones de frecuencia.
+
+Medidas:
+
+* SAI/UPS.
+* Protectores contra sobretensiones.
+* Instalaciones eléctricas adecuadas.
+* Generadores de emergencia.
+* Fuentes de alimentación redundantes.
+
+Un SAI permite mantener temporalmente los equipos funcionando durante un corte y, sobre todo, proporciona tiempo para apagarlos correctamente. En el apartado siguiente los analizaremos.
 
 Sistemas de alimentación ininterrumpida.
 -----------------------------------------------------------------------------------------------
 Un sistema de alimentación ininterrumpida o SAI protege contra problemas eléctricos comunes que pueden afectar al funcionamiento normal de un sistema informático.
+
+.. figure:: img/sai.jpg
+   :alt: Un SAI común (tomada de Wikipedia)
+   :align: center
+
+   Un SAI común (tomada de Wikipedia)
 
 * Bajadas de tensión. Produce daños a largo plazo.
 * Interrupciones del suministro. Da lugar a perjuicios económicos.
