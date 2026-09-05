@@ -49,11 +49,22 @@
 <li class="toctree-l2"><a class="reference internal" href="#fiabilidad-confidencialidad-integridad-y-disponibilidad">Fiabilidad, confidencialidad, integridad y disponibilidad.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#elementos-vulnerables-en-el-sistema-informatico-hardware-software-y-datos">Elementos vulnerables en el sistema informático; hardware, software y datos.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#analisis-de-las-principales-vulnerabilidades-de-un-sistema-informatico">Análisis de las principales vulnerabilidades de un sistema informático.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#amenazas-tipos">Amenazas. Tipos.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#amenazas-fisicas">Amenazas físicas.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#amenazas-tipos">Amenazas. Tipos.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#amenazas-fisicas">Amenazas físicas.</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#amenazas-logicas">Amenazas lógicas.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#seguridad-fisica-y-ambiental">Seguridad física y ambiental</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sistemas-de-alimentacion-ininterrumpida">Sistemas de alimentación ininterrumpida.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#seguridad-fisica-y-ambiental">Seguridad física y ambiental</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#controles-fisicos">Controles físicos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proteccion-frente-al-robo">Protección frente al robo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proteccion-contra-incendios">Protección contra incendios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#alimentacion-electrica">Alimentación eléctrica</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sistemas-de-alimentacion-ininterrumpida">Sistemas de alimentación ininterrumpida.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tiempos-y-consumos-de-energia-en-sai">Tiempos y consumos de energía en SAI</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#seguridad-logica">Seguridad lógica.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#criptografia">Criptografía.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#autenticacion">Autenticación</a></li>
@@ -186,91 +197,127 @@
 </section>
 <section id="analisis-de-las-principales-vulnerabilidades-de-un-sistema-informatico">
 <h2>Análisis de las principales vulnerabilidades de un sistema informático.<a class="headerlink" href="#analisis-de-las-principales-vulnerabilidades-de-un-sistema-informatico" title="Link to this heading"></a></h2>
+<p>Una posible definición de vulnerabilidad es: <em>Una vulnerabilidad es una debilidad de un sistema que puede ser aprovechada para comprometer su seguridad.</em></p>
 <p>Cuando se habla de vulnerabilidad, se asocia este término con problemas software. Una vulnerabilidad puede conllevar una serie de problemas muy graves:</p>
 <ul class="simple">
 <li><p>Que un intruso consiga permisos de administración en un sistema.</p></li>
 <li><p>Que un virus informático consiga tomar el control de los equipos de la empresa.</p></li>
 <li><p>Que un software o individuo consiga borrar/alterar/cifrar datos de la empresa.</p></li>
 </ul>
-<p>En Internet todas las vulnerabilidades detectadas se publican como un informe CVE (Common Vulnerability Exposure)</p>
-<p>Recientemente se han descubierto <strong>vulnerabilidades a nivel de microprocesador</strong>.
-En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
-<p>Algunas aplicaciones basadas en bases de datos son susceptibles de sufrir «ataques SQL» o «inyecciones SQL» o «SQL injects».</p>
-<p>Otro tipo de ataque común son los HTML/JS injects.</p>
-<p>En líneas generales, ningún programa web debe confiar en lo que escriben sus usuarios.</p>
+<p>En Internet todas las vulnerabilidades detectadas se publican como un informe CVE (Common Vulnerability Exposure) y existe una base de datos oficial donde se publican todas las vulnerabilidades conocidas en <cite>https://www.tenable.com/cve/newest &lt;https://www.tenable.com/cve/newest&gt;</cite></p>
 </section>
 <section id="amenazas-tipos">
 <h2>Amenazas. Tipos.<a class="headerlink" href="#amenazas-tipos" title="Link to this heading"></a></h2>
-<p>Clasificando por lugar</p>
+<p>Podemos definir amenaza como «circunstancia, agente o acontecimiento que puede provocar un daño a un sistema.»</p>
+<section id="amenazas-fisicas">
+<h3>Amenazas físicas.<a class="headerlink" href="#amenazas-fisicas" title="Link to this heading"></a></h3>
+<p>Son aquellas que pueden afectar a los sistemas informáticos mediante acciones o acontecimientos que afectan físicamente a los equipos, las instalaciones o el entorno en el que se encuentran.</p>
 <ul class="simple">
-<li><p>Interna: los problemas originados dentro de la propia empresa son <strong>los más frecuentes y los de impacto más grave</strong></p></li>
-<li><p>Externa: son las originadas fuera de la propia empresa.</p></li>
-</ul>
-<p>Clasificando por mecanismo</p>
-<ul class="simple">
-<li><p>Físicas</p></li>
-<li><p>Lógicas</p></li>
+<li><p>Robo de un ordenador o servidor.</p></li>
+<li><p>Incendio o inundación.</p></li>
+<li><p>Corte eléctrico.</p></li>
+<li><p>Daño intencionado de un equipo.</p></li>
+<li><p>Acceso físico no autorizado.</p></li>
+<li><p>Sobrecalentamiento.</p></li>
+<li><p>Avería de un disco duro.</p></li>
 </ul>
 </section>
-<section id="amenazas-fisicas">
-<h2>Amenazas físicas.<a class="headerlink" href="#amenazas-fisicas" title="Link to this heading"></a></h2>
-<p>Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.</p>
-<ul>
-<li><p>Rotura intencionada.</p></li>
-<li><p>Desastre natural: terremotos, inundaciones, incendios, etc…</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Se debe disponer de la protección antiincendios adecuada.</p></li>
-<li><p>No todos los extintores son apropiados para todo.</p></li>
-<li><p>Los seguros no suelen cubrir eventos de este tipo.</p></li>
-<li><p>Se desaconseja la instalación de centros de datos en bajos o sótanos.</p></li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-<p>En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.</p>
-<ul>
-<li><p>Barreras físicas.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Los servidores deberían estar cerrados con llaves y con acceso restringido.</p></li>
-<li><p>Controles de acceso con tarjeta y/o guardia de seguridad.</p></li>
-<li><p>En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.</p></li>
-<li><p>Puertas con apertura programada.</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>Protección eléctrica.</p></li>
-</ul>
 </section>
 <section id="amenazas-logicas">
 <h2>Amenazas lógicas.<a class="headerlink" href="#amenazas-logicas" title="Link to this heading"></a></h2>
-<p>¿Qué problemas podrían causarse por motivos de un uso inapropiado de software?</p>
+<p>Son aquellas que afectan a un sistema informático mediante acciones o acontecimientos relacionados con el software, los datos, las comunicaciones o el acceso lógico al sistema.</p>
 <ul class="simple">
-<li><p>Ataques a nivel de red IP. P.ej ataques de tipo «spoofing». Phishing. MITM</p></li>
-<li><p>A nivel de SO. Buffer overflow. Errores humanos.</p></li>
-<li><p>A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.</p></li>
-<li><p>Malware: spyware, ransomware, virus, DOS (Denial of service).</p></li>
+<li><p>Malware.</p></li>
+<li><p>Phishing.</p></li>
+<li><p>Robo de credenciales.</p></li>
+<li><p>Explotación de vulnerabilidades.</p></li>
+<li><p>Acceso no autorizado.</p></li>
+<li><p>Ataques DoS/DDoS.</p></li>
+<li><p>Borrado o modificación maliciosa de datos.</p></li>
+<li><p>Errores de configuración.</p></li>
 </ul>
 </section>
 <section id="seguridad-fisica-y-ambiental">
 <h2>Seguridad física y ambiental<a class="headerlink" href="#seguridad-fisica-y-ambiental" title="Link to this heading"></a></h2>
-<p>La seguridad física y ambiental implica controlar tres grandes tipos de posibles acciones:</p>
+<p>La seguridad física y ambiental comprende las medidas destinadas a proteger los equipos, instalaciones, personas y soportes de información frente a amenazas físicas y ambientales. Su objetivo es garantizar principalmente:</p>
 <ul class="simple">
-<li><p>Engaños/fraudes.</p></li>
-<li><p>Robos/pérdidas.</p></li>
-<li><p>Sabotajes.</p></li>
+<li><p>Disponibilidad de los sistemas.</p></li>
+<li><p>Integridad de los equipos y datos.</p></li>
+<li><p>Confidencialidad de la información.</p></li>
 </ul>
-<p>Para evitarlos se suele recurrir a una o varias medidas de las siguientes:</p>
+<p>La seguridad informática no consiste únicamente en proteger los ordenadores mediante contraseñas y antivirus. <strong>Si alguien puede robar físicamente el servidor, destruirlo o cortar su alimentación eléctrica, también puede comprometer la seguridad del sistema.</strong></p>
+<section id="controles-fisicos">
+<h3>Controles físicos<a class="headerlink" href="#controles-fisicos" title="Link to this heading"></a></h3>
+<p>Se debe impedir que personas no autorizadas puedan acceder a los equipos o instalaciones.</p>
 <ul class="simple">
-<li><p>Sistemas biométricos.</p></li>
+<li><p>Cerraduras y puertas de seguridad.</p></li>
+<li><p>Control mediante tarjetas, códigos o biometría.</p></li>
+<li><p>Sistemas de videovigilancia.</p></li>
 <li><p>Personal de seguridad.</p></li>
-<li><p>Protección electrónica como sensores de presencia, infrarrojos, de movimiento.</p></li>
+<li><p>Registro de visitantes.</p></li>
+<li><p>Restricción de acceso a salas de servidores.</p></li>
+<li><p>Armarios y racks cerrados.</p></li>
 </ul>
+</section>
+<section id="proteccion-frente-al-robo">
+<h3>Protección frente al robo<a class="headerlink" href="#proteccion-frente-al-robo" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Anclajes físicos para ordenadores.</p></li>
+<li><p>Racks y armarios cerrados.</p></li>
+<li><p>Control de acceso.</p></li>
+<li><p>Inventario de equipos.</p></li>
+<li><p>Cifrado de discos.</p></li>
+<li><p>Protección de copias de seguridad.</p></li>
+<li><p>Destrucción segura de soportes que ya no se utilizan.</p></li>
+</ul>
+<p>En realidad  <strong>el cifrado no evita el robo, pero puede impedir que el ladrón pueda acceder a los datos.</strong></p>
+</section>
+<section id="proteccion-contra-incendios">
+<h3>Protección contra incendios<a class="headerlink" href="#proteccion-contra-incendios" title="Link to this heading"></a></h3>
+<p>Un incendio puede destruir equipos y provocar la pérdida de información.</p>
+<p>Medidas:</p>
+<ul class="simple">
+<li><p>Detectores de humo.</p></li>
+<li><p>Sistemas automáticos de extinción.</p></li>
+<li><p>Extintores adecuados para instalaciones eléctricas.</p></li>
+<li><p>Materiales ignífugos.</p></li>
+<li><p>Separación de zonas de riesgo.</p></li>
+<li><p>Planes de evacuación.</p></li>
+</ul>
+<p>En centros de datos pueden utilizarse sistemas de extinción mediante agentes gaseosos, evitando en determinadas circunstancias el uso de agua sobre los equipos electrónicos.</p>
+</section>
+<section id="alimentacion-electrica">
+<h3>Alimentación eléctrica<a class="headerlink" href="#alimentacion-electrica" title="Link to this heading"></a></h3>
+<p>Los equipos informáticos son sensibles a problemas eléctricos.</p>
+<p>Amenazas:</p>
+<ul class="simple">
+<li><p>Cortes de suministro.</p></li>
+<li><p>Sobretensiones.</p></li>
+<li><p>Bajadas de tensión.</p></li>
+<li><p>Picos de tensión.</p></li>
+<li><p>Microcortes.</p></li>
+<li><p>Variaciones de frecuencia.</p></li>
+</ul>
+<p>Medidas:</p>
+<ul class="simple">
+<li><p>SAI/UPS.</p></li>
+<li><p>Protectores contra sobretensiones.</p></li>
+<li><p>Instalaciones eléctricas adecuadas.</p></li>
+<li><p>Generadores de emergencia.</p></li>
+<li><p>Fuentes de alimentación redundantes.</p></li>
+</ul>
+<p>Un SAI permite mantener temporalmente los equipos funcionando durante un corte y, sobre todo, proporciona tiempo para apagarlos correctamente. En el apartado siguiente los analizaremos.</p>
+</section>
 </section>
 <section id="sistemas-de-alimentacion-ininterrumpida">
 <h2>Sistemas de alimentación ininterrumpida.<a class="headerlink" href="#sistemas-de-alimentacion-ininterrumpida" title="Link to this heading"></a></h2>
 <p>Un sistema de alimentación ininterrumpida o SAI protege contra problemas eléctricos comunes que pueden afectar al funcionamiento normal de un sistema informático.</p>
+<figure class="align-center" id="id2">
+<img alt="Un SAI común (tomada de Wikipedia)" src="../_images/sai.jpg" />
+<figcaption>
+<p><span class="caption-text">Un SAI común (tomada de Wikipedia)</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p>Bajadas de tensión. Produce daños a largo plazo.</p></li>
 <li><p>Interrupciones del suministro. Da lugar a perjuicios económicos.</p></li>
@@ -295,6 +342,31 @@ En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.</p>
 <p>Supongamos que deseamos instalar servidores que en su conjunto consumen 1300W.</p>
 <p>¿Que potencia aparente deberíamos buscar al comprar un SAI?</p>
 <p>No nos dicen el factor de potencia así que usaremos 0,75. Así la potencia aparente debería ser Eficaz/0,75 es decir 1733 VA. Como dicha potencia podría resulta insuficiente en el futuro, incrementaremos, por ejemplo un 20% multiplicando los VA por 1,20. Así, 1733 * 1,20 = 2080 VA.</p>
+<section id="tiempos-y-consumos-de-energia-en-sai">
+<h3>Tiempos y consumos de energía en SAI<a class="headerlink" href="#tiempos-y-consumos-de-energia-en-sai" title="Link to this heading"></a></h3>
+<p>El Sistema Internacional mide la energía consumida en Watios-hora (cuidado NO es Watios/hora) o en Julios. Para aclarar, podría decirse que:</p>
+<ul class="simple">
+<li><p>W (vatios). Unidad de potencia o «como de rápido consume energía».</p></li>
+<li><p>Wh (vatios-hora) Unidad de energía → «cuánta energía hay disponible».</p></li>
+<li><p>V (voltios) Unidad de diferencia de potencial o tensión eléctrica.</p></li>
+<li><p>A (amperios) Unidad de corriente o «cuantos electrones circulan por un cable en un cierto momento»</p></li>
+<li><p>Ah (amperios-hora) Unidad de capacidad eléctrica de una batería.</p></li>
+</ul>
+<p>Medimos la autonomía de un SAI así: Autonomía = Energía (Wh) / Potencia (W)</p>
+<p>Observemos esta imagen:</p>
+<figure class="align-center" id="id3">
+<img alt="Batería de un SAI" src="../_images/bateria_sai.jpg" />
+<figcaption>
+<p><span class="caption-text">Batería de un SAI</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Si este SAI ofrece una potencia de 12 V suministrando 7 Amperios-hora la energía que puede almacenar es 12x7=84 Watios-hora. Si tenemos un equipo informático conectado al SAI y dicho equipo tiene un consumo de 100W y un monitor de 50 W (enchufado también al SAI) y se va la luz podemos dividir la energía que almacena el SAI (84 Watios-hora) por los 150W que consume el equipo y tener 84/150=0.56. Es decir, que el equipo puede continuar funcionando un poco más de media hora.</p>
+<p>Si apagamos el monitor el PC pasará a consumir 100W y entonces podrá funcionar durante 84/100=0.84 horas o unos 50 minutos.</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>NO se debe confundir la potencia del SAI (que se mide en KVA o en Watios) con la energía que almacena su batería. <strong>La energía es la cantidad de energía disponible o consumida. La potencia indica la rapidez con la que se consume o se produce esa energía. Los kVA/W nos indican qué carga puede soportar el SAI; los Wh de la batería determinan, junto con el consumo, cuánto tiempo puede mantenerla.</strong></p>
+</div>
+</section>
 </section>
 <section id="seguridad-logica">
 <h2>Seguridad lógica.<a class="headerlink" href="#seguridad-logica" title="Link to this heading"></a></h2>
@@ -468,11 +540,11 @@ DH….</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> si se puede ejecutar.</p></li>
 </ul>
 <p>Estos permisos pueden ser del usuario, del grupo al que pertenece o de otros usuarios en general. Así, un fichero cualquiera puede mostrar unos permisos como estos (necesitaremos el comando <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code> para ver los permisos).</p>
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id4">
 <a class="reference internal image-reference" href="../_images/permisos_grupos.png"><img alt="Ejemplos de permisos" src="../_images/permisos_grupos.png" style="width: 329.5px; height: 34.0px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+<p><span class="caption-text">Ejemplos de permisos en un sistema GNU/Linux</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Si examinamos el fichero <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> veremos que tiene unos permisos como estos <code class="docutils literal notranslate"><span class="pre">-rw-rw-r--</span></code> y veremos también que pone <code class="docutils literal notranslate"><span class="pre">profesor</span> <span class="pre">profesor</span></code> . Por este orden, esto significa</p>
@@ -484,11 +556,11 @@ DH….</p>
 <li><p>Por último vemos <code class="docutils literal notranslate"><span class="pre">r--</span></code> . Esto significa que cualquier otro usuario que ni sea <code class="docutils literal notranslate"><span class="pre">profesor</span></code> ni pertenezca al grupo <code class="docutils literal notranslate"><span class="pre">profesor</span></code> podrá hacer nada que no sea leer en el fichero.</p></li>
 </ul>
 <p>Este sistema de permisos ha funcionado muy bien durante mucho tiempo, sin embargo con el tiempo ha mostrado algunas flaquezas.</p>
-<figure class="align-default" id="id3">
+<figure class="align-default" id="id5">
 <a class="reference internal image-reference" href="../_images/ficherorestringido.png"><img alt="Problema con los permisos" src="../_images/ficherorestringido.png" style="width: 293.5px; height: 137.0px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Un ejemplo de problema con los permisos</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+<p><span class="caption-text">Un ejemplo de problema con los permisos</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <section id="ejercicio-con-permisos">
@@ -675,38 +747,54 @@ sudo adduser gerente02</p>
 <li><p>Copias incrementales. Una copia incremental siempre se fijará en la última copia que se hizo (da igual si la última fue una incremental o una completa). Esto ahorra mucho espacio pero si hay ue recuperar una copia hay que recuperar la última completa <strong>más todas las incrementales</strong> lo cual puede ser muy lento.</p></li>
 <li><p>Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado <strong>con respecto a la última copia completa</strong> . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.</p></li>
 </ul>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-+===========+=======+================+===================+================================+==+==+==+==+==+
-|   Día     |       |                |                   |                                |
-+===========+=======+================+===================+================================+==+==+==+==+==+
-|   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
-|  Martes   | 100MB | Completa 2,1GB | Incremental 100MB |       Diferencial 100MB        |  |  |  |  |  |
-| Miércoles | 200MB | Completa 2,3GB | Incremental 200MB |     Diferencial 100+200MB      |  |  |  |  |  |
-|  Jueves   | 100MB | Completa 2,4GB | Incremental 100MB |   Diferencial 100+200+100MB    |  |  |  |  |  |
-|  Viernes  |  1GB  | Completa 3,4GB |  Incremental 1GB  | Diferencial 100+200+100+1000MB |  |  |  |  |  |
-|           |       | Total:12,2 GB  |   Total:3,4 GB    |           Total: 4,2           |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-+———–+——-+—————-+——————-+——————————–+–+–+–+–+–+
-=======
-+————-+———+——————+———————+———————————-+
-|     Dia     |  Datos  |     Completa     |       Increm        |               Dif                |
-+=============+=========+==================+=====================+==================================+
-|    Lunes    |   2GB   |   Completa 2GB   |    Completa 2GB     |           Completa 2GB           |
-+————-+———+——————+———————+———————————-+
-|   Martes    |  100MB  |  Completa 100MB  |  Incremental 100MB  |        Diferencial 100MB         |
-+————-+———+——————+———————+———————————-+
-|  Miércoles  |  200MB  |  Completa 200MB  |  Incremental 200MB  |      Diferencial 100 y 200MB     |
-+————-+———+——————+———————+———————————-+
-|   Jueves    |  100MB  |  Completa 100MB  |  Incremental 100MB  |    Diferencial 100+200+100MB     |
-+————-+———+——————+———————+———————————-+
-|   Viernes   |   1GB   |   Completa 1GB   |   Incremental 1GB   |  Diferencial 100+200+100+1000MB  |
-+————-+———+——————+———————+———————————-+
-|    Totales  |   Tot.  |  Total:12.2 GB   |    Total:3.4 GB     |            Total: 4.2            |
-+————-+———+——————+———————+———————————-+</p>
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 43d7c3a0057b4bff25768af8251d44de2085064c</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dia</p></th>
+<th class="head"><p>Datos</p></th>
+<th class="head"><p>Completa</p></th>
+<th class="head"><p>Increm</p></th>
+<th class="head"><p>Dif</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Lunes</p></td>
+<td><p>2GB</p></td>
+<td><p>Completa 2GB</p></td>
+<td><p>Completa 2GB</p></td>
+<td><p>Completa 2GB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Martes</p></td>
+<td><p>100MB</p></td>
+<td><p>Completa 100MB</p></td>
+<td><p>Incremental 100MB</p></td>
+<td><p>Diferencial 100MB</p></td>
+</tr>
+<tr class="row-even"><td><p>Miércoles</p></td>
+<td><p>200MB</p></td>
+<td><p>Completa 200MB</p></td>
+<td><p>Incremental 200MB</p></td>
+<td><p>Diferencial 100 y 200MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Jueves</p></td>
+<td><p>100MB</p></td>
+<td><p>Completa 100MB</p></td>
+<td><p>Incremental 100MB</p></td>
+<td><p>Diferencial 100+200+100MB</p></td>
+</tr>
+<tr class="row-even"><td><p>Viernes</p></td>
+<td><p>1GB</p></td>
+<td><p>Completa 1GB</p></td>
+<td><p>Incremental 1GB</p></td>
+<td><p>Diferencial 100+200+100+1000MB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Totales</p></td>
+<td><p>Tot.</p></td>
+<td><p>Total:12.2 GB</p></td>
+<td><p>Total:3.4 GB</p></td>
+<td><p>Total: 4.2</p></td>
+</tr>
+</tbody>
+</table>
 <p>En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa «Configuración de copia de seguridad» y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.</p>
 <p>En UNIX las copias se hacen de otra manera.</p>
 <ul class="simple">
@@ -853,11 +941,11 @@ sudo adduser gerente02</p>
 <section id="sistemas-biometricos-funcionamiento-estandares">
 <h2>Sistemas biométricos. Funcionamiento. Estándares.<a class="headerlink" href="#sistemas-biometricos-funcionamiento-estandares" title="Link to this heading"></a></h2>
 <p>Por desgracia la siguiente figura ilustra muy bien el problema actual con los estándares biométricos:</p>
-<figure class="align-center" id="id4">
+<figure class="align-center" id="id6">
 <a class="reference internal image-reference" href="../_images/standards.png"><img alt="Un estándar debería ser único." src="../_images/standards.png" style="width: 250.0px; height: 141.5px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">El problema actual con los estándares.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+<p><span class="caption-text">El problema actual con los estándares.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>De hecho podemos nombrar los siguientes estándares:</p>

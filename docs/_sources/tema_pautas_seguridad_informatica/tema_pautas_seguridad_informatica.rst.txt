@@ -56,6 +56,8 @@ Análisis de las principales vulnerabilidades de un sistema informático.
 -----------------------------------------------------------------------------------------------
 
 
+Una posible definición de vulnerabilidad es: *Una vulnerabilidad es una debilidad de un sistema que puede ser aprovechada para comprometer su seguridad.* 
+
 Cuando se habla de vulnerabilidad, se asocia este término con problemas software. Una vulnerabilidad puede conllevar una serie de problemas muy graves:
 
 
@@ -64,17 +66,7 @@ Cuando se habla de vulnerabilidad, se asocia este término con problemas softwar
 * Que un software o individuo consiga borrar/alterar/cifrar datos de la empresa.
 
 
-En Internet todas las vulnerabilidades detectadas se publican como un informe CVE (Common Vulnerability Exposure)
-
-Recientemente se han descubierto **vulnerabilidades a nivel de microprocesador**.
-En entornos muy sofisticados existen unas vulnerabilidades llamadas TEMPEST.
-
-
-Algunas aplicaciones basadas en bases de datos son susceptibles de sufrir "ataques SQL" o "inyecciones SQL" o "SQL injects".
-
-Otro tipo de ataque común son los HTML/JS injects. 
-
-En líneas generales, ningún programa web debe confiar en lo que escriben sus usuarios.
+En Internet todas las vulnerabilidades detectadas se publican como un informe CVE (Common Vulnerability Exposure) y existe una base de datos oficial donde se publican todas las vulnerabilidades conocidas en `https://www.tenable.com/cve/newest <https://www.tenable.com/cve/newest>`
 
 
 
@@ -82,78 +74,129 @@ En líneas generales, ningún programa web debe confiar en lo que escriben sus u
 Amenazas. Tipos.
 -----------------------------------------------------------------------------------------------
 
-Clasificando por lugar
-
-* Interna: los problemas originados dentro de la propia empresa son **los más frecuentes y los de impacto más grave**
-* Externa: son las originadas fuera de la propia empresa.
-
-Clasificando por mecanismo
-
-* Físicas
-* Lógicas
+Podemos definir amenaza como "circunstancia, agente o acontecimiento que puede provocar un daño a un sistema."
 
 
 Amenazas físicas.
------------------------------------------------------------------------------------------------
-Son todas aquellas que hacen uso de algún mecanismo tangible, ya sea por acción efectiva o por fallo, para perjudicar el funcionamiento de los sistemas informáticos.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-* Rotura intencionada.
-* Desastre natural: terremotos, inundaciones, incendios, etc...
+Son aquellas que pueden afectar a los sistemas informáticos mediante acciones o acontecimientos que afectan físicamente a los equipos, las instalaciones o el entorno en el que se encuentran.
 
-    * Se debe disponer de la protección antiincendios adecuada.
-    * No todos los extintores son apropiados para todo.
-    * Los seguros no suelen cubrir eventos de este tipo.
-    * Se desaconseja la instalación de centros de datos en bajos o sótanos.
-
-En relación con todos estos sucesos se recomiendan algunas medidas básicas de protección.
-
-
-* Barreras físicas.
-
-    * Los servidores deberían estar cerrados con llaves y con acceso restringido.
-    * Controles de acceso con tarjeta y/o guardia de seguridad.
-    * En relación con el punto anterior a veces se llegan a utilizar mecanismos biométricos.
-    * Puertas con apertura programada.
-    
-* Protección eléctrica.
-
+* Robo de un ordenador o servidor.
+* Incendio o inundación.
+* Corte eléctrico.
+* Daño intencionado de un equipo.
+* Acceso físico no autorizado.
+* Sobrecalentamiento.
+* Avería de un disco duro.
 
 
 Amenazas lógicas.
 -----------------------------------------------------------------------------------------------
 
+Son aquellas que afectan a un sistema informático mediante acciones o acontecimientos relacionados con el software, los datos, las comunicaciones o el acceso lógico al sistema.
 
-¿Qué problemas podrían causarse por motivos de un uso inapropiado de software?
-
-* Ataques a nivel de red IP. P.ej ataques de tipo "spoofing". Phishing. MITM
-* A nivel de SO. Buffer overflow. Errores humanos.
-* A nivel de aplicación. Un problema muy común es el SQL/HTML/JS injection y/o los errores humanos que provoquen fugas de datos.
-* Malware: spyware, ransomware, virus, DOS (Denial of service).
-
+* Malware.
+* Phishing.
+* Robo de credenciales.
+* Explotación de vulnerabilidades.
+* Acceso no autorizado.
+* Ataques DoS/DDoS.
+* Borrado o modificación maliciosa de datos.
+* Errores de configuración.
 
 
 Seguridad física y ambiental
 -----------------------------------------------------------------------------------------------
+La seguridad física y ambiental comprende las medidas destinadas a proteger los equipos, instalaciones, personas y soportes de información frente a amenazas físicas y ambientales. Su objetivo es garantizar principalmente:
 
-La seguridad física y ambiental implica controlar tres grandes tipos de posibles acciones:
+* Disponibilidad de los sistemas.
+* Integridad de los equipos y datos.
+* Confidencialidad de la información.
 
-* Engaños/fraudes.
-* Robos/pérdidas.
-* Sabotajes.
+La seguridad informática no consiste únicamente en proteger los ordenadores mediante contraseñas y antivirus. **Si alguien puede robar físicamente el servidor, destruirlo o cortar su alimentación eléctrica, también puede comprometer la seguridad del sistema.**
 
-Para evitarlos se suele recurrir a una o varias medidas de las siguientes:
+Controles físicos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Sistemas biométricos.
+Se debe impedir que personas no autorizadas puedan acceder a los equipos o instalaciones.
+
+
+* Cerraduras y puertas de seguridad.
+* Control mediante tarjetas, códigos o biometría.
+* Sistemas de videovigilancia.
 * Personal de seguridad.
-* Protección electrónica como sensores de presencia, infrarrojos, de movimiento.
+* Registro de visitantes.
+* Restricción de acceso a salas de servidores.
+* Armarios y racks cerrados.
 
 
+Protección frente al robo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* Anclajes físicos para ordenadores.
+* Racks y armarios cerrados.
+* Control de acceso.
+* Inventario de equipos.
+* Cifrado de discos.
+* Protección de copias de seguridad.
+* Destrucción segura de soportes que ya no se utilizan.
+
+En realidad  **el cifrado no evita el robo, pero puede impedir que el ladrón pueda acceder a los datos.**
+
+
+Protección contra incendios
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Un incendio puede destruir equipos y provocar la pérdida de información.
+
+Medidas:
+
+* Detectores de humo.
+* Sistemas automáticos de extinción.
+* Extintores adecuados para instalaciones eléctricas.
+* Materiales ignífugos.
+* Separación de zonas de riesgo.
+* Planes de evacuación.
+
+En centros de datos pueden utilizarse sistemas de extinción mediante agentes gaseosos, evitando en determinadas circunstancias el uso de agua sobre los equipos electrónicos.
+
+
+Alimentación eléctrica
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Los equipos informáticos son sensibles a problemas eléctricos.
+
+Amenazas:
+
+* Cortes de suministro.
+* Sobretensiones.
+* Bajadas de tensión.
+* Picos de tensión.
+* Microcortes.
+* Variaciones de frecuencia.
+
+Medidas:
+
+* SAI/UPS.
+* Protectores contra sobretensiones.
+* Instalaciones eléctricas adecuadas.
+* Generadores de emergencia.
+* Fuentes de alimentación redundantes.
+
+Un SAI permite mantener temporalmente los equipos funcionando durante un corte y, sobre todo, proporciona tiempo para apagarlos correctamente. En el apartado siguiente los analizaremos.
 
 Sistemas de alimentación ininterrumpida.
 -----------------------------------------------------------------------------------------------
 Un sistema de alimentación ininterrumpida o SAI protege contra problemas eléctricos comunes que pueden afectar al funcionamiento normal de un sistema informático.
+
+.. figure:: img/sai.jpg
+   :alt: Un SAI común (tomada de Wikipedia)
+   :align: center
+
+   Un SAI común (tomada de Wikipedia)
 
 * Bajadas de tensión. Produce daños a largo plazo.
 * Interrupciones del suministro. Da lugar a perjuicios económicos.
@@ -202,7 +245,33 @@ Supongamos que deseamos instalar servidores que en su conjunto consumen 1300W.
 
 No nos dicen el factor de potencia así que usaremos 0,75. Así la potencia aparente debería ser Eficaz/0,75 es decir 1733 VA. Como dicha potencia podría resulta insuficiente en el futuro, incrementaremos, por ejemplo un 20% multiplicando los VA por 1,20. Así, 1733 * 1,20 = 2080 VA.
 
+Tiempos y consumos de energía en SAI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+El Sistema Internacional mide la energía consumida en Watios-hora (cuidado NO es Watios/hora) o en Julios. Para aclarar, podría decirse que:
+
+* W (vatios). Unidad de potencia o "como de rápido consume energía".
+* Wh (vatios-hora) Unidad de energía → "cuánta energía hay disponible".
+* V (voltios) Unidad de diferencia de potencial o tensión eléctrica.
+* A (amperios) Unidad de corriente o "cuantos electrones circulan por un cable en un cierto momento"
+* Ah (amperios-hora) Unidad de capacidad eléctrica de una batería.
+
+Medimos la autonomía de un SAI así: Autonomía = Energía (Wh) / Potencia (W)
+
+Observemos esta imagen:
+
+.. figure:: img/bateria_sai.jpg
+   :alt: Batería de un SAI
+   :align: center
+
+   Batería de un SAI    
+
+Si este SAI ofrece una potencia de 12 V suministrando 7 Amperios-hora la energía que puede almacenar es 12x7=84 Watios-hora. Si tenemos un equipo informático conectado al SAI y dicho equipo tiene un consumo de 100W y un monitor de 50 W (enchufado también al SAI) y se va la luz podemos dividir la energía que almacena el SAI (84 Watios-hora) por los 150W que consume el equipo y tener 84/150=0.56. Es decir, que el equipo puede continuar funcionando un poco más de media hora.
+
+Si apagamos el monitor el PC pasará a consumir 100W y entonces podrá funcionar durante 84/100=0.84 horas o unos 50 minutos. 
+
+.. warning::
+   NO se debe confundir la potencia del SAI (que se mide en KVA o en Watios) con la energía que almacena su batería. **La energía es la cantidad de energía disponible o consumida. La potencia indica la rapidez con la que se consume o se produce esa energía. Los kVA/W nos indican qué carga puede soportar el SAI; los Wh de la batería determinan, junto con el consumo, cuánto tiempo puede mantenerla.** 
 
 Seguridad lógica.
 -----------------------------------------------------------------------------------------------
@@ -645,22 +714,8 @@ En cuanto a las copias de seguridad podemos hablar de:
 * Copias diferenciales. Son copias en las que solo se guarda lo que haya cambiado **con respecto a la última copia completa** . Así, si hay que recuperar una copia solo necesitamos la última completa y la última diferencial. Lo malo es que las copias intermedias ocupan más que las copias intermedias incrementales.
 
 
-<<<<<<< HEAD
-+===========+=======+================+===================+================================+==+==+==+==+==+
-|   Día     |       |                |                   |                                |
-+===========+=======+================+===================+================================+==+==+==+==+==+
-|   Lunes   |  2GB  |  Completa 2GB  |   Completa 2GB    |          Completa 2GB          |  |  |  |  |  |
-|  Martes   | 100MB | Completa 2,1GB | Incremental 100MB |       Diferencial 100MB        |  |  |  |  |  |
-| Miércoles | 200MB | Completa 2,3GB | Incremental 200MB |     Diferencial 100+200MB      |  |  |  |  |  |
-|  Jueves   | 100MB | Completa 2,4GB | Incremental 100MB |   Diferencial 100+200+100MB    |  |  |  |  |  |
-|  Viernes  |  1GB  | Completa 3,4GB |  Incremental 1GB  | Diferencial 100+200+100+1000MB |  |  |  |  |  |
-|           |       | Total:12,2 GB  |   Total:3,4 GB    |           Total: 4,2           |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-|           |       |                |                   |                                |  |  |  |  |  |
-+-----------+-------+----------------+-------------------+--------------------------------+--+--+--+--+--+
-=======
+
+
 +-------------+---------+------------------+---------------------+----------------------------------+
 |     Dia     |  Datos  |     Completa     |       Increm        |               Dif                |
 +=============+=========+==================+=====================+==================================+
@@ -677,7 +732,6 @@ En cuanto a las copias de seguridad podemos hablar de:
 |    Totales  |   Tot.  |  Total:12.2 GB   |    Total:3.4 GB     |            Total: 4.2            |
 +-------------+---------+------------------+---------------------+----------------------------------+
 
->>>>>>> 43d7c3a0057b4bff25768af8251d44de2085064c
 
 
 En Windows, las copias de seguridad se han ido volviendo más y más sencillas con el paso de los años. En Windows 10 basta con arrancar el programa "Configuración de copia de seguridad" y usando las opciones avanzadas seleccionar los directorios que se quieren copiar, la carpeta donde se va a guardar la copia de seguridad (puede ser una carpeta de red) y la periodicidad con que se va a hacer la copia. Una vez seleccionados los parámetros, la tarea de copia de seguridad ha quedado programada y se ejecutará sin necesidad de control alguno por parte del administrador.

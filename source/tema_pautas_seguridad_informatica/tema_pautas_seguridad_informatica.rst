@@ -245,7 +245,33 @@ Supongamos que deseamos instalar servidores que en su conjunto consumen 1300W.
 
 No nos dicen el factor de potencia así que usaremos 0,75. Así la potencia aparente debería ser Eficaz/0,75 es decir 1733 VA. Como dicha potencia podría resulta insuficiente en el futuro, incrementaremos, por ejemplo un 20% multiplicando los VA por 1,20. Así, 1733 * 1,20 = 2080 VA.
 
+Tiempos y consumos de energía en SAI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+El Sistema Internacional mide la energía consumida en Watios-hora (cuidado NO es Watios/hora) o en Julios. Para aclarar, podría decirse que:
+
+* W (vatios). Unidad de potencia o "como de rápido consume energía".
+* Wh (vatios-hora) Unidad de energía → "cuánta energía hay disponible".
+* V (voltios) Unidad de diferencia de potencial o tensión eléctrica.
+* A (amperios) Unidad de corriente o "cuantos electrones circulan por un cable en un cierto momento"
+* Ah (amperios-hora) Unidad de capacidad eléctrica de una batería.
+
+Medimos la autonomía de un SAI así: Autonomía = Energía (Wh) / Potencia (W)
+
+Observemos esta imagen:
+
+.. figure:: img/bateria_sai.jpg
+   :alt: Batería de un SAI
+   :align: center
+
+   Batería de un SAI    
+
+Si este SAI ofrece una potencia de 12 V suministrando 7 Amperios-hora la energía que puede almacenar es 12x7=84 Watios-hora. Si tenemos un equipo informático conectado al SAI y dicho equipo tiene un consumo de 100W y un monitor de 50 W (enchufado también al SAI) y se va la luz podemos dividir la energía que almacena el SAI (84 Watios-hora) por los 150W que consume el equipo y tener 84/150=0.56. Es decir, que el equipo puede continuar funcionando un poco más de media hora.
+
+Si apagamos el monitor el PC pasará a consumir 100W y entonces podrá funcionar durante 84/100=0.84 horas o unos 50 minutos. 
+
+.. warning::
+   NO se debe confundir la potencia del SAI (que se mide en KVA o en Watios) con la energía que almacena su batería. **La energía es la cantidad de energía disponible o consumida. La potencia indica la rapidez con la que se consume o se produce esa energía. Los kVA/W nos indican qué carga puede soportar el SAI; los Wh de la batería determinan, junto con el consumo, cuánto tiempo puede mantenerla.** 
 
 Seguridad lógica.
 -----------------------------------------------------------------------------------------------
